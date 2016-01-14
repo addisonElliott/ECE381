@@ -12,7 +12,7 @@ void main(void)
 	// Insert your main routine code here.
 	
 	unsigned char sw1On = FALSE;
-	unsigned char sw2On = FALSE;
+	unsigned char sw2On = FALSE; // Comment
 	unsigned int count = 0;
 	char tmpStr[4];
 	
