@@ -1,0 +1,33 @@
+XH
+H 1 areas 1 global symbols
+M main.c
+A text size 33 flags 0
+dbfile ./main.c
+dbfile C:\Users\addis\GOOGLE~1\DOCUME~1\ECE381\BINARY~1\BINARY~1\main.c
+dbfunc e main 0 fV
+dbsym l count 2 c
+dbsym l i 0 i
+dbline FFFFFFFF 0
+dbline A 4
+dbline D 4
+dbline E 7
+dbline 11 F
+dbline 12 F
+dbline 14 13
+dbline 14 1B
+dbline 14 1B
+dbline 14 20
+dbline 15 2A
+dbline 16 2C
+dbline 10 2C
+dbline FFFFFFFE 2E
+dbline 0 31
+S _main Def0000
+T 00 00 10 4F 38 03 56 02 00 56 01 00 56 00 00 80
+R 00 00 00 00
+T 00 0E 1E 52 02 60 04 56 01 00 56 00 00 80 06 77
+R 00 00 00 00
+T 00 1C 01 0F 00 00 52 01 11 C4 52 00 19 09 CF F2
+R 00 00 00 00
+T 00 2A 77 02 8F E2 38 FD 20 8F FF
+R 00 00 00 00

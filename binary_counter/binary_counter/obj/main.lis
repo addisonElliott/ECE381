@@ -1,0 +1,81 @@
+ 0000                   cpu LMM
+                        .module main.c
+                        .area text(rom, con, rel)
+ 0000                   .dbfile ./main.c
+ 0000                   .dbfile C:\Users\addis\GOOGLE~1\DOCUME~1\ECE381\BINARY~1\BINARY~1\main.c
+ 0000                   .dbfunc e main _main fV
+ 0000           ;          count -> X+2
+ 0000           ;              i -> X+0
+ 0000           _main::
+ 0000                   .dbline -1
+ 0000 10                push X
+ 0001 4F                mov X,SP
+ 0002 3803              add SP,3
+ 0004                   .dbline 10
+ 0004           ; //----------------------------------------------------------------------------
+ 0004           ; // C main line
+ 0004           ; //----------------------------------------------------------------------------
+ 0004           ; 
+ 0004           ; #include <m8c.h>        // part specific constants and macros
+ 0004           ; #include "PSoCAPI.h"    // PSoC API definitions for all User Modules
+ 0004           ; 
+ 0004           ; 
+ 0004           ; void main(void)
+ 0004           ; {
+ 0004                   .dbline 13
+ 0004           ;       // M8C_EnableGInt ; // Uncomment this line to enable Global Interrupts
+ 0004           ;       // Insert your main routine code here.
+ 0004           ;       char count = 0;
+ 0004 560200            mov [X+2],0
+ 0007                   .dbline 14
+ 0007           ;       unsigned int i = 0;
+ 0007 560100            mov [X+1],0
+ 000A 560000            mov [X+0],0
+ 000D 801E              xjmp L3
+ 000F           L2:
+ 000F                   .dbline 17
+ 000F           ;       
+ 000F           ;       while (TRUE)
+ 000F           ;       {
+ 000F                   .dbline 18
+ 000F           ;               LED1_Data_ADDR = count; 
+ 000F 5202              mov A,[X+2]
+ 0011 6004              mov REG[0x4],A
+ 0013                   .dbline 20
+ 0013           ;               
+ 0013           ;               for (i = 0; i < 2500; ++i);
+ 0013 560100            mov [X+1],0
+ 0016 560000            mov [X+0],0
+ 0019 8006              xjmp L8
+ 001B           L5:
+ 001B                   .dbline 20
+ 001B           L6:
+ 001B                   .dbline 20
+ 001B 7701              inc [X+1]
+ 001D 0F0000            adc [X+0],0
+ 0020           L8:
+ 0020                   .dbline 20
+ 0020 5201              mov A,[X+1]
+ 0022 11C4              sub A,-60
+ 0024 5200              mov A,[X+0]
+ 0026 1909              sbb A,9
+ 0028 CFF2              jc L5
+ 002A           X1:
+ 002A                   .dbline 21
+ 002A           ;               count++;
+ 002A 7702              inc [X+2]
+ 002C                   .dbline 22
+ 002C           ;       }
+ 002C           L3:
+ 002C                   .dbline 16
+ 002C 8FE2              xjmp L2
+ 002E           X0:
+ 002E                   .dbline -2
+ 002E           L1:
+ 002E 38FD              add SP,-3
+ 0030 20                pop X
+ 0031                   .dbline 0 ; func end
+ 0031 8FFF              jmp .
+ 0033                   .dbsym l count 2 c
+ 0033                   .dbsym l i 0 i
+ 0033                   .dbend

@@ -1,0 +1,50 @@
+XH
+H 1 areas 2 global symbols
+M main.c
+S __r0 Ref0000
+A text size 4B flags 0
+dbfile ./main.c
+dbfile C:\Users\addis\GOOGLE~1\DOCUME~1\ECE381\POLLSW~1\POLLSW~1\main.c
+dbfunc e main 0 fV
+dbsym l sw2On 1 c
+dbsym l sw1On 0 c
+dbline FFFFFFFF 0
+dbline A 4
+dbline D 4
+dbline E 7
+dbline 11 C
+dbline 12 C
+dbline 14 18
+dbline 14 18
+dbline 16 1D
+dbline 16 1D
+dbline 17 20
+dbline 1C 23
+dbline 1D 23
+dbline 1F 25
+dbline 21 28
+dbline 23 34
+dbline 23 34
+dbline 25 39
+dbline 25 39
+dbline 26 3C
+dbline 2B 3F
+dbline 2C 3F
+dbline 2E 41
+dbline 2F 44
+dbline 10 44
+dbline FFFFFFFE 46
+dbline 0 49
+S _main Def0000
+T 00 00 10 4F 38 02 56 00 00 56 01 00 80 39 5D 04
+R 00 00 00 00
+T 00 0E 62 D0 00 00 53 00 00 47 00 00 10 A0 0E 3D
+R 00 00 00 00 43 04 00 00 03 07 00 00 03 0A 00 00
+T 00 19 00 00 B0 0C 56 00 01 45 04 01 80 04 56 00
+R 00 00 00 00
+T 00 27 00 5D 04 62 D0 00 00 53 00 00 47 00 00 20
+R 00 00 00 00 43 07 00 00 03 0A 00 00 03 0D 00 00
+T 00 32 A0 0E 3D 01 00 B0 0C 56 01 01 45 04 02 80
+R 00 00 00 00
+T 00 40 04 56 01 00 8F C7 38 FE 20 8F FF
+R 00 00 00 00
