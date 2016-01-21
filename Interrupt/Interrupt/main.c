@@ -1,26 +1,3 @@
-//----------------------------------------------------------------------------
-//
-// Project: Simple GPIO Interrupt
-//
-// File: main.c
-//
-// Description: This PSoC project configures Port1[0] as an output to drive
-//   an LED and configures Port1[4] as an input that generates an interrupt
-//   on the rising edge. At each interrupt Port1[0] is toggled, thereby turning
-//   the LED on/off with each switch press.
-//
-// Ports:
-//   Port1[0]: Name=LED, Drive=Strong
-//   Port1[4]: Name=SWITCH, Drive=High Z, Interrupt=RisingEdge
-//
-// Author: Dr. Brad Noble
-// Date: 1-Sep-2009
-//
-// Edited: Matthew Clark
-// Date: 29-July-2010
-// 
-//----------------------------------------------------------------------------
-
 #include <m8c.h>			// part specific constants and macros
 #include "PSoCAPI.h"		// PSoC API definitions for all User Modules
 #include "PSoCGPIOINT.h"	// We have to include this file manually for GPIO
@@ -32,11 +9,8 @@
 
 void main(void)
 {
-	int test = LED1_Data_ADDR & LED1_MASK;
-	int test2;
-	
-	// Enable global interrupts (see m8c.h)
-M8C_EnableGInt;
+	// Enable Global interrupts (see m8c.h)
+	M8C_EnableGInt;
 	// Enable GPIO Interrupts (see m8c.h)
 	M8C_EnableIntMask(INT_MSK0,INT_MSK0_GPIO);
 	
