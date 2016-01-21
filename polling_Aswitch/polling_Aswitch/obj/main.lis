@@ -1,0 +1,119 @@
+ 0000                   cpu LMM
+                        .module main.c
+                        .area text(rom, con, rel)
+ 0000                   .dbfile ./main.c
+ 0000                   .dbfile C:\Users\Jacob\Desktop\ECE381\POLLIN~1\POLLIN~1\main.c
+ 0000                   .dbfunc e main _main fV
+ 0000           ;          sw2On -> X+1
+ 0000           ;          sw1On -> X+0
+ 0000           _main::
+ 0000                   .dbline -1
+ 0000 10                push X
+ 0001 4F                mov X,SP
+ 0002 3802              add SP,2
+ 0004                   .dbline 10
+ 0004           ; //----------------------------------------------------------------------------
+ 0004           ; // C main line
+ 0004           ; //----------------------------------------------------------------------------
+ 0004           ; 
+ 0004           ; #include <m8c.h>        // part specific constants and macros
+ 0004           ; #include "PSoCAPI.h"    // PSoC API definitions for all User Modules
+ 0004           ; 
+ 0004           ; 
+ 0004           ; void main(void)
+ 0004           ; {
+ 0004                   .dbline 14
+ 0004           ;       
+ 0004           ; // M8C_EnableGInt ; // Uncomment this line to enable Global Interrupts
+ 0004           ;       // Insert your main routine code here.
+ 0004           ;       unsigned char sw1On = FALSE;
+ 0004 560000            mov [X+0],0
+ 0007                   .dbline 15
+ 0007           ;       unsigned char sw2On = FALSE;
+ 0007 560100            mov [X+1],0
+ 000A 8039              xjmp L3
+ 000C           L2:
+ 000C                   .dbline 18
+ 000C           ;       
+ 000C           ;       while (1)
+ 000C           ;       {
+ 000C                   .dbline 19
+ 000C           ;               if (SW1_Data_ADDR & SW1_MASK)
+ 000C 5D04              mov A,REG[0x4]
+ 000E 62D000            mov REG[0xd0],>__r0
+ 0011 5300              mov [__r0],A
+ 0013 470010            tst [__r0],16
+ 0016 A00E              jz L5
+ 0018                   .dbline 21
+ 0018           ;               {
+ 0018           ;                       if (sw1On == FALSE)
+ 0018                   .dbline 21
+ 0018 3D0000            cmp [X+0],0
+ 001B B00C              jnz L6
+ 001D                   .dbline 23
+ 001D           ;                       {
+ 001D           ;                               sw1On = TRUE;
+ 001D                   .dbline 23
+ 001D 560001            mov [X+0],1
+ 0020                   .dbline 24
+ 0020           ;                               LED1_Data_ADDR ^= LED1_MASK;
+ 0020 450401            xor REG[0x4],1
+ 0023                   .dbline 25
+ 0023           ;                       }
+ 0023                   .dbline 26
+ 0023           ;               }
+ 0023 8004              xjmp L6
+ 0025           L5:
+ 0025                   .dbline 28
+ 0025           ;               else
+ 0025           ;                       sw1On = FALSE;
+ 0025 560000            mov [X+0],0
+ 0028           L6:
+ 0028                   .dbline 30
+ 0028           ;               
+ 0028           ;               if (SW2_Data_ADDR & SW2_MASK)
+ 0028 5D04              mov A,REG[0x4]
+ 002A 62D000            mov REG[0xd0],>__r0
+ 002D 5300              mov [__r0],A
+ 002F 470020            tst [__r0],32
+ 0032 A00E              jz L9
+ 0034                   .dbline 32
+ 0034           ;               {
+ 0034           ;                       if (sw2On == FALSE)
+ 0034                   .dbline 32
+ 0034 3D0100            cmp [X+1],0
+ 0037 B00C              jnz L10
+ 0039                   .dbline 34
+ 0039           ;                       {
+ 0039           ;                               sw2On = TRUE;
+ 0039                   .dbline 34
+ 0039 560101            mov [X+1],1
+ 003C                   .dbline 35
+ 003C           ;                               LED2_Data_ADDR ^= LED2_MASK;
+ 003C 450402            xor REG[0x4],2
+ 003F                   .dbline 36
+ 003F           ;                       }
+ 003F                   .dbline 37
+ 003F           ;               }
+ 003F 8004              xjmp L10
+ 0041           L9:
+ 0041                   .dbline 39
+ 0041           ;               else
+ 0041           ;                       sw2On = FALSE;
+ 0041 560100            mov [X+1],0
+ 0044           L10:
+ 0044                   .dbline 40
+ 0044           ;       }
+ 0044           L3:
+ 0044                   .dbline 17
+ 0044 8FC7              xjmp L2
+ 0046           X0:
+ 0046                   .dbline -2
+ 0046           L1:
+ 0046 38FE              add SP,-2
+ 0048 20                pop X
+ 0049                   .dbline 0 ; func end
+ 0049 8FFF              jmp .
+ 004B                   .dbsym l sw2On 1 c
+ 004B                   .dbsym l sw1On 0 c
+ 004B                   .dbend

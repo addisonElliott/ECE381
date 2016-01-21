@@ -1,0 +1,77 @@
+ 0000                   cpu LMM
+                        .module main.c
+                        .area text(rom, con, rel)
+ 0000                   .dbfile ./main.c
+                        .area lit(rom, con, rel, lit)
+ 0000           L2:
+ 0000 50536F43204C434400        .byte 'P,'S,'o,'C,32,'L,'C,'D,0
+                        .area text(rom, con, rel)
+ 0000                   .dbfile ./main.c
+ 0000                   .dbfile C:\Users\Jacob\Desktop\ECE381\DATASH~1\DATASH~1\main.c
+ 0000                   .dbfunc e main _main fV
+ 0000           ;         theStr -> X+0
+ 0000           _main::
+ 0000                   .dbline -1
+ 0000 10                push X
+ 0001 4F                mov X,SP
+ 0002 3809              add SP,9
+ 0004                   .dbline 11
+ 0004           ; //--------------------------------------------------------------------
+ 0004           ; // Sample C code for LCD
+ 0004           ; //
+ 0004           ; //  Print the string “PSoC LCD" on the top row starting at the 6th
+ 0004           ; //  location on an LCD.
+ 0004           ; // 
+ 0004           ; //--------------------------------------------------------------------
+ 0004           ; #include <m8c.h>        // part specific constants and macros  
+ 0004           ; #include "PSoCAPI.h"    // PSoC API definitions for all User Modules 
+ 0004           ; void main(void)
+ 0004           ; {
+ 0004                   .dbline 12
+ 0004           ;    char theStr[] = "PSoC LCD";   // Define RAM string
+ 0004 62D000            mov REG[0xd0],>__r0
+ 0007 550000            mov [__r1],<L2
+ 000A 550000            mov [__r0],>L2
+ 000D 5A00              mov [__r3],X
+ 000F 62D507            mov REG[0xd5],7
+ 0012 10                push X
+ 0013 550000            mov [__rX],0
+ 0016 5100              mov A,[__r0]
+ 0018 5800              mov X,[__r1]
+ 001A           X0:
+ 001A 08                push A
+ 001B 28                romx
+ 001C 62D000            mov REG[0xd0],>__r0
+ 001F 3F00              mvi [__r3],A
+ 0021 18                pop A
+ 0022 75                inc X
+ 0023 0900              adc A,0
+ 0025 7600              inc [__rX]
+ 0027 3C0009            cmp [__rX],9
+ 002A BFEF              jnz X0
+ 002C                   .dbline 13
+ 002C           ;    LCD_Start();                  // Initialize LCD
+ 002C 7C0000            xcall _LCD_Start
+ 002F                   .dbline 14
+ 002F           ;    LCD_Position(0,5);            // Place LCD cursor at row 0, col 5.
+ 002F 5705              mov X,5
+ 0031 5000              mov A,0
+ 0033 7C0000            xcall _LCD_Position
+ 0036 20                pop X
+ 0037                   .dbline 15
+ 0037           ;    LCD_PrString(theStr);         // Print "PSoC LCD" on the LCD
+ 0037 62D000            mov REG[0xd0],>__r0
+ 003A 10                push X
+ 003B 5007              mov A,7
+ 003D 08                push A
+ 003E 18                pop A
+ 003F 7C0000            xcall _LCD_PrString
+ 0042 20                pop X
+ 0043                   .dbline -2
+ 0043           L1:
+ 0043 38F7              add SP,-9
+ 0045 20                pop X
+ 0046                   .dbline 0 ; func end
+ 0046 8FFF              jmp .
+ 0048                   .dbsym l theStr 0 A[9:9]c
+ 0048                   .dbend

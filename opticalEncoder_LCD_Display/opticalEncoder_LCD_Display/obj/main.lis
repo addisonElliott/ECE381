@@ -1,0 +1,287 @@
+ 0000                   cpu LMM
+                        .module main.c
+                        .area text(rom, con, rel)
+ 0000                   .dbfile ./main.c
+ 0000                   .dbfile C:\Users\Jacob\Desktop\ECE381\OPTICA~1\OPTICA~1\main.c
+ 0000                   .dbfunc e main _main fV
+ 0000           ;        tempStr -> X+2
+ 0000           ;          count -> X+0
+ 0000           _main::
+ 0000                   .dbline -1
+ 0000 10                push X
+ 0001 4F                mov X,SP
+ 0002 3808              add SP,8
+ 0004                   .dbline 14
+ 0004           ; //----------------------------------------------------------------------------
+ 0004           ; // C main line
+ 0004           ; //----------------------------------------------------------------------------
+ 0004           ; 
+ 0004           ; #include <m8c.h>        // part specific constants and macros
+ 0004           ; #include "PSoCAPI.h"    // PSoC API definitions for all User Modules
+ 0004           ; #include "PSoCGPIOINT.h"      // We have to include this file manually for GPIO
+ 0004           ; #pragma interrupt_handler PSoC_GPIO_ISR_C
+ 0004           ; 
+ 0004           ; char state;                   // zero is no change ; -1 is CCW ; 1 is CW
+ 0004           ; char prev_A;
+ 0004           ; char prev_B;
+ 0004           ; void main(void)
+ 0004           ; {
+ 0004                   .dbline 16
+ 0004           ;       char tempStr[4];
+ 0004           ;       unsigned int count = 50;                
+ 0004 560132            mov [X+1],50
+ 0007 560000            mov [X+0],0
+ 000A                   .dbline 17
+ 000A           ;       prev_A = OpEncA_Data_ADDR & OpEncA_MASK;
+ 000A 5D04              mov A,REG[0x4]
+ 000C 2110              and A,16
+ 000E 62D000            mov REG[0xd0],>_prev_A
+ 0011 5300              mov [_prev_A],A
+ 0013                   .dbline 18
+ 0013           ;       prev_B = OpEncB_Data_ADDR & OpEncB_MASK;
+ 0013 5D04              mov A,REG[0x4]
+ 0015 2120              and A,32
+ 0017 62D000            mov REG[0xd0],>_prev_B
+ 001A 5300              mov [_prev_B],A
+ 001C                   .dbline 19
+ 001C           ;       state = 0;
+ 001C 62D000            mov REG[0xd0],>_state
+ 001F 550000            mov [_state],0
+ 0022                   .dbline 21
+ 0022           ;       
+ 0022           ;       M8C_EnableGInt ; // Uncomment this line to enable Global Interrupts
+ 0022 7101                      or  F, 01h
+ 0024           
+ 0024                   .dbline 22
+ 0024           ;       M8C_EnableIntMask(INT_MSK0,INT_MSK0_GPIO);              // Enable Interrupt Mask
+ 0024 43E020            or REG[0xe0],32
+ 0027                   .dbline 24
+ 0027           ;       
+ 0027           ;       LCD_Start();
+ 0027 10                push X
+ 0028 7C0000            xcall _LCD_Start
+ 002B                   .dbline 25
+ 002B           ;       LCD_Position(1,0);
+ 002B 5700              mov X,0
+ 002D 5001              mov A,1
+ 002F 7C0000            xcall _LCD_Position
+ 0032                   .dbline 26
+ 0032           ;       LCD_PrCString("Volume: 50");
+ 0032 5004              mov A,>L2
+ 0034 08                push A
+ 0035 5004              mov A,<L2
+ 0037 5C                mov X,A
+ 0038 18                pop A
+ 0039 7C0000            xcall _LCD_PrCString
+ 003C 20                pop X
+ 003D 8096              xjmp L4
+ 003F           L3:
+ 003F                   .dbline 28
+ 003F           ;       while (1)
+ 003F           ;       {       
+ 003F                   .dbline 29
+ 003F           ;               if((state == 1 && count < 100) || (state == -1 && count > 0) )  // there was a turn
+ 003F 62D000            mov REG[0xd0],>_state
+ 0042 3C0001            cmp [_state],1
+ 0045 B00B              jnz L9
+ 0047 5201              mov A,[X+1]
+ 0049 1164              sub A,100
+ 004B 5200              mov A,[X+0]
+ 004D 1900              sbb A,0
+ 004F C013              jc L8
+ 0051           X1:
+ 0051           L9:
+ 0051 62D000            mov REG[0xd0],>_state
+ 0054 3C00FF            cmp [_state],-1
+ 0057 B07C              jnz L6
+ 0059 3D0000            cmp [X+0],0
+ 005C B006              jnz X2
+ 005E 3D0100            cmp [X+1],0
+ 0061 A072              jz L6
+ 0063           X2:
+ 0063           L8:
+ 0063                   .dbline 31
+ 0063           ;               {
+ 0063           ;                       count += (state == 1 ? 1 : -1); // the variable state updates the count
+ 0063                   .dbline 31
+ 0063 62D000            mov REG[0xd0],>_state
+ 0066 3C0001            cmp [_state],1
+ 0069 B009              jnz L11
+ 006B 560701            mov [X+7],1
+ 006E 560600            mov [X+6],0
+ 0071 8007              xjmp L12
+ 0073           L11:
+ 0073 5607FF            mov [X+7],-1
+ 0076 5606FF            mov [X+6],-1
+ 0079           L12:
+ 0079 5207              mov A,[X+7]
+ 007B 0501              add [X+1],A
+ 007D 5206              mov A,[X+6]
+ 007F 0D00              adc [X+0],A
+ 0081                   .dbline 32
+ 0081           ;                       LCD_Position(1,8);
+ 0081 10                push X
+ 0082 5708              mov X,8
+ 0084 5001              mov A,1
+ 0086 7C0000            xcall _LCD_Position
+ 0089                   .dbline 33
+ 0089           ;                       LCD_PrCString("   ");
+ 0089 5000              mov A,>L13
+ 008B 08                push A
+ 008C 5000              mov A,<L13
+ 008E 5C                mov X,A
+ 008F 18                pop A
+ 0090 7C0000            xcall _LCD_PrCString
+ 0093                   .dbline 34
+ 0093           ;                       LCD_Position(1,8);
+ 0093 5708              mov X,8
+ 0095 5001              mov A,1
+ 0097 7C0000            xcall _LCD_Position
+ 009A 20                pop X
+ 009B                   .dbline 35
+ 009B           ;                       utoa(tempStr, count, 10);
+ 009B 5000              mov A,0
+ 009D 08                push A
+ 009E 500A              mov A,10
+ 00A0 08                push A
+ 00A1 5200              mov A,[X+0]
+ 00A3 08                push A
+ 00A4 5201              mov A,[X+1]
+ 00A6 08                push A
+ 00A7 62D000            mov REG[0xd0],>__r0
+ 00AA 5A00              mov [__r1],X
+ 00AC 060002            add [__r1],2
+ 00AF 5007              mov A,7
+ 00B1 08                push A
+ 00B2 5100              mov A,[__r1]
+ 00B4 08                push A
+ 00B5 7C0000            xcall _utoa
+ 00B8 38FA              add SP,-6
+ 00BA                   .dbline 36
+ 00BA           ;                       LCD_PrString(tempStr);
+ 00BA 62D000            mov REG[0xd0],>__r0
+ 00BD 5A00              mov [__r1],X
+ 00BF 060002            add [__r1],2
+ 00C2 10                push X
+ 00C3 5007              mov A,7
+ 00C5 08                push A
+ 00C6 5100              mov A,[__r1]
+ 00C8 5C                mov X,A
+ 00C9 18                pop A
+ 00CA 7C0000            xcall _LCD_PrString
+ 00CD 20                pop X
+ 00CE                   .dbline 37
+ 00CE           ;                       state = 0;
+ 00CE 62D000            mov REG[0xd0],>_state
+ 00D1 550000            mov [_state],0
+ 00D4                   .dbline 38
+ 00D4           ;               }
+ 00D4           L6:
+ 00D4                   .dbline 39
+ 00D4           ;       }
+ 00D4           L4:
+ 00D4                   .dbline 27
+ 00D4 8F6A              xjmp L3
+ 00D6           X0:
+ 00D6                   .dbline -2
+ 00D6           L1:
+ 00D6 38F8              add SP,-8
+ 00D8 20                pop X
+ 00D9                   .dbline 0 ; func end
+ 00D9 8FFF              jmp .
+ 00DB                   .dbsym l tempStr 2 A[4:4]c
+ 00DB                   .dbsym l count 0 i
+ 00DB                   .dbend
+ 00DB                   .dbfunc e PSoC_GPIO_ISR_C _PSoC_GPIO_ISR_C fV
+ 00DB           ;          cur_B -> X+0
+ 00DB           _PSoC_GPIO_ISR_C::
+ 00DB                   .dbline -1
+ 00DB 71C0              or F,-64
+ 00DD 08                push A
+ 00DE 5DD0              mov A,REG[0xd0]
+ 00E0 08                push A
+ 00E1 10                push X
+ 00E2 4F                mov X,SP
+ 00E3 3801              add SP,1
+ 00E5                   .dbline 44
+ 00E5           ;       
+ 00E5           ; }
+ 00E5           ; 
+ 00E5           ; void PSoC_GPIO_ISR_C(void)
+ 00E5           ; {
+ 00E5                   .dbline 45
+ 00E5           ;       char cur_B = OpEncB_Data_ADDR & OpEncB_MASK;
+ 00E5 5D04              mov A,REG[0x4]
+ 00E7 2120              and A,32
+ 00E9 5400              mov [X+0],A
+ 00EB                   .dbline 47
+ 00EB           ;       // If condition true set state to clockwise else counter clockwise      
+ 00EB           ;       if ( (cur_B && !prev_A) || ( !cur_B && prev_A))
+ 00EB 3D0000            cmp [X+0],0
+ 00EE A009              jz L18
+ 00F0 62D000            mov REG[0xd0],>_prev_A
+ 00F3 3C0000            cmp [_prev_A],0
+ 00F6 A00E              jz L17
+ 00F8           L18:
+ 00F8 3D0000            cmp [X+0],0
+ 00FB B011              jnz L15
+ 00FD 62D000            mov REG[0xd0],>_prev_A
+ 0100 3C0000            cmp [_prev_A],0
+ 0103 A009              jz L15
+ 0105           L17:
+ 0105                   .dbline 48
+ 0105           ;               state = -1;     // CCW
+ 0105 62D000            mov REG[0xd0],>_state
+ 0108 5500FF            mov [_state],-1
+ 010B 8007              xjmp L16
+ 010D           L15:
+ 010D                   .dbline 50
+ 010D           ;       else
+ 010D           ;               state = 1;      //CW
+ 010D 62D000            mov REG[0xd0],>_state
+ 0110 550001            mov [_state],1
+ 0113           L16:
+ 0113                   .dbline 52
+ 0113           ;               
+ 0113           ;       prev_A = OpEncA_Data_ADDR & OpEncA_MASK;                // update previous values to new 
+ 0113 5D04              mov A,REG[0x4]
+ 0115 2110              and A,16
+ 0117 62D000            mov REG[0xd0],>_prev_A
+ 011A 5300              mov [_prev_A],A
+ 011C                   .dbline 53
+ 011C           ;       prev_B = OpEncB_Data_ADDR & OpEncB_MASK;        
+ 011C 5D04              mov A,REG[0x4]
+ 011E 2120              and A,32
+ 0120 62D000            mov REG[0xd0],>_prev_B
+ 0123 5300              mov [_prev_B],A
+ 0125                   .dbline -2
+ 0125           L14:
+ 0125 38FF              add SP,-1
+ 0127 20                pop X
+ 0128 18                pop A
+ 0129 60D0              mov REG[208],A
+ 012B 18                pop A
+ 012C                   .dbline 0 ; func end
+ 012C 7E                reti
+ 012D                   .dbsym l cur_B 0 c
+ 012D                   .dbend
+                        .area data(ram, con, rel)
+ 0000                   .dbfile C:\Users\Jacob\Desktop\ECE381\OPTICA~1\OPTICA~1\main.c
+ 0000           _prev_B::
+ 0000 00                .byte 0
+ 0001                   .dbsym e prev_B _prev_B c
+                        .area data(ram, con, rel)
+ 0000                   .dbfile C:\Users\Jacob\Desktop\ECE381\OPTICA~1\OPTICA~1\main.c
+ 0000           _prev_A::
+ 0000 00                .byte 0
+ 0001                   .dbsym e prev_A _prev_A c
+                        .area data(ram, con, rel)
+ 0000                   .dbfile C:\Users\Jacob\Desktop\ECE381\OPTICA~1\OPTICA~1\main.c
+ 0000           _state::
+ 0000 00                .byte 0
+ 0001                   .dbsym e state _state c
+                        .area lit(rom, con, rel, lit)
+ 0000           L13:
+ 0000 20202000          .byte 32,32,32,0
+ 0004           L2:
+ 0004 566F6C756D653A20353000    .byte 'V,'o,'l,'u,'m,'e,58,32,53,48,0

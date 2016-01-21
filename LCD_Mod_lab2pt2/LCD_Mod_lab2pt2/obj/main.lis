@@ -1,0 +1,400 @@
+ 0000                   cpu LMM
+                        .module main.c
+                        .area text(rom, con, rel)
+ 0000                   .dbfile ./main.c
+ 0000                   .dbfile C:\Users\Jacob\Desktop\ECE381\LCD_MO~1\LCD_MO~1\main.c
+ 0000                   .dbfunc e main _main fV
+ 0000           ;         tmpStr -> X+4
+ 0000           ;          count -> X+2
+ 0000           ;          sw2On -> X+1
+ 0000           ;          sw1On -> X+0
+ 0000           _main::
+ 0000                   .dbline -1
+ 0000 10                push X
+ 0001 4F                mov X,SP
+ 0002 3808              add SP,8
+ 0004                   .dbline 10
+ 0004           ; //----------------------------------------------------------------------------
+ 0004           ; // C main line
+ 0004           ; //----------------------------------------------------------------------------
+ 0004           ; 
+ 0004           ; #include <m8c.h>        // part specific constants and macros
+ 0004           ; #include "PSoCAPI.h"    // PSoC API definitions for all User Modules
+ 0004           ; 
+ 0004           ; 
+ 0004           ; void main(void)
+ 0004           ; {
+ 0004                   .dbline 14
+ 0004           ;       // M8C_EnableGInt ; // Uncomment this line to enable Global Interrupts
+ 0004           ;       // Insert your main routine code here.
+ 0004           ;       
+ 0004           ;       unsigned char sw1On = FALSE;
+ 0004 560000            mov [X+0],0
+ 0007                   .dbline 15
+ 0007           ;       unsigned char sw2On = FALSE; // Comment
+ 0007 560100            mov [X+1],0
+ 000A                   .dbline 16
+ 000A           ;       unsigned int count = 0;
+ 000A 560300            mov [X+3],0
+ 000D 560200            mov [X+2],0
+ 0010                   .dbline 19
+ 0010           ;       char tmpStr[4];
+ 0010           ;       
+ 0010           ;       LCD_Start();
+ 0010 10                push X
+ 0011 7C0000            xcall _LCD_Start
+ 0014                   .dbline 20
+ 0014           ;       LCD_Position(1, 0);
+ 0014 5700              mov X,0
+ 0016 5001              mov A,1
+ 0018 7C0000            xcall _LCD_Position
+ 001B                   .dbline 21
+ 001B           ;       LCD_PrCString("Count: 0");
+ 001B 502B              mov A,>L2
+ 001D 08                push A
+ 001E 502B              mov A,<L2
+ 0020 5C                mov X,A
+ 0021 18                pop A
+ 0022 7C0000            xcall _LCD_PrCString
+ 0025 20                pop X
+ 0026 8165              xjmp L4
+ 0028           L3:
+ 0028                   .dbline 24
+ 0028           ;       
+ 0028           ;       while (1)
+ 0028           ;       {
+ 0028                   .dbline 25
+ 0028           ;               if (SW1_Data_ADDR & SW1_MASK)
+ 0028 5D04              mov A,REG[0x4]
+ 002A 62D000            mov REG[0xd0],>__r0
+ 002D 5300              mov [__r0],A
+ 002F 470010            tst [__r0],16
+ 0032 A08C              jz L6
+ 0034                   .dbline 27
+ 0034           ;               {
+ 0034           ;                       if (sw1On == FALSE)
+ 0034                   .dbline 27
+ 0034 3D0000            cmp [X+0],0
+ 0037 B0A2              jnz L7
+ 0039                   .dbline 29
+ 0039           ;                       {
+ 0039           ;                               sw1On = TRUE;
+ 0039                   .dbline 29
+ 0039 560001            mov [X+0],1
+ 003C                   .dbline 30
+ 003C           ;                               if (count != 100)
+ 003C 3D0200            cmp [X+2],0
+ 003F B006              jnz X1
+ 0041 3D0364            cmp [X+3],100
+ 0044 A095              jz L7
+ 0046           X1:
+ 0046                   .dbline 32
+ 0046           ;                               {
+ 0046           ;                                       LCD_Position(0, 0);
+ 0046                   .dbline 32
+ 0046 10                push X
+ 0047 5000              mov A,0
+ 0049 5700              mov X,0
+ 004B 7C0000            xcall _LCD_Position
+ 004E                   .dbline 33
+ 004E           ;                                       LCD_PrCString("Incrementing");
+ 004E 501E              mov A,>L12
+ 0050 08                push A
+ 0051 501E              mov A,<L12
+ 0053 5C                mov X,A
+ 0054 18                pop A
+ 0055 7C0000            xcall _LCD_PrCString
+ 0058 20                pop X
+ 0059                   .dbline 34
+ 0059           ;                                       count = count + 1;
+ 0059 7703              inc [X+3]
+ 005B 0F0200            adc [X+2],0
+ 005E                   .dbline 35
+ 005E           ;                                       LCD_Position(1, 7);
+ 005E 10                push X
+ 005F 5707              mov X,7
+ 0061 5001              mov A,1
+ 0063 7C0000            xcall _LCD_Position
+ 0066 20                pop X
+ 0067                   .dbline 36
+ 0067           ;                                       LCD_PrHexInt(count);
+ 0067 10                push X
+ 0068 5202              mov A,[X+2]
+ 006A 08                push A
+ 006B 5203              mov A,[X+3]
+ 006D 20                pop X
+ 006E 7C0000            xcall _LCD_PrHexInt
+ 0071                   .dbline 37
+ 0071           ;                                       LCD_Position(1, 12);
+ 0071 570C              mov X,12
+ 0073 5001              mov A,1
+ 0075 7C0000            xcall _LCD_Position
+ 0078                   .dbline 38
+ 0078           ;                                       LCD_PrCString("   ");
+ 0078 501A              mov A,>L13
+ 007A 08                push A
+ 007B 501A              mov A,<L13
+ 007D 5C                mov X,A
+ 007E 18                pop A
+ 007F 7C0000            xcall _LCD_PrCString
+ 0082                   .dbline 39
+ 0082           ;                                       LCD_Position(1, 12);
+ 0082 570C              mov X,12
+ 0084 5001              mov A,1
+ 0086 7C0000            xcall _LCD_Position
+ 0089 20                pop X
+ 008A                   .dbline 40
+ 008A           ;                                       utoa(tmpStr, count, 10);
+ 008A 5000              mov A,0
+ 008C 08                push A
+ 008D 500A              mov A,10
+ 008F 08                push A
+ 0090 5202              mov A,[X+2]
+ 0092 08                push A
+ 0093 5203              mov A,[X+3]
+ 0095 08                push A
+ 0096 62D000            mov REG[0xd0],>__r0
+ 0099 5A00              mov [__r1],X
+ 009B 060004            add [__r1],4
+ 009E 5007              mov A,7
+ 00A0 08                push A
+ 00A1 5100              mov A,[__r1]
+ 00A3 08                push A
+ 00A4 7C0000            xcall _utoa
+ 00A7 38FA              add SP,-6
+ 00A9                   .dbline 41
+ 00A9           ;                                       LCD_PrString(tmpStr);
+ 00A9 62D000            mov REG[0xd0],>__r0
+ 00AC 5A00              mov [__r1],X
+ 00AE 060004            add [__r1],4
+ 00B1 10                push X
+ 00B2 5007              mov A,7
+ 00B4 08                push A
+ 00B5 5100              mov A,[__r1]
+ 00B7 5C                mov X,A
+ 00B8 18                pop A
+ 00B9 7C0000            xcall _LCD_PrString
+ 00BC 20                pop X
+ 00BD                   .dbline 42
+ 00BD           ;                               }
+ 00BD                   .dbline 43
+ 00BD           ;                       }
+ 00BD                   .dbline 44
+ 00BD           ;               }
+ 00BD 801C              xjmp L7
+ 00BF           L6:
+ 00BF                   .dbline 46
+ 00BF           ;               else
+ 00BF           ;               {
+ 00BF                   .dbline 47
+ 00BF           ;                       if (sw2On == FALSE)
+ 00BF 3D0100            cmp [X+1],0
+ 00C2 B014              jnz L14
+ 00C4                   .dbline 49
+ 00C4           ;                       {
+ 00C4           ;                               LCD_Position(0, 0);
+ 00C4                   .dbline 49
+ 00C4 10                push X
+ 00C5 5000              mov A,0
+ 00C7 5700              mov X,0
+ 00C9 7C0000            xcall _LCD_Position
+ 00CC                   .dbline 50
+ 00CC           ;                               LCD_PrCString("            ");
+ 00CC 500D              mov A,>L16
+ 00CE 08                push A
+ 00CF 500D              mov A,<L16
+ 00D1 5C                mov X,A
+ 00D2 18                pop A
+ 00D3 7C0000            xcall _LCD_PrCString
+ 00D6 20                pop X
+ 00D7                   .dbline 51
+ 00D7           ;                       }
+ 00D7           L14:
+ 00D7                   .dbline 52
+ 00D7           ;                       sw1On = FALSE;
+ 00D7 560000            mov [X+0],0
+ 00DA                   .dbline 53
+ 00DA           ;               }
+ 00DA           L7:
+ 00DA                   .dbline 55
+ 00DA           ;               
+ 00DA           ;               if (SW2_Data_ADDR & SW2_MASK)
+ 00DA 5D04              mov A,REG[0x4]
+ 00DC 62D000            mov REG[0xd0],>__r0
+ 00DF 5300              mov [__r0],A
+ 00E1 470020            tst [__r0],32
+ 00E4 A08C              jz L17
+ 00E6                   .dbline 57
+ 00E6           ;               {
+ 00E6           ;                       if (sw2On == FALSE)
+ 00E6                   .dbline 57
+ 00E6 3D0100            cmp [X+1],0
+ 00E9 B0A2              jnz L18
+ 00EB                   .dbline 59
+ 00EB           ;                       {
+ 00EB           ;                               sw2On = TRUE;   
+ 00EB                   .dbline 59
+ 00EB 560101            mov [X+1],1
+ 00EE                   .dbline 60
+ 00EE           ;                               if (count != 0)
+ 00EE 3D0200            cmp [X+2],0
+ 00F1 B006              jnz X2
+ 00F3 3D0300            cmp [X+3],0
+ 00F6 A095              jz L18
+ 00F8           X2:
+ 00F8                   .dbline 62
+ 00F8           ;                               {
+ 00F8           ;                                       LCD_Position(0, 0);
+ 00F8                   .dbline 62
+ 00F8 10                push X
+ 00F9 5000              mov A,0
+ 00FB 5700              mov X,0
+ 00FD 7C0000            xcall _LCD_Position
+ 0100                   .dbline 63
+ 0100           ;                                       LCD_PrCString("Decrementing");
+ 0100 5000              mov A,>L23
+ 0102 08                push A
+ 0103 5000              mov A,<L23
+ 0105 5C                mov X,A
+ 0106 18                pop A
+ 0107 7C0000            xcall _LCD_PrCString
+ 010A 20                pop X
+ 010B                   .dbline 64
+ 010B           ;                                       count = count - 1;
+ 010B 7B03              dec [X+3]
+ 010D 1F0200            sbb [X+2],0
+ 0110                   .dbline 65
+ 0110           ;                                       LCD_Position(1, 7);
+ 0110 10                push X
+ 0111 5707              mov X,7
+ 0113 5001              mov A,1
+ 0115 7C0000            xcall _LCD_Position
+ 0118 20                pop X
+ 0119                   .dbline 66
+ 0119           ;                                       LCD_PrHexInt(count);
+ 0119 10                push X
+ 011A 5202              mov A,[X+2]
+ 011C 08                push A
+ 011D 5203              mov A,[X+3]
+ 011F 20                pop X
+ 0120 7C0000            xcall _LCD_PrHexInt
+ 0123                   .dbline 67
+ 0123           ;                                       LCD_Position(1, 12);
+ 0123 570C              mov X,12
+ 0125 5001              mov A,1
+ 0127 7C0000            xcall _LCD_Position
+ 012A                   .dbline 68
+ 012A           ;                                       LCD_PrCString("   ");
+ 012A 501A              mov A,>L13
+ 012C 08                push A
+ 012D 501A              mov A,<L13
+ 012F 5C                mov X,A
+ 0130 18                pop A
+ 0131 7C0000            xcall _LCD_PrCString
+ 0134                   .dbline 69
+ 0134           ;                                       LCD_Position(1, 12);
+ 0134 570C              mov X,12
+ 0136 5001              mov A,1
+ 0138 7C0000            xcall _LCD_Position
+ 013B 20                pop X
+ 013C                   .dbline 70
+ 013C           ;                                       utoa(tmpStr, count, 10);
+ 013C 5000              mov A,0
+ 013E 08                push A
+ 013F 500A              mov A,10
+ 0141 08                push A
+ 0142 5202              mov A,[X+2]
+ 0144 08                push A
+ 0145 5203              mov A,[X+3]
+ 0147 08                push A
+ 0148 62D000            mov REG[0xd0],>__r0
+ 014B 5A00              mov [__r1],X
+ 014D 060004            add [__r1],4
+ 0150 5007              mov A,7
+ 0152 08                push A
+ 0153 5100              mov A,[__r1]
+ 0155 08                push A
+ 0156 7C0000            xcall _utoa
+ 0159 38FA              add SP,-6
+ 015B                   .dbline 71
+ 015B           ;                                       LCD_PrString(tmpStr);
+ 015B 62D000            mov REG[0xd0],>__r0
+ 015E 5A00              mov [__r1],X
+ 0160 060004            add [__r1],4
+ 0163 10                push X
+ 0164 5007              mov A,7
+ 0166 08                push A
+ 0167 5100              mov A,[__r1]
+ 0169 5C                mov X,A
+ 016A 18                pop A
+ 016B 7C0000            xcall _LCD_PrString
+ 016E 20                pop X
+ 016F                   .dbline 72
+ 016F           ;                               }
+ 016F                   .dbline 73
+ 016F           ;                       }
+ 016F                   .dbline 74
+ 016F           ;               }
+ 016F 801C              xjmp L18
+ 0171           L17:
+ 0171                   .dbline 76
+ 0171           ;               else
+ 0171           ;               {
+ 0171                   .dbline 77
+ 0171           ;                       if (sw1On == FALSE)
+ 0171 3D0000            cmp [X+0],0
+ 0174 B014              jnz L24
+ 0176                   .dbline 79
+ 0176           ;                       {
+ 0176           ;                               LCD_Position(0, 0);
+ 0176                   .dbline 79
+ 0176 10                push X
+ 0177 5000              mov A,0
+ 0179 5700              mov X,0
+ 017B 7C0000            xcall _LCD_Position
+ 017E                   .dbline 80
+ 017E           ;                               LCD_PrCString("            ");
+ 017E 500D              mov A,>L16
+ 0180 08                push A
+ 0181 500D              mov A,<L16
+ 0183 5C                mov X,A
+ 0184 18                pop A
+ 0185 7C0000            xcall _LCD_PrCString
+ 0188 20                pop X
+ 0189                   .dbline 81
+ 0189           ;                       }
+ 0189           L24:
+ 0189                   .dbline 82
+ 0189           ;                       sw2On = FALSE;
+ 0189 560100            mov [X+1],0
+ 018C                   .dbline 83
+ 018C           ;               }
+ 018C           L18:
+ 018C                   .dbline 84
+ 018C           ;       }
+ 018C           L4:
+ 018C                   .dbline 23
+ 018C 8E9B              xjmp L3
+ 018E           X0:
+ 018E                   .dbline -2
+ 018E           L1:
+ 018E 38F8              add SP,-8
+ 0190 20                pop X
+ 0191                   .dbline 0 ; func end
+ 0191 8FFF              jmp .
+ 0193                   .dbsym l tmpStr 4 A[4:4]c
+ 0193                   .dbsym l count 2 i
+ 0193                   .dbsym l sw2On 1 c
+ 0193                   .dbsym l sw1On 0 c
+ 0193                   .dbend
+                        .area lit(rom, con, rel, lit)
+ 0000           L23:
+ 0000 44656372656D656E74696E6700        .byte 'D,'e,'c,'r,'e,'m,'e,'n,'t,'i,'n,'g,0
+ 000D           L16:
+ 000D 20202020202020202020202000        .byte 32,32,32,32,32,32,32,32,32,32,32,32,0
+ 001A           L13:
+ 001A 20202000          .byte 32,32,32,0
+ 001E           L12:
+ 001E 496E6372656D656E74696E6700        .byte 'I,'n,'c,'r,'e,'m,'e,'n,'t,'i,'n,'g,0
+ 002B           L2:
+ 002B 436F756E743A203000        .byte 'C,'o,'u,'n,'t,58,32,48,0

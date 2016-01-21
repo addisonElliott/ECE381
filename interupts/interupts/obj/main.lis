@@ -1,0 +1,89 @@
+ 0000                   cpu LMM
+                        .module main.c
+                        .area text(rom, con, rel)
+ 0000                   .dbfile ./main.c
+ 0000                   .dbfile C:\Users\Jacob\Desktop\ECE381\INTERU~1\INTERU~1\main.c
+ 0000                   .dbfunc e main _main fV
+ 0000           _main::
+ 0000                   .dbline -1
+ 0000                   .dbline 34
+ 0000           ; //----------------------------------------------------------------------------
+ 0000           ; //
+ 0000           ; // Project: Simple GPIO Interrupt
+ 0000           ; //
+ 0000           ; // File: main.c
+ 0000           ; //
+ 0000           ; // Description: This PSoC project configures Port1[0] as an output to drive
+ 0000           ; //   an LED and configures Port1[4] as an input that generates an interrupt
+ 0000           ; //   on the rising edge. At each interrupt Port1[0] is toggled, thereby turning
+ 0000           ; //   the LED on/off with each switch press.
+ 0000           ; //
+ 0000           ; // Ports:
+ 0000           ; //   Port1[0]: Name=LED, Drive=Strong
+ 0000           ; //   Port1[4]: Name=SWITCH, Drive=High Z, Interrupt=RisingEdge
+ 0000           ; //
+ 0000           ; // Author: Dr. Brad Noble
+ 0000           ; // Date: 1-Sep-2009
+ 0000           ; //
+ 0000           ; // Edited: Matthew Clark
+ 0000           ; // Date: 29-July-2010
+ 0000           ; // 
+ 0000           ; //----------------------------------------------------------------------------
+ 0000           ; 
+ 0000           ; #include <m8c.h>                      // part specific constants and macros
+ 0000           ; #include "PSoCAPI.h"          // PSoC API definitions for all User Modules
+ 0000           ; #include "PSoCGPIOINT.h"      // We have to include this file manually for GPIO
+ 0000           ; 
+ 0000           ; // A compiler directive that tells the C compiler to make PSoC_GPIO_ISR_C a
+ 0000           ; // function that handles interrupts. This means it replaces ret at the end of // the function with reti. Refer to PSoC Technical Reference Manual for more
+ 0000           ; // information.
+ 0000           ; #pragma interrupt_handler PSoC_GPIO_ISR_C
+ 0000           ; 
+ 0000           ; void main(void)
+ 0000           ; {
+ 0000                   .dbline 36
+ 0000           ;       // Enable global interrupts (see m8c.h)
+ 0000           ; M8C_EnableGInt;
+ 0000 7101                      or  F, 01h
+ 0002           
+ 0002                   .dbline 38
+ 0002           ;       // Enable GPIO Interrupts (see m8c.h)
+ 0002           ;       M8C_EnableIntMask(INT_MSK0,INT_MSK0_GPIO);
+ 0002 43E020            or REG[0xe0],32
+ 0005           L2:
+ 0005                   .dbline 41
+ 0005           ; 
+ 0005           ;       // Spin here forever
+ 0005           ;       while(1);
+ 0005           L3:
+ 0005                   .dbline 41
+ 0005 8FFF              xjmp L2
+ 0007           X0:
+ 0007                   .dbline -2
+ 0007           L1:
+ 0007                   .dbline 0 ; func end
+ 0007 8FFF              jmp .
+ 0009                   .dbend
+ 0009                   .dbfunc e PSoC_GPIO_ISR_C _PSoC_GPIO_ISR_C fV
+ 0009           _PSoC_GPIO_ISR_C::
+ 0009                   .dbline -1
+ 0009 08                push A
+ 000A                   .dbline 49
+ 000A           ; }
+ 000A           ; 
+ 000A           ; // The interrupt vector for GPIO interrupts is usually handled in assembly
+ 000A           ; // by function PSoC_GPIO_ISR located in PSoCGPIOINT.asm. Since we changed the // corresponding line in boot.asm, this function is called instead.
+ 000A           ; // Note: This C function is only called when a GPIO interrupt is received
+ 000A           ; // and when this C-function is finished it will return-from-interrupt (reti).
+ 000A           ; void PSoC_GPIO_ISR_C(void)
+ 000A           ; {
+ 000A                   .dbline 51
+ 000A           ;       // Toggle LED1
+ 000A           ;       LED1_Data_ADDR ^= LED1_MASK;
+ 000A 450401            xor REG[0x4],1
+ 000D                   .dbline -2
+ 000D           L5:
+ 000D 18                pop A
+ 000E                   .dbline 0 ; func end
+ 000E 7E                reti
+ 000F                   .dbend

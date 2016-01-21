@@ -1,0 +1,41 @@
+XH
+H 2 areas 8 global symbols
+M main.c
+S __r0 Ref0000
+S __r1 Ref0000
+S __r3 Ref0000
+S __rX Ref0000
+S _LCD_Start Ref0000
+S _LCD_PrString Ref0000
+S _LCD_Position Ref0000
+A text size 48 flags 0
+dbfile ./main.c
+dbfile C:\Users\Jacob\Desktop\ECE381\DATASH~1\DATASH~1\main.c
+dbfunc e main 0 fV
+dbsym l theStr 0 A[9:9]c
+dbline FFFFFFFF 0
+dbline B 4
+dbline C 4
+dbline D 2C
+dbline E 2F
+dbline F 37
+dbline FFFFFFFE 43
+dbline 0 46
+S _main Def0000
+A lit size 9 flags 1
+T 00 00 50 53 6F 43 20 4C 43 44 00
+R 00 00 00 01
+T 00 00 10 4F 38 09 62 D0 00 00 55 00 00 00 00 55
+R 00 00 00 00 43 08 00 00 03 0B 00 01 01 0D 00 01
+T 00 0B 00 00 00 00 5A 00 00 62 D5 07 10 55
+R 00 00 00 00 03 02 00 00 41 04 00 01 03 07 00 02
+T 00 14 00 00 00 51 00 00 58 00 00 08 28 62 D0
+R 00 00 00 00 03 02 00 03 03 06 00 00 03 09 00 01
+T 00 1E 00 00 3F 00 00 18 75 09 00 76 00 00 3C
+R 00 00 00 00 43 02 00 00 03 05 00 02 03 0C 00 03
+T 00 28 00 00 09 BF EF 7C 00 00 57 05 50 00 7C
+R 00 00 00 00 03 02 00 03 02 08 00 04
+T 00 34 00 00 20 62 D0 00 00 10 50 07 08 18 7C
+R 00 00 00 00 02 02 00 06 43 07 00 00
+T 00 40 00 00 20 38 F7 20 8F FF
+R 00 00 00 00 02 02 00 05

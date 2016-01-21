@@ -1,0 +1,47 @@
+Starting MAKE...
+creating project.mk 
+
+lib/lcd.asm
+
+lib/psocconfig.asm
+
+lib/psocconfigtbl.asm
+
+lib/psocgpioint.asm
+
+!W C:\Users\Jacob\Desktop\ECE381\OPTICA~1\OPTICA~1\main.c(35):[warning] [MISRA 2200]calling an undeclared function may cause unexpected behavior if the function 
+
+takes or returns values other than int
+
+!W C:\Users\Jacob\Desktop\ECE381\OPTICA~1\OPTICA~1\main.c(35):[warning] [MISRA 2714]calling a function without prototype may cause unexpected behavior if the function 
+
+takes or returns values other than int
+
+!W C:\Users\Jacob\Desktop\ECE381\OPTICA~1\OPTICA~1\main.c(48):[warning] overflow in converting constant expression from `int' to `unsigned int'
+
+!W C:\Users\Jacob\Desktop\ECE381\OPTICA~1\OPTICA~1\main.c(48):[warning] overflow in converting constant expression from `unsigned int' to `char'
+
+./boot.asm
+
+Linking..
+
+LMM info: area 'InterruptRAM' uses 3 bytes in SRAM bank 0
+
+LMM info: area 'virtual_registers' uses 7 bytes in SRAM page 0
+
+LMM info: area 'data' item of 1 bytes allocated in SRAM page 0
+
+LMM info: area 'data' item of 1 bytes allocated in SRAM page 0
+
+LMM info: area 'data' item of 1 bytes allocated in SRAM page 0
+
+idata dump at output/opticalEncoder_LCD_Display.idata
+
+  ROM 5% full. 1632 out of 32768 bytes used (does not include absolute areas).
+
+  RAM 1% full. 13 bytes used (does not include stack usage).
+Built with ICCM8C STD V7.05.00
+
+ 
+opticalEncoder_LCD_Display - 0 error(s) 4 warning(s) 20:23:20
+
