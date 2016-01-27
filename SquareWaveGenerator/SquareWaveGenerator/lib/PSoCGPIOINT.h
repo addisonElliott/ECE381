@@ -50,24 +50,42 @@ BYTE			OpEncA_IntCtrl_1_ADDR;
 #pragma	ioport	OpEncA_IntEn_ADDR:	0x5
 BYTE			OpEncA_IntEn_ADDR;
 #define OpEncA_MASK 0x40
-// SWEN address and mask defines
-#pragma	ioport	SWEN_Data_ADDR:	0x4
-BYTE			SWEN_Data_ADDR;
-#pragma	ioport	SWEN_DriveMode_0_ADDR:	0x104
-BYTE			SWEN_DriveMode_0_ADDR;
-#pragma	ioport	SWEN_DriveMode_1_ADDR:	0x105
-BYTE			SWEN_DriveMode_1_ADDR;
-#pragma	ioport	SWEN_DriveMode_2_ADDR:	0x7
-BYTE			SWEN_DriveMode_2_ADDR;
-#pragma	ioport	SWEN_GlobalSelect_ADDR:	0x6
-BYTE			SWEN_GlobalSelect_ADDR;
-#pragma	ioport	SWEN_IntCtrl_0_ADDR:	0x106
-BYTE			SWEN_IntCtrl_0_ADDR;
-#pragma	ioport	SWEN_IntCtrl_1_ADDR:	0x107
-BYTE			SWEN_IntCtrl_1_ADDR;
-#pragma	ioport	SWEN_IntEn_ADDR:	0x5
-BYTE			SWEN_IntEn_ADDR;
-#define SWEN_MASK 0x10
+// Out address and mask defines
+#pragma	ioport	Out_Data_ADDR:	0x0
+BYTE			Out_Data_ADDR;
+#pragma	ioport	Out_DriveMode_0_ADDR:	0x100
+BYTE			Out_DriveMode_0_ADDR;
+#pragma	ioport	Out_DriveMode_1_ADDR:	0x101
+BYTE			Out_DriveMode_1_ADDR;
+#pragma	ioport	Out_DriveMode_2_ADDR:	0x3
+BYTE			Out_DriveMode_2_ADDR;
+#pragma	ioport	Out_GlobalSelect_ADDR:	0x2
+BYTE			Out_GlobalSelect_ADDR;
+#pragma	ioport	Out_IntCtrl_0_ADDR:	0x102
+BYTE			Out_IntCtrl_0_ADDR;
+#pragma	ioport	Out_IntCtrl_1_ADDR:	0x103
+BYTE			Out_IntCtrl_1_ADDR;
+#pragma	ioport	Out_IntEn_ADDR:	0x1
+BYTE			Out_IntEn_ADDR;
+#define Out_MASK 0x1
+// Clk address and mask defines
+#pragma	ioport	Clk_Data_ADDR:	0x0
+BYTE			Clk_Data_ADDR;
+#pragma	ioport	Clk_DriveMode_0_ADDR:	0x100
+BYTE			Clk_DriveMode_0_ADDR;
+#pragma	ioport	Clk_DriveMode_1_ADDR:	0x101
+BYTE			Clk_DriveMode_1_ADDR;
+#pragma	ioport	Clk_DriveMode_2_ADDR:	0x3
+BYTE			Clk_DriveMode_2_ADDR;
+#pragma	ioport	Clk_GlobalSelect_ADDR:	0x2
+BYTE			Clk_GlobalSelect_ADDR;
+#pragma	ioport	Clk_IntCtrl_0_ADDR:	0x102
+BYTE			Clk_IntCtrl_0_ADDR;
+#pragma	ioport	Clk_IntCtrl_1_ADDR:	0x103
+BYTE			Clk_IntCtrl_1_ADDR;
+#pragma	ioport	Clk_IntEn_ADDR:	0x1
+BYTE			Clk_IntEn_ADDR;
+#define Clk_MASK 0x4
 // SWFREQ address and mask defines
 #pragma	ioport	SWFREQ_Data_ADDR:	0x4
 BYTE			SWFREQ_Data_ADDR;
@@ -85,7 +103,25 @@ BYTE			SWFREQ_IntCtrl_0_ADDR;
 BYTE			SWFREQ_IntCtrl_1_ADDR;
 #pragma	ioport	SWFREQ_IntEn_ADDR:	0x5
 BYTE			SWFREQ_IntEn_ADDR;
-#define SWFREQ_MASK 0x20
+#define SWFREQ_MASK 0x10
+// SWEN address and mask defines
+#pragma	ioport	SWEN_Data_ADDR:	0x4
+BYTE			SWEN_Data_ADDR;
+#pragma	ioport	SWEN_DriveMode_0_ADDR:	0x104
+BYTE			SWEN_DriveMode_0_ADDR;
+#pragma	ioport	SWEN_DriveMode_1_ADDR:	0x105
+BYTE			SWEN_DriveMode_1_ADDR;
+#pragma	ioport	SWEN_DriveMode_2_ADDR:	0x7
+BYTE			SWEN_DriveMode_2_ADDR;
+#pragma	ioport	SWEN_GlobalSelect_ADDR:	0x6
+BYTE			SWEN_GlobalSelect_ADDR;
+#pragma	ioport	SWEN_IntCtrl_0_ADDR:	0x106
+BYTE			SWEN_IntCtrl_0_ADDR;
+#pragma	ioport	SWEN_IntCtrl_1_ADDR:	0x107
+BYTE			SWEN_IntCtrl_1_ADDR;
+#pragma	ioport	SWEN_IntEn_ADDR:	0x5
+BYTE			SWEN_IntEn_ADDR;
+#define SWEN_MASK 0x20
 // LCDD4 address and mask defines
 #pragma	ioport	LCDD4_Data_ADDR:	0x8
 BYTE			LCDD4_Data_ADDR;

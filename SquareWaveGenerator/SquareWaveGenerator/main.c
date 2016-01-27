@@ -7,7 +7,7 @@
 #pragma interrupt_handler PSoC_GPIO_ISR_C // Tells compiler that PSoC_GPIO_ISR_C is an interrupt
 #pragma interrupt_handler PSoC_DigBuf_ISR_C // Tells compiler that PSoc_DigBuf_ISR_C is an interrupt
 
-char state;			// 0: No Change, -1: CCW Rotation, 1: CW Rotation 2: Frequency range was toggled
+int state;			// 0: No Change, -1: CCW Rotation, 1: CW Rotation 2: Frequency range was toggled
 char prev_A;		// Holds previous value of channel A
 char prev_B;		// Holds previous value of channel B
 void main(void)
@@ -22,6 +22,7 @@ void main(void)
 	
 	M8C_EnableGInt ; // Uncomment this line to enable Global Interrupts
 	M8C_EnableIntMask(INT_MSK0,INT_MSK0_GPIO);		// Enable Interrupt Mask
+	M8C_EnableIntMask(INT_MSK1,INT_MSK1_DCB02);		// Enable Interrupt Mask
 	OSC_GO_EN |= 0x04;
 	
 	/*
@@ -35,17 +36,18 @@ void main(void)
 	Counter16_Start();
 	while (1)
 	{	
-		if (state)
+		if ((state == 1 && count < 25) || (state == -1 && count > 1) || state == 2)
 		{
 			float freq;
 			unsigned int periodValue;
 			unsigned int compareValue;
 			char *floatStr;
+			char tempStr[8];
 			char *ptr;
 			size_t floatLen;
 			int status;
 			
-			if ((state == 1 && count < 25) || (state == -1 && count > 1))
+			if (state != 2)
 				count += state;
 			
 			LCD_Position(1,6);

@@ -156,11 +156,11 @@ ENDIF
     reti
 
     org   2Ch                      ;PSoC Block DCB03 Interrupt Vector
-    `@INTERRUPT_11`
+    ljmp _PSoC_DigBuf_ISR_C
     reti
 
     org   30h                      ;PSoC Block DBB10 Interrupt Vector
-    `@INTERRUPT_12`
+    ljmp _PSoC_DigBuf_ISR_C
     reti
 
     org   34h                      ;PSoC Block DBB11 Interrupt Vector

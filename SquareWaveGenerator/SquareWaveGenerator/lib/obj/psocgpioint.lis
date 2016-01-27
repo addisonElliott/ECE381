@@ -851,16 +851,26 @@
  0107           OpEncA_IntCtrl_1_ADDR:	equ	107h
  0005           OpEncA_IntEn_ADDR:	equ	5h
  0040           OpEncA_MASK:	equ	40h
- 0000           ; SWEN address and mask equates
- 0004           SWEN_Data_ADDR:	equ	4h
- 0104           SWEN_DriveMode_0_ADDR:	equ	104h
- 0105           SWEN_DriveMode_1_ADDR:	equ	105h
- 0007           SWEN_DriveMode_2_ADDR:	equ	7h
- 0006           SWEN_GlobalSelect_ADDR:	equ	6h
- 0106           SWEN_IntCtrl_0_ADDR:	equ	106h
- 0107           SWEN_IntCtrl_1_ADDR:	equ	107h
- 0005           SWEN_IntEn_ADDR:	equ	5h
- 0010           SWEN_MASK:	equ	10h
+ 0000           ; Out address and mask equates
+ 0000           Out_Data_ADDR:	equ	0h
+ 0100           Out_DriveMode_0_ADDR:	equ	100h
+ 0101           Out_DriveMode_1_ADDR:	equ	101h
+ 0003           Out_DriveMode_2_ADDR:	equ	3h
+ 0002           Out_GlobalSelect_ADDR:	equ	2h
+ 0102           Out_IntCtrl_0_ADDR:	equ	102h
+ 0103           Out_IntCtrl_1_ADDR:	equ	103h
+ 0001           Out_IntEn_ADDR:	equ	1h
+ 0001           Out_MASK:	equ	1h
+ 0000           ; Clk address and mask equates
+ 0000           Clk_Data_ADDR:	equ	0h
+ 0100           Clk_DriveMode_0_ADDR:	equ	100h
+ 0101           Clk_DriveMode_1_ADDR:	equ	101h
+ 0003           Clk_DriveMode_2_ADDR:	equ	3h
+ 0002           Clk_GlobalSelect_ADDR:	equ	2h
+ 0102           Clk_IntCtrl_0_ADDR:	equ	102h
+ 0103           Clk_IntCtrl_1_ADDR:	equ	103h
+ 0001           Clk_IntEn_ADDR:	equ	1h
+ 0004           Clk_MASK:	equ	4h
  0000           ; SWFREQ address and mask equates
  0004           SWFREQ_Data_ADDR:	equ	4h
  0104           SWFREQ_DriveMode_0_ADDR:	equ	104h
@@ -870,7 +880,17 @@
  0106           SWFREQ_IntCtrl_0_ADDR:	equ	106h
  0107           SWFREQ_IntCtrl_1_ADDR:	equ	107h
  0005           SWFREQ_IntEn_ADDR:	equ	5h
- 0020           SWFREQ_MASK:	equ	20h
+ 0010           SWFREQ_MASK:	equ	10h
+ 0000           ; SWEN address and mask equates
+ 0004           SWEN_Data_ADDR:	equ	4h
+ 0104           SWEN_DriveMode_0_ADDR:	equ	104h
+ 0105           SWEN_DriveMode_1_ADDR:	equ	105h
+ 0007           SWEN_DriveMode_2_ADDR:	equ	7h
+ 0006           SWEN_GlobalSelect_ADDR:	equ	6h
+ 0106           SWEN_IntCtrl_0_ADDR:	equ	106h
+ 0107           SWEN_IntCtrl_1_ADDR:	equ	107h
+ 0005           SWEN_IntEn_ADDR:	equ	5h
+ 0020           SWEN_MASK:	equ	20h
  0000           ; LCDD4 address and mask equates
  0008           LCDD4_Data_ADDR:	equ	8h
  0108           LCDD4_DriveMode_0_ADDR:	equ	108h

@@ -1,6 +1,6 @@
 Project:      output/SquareWaveGenerator
 Build Number: 0
-Date:         Tue Jan 26 22:04:53 2016
+Date:         Wed Jan 27 11:52:03 2016
 Compiler:     ICCM8C
 Version:      7.05.00
 
@@ -95,23 +95,23 @@ Area                               Addr   Size   Decimal Bytes (Attributes)
 
 Area                               Addr   Size   Decimal Bytes (Attributes)
 --------------------------------   ----   ----   ------- ----- ------------
-                            text   05DD   1489 =   5257. bytes (rel,con,rom,code)
+                            text   05DD   1446 =   5190. bytes (rel,con,rom,code)
 
        Addr  Global Symbol
       -----  --------------------------------
        05DD  _main
        05DD  __text_start
-       097D  _PSoC_GPIO_ISR_C
-       0A25  _PSoC_DigBuf_ISR_C
-       0FF3  _strlenLMM
-       0FFE  _strlen
-       1019  _ltoa
-       1292  _ftoa
-       16E1  _frexpf
-       17B7  _logf
-       1A66  __xidata_start
-       1A66  __text_end
-       1A70  __xidata_end
+       0936  _PSoC_GPIO_ISR_C
+       09E2  _PSoC_DigBuf_ISR_C
+       0FB0  _strlenLMM
+       0FBB  _strlen
+       0FD6  _ltoa
+       124F  _ftoa
+       169E  _frexpf
+       1774  _logf
+       1A23  __xidata_start
+       1A23  __text_end
+       1A2D  __xidata_end
 
 Area                               Start  End    Decimal Bytes (Attributes)
 --------------------------------   ----   ----   ------- ----- ------------
@@ -158,15 +158,15 @@ Area                               Addr   Size   Decimal Bytes (Attributes)
 
 Area                               Addr   Size   Decimal Bytes (Attributes)
 --------------------------------   ----   ----   ------- ----- ------------
-                            data   0000   0014 =     20. bytes (rel,con,ram)
+                            data   0000   0015 =     21. bytes (rel,con,ram)
 
        Addr  Global Symbol
       -----  --------------------------------
        0000  __data_start
-       001D  _errno
-       001F  _state
-       0020  _prev_A
-       0021  _prev_B
+       001D  _state
+       001F  _errno
+       0021  _prev_A
+       0022  _prev_B
 
 Files Linked      [ module(s) ]
 

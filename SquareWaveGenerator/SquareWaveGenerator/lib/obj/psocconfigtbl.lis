@@ -936,11 +936,11 @@
  0000 70EF          and   F, ~FLAG_XIO_MASK
  0002 620000            mov     reg[00h], 00h           ; Port_0_Data register (PRT0DR)
  0005 7110          or    F, FLAG_XIO_MASK
- 0007 620000            mov     reg[00h], 00h           ; Port_0_DriveMode_0 register (PRT0DM0)
- 000A 6201FF            mov     reg[01h], ffh           ; Port_0_DriveMode_1 register (PRT0DM1)
+ 0007 620005            mov     reg[00h], 05h           ; Port_0_DriveMode_0 register (PRT0DM0)
+ 000A 6201FA            mov     reg[01h], fah           ; Port_0_DriveMode_1 register (PRT0DM1)
  000D 70EF          and   F, ~FLAG_XIO_MASK
- 000F 6203FF            mov     reg[03h], ffh           ; Port_0_DriveMode_2 register (PRT0DM2)
- 0012 620200            mov     reg[02h], 00h           ; Port_0_GlobalSelect register (PRT0GS)
+ 000F 6203FA            mov     reg[03h], fah           ; Port_0_DriveMode_2 register (PRT0DM2)
+ 0012 620204            mov     reg[02h], 04h           ; Port_0_GlobalSelect register (PRT0GS)
  0015 7110          or    F, FLAG_XIO_MASK
  0017 620200            mov     reg[02h], 00h           ; Port_0_IntCtrl_0 register (PRT0IC0)
  001A 620300            mov     reg[03h], 00h           ; Port_0_IntCtrl_1 register (PRT0IC1)

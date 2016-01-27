@@ -26,8 +26,10 @@ dbline 99 24
 dbline 9A 27
 dbline 9D 28
 dbline 9E 2B
-dbline A2 2C
-dbline A6 30
+dbline A1 2C
+dbline A2 2F
+dbline A5 30
+dbline A6 33
 dbline AA 34
 dbline AE 38
 dbline B2 3C
@@ -211,10 +213,10 @@ T 00 24 7D 00 00 7E
 R 00 00 00 00 02 03 00 07
 T 00 28 7D 00 00 7E
 R 00 00 00 00 02 03 00 03
-T 00 2C 7E
-R 00 00 00 00
-T 00 30 7E
-R 00 00 00 00
+T 00 2C 7D 00 00 7E
+R 00 00 00 00 02 03 00 03
+T 00 30 7D 00 00 7E
+R 00 00 00 00 02 03 00 03
 T 00 34 7E
 R 00 00 00 00
 T 00 38 7E

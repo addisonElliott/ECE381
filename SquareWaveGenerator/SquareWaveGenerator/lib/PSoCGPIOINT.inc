@@ -33,16 +33,26 @@ OpEncA_IntCtrl_0_ADDR:	equ	106h
 OpEncA_IntCtrl_1_ADDR:	equ	107h
 OpEncA_IntEn_ADDR:	equ	5h
 OpEncA_MASK:	equ	40h
-; SWEN address and mask equates
-SWEN_Data_ADDR:	equ	4h
-SWEN_DriveMode_0_ADDR:	equ	104h
-SWEN_DriveMode_1_ADDR:	equ	105h
-SWEN_DriveMode_2_ADDR:	equ	7h
-SWEN_GlobalSelect_ADDR:	equ	6h
-SWEN_IntCtrl_0_ADDR:	equ	106h
-SWEN_IntCtrl_1_ADDR:	equ	107h
-SWEN_IntEn_ADDR:	equ	5h
-SWEN_MASK:	equ	10h
+; Out address and mask equates
+Out_Data_ADDR:	equ	0h
+Out_DriveMode_0_ADDR:	equ	100h
+Out_DriveMode_1_ADDR:	equ	101h
+Out_DriveMode_2_ADDR:	equ	3h
+Out_GlobalSelect_ADDR:	equ	2h
+Out_IntCtrl_0_ADDR:	equ	102h
+Out_IntCtrl_1_ADDR:	equ	103h
+Out_IntEn_ADDR:	equ	1h
+Out_MASK:	equ	1h
+; Clk address and mask equates
+Clk_Data_ADDR:	equ	0h
+Clk_DriveMode_0_ADDR:	equ	100h
+Clk_DriveMode_1_ADDR:	equ	101h
+Clk_DriveMode_2_ADDR:	equ	3h
+Clk_GlobalSelect_ADDR:	equ	2h
+Clk_IntCtrl_0_ADDR:	equ	102h
+Clk_IntCtrl_1_ADDR:	equ	103h
+Clk_IntEn_ADDR:	equ	1h
+Clk_MASK:	equ	4h
 ; SWFREQ address and mask equates
 SWFREQ_Data_ADDR:	equ	4h
 SWFREQ_DriveMode_0_ADDR:	equ	104h
@@ -52,7 +62,17 @@ SWFREQ_GlobalSelect_ADDR:	equ	6h
 SWFREQ_IntCtrl_0_ADDR:	equ	106h
 SWFREQ_IntCtrl_1_ADDR:	equ	107h
 SWFREQ_IntEn_ADDR:	equ	5h
-SWFREQ_MASK:	equ	20h
+SWFREQ_MASK:	equ	10h
+; SWEN address and mask equates
+SWEN_Data_ADDR:	equ	4h
+SWEN_DriveMode_0_ADDR:	equ	104h
+SWEN_DriveMode_1_ADDR:	equ	105h
+SWEN_DriveMode_2_ADDR:	equ	7h
+SWEN_GlobalSelect_ADDR:	equ	6h
+SWEN_IntCtrl_0_ADDR:	equ	106h
+SWEN_IntCtrl_1_ADDR:	equ	107h
+SWEN_IntEn_ADDR:	equ	5h
+SWEN_MASK:	equ	20h
 ; LCDD4 address and mask equates
 LCDD4_Data_ADDR:	equ	8h
 LCDD4_DriveMode_0_ADDR:	equ	108h
