@@ -43,5 +43,5 @@ idata dump at output/opticalEncoder_LCD_Display.idata
 Built with ICCM8C STD V7.05.00
 
  
-opticalEncoder_LCD_Display - 0 error(s) 4 warning(s) 20:23:20
+opticalEncoder_LCD_Display - 0 error(s) 4 warning(s) 14:27:26
 

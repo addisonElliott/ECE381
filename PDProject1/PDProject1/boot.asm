@@ -142,8 +142,7 @@ ENDIF
     reti
 
     org   1Ch                      ;GPIO Interrupt Vector
-   	ljmp _PSoC_GPIO_ISR_C
-	
+    ljmp _PSoC_GPIO_ISR_C
     reti
 
     org   20h                      ;PSoC Block DBB00 Interrupt Vector
