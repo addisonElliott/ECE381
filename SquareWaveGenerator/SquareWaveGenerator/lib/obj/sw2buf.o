@@ -1,0 +1,52 @@
+XH
+H 3 areas 10 global symbols
+M sw2buf.asm
+A text size 0 flags 0
+dbfile lib/sw2buf.asm
+dbfunc 0 ? 0 I
+dbfile SW2Buf.inc
+dbfunc 0 ? 0 I
+dbfile C:/PROGRA~2/Cypress/PSOCDE~1/5.4/Common/CYPRES~1/tools/include/CY8C29~1/m8c.inc
+dbfunc 0 ? 0 I
+dbfile ./lib/SW2Buf.inc
+dbfunc 0 ? 0 I
+dbfile lib/sw2buf.asm
+dbfunc 0 ? 0 I
+dbfile memory.inc
+dbfunc 0 ? 0 I
+dbfile lib/sw2buf.asm
+dbfunc 0 ? 0 I
+dbfile C:/PROGRA~2/Cypress/PSOCDE~1/5.4/Common/CYPRES~1/tools/include/CY8C29~1/m8c.inc
+dbfunc 0 ? 0 I
+A bss size 0 flags 20
+A UserModules size 10 flags 0
+dbfile lib/sw2buf.asm
+dbfunc 0 ? 0 I
+dbline 2 0
+dbline 4D 3
+dbline 2 4
+dbline 68 7
+dbline 2 8
+dbline 82 B
+dbline 2 C
+dbline 9C F
+S $sb$SW2Buf_Stop Def000C
+S $se$SW2Buf_Stop Def0010
+S _SW2Buf_EnableInt Def0000
+S SW2Buf_DisableInt Def0004
+S $sb$SW2Buf_DisableInt Def0004
+S $se$SW2Buf_DisableInt Def0008
+S _SW2Buf_Stop Def000C
+S SW2Buf_Start Def0008
+S $sb$SW2Buf_Start Def0008
+S $se$SW2Buf_Start Def000C
+S _SW2Buf_DisableInt Def0004
+S _SW2Buf_Start Def0008
+S SW2Buf_EnableInt Def0000
+S $sb$SW2Buf_EnableInt Def0000
+S $se$SW2Buf_EnableInt Def0004
+S SW2Buf_Stop Def000C
+T 00 00 43 E1 04 7F 41 E1 FB 7F 43 2B 01 7F 41 2B
+R 00 00 00 02
+T 00 0E FE 7F
+R 00 00 00 02
