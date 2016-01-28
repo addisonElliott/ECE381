@@ -31,7 +31,7 @@ BYTE			OpEncB_IntCtrl_0_ADDR;
 BYTE			OpEncB_IntCtrl_1_ADDR;
 #pragma	ioport	OpEncB_IntEn_ADDR:	0x5
 BYTE			OpEncB_IntEn_ADDR;
-#define OpEncB_MASK 0x20
+#define OpEncB_MASK 0x80
 // OpEncA address and mask defines
 #pragma	ioport	OpEncA_Data_ADDR:	0x4
 BYTE			OpEncA_Data_ADDR;
@@ -49,7 +49,43 @@ BYTE			OpEncA_IntCtrl_0_ADDR;
 BYTE			OpEncA_IntCtrl_1_ADDR;
 #pragma	ioport	OpEncA_IntEn_ADDR:	0x5
 BYTE			OpEncA_IntEn_ADDR;
-#define OpEncA_MASK 0x10
+#define OpEncA_MASK 0x40
+// SWFreq2 address and mask defines
+#pragma	ioport	SWFreq2_Data_ADDR:	0x4
+BYTE			SWFreq2_Data_ADDR;
+#pragma	ioport	SWFreq2_DriveMode_0_ADDR:	0x104
+BYTE			SWFreq2_DriveMode_0_ADDR;
+#pragma	ioport	SWFreq2_DriveMode_1_ADDR:	0x105
+BYTE			SWFreq2_DriveMode_1_ADDR;
+#pragma	ioport	SWFreq2_DriveMode_2_ADDR:	0x7
+BYTE			SWFreq2_DriveMode_2_ADDR;
+#pragma	ioport	SWFreq2_GlobalSelect_ADDR:	0x6
+BYTE			SWFreq2_GlobalSelect_ADDR;
+#pragma	ioport	SWFreq2_IntCtrl_0_ADDR:	0x106
+BYTE			SWFreq2_IntCtrl_0_ADDR;
+#pragma	ioport	SWFreq2_IntCtrl_1_ADDR:	0x107
+BYTE			SWFreq2_IntCtrl_1_ADDR;
+#pragma	ioport	SWFreq2_IntEn_ADDR:	0x5
+BYTE			SWFreq2_IntEn_ADDR;
+#define SWFreq2_MASK 0x10
+// SWEnable address and mask defines
+#pragma	ioport	SWEnable_Data_ADDR:	0x4
+BYTE			SWEnable_Data_ADDR;
+#pragma	ioport	SWEnable_DriveMode_0_ADDR:	0x104
+BYTE			SWEnable_DriveMode_0_ADDR;
+#pragma	ioport	SWEnable_DriveMode_1_ADDR:	0x105
+BYTE			SWEnable_DriveMode_1_ADDR;
+#pragma	ioport	SWEnable_DriveMode_2_ADDR:	0x7
+BYTE			SWEnable_DriveMode_2_ADDR;
+#pragma	ioport	SWEnable_GlobalSelect_ADDR:	0x6
+BYTE			SWEnable_GlobalSelect_ADDR;
+#pragma	ioport	SWEnable_IntCtrl_0_ADDR:	0x106
+BYTE			SWEnable_IntCtrl_0_ADDR;
+#pragma	ioport	SWEnable_IntCtrl_1_ADDR:	0x107
+BYTE			SWEnable_IntCtrl_1_ADDR;
+#pragma	ioport	SWEnable_IntEn_ADDR:	0x5
+BYTE			SWEnable_IntEn_ADDR;
+#define SWEnable_MASK 0x20
 // LCDD4 address and mask defines
 #pragma	ioport	LCDD4_Data_ADDR:	0x8
 BYTE			LCDD4_Data_ADDR;

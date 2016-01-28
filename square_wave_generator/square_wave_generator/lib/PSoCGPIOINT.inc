@@ -22,7 +22,7 @@ OpEncB_GlobalSelect_ADDR:	equ	6h
 OpEncB_IntCtrl_0_ADDR:	equ	106h
 OpEncB_IntCtrl_1_ADDR:	equ	107h
 OpEncB_IntEn_ADDR:	equ	5h
-OpEncB_MASK:	equ	20h
+OpEncB_MASK:	equ	80h
 ; OpEncA address and mask equates
 OpEncA_Data_ADDR:	equ	4h
 OpEncA_DriveMode_0_ADDR:	equ	104h
@@ -32,7 +32,27 @@ OpEncA_GlobalSelect_ADDR:	equ	6h
 OpEncA_IntCtrl_0_ADDR:	equ	106h
 OpEncA_IntCtrl_1_ADDR:	equ	107h
 OpEncA_IntEn_ADDR:	equ	5h
-OpEncA_MASK:	equ	10h
+OpEncA_MASK:	equ	40h
+; SWFreq2 address and mask equates
+SWFreq2_Data_ADDR:	equ	4h
+SWFreq2_DriveMode_0_ADDR:	equ	104h
+SWFreq2_DriveMode_1_ADDR:	equ	105h
+SWFreq2_DriveMode_2_ADDR:	equ	7h
+SWFreq2_GlobalSelect_ADDR:	equ	6h
+SWFreq2_IntCtrl_0_ADDR:	equ	106h
+SWFreq2_IntCtrl_1_ADDR:	equ	107h
+SWFreq2_IntEn_ADDR:	equ	5h
+SWFreq2_MASK:	equ	10h
+; SWEnable address and mask equates
+SWEnable_Data_ADDR:	equ	4h
+SWEnable_DriveMode_0_ADDR:	equ	104h
+SWEnable_DriveMode_1_ADDR:	equ	105h
+SWEnable_DriveMode_2_ADDR:	equ	7h
+SWEnable_GlobalSelect_ADDR:	equ	6h
+SWEnable_IntCtrl_0_ADDR:	equ	106h
+SWEnable_IntCtrl_1_ADDR:	equ	107h
+SWEnable_IntEn_ADDR:	equ	5h
+SWEnable_MASK:	equ	20h
 ; LCDD4 address and mask equates
 LCDD4_Data_ADDR:	equ	8h
 LCDD4_DriveMode_0_ADDR:	equ	108h

@@ -18,6 +18,8 @@
 #define __PSOCAPI_H
 
 #include "PSoCGPIOINT.h"
+#include "Counter16.h"
 #include "LCD.h"
+#include "SW2Buf.h"
 
 #endif

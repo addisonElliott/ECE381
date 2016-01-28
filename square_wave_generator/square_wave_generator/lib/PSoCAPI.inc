@@ -14,4 +14,6 @@
 ; =============================================================================
  
 include "PSoCGPIOINT.inc"
+include "Counter16.inc"
 include "LCD.inc"
+include "SW2Buf.inc"

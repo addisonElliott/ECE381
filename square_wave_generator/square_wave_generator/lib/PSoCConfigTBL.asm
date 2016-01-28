@@ -20,7 +20,21 @@ export LoadConfigTBL_opticalencoder_lcd_display_Bank0
 export LoadConfigTBL_opticalencoder_lcd_display_Ordered
 AREA lit(rom, rel)
 LoadConfigTBL_opticalencoder_lcd_display_Bank0:
+;  Instance name Counter16, User Module Counter16
+;       Instance name Counter16, Block Name CNTR16_LSB(DBB00)
+	db		23h, 00h		;Counter16_CONTROL_LSB_REG(DBB00CR0)
+	db		21h, 6fh		;Counter16_PERIOD_LSB_REG(DBB00DR1)
+	db		22h, b8h		;Counter16_COMPARE_LSB_REG(DBB00DR2)
+;       Instance name Counter16, Block Name CNTR16_MSB(DBB01)
+	db		27h, 00h		;Counter16_CONTROL_MSB_REG(DBB01CR0)
+	db		25h, 17h		;Counter16_PERIOD_MSB_REG(DBB01DR1)
+	db		26h, 0bh		;Counter16_COMPARE_MSB_REG(DBB01DR2)
 ;  Instance name LCD, User Module LCD
+;  Instance name SW2Buf, User Module DigBuf
+;       Instance name SW2Buf, Block Name DigBuf(DCB02)
+	db		2bh, 03h		;SW2Buf_CONTROL_REG(DCB02CR0)
+	db		29h, 00h		;SW2Buf_DATA_1_REG(DCB02DR1)
+	db		2ah, 00h		;SW2Buf_DATA_2_REG(DCB02DR2)
 ;  Global Register values Bank 0
 	db		60h, 28h		; AnalogColumnInputSelect register (AMX_IN)
 	db		66h, 00h		; AnalogComparatorControl1 register (CMP_CR1)
@@ -29,12 +43,12 @@ LoadConfigTBL_opticalencoder_lcd_display_Bank0:
 	db		e6h, 00h		; DecimatorControl_0 register (DEC_CR0)
 	db		e7h, 00h		; DecimatorControl_1 register (DEC_CR1)
 	db		d6h, 00h		; I2CConfig register (I2C_CFG)
-	db		b0h, 00h		; Row_0_InputMux register (RDI0RI)
+	db		b0h, 0fh		; Row_0_InputMux register (RDI0RI)
 	db		b1h, 00h		; Row_0_InputSync register (RDI0SYN)
 	db		b2h, 00h		; Row_0_LogicInputAMux register (RDI0IS)
 	db		b3h, 33h		; Row_0_LogicSelect_0 register (RDI0LT0)
 	db		b4h, 33h		; Row_0_LogicSelect_1 register (RDI0LT1)
-	db		b5h, 00h		; Row_0_OutputDrive_0 register (RDI0SRO0)
+	db		b5h, 04h		; Row_0_OutputDrive_0 register (RDI0SRO0)
 	db		b6h, 00h		; Row_0_OutputDrive_1 register (RDI0SRO1)
 	db		b8h, 55h		; Row_1_InputMux register (RDI1RI)
 	db		b9h, 00h		; Row_1_InputSync register (RDI1SYN)
@@ -63,7 +77,21 @@ LoadConfigTBL_opticalencoder_lcd_display_Bank0:
 	db		6fh, 00h		; TMP_DR3 register (TMP_DR3)
 	db		ffh
 LoadConfigTBL_opticalencoder_lcd_display_Bank1:
+;  Instance name Counter16, User Module Counter16
+;       Instance name Counter16, Block Name CNTR16_LSB(DBB00)
+	db		20h, 91h		;Counter16_FUNC_LSB_REG(DBB00FN)
+	db		21h, d1h		;Counter16_INPUT_LSB_REG(DBB00IN)
+	db		22h, 40h		;Counter16_OUTPUT_LSB_REG(DBB00OU)
+;       Instance name Counter16, Block Name CNTR16_MSB(DBB01)
+	db		24h, 31h		;Counter16_FUNC_MSB_REG(DBB01FN)
+	db		25h, 31h		;Counter16_INPUT_MSB_REG(DBB01IN)
+	db		26h, 44h		;Counter16_OUTPUT_MSB_REG(DBB01OU)
 ;  Instance name LCD, User Module LCD
+;  Instance name SW2Buf, User Module DigBuf
+;       Instance name SW2Buf, Block Name DigBuf(DCB02)
+	db		28h, 22h		;SW2Buf_FUNC_REG(DCB02FN)
+	db		29h, c0h		;SW2Buf_INPUT_REG(DCB02IN)
+	db		2ah, 40h		;SW2Buf_OUTPUT_REG(DCB02OU)
 ;  Global Register values Bank 1
 	db		61h, 00h		; AnalogClockSelect1 register (CLK_CR1)
 	db		69h, 00h		; AnalogClockSelect2 register (CLK_CR2)
@@ -79,8 +107,8 @@ LoadConfigTBL_opticalencoder_lcd_display_Bank1:
 	db		d2h, 00h		; GlobalDigitalInterconnect_Drive_Odd_Output register (GDI_O_OU)
 	db		e1h, ffh		; OscillatorControl_1 register (OSC_CR1)
 	db		e2h, 00h		; OscillatorControl_2 register (OSC_CR2)
-	db		dfh, ffh		; OscillatorControl_3 register (OSC_CR3)
-	db		deh, 02h		; OscillatorControl_4 register (OSC_CR4)
+	db		dfh, 03h		; OscillatorControl_3 register (OSC_CR3)
+	db		deh, 00h		; OscillatorControl_4 register (OSC_CR4)
 	db		ddh, 00h		; OscillatorGlobalBusEnableControl register (OSC_GO_EN)
 	db		e7h, 00h		; Type2Decimator_Control register (DEC_CR2)
 	db		ffh
@@ -90,11 +118,11 @@ LoadConfigTBL_opticalencoder_lcd_display_Ordered:
 	M8C_SetBank0
 	mov	reg[00h], 00h		; Port_0_Data register (PRT0DR)
 	M8C_SetBank1
-	mov	reg[00h], 00h		; Port_0_DriveMode_0 register (PRT0DM0)
-	mov	reg[01h], ffh		; Port_0_DriveMode_1 register (PRT0DM1)
+	mov	reg[00h], 04h		; Port_0_DriveMode_0 register (PRT0DM0)
+	mov	reg[01h], fbh		; Port_0_DriveMode_1 register (PRT0DM1)
 	M8C_SetBank0
-	mov	reg[03h], ffh		; Port_0_DriveMode_2 register (PRT0DM2)
-	mov	reg[02h], 00h		; Port_0_GlobalSelect register (PRT0GS)
+	mov	reg[03h], fbh		; Port_0_DriveMode_2 register (PRT0DM2)
+	mov	reg[02h], 04h		; Port_0_GlobalSelect register (PRT0GS)
 	M8C_SetBank1
 	mov	reg[02h], 00h		; Port_0_IntCtrl_0 register (PRT0IC0)
 	mov	reg[03h], 00h		; Port_0_IntCtrl_1 register (PRT0IC1)
@@ -102,16 +130,16 @@ LoadConfigTBL_opticalencoder_lcd_display_Ordered:
 	mov	reg[01h], 00h		; Port_0_IntEn register (PRT0IE)
 	mov	reg[04h], 00h		; Port_1_Data register (PRT1DR)
 	M8C_SetBank1
-	mov	reg[04h], 00h		; Port_1_DriveMode_0 register (PRT1DM0)
-	mov	reg[05h], ffh		; Port_1_DriveMode_1 register (PRT1DM1)
+	mov	reg[04h], 01h		; Port_1_DriveMode_0 register (PRT1DM0)
+	mov	reg[05h], feh		; Port_1_DriveMode_1 register (PRT1DM1)
 	M8C_SetBank0
-	mov	reg[07h], cfh		; Port_1_DriveMode_2 register (PRT1DM2)
-	mov	reg[06h], 00h		; Port_1_GlobalSelect register (PRT1GS)
+	mov	reg[07h], 0eh		; Port_1_DriveMode_2 register (PRT1DM2)
+	mov	reg[06h], 31h		; Port_1_GlobalSelect register (PRT1GS)
 	M8C_SetBank1
-	mov	reg[06h], 30h		; Port_1_IntCtrl_0 register (PRT1IC0)
-	mov	reg[07h], 30h		; Port_1_IntCtrl_1 register (PRT1IC1)
+	mov	reg[06h], c0h		; Port_1_IntCtrl_0 register (PRT1IC0)
+	mov	reg[07h], c0h		; Port_1_IntCtrl_1 register (PRT1IC1)
 	M8C_SetBank0
-	mov	reg[05h], 30h		; Port_1_IntEn register (PRT1IE)
+	mov	reg[05h], c0h		; Port_1_IntEn register (PRT1IE)
 	mov	reg[08h], 00h		; Port_2_Data register (PRT2DR)
 	M8C_SetBank1
 	mov	reg[08h], 7fh		; Port_2_DriveMode_0 register (PRT2DM0)

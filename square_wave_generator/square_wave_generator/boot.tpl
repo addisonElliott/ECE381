@@ -151,9 +151,9 @@ ENDIF
     `@INTERRUPT_9`
     reti
 
-    org   28h                      ;PSoC Block DCB02 Interrupt Vector
-    `@INTERRUPT_10`
-    reti
+    org   28h  					   ;PSoC Block DCB02 Interrupt Vector
+    ljmp _PSoC_DigBuf_ISR_C
+	reti
 
     org   2Ch                      ;PSoC Block DCB03 Interrupt Vector
     `@INTERRUPT_11`
