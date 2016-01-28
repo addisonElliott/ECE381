@@ -1,0 +1,35 @@
+# DO NOT DELETE
+./obj/boot.o : \
+   C:/PROGRA~2/Cypress/PSOCDE~1/5.4/Common/CYPRES~1/tools/include/CY8C29~1/m8c.inc\
+   C:/PROGRA~2/Cypress/PSOCDE~1/5.4/Common/CYPRES~1/tools/include/CY8C29~1/m8ssc.inc\
+   C:\Users\addis\Desktop\ECE381\SQUARE~2\SQUARE~1\lib\GLOBAL~1.INC\
+   C:\Users\addis\Desktop\ECE381\SQUARE~2\SQUARE~1\memory.inc
+./obj/main.o :  ./lib/COUNTE~1.H ./lib/LCD.h ./lib/PSoCAPI.h\
+   ./lib/PSOCGP~1.H ./lib/SW2Buf.h\
+   C:/PROGRA~2/Cypress/PSOCDE~1/5.4/Common/CYPRES~1/tools/include/CY8C29~1/m8c.h\
+   C:/PROGRA~2/Cypress/PSOCDE~1/5.4/Common/CYPRES~1/tools/include/_const.h\
+   C:/PROGRA~2/Cypress/PSOCDE~1/5.4/Common/CYPRES~1/tools/include/limits.h\
+   C:/PROGRA~2/Cypress/PSOCDE~1/5.4/Common/CYPRES~1/tools/include/math.h\
+   C:/PROGRA~2/Cypress/PSOCDE~1/5.4/Common/CYPRES~1/tools/include/stdlib.h
+./lib/obj/counter16.o :  ./lib/COUNTE~1.INC\
+   C:/PROGRA~2/Cypress/PSOCDE~1/5.4/Common/CYPRES~1/tools/include/CY8C29~1/m8c.inc\
+   C:\Users\addis\Desktop\ECE381\SQUARE~2\SQUARE~1\memory.inc
+./lib/obj/counter16int.o :  ./lib/COUNTE~1.INC\
+   C:/PROGRA~2/Cypress/PSOCDE~1/5.4/Common/CYPRES~1/tools/include/CY8C29~1/m8c.inc\
+   C:\Users\addis\Desktop\ECE381\SQUARE~2\SQUARE~1\memory.inc
+./lib/obj/lcd.o :  ./lib/LCD.inc\
+   C:/PROGRA~2/Cypress/PSOCDE~1/5.4/Common/CYPRES~1/tools/include/CY8C29~1/m8c.inc\
+   C:\Users\addis\Desktop\ECE381\SQUARE~2\SQUARE~1\memory.inc
+./lib/obj/psocconfig.o :  ./lib/GLOBAL~1.INC\
+   C:/PROGRA~2/Cypress/PSOCDE~1/5.4/Common/CYPRES~1/tools/include/CY8C29~1/m8c.inc\
+   C:\Users\addis\Desktop\ECE381\SQUARE~2\SQUARE~1\memory.inc
+./lib/obj/psocconfigtbl.o : \
+   C:/PROGRA~2/Cypress/PSOCDE~1/5.4/Common/CYPRES~1/tools/include/CY8C29~1/m8c.inc
+./lib/obj/psocgpioint.o :  ./lib/PSOCGP~1.INC\
+   C:/PROGRA~2/Cypress/PSOCDE~1/5.4/Common/CYPRES~1/tools/include/CY8C29~1/m8c.inc
+./lib/obj/sw2buf.o :  ./lib/SW2Buf.inc\
+   C:/PROGRA~2/Cypress/PSOCDE~1/5.4/Common/CYPRES~1/tools/include/CY8C29~1/m8c.inc\
+   C:\Users\addis\Desktop\ECE381\SQUARE~2\SQUARE~1\memory.inc
+./lib/obj/sw2bufint.o : \
+   C:/PROGRA~2/Cypress/PSOCDE~1/5.4/Common/CYPRES~1/tools/include/CY8C29~1/m8c.inc\
+   C:\Users\addis\Desktop\ECE381\SQUARE~2\SQUARE~1\memory.inc
