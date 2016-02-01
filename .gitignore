@@ -6,6 +6,11 @@
 *.rpt
 *.uvopt
 *.uvproj
+*.hex
+*flashsecurity.txt
+*.soc
+*.xml
+*.app
 *_timing.html
 *.cydsn/codegentemp
 *.cydsn/DP8051
