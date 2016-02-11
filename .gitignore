@@ -7,7 +7,6 @@
 *.uvopt
 *.uvproj
 *.hex
-*flashsecurity.txt
 *.app
 *_timing.html
 *.cydsn/codegentemp
