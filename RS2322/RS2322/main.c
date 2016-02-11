@@ -49,7 +49,7 @@ void GetLine(char *buffer, char bufferLen)
 		}
 		else if (c == 0x0D) // Newline enter is pressed
 		{
-			buffer[strPos+1] = 0x00; // Null-terminate the string
+			buffer[strPos] = 0x00;
 			UART_PutCRLF(); // Go to another line
 			break;
 		}
@@ -71,20 +71,20 @@ void main(void)
 {
 	char opt;
 	
+	// Start the LCD, UART(with no parity), and Counter16
 	LCD_Start();
 	UART_Start(UART_PARITY_NONE);
 	Counter16_Start();
-	OSC_GO_EN |= 0x40;
 	
-	memset(str, 17 * 4, 0x00); // Initialize all four strings to 0x00
+	memset(str, 0x00, 17 * 4); // Initialize all four strings to 0x00
 	
 	while (1)
 	{
 		// \r\n is a CRLF \t is a tab. This prints out prompting user what to do
 		UART_CPutString("What would you like to do?\r\n\t1. Write to string\r\n\t2. Print to screen\r\n\t3. Print to LCD\r\n");
 		opt = GetNumber(1, 3); // Basically retrieves which option to do
+		UART_PutCRLF(); // Goes to a new line on serial console.  Used frequently to make the prompting look 'pretty'
 		
-		UART_PutCRLF();
 		switch (opt)
 		{
 			case 1: // Write to string option

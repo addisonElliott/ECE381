@@ -52,7 +52,7 @@ LoadConfigTBL_rs2322_Bank0:
 	db		b2h, 00h		; Row_0_LogicInputAMux register (RDI0IS)
 	db		b3h, 33h		; Row_0_LogicSelect_0 register (RDI0LT0)
 	db		b4h, 33h		; Row_0_LogicSelect_1 register (RDI0LT1)
-	db		b5h, 04h		; Row_0_OutputDrive_0 register (RDI0SRO0)
+	db		b5h, 10h		; Row_0_OutputDrive_0 register (RDI0SRO0)
 	db		b6h, 20h		; Row_0_OutputDrive_1 register (RDI0SRO1)
 	db		b8h, 55h		; Row_1_InputMux register (RDI1RI)
 	db		b9h, 00h		; Row_1_InputSync register (RDI1SYN)
@@ -89,16 +89,16 @@ LoadConfigTBL_rs2322_Bank1:
 ;       Instance name Counter16, Block Name CNTR16_MSB(DBB01)
 	db		24h, 31h		;Counter16_FUNC_MSB_REG(DBB01FN)
 	db		25h, 35h		;Counter16_INPUT_MSB_REG(DBB01IN)
-	db		26h, 44h		;Counter16_OUTPUT_MSB_REG(DBB01OU)
+	db		26h, 45h		;Counter16_OUTPUT_MSB_REG(DBB01OU)
 ;  Instance name LCD, User Module LCD
 ;  Instance name UART, User Module UART
 ;       Instance name UART, Block Name RX(DCB03)
 	db		2ch, 05h		;UART_RX_FUNC_REG   (DCB03FN)
-	db		2dh, e8h		;UART_RX_INPUT_REG  (DCB03IN)
+	db		2dh, e9h		;UART_RX_INPUT_REG  (DCB03IN)
 	db		2eh, 40h		;UART_RX_OUTPUT_REG (DCB03OU)
 ;       Instance name UART, Block Name TX(DCB02)
 	db		28h, 0dh		;UART_TX_FUNC_REG   (DCB02FN)
-	db		29h, 08h		;UART_TX_INPUT_REG  (DCB02IN)
+	db		29h, 09h		;UART_TX_INPUT_REG  (DCB02IN)
 	db		2ah, 47h		;UART_TX_OUTPUT_REG (DCB02OU)
 ;  Global Register values Bank 1
 	db		61h, 00h		; AnalogClockSelect1 register (CLK_CR1)
@@ -126,11 +126,11 @@ LoadConfigTBL_rs2322_Ordered:
 	M8C_SetBank0
 	mov	reg[00h], 00h		; Port_0_Data register (PRT0DR)
 	M8C_SetBank1
-	mov	reg[00h], 40h		; Port_0_DriveMode_0 register (PRT0DM0)
-	mov	reg[01h], bfh		; Port_0_DriveMode_1 register (PRT0DM1)
+	mov	reg[00h], 42h		; Port_0_DriveMode_0 register (PRT0DM0)
+	mov	reg[01h], bdh		; Port_0_DriveMode_1 register (PRT0DM1)
 	M8C_SetBank0
-	mov	reg[03h], bfh		; Port_0_DriveMode_2 register (PRT0DM2)
-	mov	reg[02h], 40h		; Port_0_GlobalSelect register (PRT0GS)
+	mov	reg[03h], bdh		; Port_0_DriveMode_2 register (PRT0DM2)
+	mov	reg[02h], 42h		; Port_0_GlobalSelect register (PRT0GS)
 	M8C_SetBank1
 	mov	reg[02h], 00h		; Port_0_IntCtrl_0 register (PRT0IC0)
 	mov	reg[03h], 00h		; Port_0_IntCtrl_1 register (PRT0IC1)
@@ -138,11 +138,11 @@ LoadConfigTBL_rs2322_Ordered:
 	mov	reg[01h], 00h		; Port_0_IntEn register (PRT0IE)
 	mov	reg[04h], 00h		; Port_1_Data register (PRT1DR)
 	M8C_SetBank1
-	mov	reg[04h], 01h		; Port_1_DriveMode_0 register (PRT1DM0)
-	mov	reg[05h], feh		; Port_1_DriveMode_1 register (PRT1DM1)
+	mov	reg[04h], 00h		; Port_1_DriveMode_0 register (PRT1DM0)
+	mov	reg[05h], ffh		; Port_1_DriveMode_1 register (PRT1DM1)
 	M8C_SetBank0
-	mov	reg[07h], beh		; Port_1_DriveMode_2 register (PRT1DM2)
-	mov	reg[06h], 41h		; Port_1_GlobalSelect register (PRT1GS)
+	mov	reg[07h], bfh		; Port_1_DriveMode_2 register (PRT1DM2)
+	mov	reg[06h], 40h		; Port_1_GlobalSelect register (PRT1GS)
 	M8C_SetBank1
 	mov	reg[06h], 00h		; Port_1_IntCtrl_0 register (PRT1IC0)
 	mov	reg[07h], 00h		; Port_1_IntCtrl_1 register (PRT1IC1)

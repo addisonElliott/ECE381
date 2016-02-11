@@ -123,7 +123,7 @@
  0043           ;       char c;
  0043           ;       char strPos = 0; // Current position in the string
  0043 560100            mov [X+1],0
- 0046 8095              xjmp L10
+ 0046 808F              xjmp L10
  0048           L9:
  0048                   .dbline 39
  0048           ;       
@@ -150,7 +150,7 @@
  005C                   .dbline 44
  005C 5000              mov A,0
  005E 3B01              cmp A,[X+1]
- 0060 D07B              jnc L13
+ 0060 D075              jnc L13
  0062           X4:
  0062                   .dbline 46
  0062           ;                       {
@@ -171,15 +171,15 @@
  0070           ;                       }
  0070                   .dbline 49
  0070           ;               }
- 0070 806B              xjmp L13
+ 0070 8065              xjmp L13
  0072           L12:
  0072                   .dbline 50
  0072           ;               else if (c == 0x0D) // Newline enter is pressed
  0072 3D000D            cmp [X+0],13
- 0075 B028              jnz L17
+ 0075 B022              jnz L17
  0077                   .dbline 52
  0077           ;               {
- 0077           ;                       buffer[strPos+1] = 0x00; // Null-terminate the string
+ 0077           ;                       buffer[strPos] = 0x00;
  0077                   .dbline 52
  0077 62D000            mov REG[0xd0],>__r0
  007A 5201              mov A,[X+1]
@@ -189,423 +189,418 @@
  0083 0400              add [__r1],A
  0085 52FB              mov A,[X-5]
  0087 0C00              adc [__r0],A
- 0089 060001            add [__r1],1
- 008C 0E0000            adc [__r0],0
- 008F 5100              mov A,[__r0]
- 0091 60D5              mov REG[0xd5],A
- 0093 5000              mov A,0
- 0095 3F00              mvi [__r1],A
- 0097                   .dbline 53
- 0097           ;                       UART_PutCRLF(); // Go to another line
- 0097 10                push X
- 0098 7C0000            xcall _UART_PutCRLF
- 009B 20                pop X
- 009C                   .dbline 54
- 009C           ;                       break;
- 009C 8041              xjmp L8
- 009E           L17:
- 009E                   .dbline 56
- 009E           ;               }
- 009E           ;               else if (c >= 0x20 && c < 0x7F) // Only echo valid characters to the string. These are any alphabet, numeric, or symbols
- 009E 3D0020            cmp [X+0],32
- 00A1 C03A              jc L19
- 00A3           X5:
- 00A3 3D007F            cmp [X+0],127
- 00A6 D035              jnc L19
- 00A8           X6:
- 00A8                   .dbline 58
- 00A8           ;               {
- 00A8           ;                       if (strPos < bufferLen) // If there is space in the buffer
- 00A8                   .dbline 58
- 00A8 5201              mov A,[X+1]
- 00AA 3BFA              cmp A,[X-6]
- 00AC D028              jnc L21
- 00AE           X7:
- 00AE                   .dbline 60
- 00AE           ;                       {
- 00AE           ;                               buffer[strPos++] = c; // Set the current character in buffer to c and then increment strPos
- 00AE                   .dbline 60
- 00AE 62D000            mov REG[0xd0],>__r0
- 00B1 5201              mov A,[X+1]
- 00B3 5300              mov [__r1],A
- 00B5 550000            mov [__r0],0
- 00B8 0101              add A,1
- 00BA 5401              mov [X+1],A
- 00BC 52FC              mov A,[X-4]
- 00BE 0400              add [__r1],A
- 00C0 52FB              mov A,[X-5]
- 00C2 0C00              adc [__r0],A
- 00C4 5100              mov A,[__r0]
- 00C6 60D5              mov REG[0xd5],A
- 00C8 5200              mov A,[X+0]
- 00CA 3F00              mvi [__r1],A
- 00CC                   .dbline 61
- 00CC           ;                               UART_PutChar(c); // Send the character to the computer
- 00CC 10                push X
- 00CD 5200              mov A,[X+0]
- 00CF 7C0000            xcall _UART_PutChar
- 00D2 20                pop X
- 00D3                   .dbline 62
- 00D3           ;                       }
- 00D3 8008              xjmp L22
- 00D5           L21:
- 00D5                   .dbline 64
- 00D5           ;                       else
- 00D5           ;                               UART_PutChar(0x07); // Send BEL key because there is no more space left to add to the string
- 00D5 10                push X
- 00D6 5007              mov A,7
- 00D8 7C0000            xcall _UART_PutChar
- 00DB 20                pop X
- 00DC           L22:
- 00DC                   .dbline 65
- 00DC           ;               }
- 00DC           L19:
- 00DC           L13:
- 00DC                   .dbline 66
- 00DC           ;       }
- 00DC           L10:
- 00DC                   .dbline 38
- 00DC 8F6B              xjmp L9
- 00DE           X3:
- 00DE                   .dbline -2
- 00DE           L8:
- 00DE 38FE              add SP,-2
- 00E0 20                pop X
- 00E1                   .dbline 0 ; func end
- 00E1 7F                ret
- 00E2                   .dbsym l strPos 1 c
- 00E2                   .dbsym l c 0 c
- 00E2                   .dbsym l bufferLen -6 c
- 00E2                   .dbsym l buffer -5 pc
- 00E2                   .dbend
- 00E2                   .dbfunc e main _main fV
- 00E2           ;            opt -> X+0
- 00E2           _main::
- 00E2                   .dbline -1
- 00E2 10                push X
- 00E3 4F                mov X,SP
- 00E4 3803              add SP,3
- 00E6                   .dbline 71
- 00E6           ;       return;
- 00E6           ; }
- 00E6           ; 
- 00E6           ; void main(void)
- 00E6           ; {
- 00E6                   .dbline 74
- 00E6           ;       char opt;
- 00E6           ;       
- 00E6           ;       LCD_Start();
- 00E6 10                push X
- 00E7 7C0000            xcall _LCD_Start
- 00EA                   .dbline 75
- 00EA           ;       UART_Start(UART_PARITY_NONE);
- 00EA 5000              mov A,0
- 00EC 7C0000            xcall _UART_Start
- 00EF                   .dbline 76
- 00EF           ;       Counter16_Start();
- 00EF 7C0000            xcall _Counter16_Start
- 00F2 20                pop X
- 00F3                   .dbline 77
- 00F3           ;       OSC_GO_EN |= 0x40;
- 00F3 7110              or F,0x10  ; iopage = 1
- 00F5 43DD40            or REG[0xdd],64
- 00F8                   .dbline 79
- 00F8           ;       
- 00F8           ;       memset(str, 17 * 4, 0x00); // Initialize all four strings to 0x00
- 00F8 5000              mov A,0
- 00FA 08                push A
- 00FB 08                push A
+ 0089 5100              mov A,[__r0]
+ 008B 60D5              mov REG[0xd5],A
+ 008D 5000              mov A,0
+ 008F 3F00              mvi [__r1],A
+ 0091                   .dbline 53
+ 0091           ;                       UART_PutCRLF(); // Go to another line
+ 0091 10                push X
+ 0092 7C0000            xcall _UART_PutCRLF
+ 0095 20                pop X
+ 0096                   .dbline 54
+ 0096           ;                       break;
+ 0096 8041              xjmp L8
+ 0098           L17:
+ 0098                   .dbline 56
+ 0098           ;               }
+ 0098           ;               else if (c >= 0x20 && c < 0x7F) // Only echo valid characters to the string. These are any alphabet, numeric, or symbols
+ 0098 3D0020            cmp [X+0],32
+ 009B C03A              jc L19
+ 009D           X5:
+ 009D 3D007F            cmp [X+0],127
+ 00A0 D035              jnc L19
+ 00A2           X6:
+ 00A2                   .dbline 58
+ 00A2           ;               {
+ 00A2           ;                       if (strPos < bufferLen) // If there is space in the buffer
+ 00A2                   .dbline 58
+ 00A2 5201              mov A,[X+1]
+ 00A4 3BFA              cmp A,[X-6]
+ 00A6 D028              jnc L21
+ 00A8           X7:
+ 00A8                   .dbline 60
+ 00A8           ;                       {
+ 00A8           ;                               buffer[strPos++] = c; // Set the current character in buffer to c and then increment strPos
+ 00A8                   .dbline 60
+ 00A8 62D000            mov REG[0xd0],>__r0
+ 00AB 5201              mov A,[X+1]
+ 00AD 5300              mov [__r1],A
+ 00AF 550000            mov [__r0],0
+ 00B2 0101              add A,1
+ 00B4 5401              mov [X+1],A
+ 00B6 52FC              mov A,[X-4]
+ 00B8 0400              add [__r1],A
+ 00BA 52FB              mov A,[X-5]
+ 00BC 0C00              adc [__r0],A
+ 00BE 5100              mov A,[__r0]
+ 00C0 60D5              mov REG[0xd5],A
+ 00C2 5200              mov A,[X+0]
+ 00C4 3F00              mvi [__r1],A
+ 00C6                   .dbline 61
+ 00C6           ;                               UART_PutChar(c); // Send the character to the computer
+ 00C6 10                push X
+ 00C7 5200              mov A,[X+0]
+ 00C9 7C0000            xcall _UART_PutChar
+ 00CC 20                pop X
+ 00CD                   .dbline 62
+ 00CD           ;                       }
+ 00CD 8008              xjmp L22
+ 00CF           L21:
+ 00CF                   .dbline 64
+ 00CF           ;                       else
+ 00CF           ;                               UART_PutChar(0x07); // Send BEL key because there is no more space left to add to the string
+ 00CF 10                push X
+ 00D0 5007              mov A,7
+ 00D2 7C0000            xcall _UART_PutChar
+ 00D5 20                pop X
+ 00D6           L22:
+ 00D6                   .dbline 65
+ 00D6           ;               }
+ 00D6           L19:
+ 00D6           L13:
+ 00D6                   .dbline 66
+ 00D6           ;       }
+ 00D6           L10:
+ 00D6                   .dbline 38
+ 00D6 8F71              xjmp L9
+ 00D8           X3:
+ 00D8                   .dbline -2
+ 00D8           L8:
+ 00D8 38FE              add SP,-2
+ 00DA 20                pop X
+ 00DB                   .dbline 0 ; func end
+ 00DB 7F                ret
+ 00DC                   .dbsym l strPos 1 c
+ 00DC                   .dbsym l c 0 c
+ 00DC                   .dbsym l bufferLen -6 c
+ 00DC                   .dbsym l buffer -5 pc
+ 00DC                   .dbend
+ 00DC                   .dbfunc e main _main fV
+ 00DC           ;            opt -> X+0
+ 00DC           _main::
+ 00DC                   .dbline -1
+ 00DC 10                push X
+ 00DD 4F                mov X,SP
+ 00DE 3803              add SP,3
+ 00E0                   .dbline 71
+ 00E0           ;       return;
+ 00E0           ; }
+ 00E0           ; 
+ 00E0           ; void main(void)
+ 00E0           ; {
+ 00E0                   .dbline 75
+ 00E0           ;       char opt;
+ 00E0           ;       
+ 00E0           ;       // Start the LCD, UART(with no parity), and Counter16
+ 00E0           ;       LCD_Start();
+ 00E0 10                push X
+ 00E1 7C0000            xcall _LCD_Start
+ 00E4                   .dbline 76
+ 00E4           ;       UART_Start(UART_PARITY_NONE);
+ 00E4 5000              mov A,0
+ 00E6 7C0000            xcall _UART_Start
+ 00E9                   .dbline 77
+ 00E9           ;       Counter16_Start();
+ 00E9 7C0000            xcall _Counter16_Start
+ 00EC 20                pop X
+ 00ED                   .dbline 79
+ 00ED           ;       
+ 00ED           ;       memset(str, 0x00, 17 * 4); // Initialize all four strings to 0x00
+ 00ED 5000              mov A,0
+ 00EF 08                push A
+ 00F0 5044              mov A,68
+ 00F2 08                push A
+ 00F3 5000              mov A,0
+ 00F5 08                push A
+ 00F6 08                push A
+ 00F7 5000              mov A,>_str
+ 00F9 08                push A
+ 00FA 5000              mov A,<_str
  00FC 08                push A
- 00FD 5044              mov A,68
- 00FF 08                push A
- 0100 5000              mov A,>_str
- 0102 08                push A
- 0103 5000              mov A,<_str
- 0105 08                push A
- 0106 70CF              and F,0xCF      ; iopage = 0
- 0108 7C0000            xcall _memsetLMM
- 010B 38FA              add SP,-6
- 010D 8166              xjmp L25
- 010F           L24:
- 010F                   .dbline 82
- 010F           ;       
- 010F           ;       while (1)
- 010F           ;       {
- 010F                   .dbline 84
- 010F           ;               // \r\n is a CRLF \t is a tab. This prints out prompting user what to do
- 010F           ;               UART_CPutString("What would you like to do?\r\n\t1. Write to string\r\n\t2. Print to screen\r\n\t3. Print to LCD\r\n");
- 010F 10                push X
- 0110 5062              mov A,>L27
+ 00FD 7C0000            xcall _memsetLMM
+ 0100 38FA              add SP,-6
+ 0102 8166              xjmp L25
+ 0104           L24:
+ 0104                   .dbline 82
+ 0104           ;       
+ 0104           ;       while (1)
+ 0104           ;       {
+ 0104                   .dbline 84
+ 0104           ;               // \r\n is a CRLF \t is a tab. This prints out prompting user what to do
+ 0104           ;               UART_CPutString("What would you like to do?\r\n\t1. Write to string\r\n\t2. Print to screen\r\n\t3. Print to LCD\r\n");
+ 0104 10                push X
+ 0105 5062              mov A,>L27
+ 0107 08                push A
+ 0108 5062              mov A,<L27
+ 010A 5C                mov X,A
+ 010B 18                pop A
+ 010C 7C0000            xcall _UART_CPutString
+ 010F 20                pop X
+ 0110                   .dbline 85
+ 0110           ;               opt = GetNumber(1, 3); // Basically retrieves which option to do
+ 0110 5003              mov A,3
  0112 08                push A
- 0113 5062              mov A,<L27
- 0115 5C                mov X,A
- 0116 18                pop A
- 0117 7C0000            xcall _UART_CPutString
- 011A 20                pop X
- 011B                   .dbline 85
- 011B           ;               opt = GetNumber(1, 3); // Basically retrieves which option to do
- 011B 5003              mov A,3
- 011D 08                push A
- 011E 5001              mov A,1
- 0120 08                push A
- 0121 9EDD              xcall _GetNumber
- 0123 38FE              add SP,-2
- 0125 62D000            mov REG[0xd0],>__r0
- 0128 5400              mov [X+0],A
- 012A                   .dbline 87
- 012A           ;               
- 012A           ;               UART_PutCRLF();
- 012A 10                push X
- 012B 7C0000            xcall _UART_PutCRLF
- 012E 20                pop X
- 012F                   .dbline 88
- 012F           ;               switch (opt)
- 012F 5200              mov A,[X+0]
- 0131 5402              mov [X+2],A
- 0133 560100            mov [X+1],0
- 0136 3D0100            cmp [X+1],0
- 0139 B006              jnz X9
- 013B 3D0201            cmp [X+2],1
- 013E A017              jz L31
- 0140           X9:
- 0140 3D0100            cmp [X+1],0
- 0143 B006              jnz X10
- 0145 3D0202            cmp [X+2],2
- 0148 A067              jz L33
- 014A           X10:
- 014A 3D0100            cmp [X+1],0
- 014D B006              jnz X11
- 014F 3D0203            cmp [X+2],3
- 0152 A0B7              jz L35
- 0154           X11:
- 0154 811F              xjmp L28
- 0156           L31:
- 0156                   .dbline 91
- 0156           ;               {
- 0156           ;                       case 1: // Write to string option
- 0156           ;                               UART_CPutString("Which string would you like to write to: "); 
- 0156 10                push X
- 0157 5038              mov A,>L32
+ 0113 5001              mov A,1
+ 0115 08                push A
+ 0116 9EE8              xcall _GetNumber
+ 0118 38FE              add SP,-2
+ 011A 62D000            mov REG[0xd0],>__r0
+ 011D 5400              mov [X+0],A
+ 011F                   .dbline 86
+ 011F           ;               UART_PutCRLF(); // Goes to a new line on serial console.  Used frequently to make the prompting look 'pretty'
+ 011F 10                push X
+ 0120 7C0000            xcall _UART_PutCRLF
+ 0123 20                pop X
+ 0124                   .dbline 88
+ 0124           ;               
+ 0124           ;               switch (opt)
+ 0124 5200              mov A,[X+0]
+ 0126 5402              mov [X+2],A
+ 0128 560100            mov [X+1],0
+ 012B 3D0100            cmp [X+1],0
+ 012E B006              jnz X9
+ 0130 3D0201            cmp [X+2],1
+ 0133 A017              jz L31
+ 0135           X9:
+ 0135 3D0100            cmp [X+1],0
+ 0138 B006              jnz X10
+ 013A 3D0202            cmp [X+2],2
+ 013D A067              jz L33
+ 013F           X10:
+ 013F 3D0100            cmp [X+1],0
+ 0142 B006              jnz X11
+ 0144 3D0203            cmp [X+2],3
+ 0147 A0B7              jz L35
+ 0149           X11:
+ 0149 811F              xjmp L28
+ 014B           L31:
+ 014B                   .dbline 91
+ 014B           ;               {
+ 014B           ;                       case 1: // Write to string option
+ 014B           ;                               UART_CPutString("Which string would you like to write to: "); 
+ 014B 10                push X
+ 014C 5038              mov A,>L32
+ 014E 08                push A
+ 014F 5038              mov A,<L32
+ 0151 5C                mov X,A
+ 0152 18                pop A
+ 0153 7C0000            xcall _UART_CPutString
+ 0156 20                pop X
+ 0157                   .dbline 92
+ 0157           ;                               opt = GetNumber(0, 3); // Ask which string to edit
+ 0157 5003              mov A,3
  0159 08                push A
- 015A 5038              mov A,<L32
- 015C 5C                mov X,A
- 015D 18                pop A
- 015E 7C0000            xcall _UART_CPutString
- 0161 20                pop X
- 0162                   .dbline 92
- 0162           ;                               opt = GetNumber(0, 3); // Ask which string to edit
- 0162 5003              mov A,3
- 0164 08                push A
- 0165 5000              mov A,0
- 0167 08                push A
- 0168 9E96              xcall _GetNumber
- 016A 38FE              add SP,-2
- 016C 62D000            mov REG[0xd0],>__r0
- 016F 5400              mov [X+0],A
- 0171                   .dbline 93
- 0171           ;                               UART_PutCRLF();
- 0171 10                push X
- 0172 7C0000            xcall _UART_PutCRLF
- 0175 20                pop X
- 0176                   .dbline 95
- 0176           ;                               
- 0176           ;                               GetLine(str[opt], 16); // Allow the user to change the string
- 0176 5010              mov A,16
- 0178 08                push A
- 0179 62D000            mov REG[0xd0],>__r0
- 017C 5200              mov A,[X+0]
- 017E 5300              mov [__r1],A
- 0180 5000              mov A,0
- 0182 08                push A
- 0183 5100              mov A,[__r1]
- 0185 08                push A
- 0186 5000              mov A,0
- 0188 08                push A
- 0189 5011              mov A,17
- 018B 08                push A
- 018C 7C0000            xcall __mul16
- 018F 38FC              add SP,-4
- 0191 5100              mov A,[__rX]
- 0193 5300              mov [__r1],A
- 0195 5100              mov A,[__rY]
- 0197 5300              mov [__r0],A
- 0199 060000            add [__r1],<_str
- 019C 0E0000            adc [__r0],>_str
- 019F 5100              mov A,[__r0]
- 01A1 08                push A
- 01A2 5100              mov A,[__r1]
- 01A4 08                push A
- 01A5 9E98              xcall _GetLine
- 01A7 38FD              add SP,-3
- 01A9                   .dbline 96
- 01A9           ;                               UART_PutCRLF();
- 01A9 10                push X
- 01AA 7C0000            xcall _UART_PutCRLF
- 01AD 20                pop X
- 01AE                   .dbline 97
- 01AE           ;                               break;
- 01AE 80C5              xjmp L29
- 01B0           L33:
- 01B0                   .dbline 100
- 01B0           ;                       
- 01B0           ;                       case 2: // Print to screen option
- 01B0           ;                               UART_CPutString("Which string would you like to print: ");
- 01B0 10                push X
- 01B1 5011              mov A,>L34
+ 015A 5000              mov A,0
+ 015C 08                push A
+ 015D 9EA1              xcall _GetNumber
+ 015F 38FE              add SP,-2
+ 0161 62D000            mov REG[0xd0],>__r0
+ 0164 5400              mov [X+0],A
+ 0166                   .dbline 93
+ 0166           ;                               UART_PutCRLF();
+ 0166 10                push X
+ 0167 7C0000            xcall _UART_PutCRLF
+ 016A 20                pop X
+ 016B                   .dbline 95
+ 016B           ;                               
+ 016B           ;                               GetLine(str[opt], 16); // Allow the user to change the string
+ 016B 5010              mov A,16
+ 016D 08                push A
+ 016E 62D000            mov REG[0xd0],>__r0
+ 0171 5200              mov A,[X+0]
+ 0173 5300              mov [__r1],A
+ 0175 5000              mov A,0
+ 0177 08                push A
+ 0178 5100              mov A,[__r1]
+ 017A 08                push A
+ 017B 5000              mov A,0
+ 017D 08                push A
+ 017E 5011              mov A,17
+ 0180 08                push A
+ 0181 7C0000            xcall __mul16
+ 0184 38FC              add SP,-4
+ 0186 5100              mov A,[__rX]
+ 0188 5300              mov [__r1],A
+ 018A 5100              mov A,[__rY]
+ 018C 5300              mov [__r0],A
+ 018E 060000            add [__r1],<_str
+ 0191 0E0000            adc [__r0],>_str
+ 0194 5100              mov A,[__r0]
+ 0196 08                push A
+ 0197 5100              mov A,[__r1]
+ 0199 08                push A
+ 019A 9EA3              xcall _GetLine
+ 019C 38FD              add SP,-3
+ 019E                   .dbline 96
+ 019E           ;                               UART_PutCRLF();
+ 019E 10                push X
+ 019F 7C0000            xcall _UART_PutCRLF
+ 01A2 20                pop X
+ 01A3                   .dbline 97
+ 01A3           ;                               break;
+ 01A3 80C5              xjmp L29
+ 01A5           L33:
+ 01A5                   .dbline 100
+ 01A5           ;                       
+ 01A5           ;                       case 2: // Print to screen option
+ 01A5           ;                               UART_CPutString("Which string would you like to print: ");
+ 01A5 10                push X
+ 01A6 5011              mov A,>L34
+ 01A8 08                push A
+ 01A9 5011              mov A,<L34
+ 01AB 5C                mov X,A
+ 01AC 18                pop A
+ 01AD 7C0000            xcall _UART_CPutString
+ 01B0 20                pop X
+ 01B1                   .dbline 101
+ 01B1           ;                               opt = GetNumber(0, 3); // Ask which string to print
+ 01B1 5003              mov A,3
  01B3 08                push A
- 01B4 5011              mov A,<L34
- 01B6 5C                mov X,A
- 01B7 18                pop A
- 01B8 7C0000            xcall _UART_CPutString
- 01BB 20                pop X
- 01BC                   .dbline 101
- 01BC           ;                               opt = GetNumber(0, 3); // Ask which string to print
- 01BC 5003              mov A,3
- 01BE 08                push A
- 01BF 5000              mov A,0
- 01C1 08                push A
- 01C2 9E3C              xcall _GetNumber
- 01C4 38FE              add SP,-2
- 01C6 62D000            mov REG[0xd0],>__r0
- 01C9 5400              mov [X+0],A
- 01CB                   .dbline 102
- 01CB           ;                               UART_PutCRLF();
- 01CB 10                push X
- 01CC 7C0000            xcall _UART_PutCRLF
- 01CF 20                pop X
- 01D0                   .dbline 103
- 01D0           ;                               UART_PutString(str[opt]); // Print selected string to UART
- 01D0 62D000            mov REG[0xd0],>__r0
- 01D3 5200              mov A,[X+0]
- 01D5 5300              mov [__r1],A
- 01D7 5000              mov A,0
- 01D9 08                push A
- 01DA 5100              mov A,[__r1]
- 01DC 08                push A
- 01DD 5000              mov A,0
- 01DF 08                push A
- 01E0 5011              mov A,17
- 01E2 08                push A
- 01E3 7C0000            xcall __mul16
- 01E6 38FC              add SP,-4
- 01E8 5100              mov A,[__rX]
- 01EA 5300              mov [__r1],A
- 01EC 5100              mov A,[__rY]
- 01EE 5300              mov [__r0],A
- 01F0 060000            add [__r1],<_str
- 01F3 0E0000            adc [__r0],>_str
- 01F6 10                push X
- 01F7 5100              mov A,[__r0]
- 01F9 08                push A
- 01FA 5100              mov A,[__r1]
- 01FC 5C                mov X,A
- 01FD 18                pop A
- 01FE 7C0000            xcall _UART_PutString
- 0201                   .dbline 104
- 0201           ;                               UART_PutCRLF();
- 0201 7C0000            xcall _UART_PutCRLF
- 0204                   .dbline 105
- 0204           ;                               UART_PutCRLF();
- 0204 7C0000            xcall _UART_PutCRLF
- 0207 20                pop X
- 0208                   .dbline 106
- 0208           ;                               break;
- 0208 806B              xjmp L29
- 020A           L35:
- 020A                   .dbline 109
- 020A           ;                       
- 020A           ;                       case 3: // Print to LCD option
- 020A           ;                               UART_CPutString("Which string would you like to print: "); 
- 020A 10                push X
- 020B 5011              mov A,>L34
+ 01B4 5000              mov A,0
+ 01B6 08                push A
+ 01B7 9E47              xcall _GetNumber
+ 01B9 38FE              add SP,-2
+ 01BB 62D000            mov REG[0xd0],>__r0
+ 01BE 5400              mov [X+0],A
+ 01C0                   .dbline 102
+ 01C0           ;                               UART_PutCRLF();
+ 01C0 10                push X
+ 01C1 7C0000            xcall _UART_PutCRLF
+ 01C4 20                pop X
+ 01C5                   .dbline 103
+ 01C5           ;                               UART_PutString(str[opt]); // Print selected string to UART
+ 01C5 62D000            mov REG[0xd0],>__r0
+ 01C8 5200              mov A,[X+0]
+ 01CA 5300              mov [__r1],A
+ 01CC 5000              mov A,0
+ 01CE 08                push A
+ 01CF 5100              mov A,[__r1]
+ 01D1 08                push A
+ 01D2 5000              mov A,0
+ 01D4 08                push A
+ 01D5 5011              mov A,17
+ 01D7 08                push A
+ 01D8 7C0000            xcall __mul16
+ 01DB 38FC              add SP,-4
+ 01DD 5100              mov A,[__rX]
+ 01DF 5300              mov [__r1],A
+ 01E1 5100              mov A,[__rY]
+ 01E3 5300              mov [__r0],A
+ 01E5 060000            add [__r1],<_str
+ 01E8 0E0000            adc [__r0],>_str
+ 01EB 10                push X
+ 01EC 5100              mov A,[__r0]
+ 01EE 08                push A
+ 01EF 5100              mov A,[__r1]
+ 01F1 5C                mov X,A
+ 01F2 18                pop A
+ 01F3 7C0000            xcall _UART_PutString
+ 01F6                   .dbline 104
+ 01F6           ;                               UART_PutCRLF();
+ 01F6 7C0000            xcall _UART_PutCRLF
+ 01F9                   .dbline 105
+ 01F9           ;                               UART_PutCRLF();
+ 01F9 7C0000            xcall _UART_PutCRLF
+ 01FC 20                pop X
+ 01FD                   .dbline 106
+ 01FD           ;                               break;
+ 01FD 806B              xjmp L29
+ 01FF           L35:
+ 01FF                   .dbline 109
+ 01FF           ;                       
+ 01FF           ;                       case 3: // Print to LCD option
+ 01FF           ;                               UART_CPutString("Which string would you like to print: "); 
+ 01FF 10                push X
+ 0200 5011              mov A,>L34
+ 0202 08                push A
+ 0203 5011              mov A,<L34
+ 0205 5C                mov X,A
+ 0206 18                pop A
+ 0207 7C0000            xcall _UART_CPutString
+ 020A 20                pop X
+ 020B                   .dbline 110
+ 020B           ;                               opt = GetNumber(0, 3); // Ask which string to print
+ 020B 5003              mov A,3
  020D 08                push A
- 020E 5011              mov A,<L34
- 0210 5C                mov X,A
- 0211 18                pop A
- 0212 7C0000            xcall _UART_CPutString
- 0215 20                pop X
- 0216                   .dbline 110
- 0216           ;                               opt = GetNumber(0, 3); // Ask which string to print
- 0216 5003              mov A,3
- 0218 08                push A
- 0219 5000              mov A,0
- 021B 08                push A
- 021C 9DE2              xcall _GetNumber
- 021E 38FE              add SP,-2
- 0220 62D000            mov REG[0xd0],>__r0
- 0223 5400              mov [X+0],A
- 0225                   .dbline 111
- 0225           ;                               UART_PutCRLF();
- 0225 10                push X
- 0226 7C0000            xcall _UART_PutCRLF
- 0229                   .dbline 113
- 0229           ;                               
- 0229           ;                               LCD_Position(1, 0);
- 0229 5700              mov X,0
- 022B 5001              mov A,1
- 022D 7C0000            xcall _LCD_Position
- 0230                   .dbline 114
- 0230           ;                               LCD_PrCString("                "); // Clear out old value in LCD
- 0230 5000              mov A,>L36
- 0232 08                push A
- 0233 5000              mov A,<L36
- 0235 5C                mov X,A
- 0236 18                pop A
- 0237 7C0000            xcall _LCD_PrCString
- 023A                   .dbline 115
- 023A           ;                               LCD_Position(1, 0);
- 023A 5700              mov X,0
- 023C 5001              mov A,1
- 023E 7C0000            xcall _LCD_Position
- 0241 20                pop X
- 0242                   .dbline 116
- 0242           ;                               LCD_PrString(str[opt]); // Print selected string to LCD
- 0242 62D000            mov REG[0xd0],>__r0
- 0245 5200              mov A,[X+0]
- 0247 5300              mov [__r1],A
- 0249 5000              mov A,0
- 024B 08                push A
- 024C 5100              mov A,[__r1]
- 024E 08                push A
- 024F 5000              mov A,0
- 0251 08                push A
- 0252 5011              mov A,17
- 0254 08                push A
- 0255 7C0000            xcall __mul16
- 0258 38FC              add SP,-4
- 025A 5100              mov A,[__rX]
- 025C 5300              mov [__r1],A
- 025E 5100              mov A,[__rY]
- 0260 5300              mov [__r0],A
- 0262 060000            add [__r1],<_str
- 0265 0E0000            adc [__r0],>_str
- 0268 10                push X
- 0269 5100              mov A,[__r0]
- 026B 08                push A
- 026C 5100              mov A,[__r1]
- 026E 5C                mov X,A
- 026F 18                pop A
- 0270 7C0000            xcall _LCD_PrString
- 0273 20                pop X
- 0274                   .dbline 117
- 0274           ;                               break;
- 0274           L28:
- 0274           L29:
- 0274                   .dbline 119
- 0274           ;               }
- 0274           ;       }
- 0274           L25:
- 0274                   .dbline 81
- 0274 8E9A              xjmp L24
- 0276           X8:
- 0276                   .dbline -2
- 0276           L23:
- 0276 38FD              add SP,-3
- 0278 20                pop X
- 0279                   .dbline 0 ; func end
- 0279 8FFF              jmp .
- 027B                   .dbsym l opt 0 c
- 027B                   .dbend
+ 020E 5000              mov A,0
+ 0210 08                push A
+ 0211 9DED              xcall _GetNumber
+ 0213 38FE              add SP,-2
+ 0215 62D000            mov REG[0xd0],>__r0
+ 0218 5400              mov [X+0],A
+ 021A                   .dbline 111
+ 021A           ;                               UART_PutCRLF();
+ 021A 10                push X
+ 021B 7C0000            xcall _UART_PutCRLF
+ 021E                   .dbline 113
+ 021E           ;                               
+ 021E           ;                               LCD_Position(1, 0);
+ 021E 5700              mov X,0
+ 0220 5001              mov A,1
+ 0222 7C0000            xcall _LCD_Position
+ 0225                   .dbline 114
+ 0225           ;                               LCD_PrCString("                "); // Clear out old value in LCD
+ 0225 5000              mov A,>L36
+ 0227 08                push A
+ 0228 5000              mov A,<L36
+ 022A 5C                mov X,A
+ 022B 18                pop A
+ 022C 7C0000            xcall _LCD_PrCString
+ 022F                   .dbline 115
+ 022F           ;                               LCD_Position(1, 0);
+ 022F 5700              mov X,0
+ 0231 5001              mov A,1
+ 0233 7C0000            xcall _LCD_Position
+ 0236 20                pop X
+ 0237                   .dbline 116
+ 0237           ;                               LCD_PrString(str[opt]); // Print selected string to LCD
+ 0237 62D000            mov REG[0xd0],>__r0
+ 023A 5200              mov A,[X+0]
+ 023C 5300              mov [__r1],A
+ 023E 5000              mov A,0
+ 0240 08                push A
+ 0241 5100              mov A,[__r1]
+ 0243 08                push A
+ 0244 5000              mov A,0
+ 0246 08                push A
+ 0247 5011              mov A,17
+ 0249 08                push A
+ 024A 7C0000            xcall __mul16
+ 024D 38FC              add SP,-4
+ 024F 5100              mov A,[__rX]
+ 0251 5300              mov [__r1],A
+ 0253 5100              mov A,[__rY]
+ 0255 5300              mov [__r0],A
+ 0257 060000            add [__r1],<_str
+ 025A 0E0000            adc [__r0],>_str
+ 025D 10                push X
+ 025E 5100              mov A,[__r0]
+ 0260 08                push A
+ 0261 5100              mov A,[__r1]
+ 0263 5C                mov X,A
+ 0264 18                pop A
+ 0265 7C0000            xcall _LCD_PrString
+ 0268 20                pop X
+ 0269                   .dbline 117
+ 0269           ;                               break;
+ 0269           L28:
+ 0269           L29:
+ 0269                   .dbline 119
+ 0269           ;               }
+ 0269           ;       }
+ 0269           L25:
+ 0269                   .dbline 81
+ 0269 8E9A              xjmp L24
+ 026B           X8:
+ 026B                   .dbline -2
+ 026B           L23:
+ 026B 38FD              add SP,-3
+ 026D 20                pop X
+ 026E                   .dbline 0 ; func end
+ 026E 8FFF              jmp .
+ 0270                   .dbsym l opt 0 c
+ 0270                   .dbend
                         .area data(ram, con, rel)
  0000                   .dbfile C:\Users\addis\Desktop\ECE381\RS2322\RS2322\main.c
  0000           _str::

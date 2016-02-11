@@ -23,8 +23,8 @@ LoadConfigTBL_rs2322_Bank0:
 ;  Instance name Counter16, User Module Counter16
 ;       Instance name Counter16, Block Name CNTR16_LSB(DBB00)
 	db		23h, 00h		;Counter16_CONTROL_LSB_REG(DBB00CR0)
-	db		21h, 9ch		;Counter16_PERIOD_LSB_REG(DBB00DR1)
-	db		22h, 4eh		;Counter16_COMPARE_LSB_REG(DBB00DR2)
+	db		21h, 9eh		;Counter16_PERIOD_LSB_REG(DBB00DR1)
+	db		22h, 4fh		;Counter16_COMPARE_LSB_REG(DBB00DR2)
 ;       Instance name Counter16, Block Name CNTR16_MSB(DBB01)
 	db		27h, 00h		;Counter16_CONTROL_MSB_REG(DBB01CR0)
 	db		25h, 00h		;Counter16_PERIOD_MSB_REG(DBB01DR1)

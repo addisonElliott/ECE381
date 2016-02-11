@@ -1,6 +1,6 @@
 Project:      output/RS2322
 Build Number: 0
-Date:         Wed Feb 03 19:07:02 2016
+Date:         Thu Feb 04 14:46:12 2016
 Compiler:     ICCM8C
 Version:      7.05.00
 
@@ -147,19 +147,19 @@ Area                               Addr   Size   Decimal Bytes (Attributes)
 
 Area                               Addr   Size   Decimal Bytes (Attributes)
 --------------------------------   ----   ----   ------- ----- ------------
-                            text   07DB   02E7 =    743. bytes (rel,con,rom,code)
+                            text   07DB   02DC =    732. bytes (rel,con,rom,code)
 
        Addr  Global Symbol
       -----  --------------------------------
        07DB  __text_start
        07DB  _GetNumber
        081A  _GetLine
-       08BD  _main
-       0A94  _memsetLMM
-       0A9F  _memset
-       0AC2  __xidata_start
-       0AC2  __text_end
-       0ACF  __xidata_end
+       08B7  _main
+       0A89  _memsetLMM
+       0A94  _memset
+       0AB7  __xidata_start
+       0AB7  __text_end
+       0AC4  __xidata_end
 
 Area                               Start  End    Decimal Bytes (Attributes)
 --------------------------------   ----   ----   ------- ----- ------------

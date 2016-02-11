@@ -1,0 +1,62 @@
+Starting MAKE...
+creating project.mk 
+
+lib/counter16.asm
+
+lib/counter16int.asm
+
+lib/i2chwcommon.asm
+
+lib/i2chwint.asm
+
+lib/i2chwmstr.asm
+
+lib/i2chwrsrcinits.asm
+
+lib/psocconfig.asm
+
+lib/psocconfigtbl.asm
+
+lib/uart.asm
+
+lib/uartint.asm
+
+lib/uartplus.asm
+
+./boot.asm
+
+Linking..
+
+LMM info: area 'InterruptRAM' uses 9 bytes in SRAM bank 0
+
+LMM info: area 'data' item of 81 bytes allocated in SRAM page 0
+
+LMM info: area 'data' item of 25 bytes allocated in SRAM page 0
+
+LMM info: area 'virtual_registers' uses 11 bytes in SRAM page 0
+
+LMM info: area 'data' item of 4 bytes allocated in SRAM page 0
+
+LMM info: area 'data' item of 2 bytes allocated in SRAM page 0
+
+LMM info: area 'data' item of 2 bytes allocated in SRAM page 0
+
+LMM info: area 'data' item of 2 bytes allocated in SRAM page 0
+
+LMM info: area 'data' item of 2 bytes allocated in SRAM page 0
+
+LMM info: area 'data' item of 2 bytes allocated in SRAM page 0
+
+LMM info: area 'data' item of 1 bytes allocated in SRAM page 0
+
+idata dump at output/I2CRAM.idata
+
+  ROM 35% full. 11396 out of 32768 bytes used (does not include absolute areas).
+
+  RAM 8% full. 141 bytes used (does not include stack usage).
+
+Built with ICCM8C STD V7.05.00
+
+ 
+I2CRAM - 0 error(s) 0 warning(s) 08:45:57
+
