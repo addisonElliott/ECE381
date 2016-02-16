@@ -10,7 +10,7 @@ S LoadConfigInit Ref0000
 S _UART_RX_ISR Ref0000
 S _UART_TX_ISR Ref0000
 S _Counter16_ISR Ref0000
-A TOP size 143 flags C
+A TOP size 146 flags C
 dbfile ./boot.asm
 dbfunc 0 ? 0 I
 dbline 72 0
@@ -146,19 +146,20 @@ dbline 24A 123
 dbline 24B 124
 dbline 24E 126
 dbline 2 127
-dbline 2 129
-dbline 28C 12B
-dbline 2 12E
-dbline 292 130
-dbline 293 133
-dbline 2 136
-dbline 29A 138
-dbline 2A2 13B
-dbline 2A4 13E
-dbline 2B1 140
-dbline 2B2 142
-S bGetPowerSetting Def0140
-S _bGetPowerSetting Def0140
+dbline 27E 129
+dbline 2 12C
+dbline 28C 12E
+dbline 2 131
+dbline 292 133
+dbline 293 136
+dbline 2 139
+dbline 29A 13B
+dbline 2A2 13E
+dbline 2A4 141
+dbline 2B1 143
+dbline 2B2 145
+S bGetPowerSetting Def0143
+S _bGetPowerSetting Def0143
 S __Start Def0068
 A lit size 0 flags 1
 A idata size 0 flags 1
@@ -273,9 +274,11 @@ T 01 10 00 3F 00 00 47 00 00 FF B0 08 5D D5 74 60
 R 00 00 00 00 03 04 00 03 03 07 00 03
 T 01 1C D5 50 00 7A 00 00 BF EF 18 8F AA 18 71 10
 R 00 00 00 00 03 06 00 04
-T 01 29 70 EF 62 E0 00 71 10 62 E0 00 43 E7 80 70
+T 01 29 43 E3 20 70 EF 62 E0 00 71 10 62 E0 03 43
 R 00 00 00 00
-T 01 37 EF 62 E2 00 7C 00 00 8F FF 50 10 7F
-R 00 00 00 00 02 07 00 00
+T 01 37 E7 80 70 EF 62 E2 00 7C 00 00 8F FF 50 10
+R 00 00 00 00 02 0A 00 00
+T 01 45 7F
+R 00 00 00 00
 T 00 00 00 00
 R 00 00 00 03 02 02 00 02

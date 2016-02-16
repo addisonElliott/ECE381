@@ -24,6 +24,13 @@ export LoadConfigInit
 export _LoadConfigInit
 export LoadConfig_i2cram
 export _LoadConfig_i2cram
+export Port_2_Data_SHADE
+export _Port_2_Data_SHADE
+export Port_2_DriveMode_0_SHADE
+export _Port_2_DriveMode_0_SHADE
+export Port_2_DriveMode_1_SHADE
+export _Port_2_DriveMode_1_SHADE
+
 
 export NO_SHADOW
 export _NO_SHADOW
@@ -55,6 +62,10 @@ _LoadConfigInit:
  LoadConfigInit:
     RAM_PROLOGUE RAM_USE_CLASS_4
     
+	mov		[Port_2_Data_SHADE], 0h
+	mov		[Port_2_DriveMode_0_SHADE], ffh
+	mov		[Port_2_DriveMode_1_SHADE], 0h
+
 	lcall	LoadConfig_i2cram
 	lcall	LoadConfigTBL_i2cram_Ordered
 
@@ -176,3 +187,11 @@ AREA InterruptRAM(ram, rel)
 
 NO_SHADOW:
 _NO_SHADOW:
+; write only register shadows
+_Port_2_Data_SHADE:
+Port_2_Data_SHADE:	BLK	1
+_Port_2_DriveMode_0_SHADE:
+Port_2_DriveMode_0_SHADE:	BLK	1
+_Port_2_DriveMode_1_SHADE:
+Port_2_DriveMode_1_SHADE:	BLK	1
+

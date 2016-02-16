@@ -13,6 +13,8 @@ lib/i2chwmstr.asm
 
 lib/i2chwrsrcinits.asm
 
+lib/lcd.asm
+
 lib/psocconfig.asm
 
 lib/psocconfigtbl.asm
@@ -27,9 +29,9 @@ lib/uartplus.asm
 
 Linking..
 
-LMM info: area 'InterruptRAM' uses 9 bytes in SRAM bank 0
+LMM info: area 'InterruptRAM' uses 12 bytes in SRAM bank 0
 
-LMM info: area 'data' item of 81 bytes allocated in SRAM page 0
+LMM info: area 'data' item of 80 bytes allocated in SRAM page 0
 
 LMM info: area 'data' item of 25 bytes allocated in SRAM page 0
 
@@ -49,14 +51,16 @@ LMM info: area 'data' item of 2 bytes allocated in SRAM page 0
 
 LMM info: area 'data' item of 1 bytes allocated in SRAM page 0
 
+LMM info: area 'data' item of 256 bytes allocated in SRAM page 1
+
 idata dump at output/I2CRAM.idata
 
-  ROM 35% full. 11396 out of 32768 bytes used (does not include absolute areas).
+  ROM 40% full. 13029 out of 32768 bytes used (does not include absolute areas).
 
-  RAM 8% full. 141 bytes used (does not include stack usage).
+  RAM 23% full. 399 bytes used (does not include stack usage).
 
 Built with ICCM8C STD V7.05.00
 
  
-I2CRAM - 0 error(s) 0 warning(s) 08:45:57
+I2CRAM - 0 error(s) 0 warning(s) 22:33:30
 

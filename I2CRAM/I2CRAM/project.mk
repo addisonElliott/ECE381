@@ -1,14 +1,14 @@
 PROJNAME=I2CRAM
 DEVICE=CY8C29466
 BASEDEVICE=CY8C29000
-PROJPATH=C:/Users/addis/Desktop/ECE381/I2CRAM/I2CRAM
+PROJPATH=C:/Users/Jacob/Desktop/ECE381/I2CRAM/I2CRAM
 PSOCDIR=C:/PROGRA~2/Cypress/PSOCDE~1/5.4/Common/CYPRES~1
 INCLUDE_PATH=C:/PROGRA~2/Cypress/PSOCDE~1/5.4/Common/CYPRES~1/tools/include/CY8C29~1
 CSRCS= main.c
 LIBCSRCS=
 STDCSRCS=
 ASMSRCS=
-LIBASMSRCS= counter16.asm counter16int.asm i2chwcommon.asm i2chwint.asm i2chwmstr.asm i2chwrsrcinits.asm psocconfig.asm psocconfigtbl.asm uart.asm uartint.asm uartplus.asm
+LIBASMSRCS= counter16.asm counter16int.asm i2chwcommon.asm i2chwint.asm i2chwmstr.asm i2chwrsrcinits.asm lcd.asm psocconfig.asm psocconfigtbl.asm uart.asm uartint.asm uartplus.asm
 STDASMSRCS=
 OBJECT_SOURCES= main.c
 FILLVALUE=0x30

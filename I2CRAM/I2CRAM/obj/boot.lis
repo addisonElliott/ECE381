@@ -20,9 +20,9 @@
                 ;
                 ;=============================================================================
                 
- 0000           CPU_CLOCK:				equ	0h		;CPU clock value
+ 0003           CPU_CLOCK:				equ	3h		;CPU clock value
  0007           CPU_CLOCK_MASK:			equ	7h		;CPU clock mask
- 0000           CPU_CLOCK_JUST:			equ	0h		;CPU clock value justified
+ 0003           CPU_CLOCK_JUST:			equ	3h		;CPU clock value justified
  0000           SELECT_32K:				equ	0h		;32K select value
  0080           SELECT_32K_MASK:		equ	80h		;32K select mask
  0000           SELECT_32K_JUST:		equ	0h		;32K select value justified
@@ -109,9 +109,9 @@
  0000           PORT_1_INTCTRL_0:		equ 0h	;Port 1 interrupt control 0 register (PRT1IC0)
  0000           PORT_1_INTCTRL_1:		equ 0h	;Port 1 interrupt control 1 register (PRT1IC1)
  0080           PORT_2_GLOBAL_SELECT:	equ 80h	;Port 2 global select register (PRT2GS)
- 0080           PORT_2_DRIVE_0:			equ 80h	;Port 2 drive mode 0 register (PRT2DM0)
- 007F           PORT_2_DRIVE_1:			equ 7fh	;Port 2 drive mode 1 register (PRT2DM1)
- 007F           PORT_2_DRIVE_2:			equ 7fh	;Port 2 drive mode 2 register (PRT2DM2)
+ 00FF           PORT_2_DRIVE_0:			equ ffh	;Port 2 drive mode 0 register (PRT2DM0)
+ 0000           PORT_2_DRIVE_1:			equ 0h	;Port 2 drive mode 1 register (PRT2DM1)
+ 0000           PORT_2_DRIVE_2:			equ 0h	;Port 2 drive mode 2 register (PRT2DM2)
  0000           PORT_2_INTENABLE:		equ 0h	;Port 2 interrupt enable register (PRT2IE)
  0000           PORT_2_INTCTRL_0:		equ 0h	;Port 2 interrupt control 0 register (PRT2IC0)
  0000           PORT_2_INTCTRL_1:		equ 0h	;Port 2 interrupt control 1 register (PRT2IC1)
@@ -2121,45 +2121,45 @@
                   IF ( CPU_CLOCK_JUST ^ OSC_CR0_CPU_24MHz ) ;    As fast as 24MHz?
                                                             ;       no, set midpoint POR in user code, if desired
                   ELSE ; 24HMz                              ;
-                    or    reg[VLT_CR],  VLT_CR_POR_HIGH     ;      yes, highest POR trip point required
+ 0129 43E320        or    reg[VLT_CR],  VLT_CR_POR_HIGH     ;      yes, highest POR trip point required
                   ENDIF ; 24MHz
                  ENDIF ; Slow Mode
                 ENDIF ; 5.0V Operation
                 
- 0129 70EF          and   F, ~FLAG_XIO_MASK
- 012B           
- 012B               ;----------------------------
- 012B               ; Wrap up and invoke "main"
- 012B               ;----------------------------
- 012B           
- 012B               ; Disable the Sleep interrupt that was used for timing above.  In fact,
- 012B               ; no interrupts should be enabled now, so may as well clear the register.
- 012B               ;
- 012B 62E000        mov  reg[INT_MSK0],0
+ 012C 70EF          and   F, ~FLAG_XIO_MASK
  012E           
- 012E               ; Everything has started OK. Now select requested CPU & sleep frequency.
- 012E               ; And put decimator in full mode so it does not consume too much current.
+ 012E               ;----------------------------
+ 012E               ; Wrap up and invoke "main"
+ 012E               ;----------------------------
+ 012E           
+ 012E               ; Disable the Sleep interrupt that was used for timing above.  In fact,
+ 012E               ; no interrupts should be enabled now, so may as well clear the register.
  012E               ;
- 012E 7110          or    F, FLAG_XIO_MASK
- 0130 62E000        mov  reg[OSC_CR0],(SELECT_32K_JUST | PLL_MODE_JUST | SLEEP_TIMER_JUST | CPU_CLOCK_JUST)
- 0133 43E780        or   reg[DEC_CR2],80h                    ; Put decimator in full mode
- 0136 70EF          and   F, ~FLAG_XIO_MASK
- 0138           
- 0138               ; Global Interrupt are NOT enabled, this should be done in main().
- 0138               ; LVD is set but will not occur unless Global Interrupts are enabled.
- 0138               ; Global Interrupts should be enabled as soon as possible in main().
- 0138               ;
- 0138 62E200        mov  reg[INT_VC],0             ; Clear any pending interrupts which may
- 013B                                              ; have been set during the boot process.
+ 012E 62E000        mov  reg[INT_MSK0],0
+ 0131           
+ 0131               ; Everything has started OK. Now select requested CPU & sleep frequency.
+ 0131               ; And put decimator in full mode so it does not consume too much current.
+ 0131               ;
+ 0131 7110          or    F, FLAG_XIO_MASK
+ 0133 62E003        mov  reg[OSC_CR0],(SELECT_32K_JUST | PLL_MODE_JUST | SLEEP_TIMER_JUST | CPU_CLOCK_JUST)
+ 0136 43E780        or   reg[DEC_CR2],80h                    ; Put decimator in full mode
+ 0139 70EF          and   F, ~FLAG_XIO_MASK
+ 013B           
+ 013B               ; Global Interrupt are NOT enabled, this should be done in main().
+ 013B               ; LVD is set but will not occur unless Global Interrupts are enabled.
+ 013B               ; Global Interrupts should be enabled as soon as possible in main().
+ 013B               ;
+ 013B 62E200        mov  reg[INT_VC],0             ; Clear any pending interrupts which may
+ 013E                                              ; have been set during the boot process.
                 IF      (TOOLCHAIN & HITECH)
                         ljmp  startup                  ; Jump to C compiler startup code
                 ELSE
                 IF ENABLE_LJMP_TO_MAIN
                     ljmp  _main                    ; goto main (no return)
                 ELSE
- 013B 7C0000        lcall _main                    ; call main
- 013E           .Exit:
- 013E 8FFF          jmp  .Exit                     ; Wait here after return till power-off or reset
+ 013E 7C0000        lcall _main                    ; call main
+ 0141           .Exit:
+ 0141 8FFF          jmp  .Exit                     ; Wait here after return till power-off or reset
                 ENDIF
                 ENDIF ; TOOLCHAIN
                 
@@ -2167,14 +2167,14 @@
                     ; Library Access to Global Parms
                     ;---------------------------------
                     ;
- 0140            bGetPowerSetting:
- 0140           _bGetPowerSetting:
- 0140               ; Returns value of POWER_SETTING in the A register.
- 0140               ; No inputs. No Side Effects.
- 0140               ;
- 0140 5010          mov   A, POWER_SETTING
- 0142 7F            ret
- 0143           
+ 0143            bGetPowerSetting:
+ 0143           _bGetPowerSetting:
+ 0143               ; Returns value of POWER_SETTING in the A register.
+ 0143               ; No inputs. No Side Effects.
+ 0143               ;
+ 0143 5010          mov   A, POWER_SETTING
+ 0145 7F            ret
+ 0146           
                 IF      (TOOLCHAIN & HITECH)
                 ELSE
                     ;---------------------------------

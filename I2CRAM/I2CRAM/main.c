@@ -10,7 +10,8 @@
 
 static char rubout[4] = { 0x08, 0x20, 0x08, 0x00 }; // Rubout Sequence consists of Backspace Space Backspace. This is the null-terminated string
 
-char buf[81];
+char buf[80];
+char data[256];
 
 // This function reads characters from the serial until a character is entered that is within the min & max ASCII characters.
 // That character is returned
@@ -80,18 +81,20 @@ int HexConversion(char *src, char *dst)
 	char *str;
     int i = 0;
     int ii = 0;
+	int temp;
 
     str = cstrtok(src, " ");
     do
     {
-        if (strlen(str) > 2)
+        if (strlen(str) != 2)
             return -1;
 
         for (ii = 0; ii < strlen(str); ++ii)
             if (!isxdigit(str[ii]))
                 return -1;
 
-        csscanf(str, "%02hhx", &dst[i++]);
+        csscanf(str, "%x", &temp);
+		dst[i++] = temp;
         str = cstrtok(0x00, " ");
     } while (str != 0x00);
 
@@ -114,50 +117,79 @@ void main(void)
 	UART_Start(UART_PARITY_NONE);
 	Counter16_Start();
 	
+	LCD_Start();
+	
 	I2CHW_Start();
 	I2CHW_EnableMstr();
 	I2CHW_EnableInt();
 
-	UART_CPutString("-------I2C External SRAM-------\r\n");
+	UART_CPutString("########################## I2C External SRAM ########################\r\n\
+#	W # XX T [Data]\r\n\
+#		W    - Write command\r\n\
+#		#    - Group Address (0 - 7)\r\n\
+#		XX   - Memory Location in hex (00 - FF)\r\n\
+#		T    - Data Type, either A for ASCII or H for Hexadecimal\r\n\
+#		Data - Either ASCII string or Hexadecimal separates by spaces\r\n\
+#\t\t\tA - Mary had a little lamb\r\n\
+#\t\t\tH - 01 FF A0 0F D8 C3\r\n\
+#\r\n\
+#	R # XX T NN\r\n\
+#		R    - Read command\r\n\
+#		#    - Group Address (0 - 7)\r\n\
+#		XX   - Memory Location in hex (00 - FF)\r\n\
+#		T    - Data Type, either A for ASCII or H for Hexadecimal\r\n\
+#		NN	 - Number of bytes to read in hexadecimal\r\n\
+#####################################################################\r\n");
 	while (1)
 	{
 		char *cmd;
 		char *params;
-		char slaveAddress = 0xA0;
+		char slaveAddress = 0x50;
 		int strLoc = -1;
 		
-		GetLine(buf, 80); // Retrieves a line from UART
+		GetLine(buf, 79); // Retrieves a line from UART
 		
+		memset(data, 0x00, 256);
 		cmd = Lowercase(cstrtok(buf, " "));
 		if (strlen(cmd) == 1 && cmd[0] == 'w')
 		{	
 			int groupAddress;
-			unsigned char memLoc;
+			int memLoc;
 			char dataType;
-			int bytesRead;
-		
-			char data[80];
+			
 			int len;
 			
+			params = cstrtok(0x00, " ");
+			if (strlen(params) != 1 || csscanf(params, "%d", &groupAddress) != 1) goto error;
+	
+			params = cstrtok(0x00, " ");
+			if (strlen(params) != 2 || csscanf(params, "%x", &memLoc) != 1) goto error;
+			
+			params = cstrtok(0x00, " ");
+			if (strlen(params) != 1 || csscanf(params, "%c", &dataType) != 1) goto error;
+			
 			params = cstrtok(0x00, "\0");
-			if (csscanf(params, "%i%*[ ]%02hhx%*[ ]%c%*[ ]%n", &groupAddress, &memLoc, &dataType, &strLoc) != 3 || strLoc == -1)
-				goto error;
+			if (strlen(params) == 0) goto error;
+			LCD_Position(0, 1);
+			LCD_PrHexInt(strlen(params));
+			LCD_PrHexByte(params[0]);
+			LCD_PrHexByte(params[1]);
 			
 			dataType = tolower(dataType); // Lowercase this stuff b/c case insensitive
-			if (groupAddress < 0 || groupAddress > 1)
+			if (groupAddress < 0 || groupAddress > 7)
 				goto error;
 			
 			data[0] = memLoc;
-			slaveAddress |= (groupAddress << 1);
+			slaveAddress |= groupAddress;
 			
 			if (dataType == 'a')
 			{
-				strcpy(data, (params + bytesRead)); // If it wants ASCII, just copy it into src buffer
-				len = strlen(data); // Length is the length of string
+				strcpy((data + 1), params); // If it wants ASCII, just copy it into src buffer
+				len = strlen((data + 1)) + 1; // Length is the length of string
 			}
 			else if (dataType == 'h')
 			{
-				if ((len = HexConversion(data, (params + bytesRead + 1))) == -1) // Take hex data and convert to numbers into src + 1(src[0] has the memory loc)
+				if ((len = HexConversion(params, (data + 1))) == -1) // Take hex data and convert to numbers into src + 1(src[0] has the memory loc)
 					goto error;
 				len++; // Add one to the length because of the memoryLocation
 			}
@@ -168,31 +200,42 @@ void main(void)
 			while (!(I2CHW_bReadI2CStatus() & I2CHW_WR_COMPLETE));
 			I2CHW_ClrWrStatus();
 			
-			csprintf(data, "%i bytes were written", len); // Look up sprintf on Google for information 
+			csprintf(data, "%x bytes were written", len); // Look up sprintf on Google for information 
 			UART_PutString(data);
-			UART_PutCRLF();			
+			UART_PutCRLF();
 		}
 		else if (strlen(cmd) == 1 && cmd[0] == 'r')
 		{
 			int groupAddress;
-			unsigned char memLoc;
+			int memLoc;
 			char dataType;
-			unsigned char numBytes;
+			int numBytes;
 			
-			char data[80];
 			char hexStr[4];
 			int i;
+
+			params = cstrtok(0x00, " ");
+			if (strlen(params) != 1 || csscanf(params, "%d", &groupAddress) != 1) goto error;
+	
+			params = cstrtok(0x00, " ");
+			if (strlen(params) != 2 || csscanf(params, "%x", &memLoc) != 1) goto error;
 			
-			params = cstrtok(0x00, "\0");
-			if (csscanf(params, "%i%*[ ]%02hhx%*[ ]%c%*[ ]%02hhx %n", &groupAddress, &memLoc, &dataType, &numBytes, &strLoc) != 4 || strLoc == -1 || strLoc != strlen(params))
-				goto error;
+			params = cstrtok(0x00, " ");
+			if (strlen(params) != 1 || csscanf(params, "%c", &dataType) != 1) goto error;
+			
+			params = cstrtok(0x00, " ");
+			if (strlen(params) != 2 || csscanf(params, "%x", &numBytes) != 1) goto error;
+			
+			if (cstrtok(0x00, " ") != 0x00) goto error;
+			LCD_Position(1, 0);
+			LCD_PrHexInt(strlen(cstrtok(0x00, "\0")));
 			
 			dataType = tolower(dataType); // Lowercase this stuff b/c case insensitive
-			if (groupAddress < 0 || groupAddress > 1 || numBytes > 80)
+			if (groupAddress < 0 || groupAddress > 7)
 				goto error;
 			
 			data[0] = memLoc;
-			slaveAddress |= (groupAddress << 1);
+			slaveAddress |= groupAddress;
 			
 			I2CHW_bWriteBytes(slaveAddress, data, 1, I2CHW_NoStop);
 			while (!(I2CHW_bReadI2CStatus() & I2CHW_WR_COMPLETE));
@@ -212,7 +255,7 @@ void main(void)
 			{
 				for (i = 0; i < numBytes; ++i)
 				{
-					csprintf(hexStr, "%hhX ", data[i]);
+					csprintf(hexStr, "%X ", data[i]);
 					UART_PutString(hexStr);
 				}
 				UART_PutCRLF();
@@ -223,7 +266,8 @@ void main(void)
 		else 
 			goto error;
 		
+		continue;
 		error:
-			UART_CPutString("Invalid format entered. Valid formats are:\r\n\tW [GroupAddress] [MemoryLocation] [h|a] Hex/ASCII\r\n\tR [GroupAddress] [MemoryLocation] [h|a] [NumBytes]");
+			UART_CPutString("Invalid format entered. Valid formats are:\r\n\tW [GroupAddress] [MemoryLocation] [h|a] Hex/ASCII\r\n\tR [GroupAddress] [MemoryLocation] [h|a] [NumBytes]\r\n");
 	}
 }

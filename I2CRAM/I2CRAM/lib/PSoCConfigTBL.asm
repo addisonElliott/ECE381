@@ -30,6 +30,7 @@ LoadConfigTBL_i2cram_Bank0:
 	db		25h, 00h		;Counter16_PERIOD_MSB_REG(DBB01DR1)
 	db		26h, 00h		;Counter16_COMPARE_MSB_REG(DBB01DR2)
 ;  Instance name I2CHW, User Module I2CHW
+;  Instance name LCD, User Module LCD
 ;  Instance name UART, User Module UART
 ;       Instance name UART, Block Name RX(DCB03)
 	db		2fh, 00h		;UART_RX_CONTROL_REG(DCB03CR0)
@@ -91,6 +92,7 @@ LoadConfigTBL_i2cram_Bank1:
 	db		25h, 35h		;Counter16_INPUT_MSB_REG(DBB01IN)
 	db		26h, 44h		;Counter16_OUTPUT_MSB_REG(DBB01OU)
 ;  Instance name I2CHW, User Module I2CHW
+;  Instance name LCD, User Module LCD
 ;  Instance name UART, User Module UART
 ;       Instance name UART, Block Name RX(DCB03)
 	db		2ch, 05h		;UART_RX_FUNC_REG   (DCB03FN)
@@ -150,10 +152,10 @@ LoadConfigTBL_i2cram_Ordered:
 	mov	reg[05h], 00h		; Port_1_IntEn register (PRT1IE)
 	mov	reg[08h], 00h		; Port_2_Data register (PRT2DR)
 	M8C_SetBank1
-	mov	reg[08h], 80h		; Port_2_DriveMode_0 register (PRT2DM0)
-	mov	reg[09h], 7fh		; Port_2_DriveMode_1 register (PRT2DM1)
+	mov	reg[08h], ffh		; Port_2_DriveMode_0 register (PRT2DM0)
+	mov	reg[09h], 00h		; Port_2_DriveMode_1 register (PRT2DM1)
 	M8C_SetBank0
-	mov	reg[0bh], 7fh		; Port_2_DriveMode_2 register (PRT2DM2)
+	mov	reg[0bh], 00h		; Port_2_DriveMode_2 register (PRT2DM2)
 	mov	reg[0ah], 80h		; Port_2_GlobalSelect register (PRT2GS)
 	M8C_SetBank1
 	mov	reg[0ah], 00h		; Port_2_IntCtrl_0 register (PRT2IC0)

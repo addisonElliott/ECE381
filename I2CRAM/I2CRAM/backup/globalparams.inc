@@ -19,9 +19,9 @@
 ;=============================================================================
 ;
 
-CPU_CLOCK:				equ	0h		;CPU clock value
+CPU_CLOCK:				equ	3h		;CPU clock value
 CPU_CLOCK_MASK:			equ	7h		;CPU clock mask
-CPU_CLOCK_JUST:			equ	0h		;CPU clock value justified
+CPU_CLOCK_JUST:			equ	3h		;CPU clock value justified
 SELECT_32K:				equ	0h		;32K select value
 SELECT_32K_MASK:		equ	80h		;32K select mask
 SELECT_32K_JUST:		equ	0h		;32K select value justified
@@ -108,9 +108,9 @@ PORT_1_INTENABLE:		equ 0h	;Port 1 interrupt enable register (PRT1IE)
 PORT_1_INTCTRL_0:		equ 0h	;Port 1 interrupt control 0 register (PRT1IC0)
 PORT_1_INTCTRL_1:		equ 0h	;Port 1 interrupt control 1 register (PRT1IC1)
 PORT_2_GLOBAL_SELECT:	equ 80h	;Port 2 global select register (PRT2GS)
-PORT_2_DRIVE_0:			equ 80h	;Port 2 drive mode 0 register (PRT2DM0)
-PORT_2_DRIVE_1:			equ 7fh	;Port 2 drive mode 1 register (PRT2DM1)
-PORT_2_DRIVE_2:			equ 7fh	;Port 2 drive mode 2 register (PRT2DM2)
+PORT_2_DRIVE_0:			equ ffh	;Port 2 drive mode 0 register (PRT2DM0)
+PORT_2_DRIVE_1:			equ 0h	;Port 2 drive mode 1 register (PRT2DM1)
+PORT_2_DRIVE_2:			equ 0h	;Port 2 drive mode 2 register (PRT2DM2)
 PORT_2_INTENABLE:		equ 0h	;Port 2 interrupt enable register (PRT2IE)
 PORT_2_INTCTRL_0:		equ 0h	;Port 2 interrupt control 0 register (PRT2IC0)
 PORT_2_INTCTRL_1:		equ 0h	;Port 2 interrupt control 1 register (PRT2IC1)

@@ -1,7 +1,12 @@
-flash 2E24 SRAM    9:
- 00 106 bytes
-flash 2E28 SRAM   7E:
+flash 3485 SRAM    C:
+ 00 105 bytes
+flash 3489 SRAM   80:
  <size at next line>   8 20  8
   [size:] 3 bytes
-flash 2E2E SRAM   81:
+flash 348F SRAM   83:
  00 12 bytes
+flash 3493 SRAM  100:
+ 00 255 bytes
+flash 3497 SRAM  1FF:
+ <size at next line>   0
+  [size:] 1 bytes
