@@ -4,18 +4,18 @@
 
 #include <m8c.h>        // part specific constants and macros
 #include "PSoCAPI.h"    // PSoC API definitions for all User Modules
-#include "string.h"
-#include "stdio.h"
-#include "ctype.h"
+#include "string.h"		// used for any of the string fcns supported by API
+#include "stdio.h"		// this is used for fcns....
+#include "ctype.h"		// this is used for fcns.. csspanf() and cstork()
 
 static char rubout[4] = { 0x08, 0x20, 0x08, 0x00 }; // Rubout Sequence consists of Backspace Space Backspace. This is the null-terminated string
 
-char buf[80];
-char data[256];
+char buf[80];	// global array for user cmd and entry
+char data[256];	// all the spots in memory
 
 // This function reads characters from the serial until a character is entered that is within the min & max ASCII characters.
 // That character is returned
-char GetNumber(char min, char max)
+char GetNumber(char min, char max)	// gets passed
 {
 	char c;
 	
@@ -39,11 +39,11 @@ char GetLine(char *buffer, char bufferLen)
 	char c;
 	char strPos = 0; // Current position in the string
 	
-	UART_PutChar('>');
+	UART_PutChar('>'); // print line pointer
 	
 	while (1)
 	{
-		c = UART_cReadChar(); // Read the character
+		c = UART_cReadChar(); // Use UART module to read the character user enters
 		
 		if (c == 0x08 || c == 0x7F) // Delete or backspace pressed
 		{
@@ -55,11 +55,11 @@ char GetLine(char *buffer, char bufferLen)
 		}
 		else if (c == 0x0D) // Newline enter is pressed
 		{
-			buffer[strPos] = 0x00;
+			buffer[strPos] = 0x00; // put the null character at the current strPos
 			UART_PutCRLF(); // Go to another line
 			return strPos;
 		}
-		else if (c >= 0x20 && c < 0x7F) // Only echo valid characters to the string. These are any alphabet, numeric, or symbols
+		else if (c >= 0x20 && c < 0x7F) // only valid characters to the string. These are any alphabet, numeric, or symbols
 		{
 			if (strPos < bufferLen) // If there is space in the buffer
 			{
@@ -78,10 +78,10 @@ char GetLine(char *buffer, char bufferLen)
 // the number of bytes converted
 int HexConversion(char *src, char *dst)
 {
-	char *str;
-    int i = 0;
-    int ii = 0;
-	int temp;
+	char *str; // pointer to char array local to fcn	
+    int i = 0;	// return int
+    int ii = 0; // for loop indexing
+	int temp;	// 
 
     str = cstrtok(src, " ");
     do
@@ -113,16 +113,17 @@ char *Lowercase(char *str)
 void main(void)
 {	
 	M8C_EnableGInt ; // Uncomment this line to enable Global Interrupts
-	
+	// User Interface
 	UART_Start(UART_PARITY_NONE);
+	// clock for moving serial
 	Counter16_Start();
-	
+	// used to debug
 	LCD_Start();
-	
+	// initialize and enable the I2C module
 	I2CHW_Start();
 	I2CHW_EnableMstr();
 	I2CHW_EnableInt();
-
+// user guide for cmd window
 	UART_CPutString("########################## I2C External SRAM ########################\r\n\
 #	W # XX T [Data]\r\n\
 #		W    - Write command\r\n\
@@ -143,49 +144,53 @@ void main(void)
 	while (1)
 	{
 		char *cmd;
-		char *params;
-		char slaveAddress = 0x50;
-		int strLoc = -1;
+		char *params;	// most widely buffer
+		char slaveAddress = 0x50;		// 01010000'0' R/W shifted to front
 		
-		GetLine(buf, 79); // Retrieves a line from UART
-		
-		memset(data, 0x00, 256);
+		GetLine(buf, 79); // passing ref to global char array and max length of cmd entry
+							// return value not used
+		memset(data, 0x00, 256);	// initialize all the set {data} to zero
 		cmd = Lowercase(cstrtok(buf, " "));
+		// WRITE
 		if (strlen(cmd) == 1 && cmd[0] == 'w')
 		{	
-			int groupAddress;
+			int groupAddress; // only 1 and 2 actually go to SRAM
 			int memLoc;
 			char dataType;
 			
 			int len;
 			
-			params = cstrtok(0x00, " ");
+			params = cstrtok(0x00, " ");  // this statement begins in buf where previous delimiter left off
+											// after getting the cmd from buf. it goes to next space delimiter
+			
+			// csscanf() used to assign initialize groupAdress, memLoc, and dataType.  also makes for easy length validation
+			// condtion to test the 0 or 1 int representation of the group address
+				// csscanf(const * char, %interrpret read type as, store in location) returns an integer
 			if (strlen(params) != 1 || csscanf(params, "%d", &groupAddress) != 1) goto error;
-	
-			params = cstrtok(0x00, " ");
+			
+			params = cstrtok(0x00, " "); // get memLoc could be 00 to FF ( Mem(0) to Mem(255))
 			if (strlen(params) != 2 || csscanf(params, "%x", &memLoc) != 1) goto error;
 			
 			params = cstrtok(0x00, " ");
 			if (strlen(params) != 1 || csscanf(params, "%c", &dataType) != 1) goto error;
-			
+			// after ascii or hex selection read the rest until null ( note new delimiter)
 			params = cstrtok(0x00, "\0");
-			if (strlen(params) == 0) goto error;
-			LCD_Position(0, 1);
-			LCD_PrHexInt(strlen(params));
-			LCD_PrHexByte(params[0]);
-			LCD_PrHexByte(params[1]);
+			if (strlen(params) == 0 || params == 0x00) goto error;	// the set up command but didn't put anything in to write
 			
 			dataType = tolower(dataType); // Lowercase this stuff b/c case insensitive
 			if (groupAddress < 0 || groupAddress > 7)
-				goto error;
+				goto error;// groupAddress int representation is invalid
 			
-			data[0] = memLoc;
-			slaveAddress |= groupAddress;
+			data[0] = memLoc;	// begin to fill the global data[256] first byte is user hex mem entry
 			
-			if (dataType == 'a')
+			slaveAddress |= groupAddress;	// adds group address to the slaveAddress
+												// how does this work?? slaveAddress a char and groupAddress an int
+			if (dataType == 'a') // check data type used to write or read
 			{
-				strcpy((data + 1), params); // If it wants ASCII, just copy it into src buffer
-				len = strlen((data + 1)) + 1; // Length is the length of string
+				strcpy((data + 1), params); // If it wants ASCII, just copy it from params into data +1
+						// data + 1 (byte after memLoc) is destination, params is source copies dataType
+				len = strlen((data + 1)) + 1; // length after pointing to data plus one measure then add 1 ??
+												// because memory location why is this twice????
 			}
 			else if (dataType == 'h')
 			{
@@ -196,7 +201,7 @@ void main(void)
 			else
 				goto error;
 			
-			I2CHW_bWriteBytes(slaveAddress, data, len, I2CHW_CompleteXfer); // Write it
+			I2CHW_bWriteBytes(slaveAddress, data, len, I2CHW_CompleteXfer); // Write it using Master Fcn 
 			while (!(I2CHW_bReadI2CStatus() & I2CHW_WR_COMPLETE));
 			I2CHW_ClrWrStatus();
 			
@@ -204,6 +209,7 @@ void main(void)
 			UART_PutString(data);
 			UART_PutCRLF();
 		}
+		// READ
 		else if (strlen(cmd) == 1 && cmd[0] == 'r')
 		{
 			int groupAddress;
@@ -227,8 +233,6 @@ void main(void)
 			if (strlen(params) != 2 || csscanf(params, "%x", &numBytes) != 1) goto error;
 			
 			if (cstrtok(0x00, " ") != 0x00) goto error;
-			LCD_Position(1, 0);
-			LCD_PrHexInt(strlen(cstrtok(0x00, "\0")));
 			
 			dataType = tolower(dataType); // Lowercase this stuff b/c case insensitive
 			if (groupAddress < 0 || groupAddress > 7)
@@ -241,7 +245,7 @@ void main(void)
 			while (!(I2CHW_bReadI2CStatus() & I2CHW_WR_COMPLETE));
 			I2CHW_ClrWrStatus();
 			
-			I2CHW_fReadBytes(slaveAddress, data, numBytes, I2CHW_RepStart);
+			I2CHW_fReadBytes(slaveAddress, data, numBytes, I2CHW_CompleteXfer);
 			while(!(I2CHW_bReadI2CStatus() & I2CHW_RD_COMPLETE));
 			I2CHW_ClrRdStatus();
 			
