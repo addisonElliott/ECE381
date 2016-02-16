@@ -1,6 +1,6 @@
 Project:      output/I2CRAM
 Build Number: 0
-Date:         Mon Feb 15 22:33:30 2016
+Date:         Tue Feb 16 14:30:32 2016
 Compiler:     ICCM8C
 Version:      7.05.00
 
@@ -192,7 +192,7 @@ Area                               Addr   Size   Decimal Bytes (Attributes)
 
 Area                               Addr   Size   Decimal Bytes (Attributes)
 --------------------------------   ----   ----   ------- ----- ------------
-                            text   0FDD   24A8 =   9384. bytes (rel,con,rom,code)
+                            text   0FDD   2430 =   9264. bytes (rel,con,rom,code)
 
        Addr  Global Symbol
       -----  --------------------------------
@@ -202,36 +202,36 @@ Area                               Addr   Size   Decimal Bytes (Attributes)
        10C5  _HexConversion
        11EA  _Lowercase
        1259  _main
-       19E0  _memsetLMM
-       19EB  _memset
-       1A0E  _strcpyLMM
-       1A1D  _strcpy
-       1A37  _strlenLMM
-       1A42  _strlen
-       1A5D  __plcall
-       1A69  _itoa
-       1C42  _strtol
-       2064  _strtoul
-       23FA  _utoa
-       253D  _isdigit
-       255E  _islower
-       257F  _isspace
-       25A0  _isupper
-       25C1  _isxdigit
-       25E2  _toupper
-       2620  _tolower
-       265E  __csdepi
-       2690  _csprintf
-       2747  _csscanf
-       27B3  __cprint
-       2EC1  __cscanf
-       3226  _cstrcspn
-       32A8  _cstrpbrk
-       32F5  _cstrspn
-       33A2  _cstrtok
-       3485  __xidata_start
-       3485  __text_end
-       349D  __xidata_end
+       1968  _memsetLMM
+       1973  _memset
+       1996  _strcpyLMM
+       19A5  _strcpy
+       19BF  _strlenLMM
+       19CA  _strlen
+       19E5  __plcall
+       19F1  _itoa
+       1BCA  _strtol
+       1FEC  _strtoul
+       2382  _utoa
+       24C5  _isdigit
+       24E6  _islower
+       2507  _isspace
+       2528  _isupper
+       2549  _isxdigit
+       256A  _toupper
+       25A8  _tolower
+       25E6  __csdepi
+       2618  _csprintf
+       26CF  _csscanf
+       273B  __cprint
+       2E49  __cscanf
+       31AE  _cstrcspn
+       3230  _cstrpbrk
+       327D  _cstrspn
+       332A  _cstrtok
+       340D  __xidata_start
+       340D  __text_end
+       3425  __xidata_end
 
 Area                               Start  End    Decimal Bytes (Attributes)
 --------------------------------   ----   ----   ------- ----- ------------

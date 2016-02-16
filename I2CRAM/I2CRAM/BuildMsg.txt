@@ -55,12 +55,12 @@ LMM info: area 'data' item of 256 bytes allocated in SRAM page 1
 
 idata dump at output/I2CRAM.idata
 
-  ROM 40% full. 13029 out of 32768 bytes used (does not include absolute areas).
+  ROM 40% full. 12909 out of 32768 bytes used (does not include absolute areas).
 
   RAM 23% full. 399 bytes used (does not include stack usage).
 
 Built with ICCM8C STD V7.05.00
 
  
-I2CRAM - 0 error(s) 0 warning(s) 22:33:30
+I2CRAM - 0 error(s) 0 warning(s) 14:30:33
 
