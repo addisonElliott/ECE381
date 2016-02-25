@@ -1,6 +1,6 @@
 Project:      output/HVACmodel
 Build Number: 0
-Date:         Thu Feb 25 01:32:02 2016
+Date:         Thu Feb 25 15:22:34 2016
 Compiler:     ICCM8C
 Version:      7.05.00
 
@@ -161,8 +161,8 @@ Area                               Addr   Size   Decimal Bytes (Attributes)
        0D29  _LCD_Delay50uTimes
        0D29  LCD_Delay50uTimes
        0D2F  LCD_Delay50u_Table
-       0D37  _LCD_Delay50u
        0D37  LCD_Delay50u
+       0D37  _LCD_Delay50u
        0D4B  _I2CHW_Start
        0D4B  I2CHW_Start
        0D4C  _I2CHW_ResumeInt
@@ -211,40 +211,41 @@ Area                               Addr   Size   Decimal Bytes (Attributes)
 
 Area                               Addr   Size   Decimal Bytes (Attributes)
 --------------------------------   ----   ----   ------- ----- ------------
-                            text   1127   1BE2 =   7138. bytes (rel,con,rom,code)
+                            text   1127   1E64 =   7780. bytes (rel,con,rom,code)
 
        Addr  Global Symbol
       -----  --------------------------------
        1127  __text_start
        1127  _GetLine
-       122D  _Lowercase
-       129C  _IsNumber
-       12FA  _NumToStr
-       13A1  _WriteI2C
-       143F  _ReadI2C
-       14A2  _main
-       1B03  _PSoC_TempCounter_ISR_C
-       1B1A  _PSoC_MotorDriver_ISR_C
-       1B1D  _PSoC_GPIO_ISR_C
-       1C07  _strlenLMM
-       1C12  _strlen
-       1C2D  __plcall
-       1C39  _strtol
-       205B  _strtoul
-       23F1  _isdigit
-       2412  _isspace
-       2433  _isupper
-       2454  _isxdigit
-       2475  _tolower
-       2501  _csscanf
-       2745  __cscanf
-       2AAA  _cstrcspn
-       2B2C  _cstrpbrk
-       2B79  _cstrspn
-       2C26  _cstrtok
-       2D09  __xidata_start
-       2D09  __text_end
-       2D26  __xidata_end
+       124B  _Lowercase
+       12BA  _IsNumber
+       1318  _NumToStr
+       13B8  _CheckFan
+       13D9  _WriteI2C
+       1477  _ReadI2C
+       14DA  _main
+       1D85  _PSoC_TempCounter_ISR_C
+       1D9C  _PSoC_MotorDriver_ISR_C
+       1D9F  _PSoC_GPIO_ISR_C
+       1E89  _strlenLMM
+       1E94  _strlen
+       1EAF  __plcall
+       1EBB  _strtol
+       22DD  _strtoul
+       2673  _isdigit
+       2694  _isspace
+       26B5  _isupper
+       26D6  _isxdigit
+       26F7  _tolower
+       2783  _csscanf
+       29C7  __cscanf
+       2D2C  _cstrcspn
+       2DAE  _cstrpbrk
+       2DFB  _cstrspn
+       2EA8  _cstrtok
+       2F8B  __text_end
+       2F8B  __xidata_start
+       2FAA  __xidata_end
 
 Area                               Start  End    Decimal Bytes (Attributes)
 --------------------------------   ----   ----   ------- ----- ------------
@@ -313,7 +314,7 @@ Area                               Addr   Size   Decimal Bytes (Attributes)
 
 Area                               Addr   Size   Decimal Bytes (Attributes)
 --------------------------------   ----   ----   ------- ----- ------------
-                            data   0000   0066 =    102. bytes (rel,con,ram)
+                            data   0000   0068 =    104. bytes (rel,con,ram)
 
        Addr  Global Symbol
       -----  --------------------------------
@@ -322,14 +323,15 @@ Area                               Addr   Size   Decimal Bytes (Attributes)
        0067  main.c:rubout
        006F  _errno
        0073  _setTemp
-       0074  _curTemp
-       0075  _fanMode
-       0076  _fanSpeed
-       0077  _updateLCD
-       0079  _checkTemp
-       007A  _strPos
-       007B  main.c:slaveAddress
-       007C  _thermostatMode
+       0074  _tolerance
+       0075  _curTemp
+       0076  _fanMode
+       0077  _fanSpeed
+       0079  _updateLCD
+       007B  _checkTemp
+       007C  _strPos
+       007D  main.c:slaveAddress
+       007E  _thermostatMode
 
 Files Linked      [ module(s) ]
 

@@ -25,6 +25,7 @@ char updateLCD = TRUE; // This is a boolean that gets set when the LCD needs to 
 
 char curTemp = 0; // Current temperature
 char setTemp = 25; // Desired temperature
+char tolerance = 10;
 char thermostatMode = 0; // 0 = Off, 1 = Heating, 2 = Cooling
 char fanMode = 1; // 0 = Manual, 1 = Automatic
 char fanSpeed = 0; // 0 = Low, 1 = Medium, 2 = High
@@ -35,7 +36,14 @@ char fanSpeed = 0; // 0 = Low, 1 = Medium, 2 = High
 char GetLine(char *buffer, char *strPos, char bufferLen)
 {
 	char c;
+	static char newCommand = TRUE;
 	
+	if (newCommand)
+	{
+		UART_PutChar('>');
+		newCommand = FALSE;
+	}
+		
 	if ((c = UART_cReadChar()))
 	{
 		if (c == 0x08 || c == 0x7F) // Delete or backspace pressed
@@ -51,6 +59,7 @@ char GetLine(char *buffer, char *strPos, char bufferLen)
 			buffer[*strPos] = 0x00; // put the null character at the current strPos
 			UART_PutCRLF(); // Go to another line
 			*strPos = 0;
+			newCommand = TRUE;
 			return TRUE;
 		}
 		else if (c >= 0x20 && c < 0x7F) // only valid characters to the string. These are any alphabet, numeric, or symbols
@@ -94,14 +103,20 @@ char IsNumber(char *str)
 char *NumToStr(char *buf, unsigned int value, int digits)
 {
 	char start = digits - 1;
+	buf[digits] = '\0';
 	while (digits--)
 	{
 		buf[start--] = (value % 10) + '0';
 		value /= 10;
 	}
 	
-	buf[start] = '\0';
 	return buf;
+}
+
+void CheckFan(void)
+{
+	if (fanMode == 0 || Tout_Data_ADDR & Tout_MASK) MotorDriver_Start();
+	else MotorDriver_Stop();
 }
 
 // Writes a command to a device using I2C. The command character is sent first followed by len bytes. Limited to 31 bytes. Use the other
@@ -157,8 +172,8 @@ void main(void)
 	
 	WriteI2C(slaveAddress, 0xAC, 1, 0x02);
 	
-	WriteI2C(slaveAddress, 0xA1, 2, 30, 0x00);
-	WriteI2C(slaveAddress, 0xA2, 2, 20, 0x00);
+	WriteI2C(slaveAddress, 0xA1, 2, (setTemp + tolerance), 0x00);
+	WriteI2C(slaveAddress, 0xA2, 2, (setTemp - tolerance), 0x00);
 	WriteI2C(slaveAddress, 0xEE, 0);
 	
 	// Writes initial string to LCD. When LCD is updated, only the numbers will be changed
@@ -203,16 +218,28 @@ void main(void)
 				
 				if (cstrtok(0x00, " ") != 0x00) goto error;
 				if ( temp > 99 || temp < 0) goto error; 
+				
+				setTemp = temp;
+				WriteI2C(slaveAddress, 0xA1, 2, (setTemp + tolerance), 0x00);
+				WriteI2C(slaveAddress, 0xA2, 2, (setTemp - tolerance), 0x00);
+				updateLCD = TRUE;
 			}
 			else if (strlen(cmd) == 1 && cmd[0] == 't')
 			{	
-				int tolerance; 
+				int tol; 
 			
 				params = cstrtok(0x00, " "); 							
-				if (!IsNumber(params) || strlen(params) < 1 || strlen(params) > 2 || csscanf(params, "%d", &tolerance) != 1) goto error;
+				if (!IsNumber(params) || strlen(params) < 1 || strlen(params) > 2 || csscanf(params, "%d", &tol) != 1) goto error;
 				
 				if (cstrtok(0x00, " ") != 0x00) goto error;
-				if ( tolerance > 20 || tolerance < 2) goto error; 
+				if ( tol > 20 || tol < 2) goto error;
+				
+				tolerance = tol;
+				
+				WriteI2C(slaveAddress, 0xA1, 2, (setTemp + tolerance), 0x00);
+				WriteI2C(slaveAddress, 0xA2, 2, (setTemp - tolerance), 0x00);
+				updateLCD = TRUE;
+				
 			}
 			else if (strlen(cmd) == 1 && cmd[0] == 'm')
 			{	
@@ -224,11 +251,32 @@ void main(void)
 				if (cstrtok(0x00, " ") != 0x00) goto error;
 				
 				mode = tolower(mode);
+				
+				switch (mode)
+				{
+					case 'h':
+						thermostatMode = 1;
+						WriteI2C(slaveAddress,0xAC, 1, 0x00);
+						break;
+						
+					case 'c':
+						thermostatMode = 2;
+						WriteI2C(slaveAddress, 0xAC, 1, 0x02);
+						break;
+						
+					case 'f':
+						thermostatMode = 0;
+						break;
+						
+					default:
+						goto error;
+				}
+				CheckFan();
 			}
 			else if (strlen(cmd) == 1 && cmd[0] == 'f')
 			{	
-				char fanMode;
-				char fanSpeed;
+				char mode;
+				char speed;
 			
 				params = cstrtok(0x00, " "); 	
 				if (strlen(params) != 1 || csscanf(params, "%c", &fanMode) != 1) goto error;
@@ -240,6 +288,42 @@ void main(void)
 				fanSpeed = tolower(fanSpeed);
 				fanMode = tolower(fanMode);
 				
+				switch (mode)
+				{
+					case 'm':
+						fanMode = 0;
+						break;
+						
+					case 'a':
+						fanMode = 1;
+						break;
+						
+					default:
+						goto error;
+				}
+				MotorDriver_Stop();
+				
+				switch (speed)
+				{
+					case 'l':
+						fanSpeed = 0;
+						MotorDriver_WritePeriod(1999);
+						MotorDriver_WriteCompareValue(1000);
+						break;
+						
+					case 'm':
+						fanSpeed = 1;
+						MotorDriver_WritePeriod(9999);
+						MotorDriver_WriteCompareValue(5000);
+						break;
+						
+					case 'h':
+						fanSpeed = 2;
+						MotorDriver_WritePeriod(49999);
+						MotorDriver_WriteCompareValue(25000);
+						break;
+				}
+				CheckFan();
 			}
 			else 
 				goto error;
@@ -261,7 +345,7 @@ void main(void)
 			NumToStr(buf, curTemp, 2);
 			LCD_Position(0, 5); LCD_PrString(buf);
 			
-			LCD_Position(0,8);
+			LCD_Position(0, 8);
 			switch(thermostatMode)
 			{
 				case 0: LCD_PrCString("OFF "); break;
@@ -272,7 +356,7 @@ void main(void)
 			NumToStr(buf, setTemp, 2);
 			LCD_Position(1, 5); LCD_PrString(buf);
 			
-			LCD_Position(1,12);
+			LCD_Position(1, 12);
 			if (fanMode == 1 && thermostatMode == 0) LCD_PrCString("OFF");
 			else if (fanSpeed == 0) LCD_PrCString("LOW");
 			else if (fanSpeed == 1) LCD_PrCString("MED");
