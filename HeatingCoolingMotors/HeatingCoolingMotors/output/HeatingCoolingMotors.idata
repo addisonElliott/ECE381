@@ -1,0 +1,10 @@
+flash 394C SRAM    C:
+ 00 105 bytes
+flash 3950 SRAM   84:
+ <size at next line>   A  6  5  9  8 20  8
+  [size:] 7 bytes
+flash 395A SRAM   8B:
+ 00 14 bytes
+flash 395E SRAM   99:
+ <size at next line>   A 19  0  0  1  1 90  1
+  [size:] 8 bytes
