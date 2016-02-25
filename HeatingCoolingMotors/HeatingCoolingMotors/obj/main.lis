@@ -1,0 +1,2717 @@
+ 0000                   cpu LMM
+                        .module main.c
+                        .area text(rom, con, rel)
+ 0000                   .dbfile ./main.c
+                        .area data(ram, con, rel)
+ 0000                   .dbfile ./main.c
+ 0000           _rubout:
+ 0000 0820              .byte 8,32
+ 0002 0800              .byte 8,0
+ 0004                   .dbfile C:\Users\addis\Desktop\ECE381\HEATIN~1\HEATIN~1\main.c
+ 0004                   .dbsym s rubout _rubout A[4:4]c
+                        .area data(ram, con, rel)
+ 0000                   .dbfile C:\Users\addis\Desktop\ECE381\HEATIN~1\HEATIN~1\main.c
+                        .area data(ram, con, rel)
+ 0000                   .dbfile C:\Users\addis\Desktop\ECE381\HEATIN~1\HEATIN~1\main.c
+ 0000           _stepperSequence:
+ 0000 0A06              .byte 10,6
+ 0002 0509              .byte 5,9
+ 0004                   .dbsym s stepperSequence _stepperSequence A[4:4]c
+                        .area data(ram, con, rel)
+ 0000                   .dbfile C:\Users\addis\Desktop\ECE381\HEATIN~1\HEATIN~1\main.c
+                        .area data(ram, con, rel)
+ 0000                   .dbfile C:\Users\addis\Desktop\ECE381\HEATIN~1\HEATIN~1\main.c
+ 0000           _slaveAddress:
+ 0000 90                .byte 144
+ 0001                   .dbsym s slaveAddress _slaveAddress c
+                        .area data(ram, con, rel)
+ 0000                   .dbfile C:\Users\addis\Desktop\ECE381\HEATIN~1\HEATIN~1\main.c
+                        .area data(ram, con, rel)
+ 0000                   .dbfile C:\Users\addis\Desktop\ECE381\HEATIN~1\HEATIN~1\main.c
+ 0000           _lcdUpdate::
+ 0000 01                .byte 1
+ 0001                   .dbsym e lcdUpdate _lcdUpdate c
+                        .area data(ram, con, rel)
+ 0000                   .dbfile C:\Users\addis\Desktop\ECE381\HEATIN~1\HEATIN~1\main.c
+                        .area data(ram, con, rel)
+ 0000                   .dbfile C:\Users\addis\Desktop\ECE381\HEATIN~1\HEATIN~1\main.c
+ 0000           _checkTemp::
+ 0000 01                .byte 1
+ 0001                   .dbsym e checkTemp _checkTemp c
+                        .area data(ram, con, rel)
+ 0000                   .dbfile C:\Users\addis\Desktop\ECE381\HEATIN~1\HEATIN~1\main.c
+                        .area data(ram, con, rel)
+ 0000                   .dbfile C:\Users\addis\Desktop\ECE381\HEATIN~1\HEATIN~1\main.c
+ 0000           _curTemp::
+ 0000 00                .byte 0
+ 0001                   .dbsym e curTemp _curTemp c
+                        .area data(ram, con, rel)
+ 0000                   .dbfile C:\Users\addis\Desktop\ECE381\HEATIN~1\HEATIN~1\main.c
+                        .area data(ram, con, rel)
+ 0000                   .dbfile C:\Users\addis\Desktop\ECE381\HEATIN~1\HEATIN~1\main.c
+ 0000           _setTemp::
+ 0000 19                .byte 25
+ 0001                   .dbsym e setTemp _setTemp c
+                        .area data(ram, con, rel)
+ 0000                   .dbfile C:\Users\addis\Desktop\ECE381\HEATIN~1\HEATIN~1\main.c
+                        .area data(ram, con, rel)
+ 0000                   .dbfile C:\Users\addis\Desktop\ECE381\HEATIN~1\HEATIN~1\main.c
+ 0000           _tolerance::
+ 0000 0A                .byte 10
+ 0001                   .dbsym e tolerance _tolerance c
+                        .area data(ram, con, rel)
+ 0000                   .dbfile C:\Users\addis\Desktop\ECE381\HEATIN~1\HEATIN~1\main.c
+                        .area data(ram, con, rel)
+ 0000                   .dbfile C:\Users\addis\Desktop\ECE381\HEATIN~1\HEATIN~1\main.c
+ 0000           _thermostatMode::
+ 0000 00                .byte 0
+ 0001                   .dbsym e thermostatMode _thermostatMode c
+                        .area data(ram, con, rel)
+ 0000                   .dbfile C:\Users\addis\Desktop\ECE381\HEATIN~1\HEATIN~1\main.c
+                        .area data(ram, con, rel)
+ 0000                   .dbfile C:\Users\addis\Desktop\ECE381\HEATIN~1\HEATIN~1\main.c
+ 0000           _fanMode::
+ 0000 01                .byte 1
+ 0001                   .dbsym e fanMode _fanMode c
+                        .area data(ram, con, rel)
+ 0000                   .dbfile C:\Users\addis\Desktop\ECE381\HEATIN~1\HEATIN~1\main.c
+                        .area data(ram, con, rel)
+ 0000                   .dbfile C:\Users\addis\Desktop\ECE381\HEATIN~1\HEATIN~1\main.c
+ 0000           _fanSpeed::
+ 0000 00                .byte 0
+ 0001                   .dbsym e fanSpeed _fanSpeed c
+                        .area data(ram, con, rel)
+ 0000                   .dbfile C:\Users\addis\Desktop\ECE381\HEATIN~1\HEATIN~1\main.c
+                        .area data(ram, con, rel)
+ 0000                   .dbfile C:\Users\addis\Desktop\ECE381\HEATIN~1\HEATIN~1\main.c
+ 0000           _motorStep::
+ 0000 00                .byte 0
+ 0001                   .dbsym e motorStep _motorStep c
+                        .area data(ram, con, rel)
+ 0000                   .dbfile C:\Users\addis\Desktop\ECE381\HEATIN~1\HEATIN~1\main.c
+                        .area text(rom, con, rel)
+ 0000                   .dbfile C:\Users\addis\Desktop\ECE381\HEATIN~1\HEATIN~1\main.c
+ 0000                   .dbfunc e GetLine _GetLine fV
+ 0000           ;         strPos -> X+1
+ 0000           ;              c -> X+0
+ 0000           ;      bufferLen -> X-6
+ 0000           ;         buffer -> X-5
+ 0000           _GetLine::
+ 0000                   .dbline -1
+ 0000 10                push X
+ 0001 4F                mov X,SP
+ 0002 3802              add SP,2
+ 0004                   .dbline 37
+ 0004           ; //----------------------------------------------------------------------------
+ 0004           ; // C main line
+ 0004           ; //----------------------------------------------------------------------------
+ 0004           ; 
+ 0004           ; #include <m8c.h>        // part specific constants and macros
+ 0004           ; #include "PSoCAPI.h"    // PSoC API definitions for all User Modules
+ 0004           ; #include "string.h"           // used for any of the string fcns supported by API
+ 0004           ; #include "stdio.h"            // this is used for fcns....
+ 0004           ; #include "ctype.h"            // this is used for fcns.. csspanf() and cstork()
+ 0004           ; 
+ 0004           ; // A compiler directive that tells the C compiler to make PSoC_GPIO_ISR_C a
+ 0004           ; // function that handles interrupts. This means it replaces ret at the end of // the function with reti. Refer to PSoC Technical Reference Manual for more
+ 0004           ; // information.
+ 0004           ; #pragma interrupt_handler PSoC_GPIO_ISR_C
+ 0004           ; #pragma interrupt_handler PSoC_TempCounter_ISR_C
+ 0004           ; #pragma interrupt_handler PSoC_MotorDriver_ISR_C
+ 0004           ; 
+ 0004           ; static char rubout[4] = { 0x08, 0x20, 0x08, 0x00 }; // Rubout Sequence consists of Backspace Space Backspace. This is the null-terminated string
+ 0004           ; static char stepperSequence[4] = { 0x0A, 0x06, 0x05, 0x09 }; // CW Sequence that stepper needs to run to if running. CCW is backwards
+ 0004           ; static char slaveAddress = 0x90;              // 100100000 R/W shifted to front
+ 0004           ; 
+ 0004           ; char buf[80]; // String that stores the string the user enters in serial console
+ 0004           ; char lcdUpdate = TRUE; // This is a boolean that gets set when the LCD needs to be updated
+ 0004           ; char checkTemp = TRUE; // This is a boolean that gets set when its time to get a new temperature reading
+ 0004           ; 
+ 0004           ; char curTemp = 0; // Current temperature
+ 0004           ; char setTemp = 25; // Desired temperature
+ 0004           ; char tolerance = 10; // Tolerance where the fan will turn on/off within the temperature range 
+ 0004           ; char thermostatMode = 0; // 0 = Off, 1 = Heating, 2 = Cooling
+ 0004           ; char fanMode = 1; // 0 = Manual, 1 = Automatic
+ 0004           ; char fanSpeed = 0; // 0 = Low, 1 = Medium, 2 = High
+ 0004           ; char motorStep = 0; // 0 - 3, step at which the motor is at
+ 0004           ; 
+ 0004           ; // This function gets a line of text. It writes data into buffer with a maximum size of bufferLen. The function returns number of bytes written
+ 0004           ; // when enter is pressed
+ 0004           ; void GetLine(char *buffer, char bufferLen)
+ 0004           ; {
+ 0004                   .dbline 39
+ 0004           ;       char c;
+ 0004           ;       char strPos = 0; // Current position in the string
+ 0004 560100            mov [X+1],0
+ 0007                   .dbline 41
+ 0007           ;       
+ 0007           ;       UART_PutChar('>'); // Print line pointer
+ 0007 10                push X
+ 0008 503E              mov A,62
+ 000A 7C0000            xcall _UART_PutChar
+ 000D 20                pop X
+ 000E 808F              xjmp L3
+ 0010           L2:
+ 0010                   .dbline 44
+ 0010           ;       
+ 0010           ;       while (1)
+ 0010           ;       {
+ 0010                   .dbline 45
+ 0010           ;               c = UART_cReadChar(); // Use UART module to read the character user enters
+ 0010 10                push X
+ 0011 7C0000            xcall _UART_cReadChar
+ 0014 20                pop X
+ 0015 62D000            mov REG[0xd0],>__r0
+ 0018 5400              mov [X+0],A
+ 001A                   .dbline 47
+ 001A           ;               
+ 001A           ;               if (c == 0x08 || c == 0x7F) // Delete or backspace pressed
+ 001A 3D0008            cmp [X+0],8
+ 001D A006              jz L7
+ 001F 3D007F            cmp [X+0],127
+ 0022 B017              jnz L5
+ 0024           L7:
+ 0024                   .dbline 49
+ 0024           ;               {
+ 0024           ;                       if (strPos > 0) // Only delete if there are characters to delete
+ 0024                   .dbline 49
+ 0024 5000              mov A,0
+ 0026 3B01              cmp A,[X+1]
+ 0028 D075              jnc L6
+ 002A           X1:
+ 002A                   .dbline 51
+ 002A           ;                       {
+ 002A           ;                               strPos--; // Set the position back one
+ 002A                   .dbline 51
+ 002A 7B01              dec [X+1]
+ 002C                   .dbline 52
+ 002C           ;                               UART_PutString(rubout); // Sends the rubout sequence to the serial.
+ 002C 10                push X
+ 002D 5000              mov A,>_rubout
+ 002F 08                push A
+ 0030 5000              mov A,<_rubout
+ 0032 5C                mov X,A
+ 0033 18                pop A
+ 0034 7C0000            xcall _UART_PutString
+ 0037 20                pop X
+ 0038                   .dbline 53
+ 0038           ;                       }
+ 0038                   .dbline 54
+ 0038           ;               }
+ 0038 8065              xjmp L6
+ 003A           L5:
+ 003A                   .dbline 55
+ 003A           ;               else if (c == 0x0D) // Newline enter is pressed
+ 003A 3D000D            cmp [X+0],13
+ 003D B022              jnz L10
+ 003F                   .dbline 57
+ 003F           ;               {
+ 003F           ;                       buffer[strPos] = 0x00; // put the null character at the current strPos
+ 003F                   .dbline 57
+ 003F 62D000            mov REG[0xd0],>__r0
+ 0042 5201              mov A,[X+1]
+ 0044 5300              mov [__r1],A
+ 0046 550000            mov [__r0],0
+ 0049 52FC              mov A,[X-4]
+ 004B 0400              add [__r1],A
+ 004D 52FB              mov A,[X-5]
+ 004F 0C00              adc [__r0],A
+ 0051 5100              mov A,[__r0]
+ 0053 60D5              mov REG[0xd5],A
+ 0055 5000              mov A,0
+ 0057 3F00              mvi [__r1],A
+ 0059                   .dbline 58
+ 0059           ;                       UART_PutCRLF(); // Go to another line
+ 0059 10                push X
+ 005A 7C0000            xcall _UART_PutCRLF
+ 005D 20                pop X
+ 005E                   .dbline 59
+ 005E           ;                       break;
+ 005E 8041              xjmp L1
+ 0060           L10:
+ 0060                   .dbline 61
+ 0060           ;               }
+ 0060           ;               else if (c >= 0x20 && c < 0x7F) // only valid characters to the string. These are any alphabet, numeric, or symbols
+ 0060 3D0020            cmp [X+0],32
+ 0063 C03A              jc L12
+ 0065           X2:
+ 0065 3D007F            cmp [X+0],127
+ 0068 D035              jnc L12
+ 006A           X3:
+ 006A                   .dbline 63
+ 006A           ;               {
+ 006A           ;                       if (strPos < bufferLen) // If there is space in the buffer
+ 006A                   .dbline 63
+ 006A 5201              mov A,[X+1]
+ 006C 3BFA              cmp A,[X-6]
+ 006E D028              jnc L14
+ 0070           X4:
+ 0070                   .dbline 65
+ 0070           ;                       {
+ 0070           ;                               buffer[strPos++] = c; // Set the current character in buffer to c and then increment strPos
+ 0070                   .dbline 65
+ 0070 62D000            mov REG[0xd0],>__r0
+ 0073 5201              mov A,[X+1]
+ 0075 5300              mov [__r1],A
+ 0077 550000            mov [__r0],0
+ 007A 0101              add A,1
+ 007C 5401              mov [X+1],A
+ 007E 52FC              mov A,[X-4]
+ 0080 0400              add [__r1],A
+ 0082 52FB              mov A,[X-5]
+ 0084 0C00              adc [__r0],A
+ 0086 5100              mov A,[__r0]
+ 0088 60D5              mov REG[0xd5],A
+ 008A 5200              mov A,[X+0]
+ 008C 3F00              mvi [__r1],A
+ 008E                   .dbline 66
+ 008E           ;                               UART_PutChar(c); // Send the character to the computer
+ 008E 10                push X
+ 008F 5200              mov A,[X+0]
+ 0091 7C0000            xcall _UART_PutChar
+ 0094 20                pop X
+ 0095                   .dbline 67
+ 0095           ;                       }
+ 0095 8008              xjmp L15
+ 0097           L14:
+ 0097                   .dbline 69
+ 0097           ;                       else
+ 0097           ;                               UART_PutChar(0x07); // Send BEL key because there is no more space left to add to the string
+ 0097 10                push X
+ 0098 5007              mov A,7
+ 009A 7C0000            xcall _UART_PutChar
+ 009D 20                pop X
+ 009E           L15:
+ 009E                   .dbline 70
+ 009E           ;               }
+ 009E           L12:
+ 009E           L6:
+ 009E                   .dbline 71
+ 009E           ;       }
+ 009E           L3:
+ 009E                   .dbline 43
+ 009E 8F71              xjmp L2
+ 00A0           X0:
+ 00A0                   .dbline -2
+ 00A0           L1:
+ 00A0 38FE              add SP,-2
+ 00A2 20                pop X
+ 00A3                   .dbline 0 ; func end
+ 00A3 7F                ret
+ 00A4                   .dbsym l strPos 1 c
+ 00A4                   .dbsym l c 0 c
+ 00A4                   .dbsym l bufferLen -6 c
+ 00A4                   .dbsym l buffer -5 pc
+ 00A4                   .dbend
+ 00A4                   .dbfunc e WriteI2C _WriteI2C fV
+ 00A4           ;           data -> X+4
+ 00A4           ;             vl -> X+2
+ 00A4           ;              i -> X+0
+ 00A4           ;            len -> X-7
+ 00A4           ;        command -> X-5
+ 00A4           ;   slaveAddress -> X-4
+ 00A4           _WriteI2C::
+ 00A4                   .dbline -1
+ 00A4 10                push X
+ 00A5 4F                mov X,SP
+ 00A6 3824              add SP,36
+ 00A8                   .dbline 80
+ 00A8           ;       
+ 00A8           ;       return;
+ 00A8           ; }
+ 00A8           ; 
+ 00A8           ; 
+ 00A8           ; // Writes a command to a device using I2C. The command character is sent first followed by the len bytes. Limited to 31 bytes. Use the other
+ 00A8           ; // I2C function to send more bytes
+ 00A8           ; void WriteI2C(char slaveAddress, char command, int len, ...)
+ 00A8           ; {
+ 00A8                   .dbline 85
+ 00A8           ;       va_list vl;
+ 00A8           ;       int i;
+ 00A8           ;       char data[32];
+ 00A8           ;       
+ 00A8           ;       buf[0] = command;
+ 00A8 52FB              mov A,[X-5]
+ 00AA 62D000            mov REG[0xd0],>_buf
+ 00AD 5300              mov [_buf],A
+ 00AF                   .dbline 86
+ 00AF           ;       va_start(vl, len);
+ 00AF 62D000            mov REG[0xd0],>__r0
+ 00B2 5A00              mov [__r1],X
+ 00B4 160007            sub [__r1],7
+ 00B7 5100              mov A,[__r1]
+ 00B9 5403              mov [X+3],A
+ 00BB 560207            mov [X+2],7
+ 00BE                   .dbline 87
+ 00BE           ;       for (i = 0; i < len; i++)
+ 00BE 560100            mov [X+1],0
+ 00C1 560000            mov [X+0],0
+ 00C4 8033              xjmp L20
+ 00C6           L17:
+ 00C6                   .dbline 88
+ 00C6           ;               data[i+1] = va_arg(vl, char);
+ 00C6 0703FF            add [X+3],-1
+ 00C9 0F02FF            adc [X+2],-1
+ 00CC 62D000            mov REG[0xd0],>__r0
+ 00CF 5203              mov A,[X+3]
+ 00D1 5300              mov [__r1],A
+ 00D3 5202              mov A,[X+2]
+ 00D5 60D4              mov REG[0xd4],A
+ 00D7 3E00              mvi A,[__r1]
+ 00D9 5300              mov [__r0],A
+ 00DB 550007            mov [__r2],7
+ 00DE 5A00              mov [__r3],X
+ 00E0 060005            add [__r3],5
+ 00E3 5201              mov A,[X+1]
+ 00E5 0200              add A,[__r3]
+ 00E7 5300              mov [__r3],A
+ 00E9 5200              mov A,[X+0]
+ 00EB 0A00              adc A,[__r2]
+ 00ED 60D5              mov REG[0xd5],A
+ 00EF 5100              mov A,[__r0]
+ 00F1 3F00              mvi [__r3],A
+ 00F3           L18:
+ 00F3                   .dbline 87
+ 00F3 7701              inc [X+1]
+ 00F5 0F0000            adc [X+0],0
+ 00F8           L20:
+ 00F8                   .dbline 87
+ 00F8 5201              mov A,[X+1]
+ 00FA 13FA              sub A,[X-6]
+ 00FC 52F9              mov A,[X-7]
+ 00FE 3180              xor A,-128
+ 0100 62D000            mov REG[0xd0],>__r0
+ 0103 5300              mov [__rX],A
+ 0105 5200              mov A,[X+0]
+ 0107 3180              xor A,-128
+ 0109 1A00              sbb A,[__rX]
+ 010B CFBA              jc L17
+ 010D           X5:
+ 010D                   .dbline 89
+ 010D           ;       va_end(vl);
+ 010D                   .dbline 91
+ 010D           ;       
+ 010D           ;       I2CHW_bWriteBytes(slaveAddress, data, len+1, I2CHW_CompleteXfer); // Write len bytes from data 
+ 010D 10                push X
+ 010E 5000              mov A,0
+ 0110 08                push A
+ 0111 62D000            mov REG[0xd0],>__r0
+ 0114 52FA              mov A,[X-6]
+ 0116 0101              add A,1
+ 0118 08                push A
+ 0119 5A00              mov [__r1],X
+ 011B 060004            add [__r1],4
+ 011E 5007              mov A,7
+ 0120 08                push A
+ 0121 5100              mov A,[__r1]
+ 0123 08                push A
+ 0124 52FC              mov A,[X-4]
+ 0126 08                push A
+ 0127 7C0000            xcall _I2CHW_bWriteBytes
+ 012A 38FB              add SP,-5
+ 012C 20                pop X
+ 012D           L22:
+ 012D                   .dbline 92
+ 012D           ;       while (!(I2CHW_bReadI2CStatus() & I2CHW_WR_COMPLETE)); // Wait while it is writing
+ 012D           L23:
+ 012D                   .dbline 92
+ 012D 10                push X
+ 012E 7C0000            xcall _I2CHW_bReadI2CStatus
+ 0131 20                pop X
+ 0132 62D000            mov REG[0xd0],>__r0
+ 0135 5300              mov [__r0],A
+ 0137 470040            tst [__r0],64
+ 013A AFF2              jz L22
+ 013C                   .dbline 93
+ 013C           ;       I2CHW_ClrWrStatus(); // Clear the write bit
+ 013C 10                push X
+ 013D 7C0000            xcall _I2CHW_ClrWrStatus
+ 0140 20                pop X
+ 0141                   .dbline -2
+ 0141           L16:
+ 0141 38DC              add SP,-36
+ 0143 20                pop X
+ 0144                   .dbline 0 ; func end
+ 0144 7F                ret
+ 0145                   .dbsym l data 4 A[32:32]c
+ 0145                   .dbsym l vl 2 pc
+ 0145                   .dbsym l i 0 I
+ 0145                   .dbsym l len -7 I
+ 0145                   .dbsym l command -5 c
+ 0145                   .dbsym l slaveAddress -4 c
+ 0145                   .dbend
+ 0145                   .dbfunc e ReadI2C _ReadI2C fV
+ 0145           ;           data -> X-9
+ 0145           ;            len -> X-7
+ 0145           ;        command -> X-5
+ 0145           ;   slaveAddress -> X-4
+ 0145           _ReadI2C::
+ 0145                   .dbline -1
+ 0145 10                push X
+ 0146 4F                mov X,SP
+ 0147                   .dbline 97
+ 0147           ; }
+ 0147           ; 
+ 0147           ; void ReadI2C(char slaveAddress, char command, int len, char *data)
+ 0147           ; {
+ 0147                   .dbline 98
+ 0147           ;       I2CHW_bWriteBytes(slaveAddress, &command, 1, I2CHW_NoStop); // Write one byte to the RAM, the slaveAddress so it knows who were talking to
+ 0147 10                push X
+ 0148 5002              mov A,2
+ 014A 08                push A
+ 014B 5001              mov A,1
+ 014D 08                push A
+ 014E 62D000            mov REG[0xd0],>__r0
+ 0151 5A00              mov [__r1],X
+ 0153 160005            sub [__r1],5
+ 0156 5007              mov A,7
+ 0158 08                push A
+ 0159 5100              mov A,[__r1]
+ 015B 08                push A
+ 015C 52FC              mov A,[X-4]
+ 015E 08                push A
+ 015F 7C0000            xcall _I2CHW_bWriteBytes
+ 0162 38FB              add SP,-5
+ 0164 20                pop X
+ 0165           L26:
+ 0165                   .dbline 99
+ 0165           ;       while (!(I2CHW_bReadI2CStatus() & I2CHW_WR_COMPLETE)); // Wait while it is writing
+ 0165           L27:
+ 0165                   .dbline 99
+ 0165 10                push X
+ 0166 7C0000            xcall _I2CHW_bReadI2CStatus
+ 0169 20                pop X
+ 016A 62D000            mov REG[0xd0],>__r0
+ 016D 5300              mov [__r0],A
+ 016F 470040            tst [__r0],64
+ 0172 AFF2              jz L26
+ 0174                   .dbline 100
+ 0174           ;       I2CHW_ClrWrStatus(); // Clear the write bit
+ 0174 10                push X
+ 0175 7C0000            xcall _I2CHW_ClrWrStatus
+ 0178 20                pop X
+ 0179                   .dbline 102
+ 0179           ;               
+ 0179           ;       I2CHW_fReadBytes(slaveAddress, data, len, I2CHW_CompleteXfer); // Read numBytes from the RAM, put it in data
+ 0179 10                push X
+ 017A 5000              mov A,0
+ 017C 08                push A
+ 017D 62D000            mov REG[0xd0],>__r0
+ 0180 52FA              mov A,[X-6]
+ 0182 08                push A
+ 0183 52F7              mov A,[X-9]
+ 0185 08                push A
+ 0186 52F8              mov A,[X-8]
+ 0188 08                push A
+ 0189 52FC              mov A,[X-4]
+ 018B 08                push A
+ 018C 7C0000            xcall _I2CHW_fReadBytes
+ 018F 38FB              add SP,-5
+ 0191 20                pop X
+ 0192           L29:
+ 0192                   .dbline 103
+ 0192           ;       while(!(I2CHW_bReadI2CStatus() & I2CHW_RD_COMPLETE)); // Wait while it is reading
+ 0192           L30:
+ 0192                   .dbline 103
+ 0192 10                push X
+ 0193 7C0000            xcall _I2CHW_bReadI2CStatus
+ 0196 20                pop X
+ 0197 62D000            mov REG[0xd0],>__r0
+ 019A 5300              mov [__r0],A
+ 019C 470004            tst [__r0],4
+ 019F AFF2              jz L29
+ 01A1                   .dbline 104
+ 01A1           ;       I2CHW_ClrRdStatus(); // Clear the read bit
+ 01A1 10                push X
+ 01A2 7C0000            xcall _I2CHW_ClrRdStatus
+ 01A5 20                pop X
+ 01A6                   .dbline -2
+ 01A6           L25:
+ 01A6 20                pop X
+ 01A7                   .dbline 0 ; func end
+ 01A7 7F                ret
+ 01A8                   .dbsym l data -9 pc
+ 01A8                   .dbsym l len -7 I
+ 01A8                   .dbsym l command -5 c
+ 01A8                   .dbsym l slaveAddress -4 c
+ 01A8                   .dbend
+ 01A8                   .dbfunc e Lowercase _Lowercase fpc
+ 01A8           ;              i -> X+0
+ 01A8           ;            str -> X-5
+ 01A8           _Lowercase::
+ 01A8                   .dbline -1
+ 01A8 10                push X
+ 01A9 4F                mov X,SP
+ 01AA 3804              add SP,4
+ 01AC                   .dbline 109
+ 01AC           ; }
+ 01AC           ; 
+ 01AC           ; // Takes input argument str and converts each character into a lowercase character. Returns that str. Note: This function alters str
+ 01AC           ; char *Lowercase(char *str)
+ 01AC           ; {
+ 01AC                   .dbline 111
+ 01AC           ;       int i;
+ 01AC           ;       for (i = 0; str[i] != '\0'; ++i) // Loop through each character in str and call tolower on it
+ 01AC 560100            mov [X+1],0
+ 01AF 560000            mov [X+0],0
+ 01B2 8043              xjmp L36
+ 01B4           L33:
+ 01B4                   .dbline 112
+ 01B4           ;               str[i] = tolower(str[i]); // Set the character to be the lowercase of the character
+ 01B4 62D000            mov REG[0xd0],>__r0
+ 01B7 5201              mov A,[X+1]
+ 01B9 03FC              add A,[X-4]
+ 01BB 5300              mov [__r1],A
+ 01BD 5200              mov A,[X+0]
+ 01BF 0BFB              adc A,[X-5]
+ 01C1 5300              mov [__r0],A
+ 01C3 5100              mov A,[__r1]
+ 01C5 5403              mov [X+3],A
+ 01C7 5100              mov A,[__r0]
+ 01C9 5402              mov [X+2],A
+ 01CB 60D4              mov REG[0xd4],A
+ 01CD 3E00              mvi A,[__r1]
+ 01CF 7A00              dec [__r1]
+ 01D1 5300              mov [__r3],A
+ 01D3 5000              mov A,0
+ 01D5 08                push A
+ 01D6 5100              mov A,[__r3]
+ 01D8 08                push A
+ 01D9 7C0000            xcall _tolower
+ 01DC 38FE              add SP,-2
+ 01DE 62D000            mov REG[0xd0],>__r0
+ 01E1 5100              mov A,[__r1]
+ 01E3 5300              mov [__r0],A
+ 01E5 5203              mov A,[X+3]
+ 01E7 5300              mov [__r3],A
+ 01E9 5202              mov A,[X+2]
+ 01EB 60D5              mov REG[0xd5],A
+ 01ED 5100              mov A,[__r0]
+ 01EF 3F00              mvi [__r3],A
+ 01F1           L34:
+ 01F1                   .dbline 111
+ 01F1 7701              inc [X+1]
+ 01F3 0F0000            adc [X+0],0
+ 01F6           L36:
+ 01F6                   .dbline 111
+ 01F6 62D000            mov REG[0xd0],>__r0
+ 01F9 5201              mov A,[X+1]
+ 01FB 03FC              add A,[X-4]
+ 01FD 5300              mov [__r1],A
+ 01FF 5200              mov A,[X+0]
+ 0201 0BFB              adc A,[X-5]
+ 0203 60D4              mov REG[0xd4],A
+ 0205 3E00              mvi A,[__r1]
+ 0207 3900              cmp A,0
+ 0209 BFAA              jnz L33
+ 020B                   .dbline 114
+ 020B           ;       
+ 020B           ;       return str; // Return the string
+ 020B 52FC              mov A,[X-4]
+ 020D 5300              mov [__r1],A
+ 020F 52FB              mov A,[X-5]
+ 0211 5300              mov [__r0],A
+ 0213                   .dbline -2
+ 0213           L32:
+ 0213 38FC              add SP,-4
+ 0215 20                pop X
+ 0216                   .dbline 0 ; func end
+ 0216 7F                ret
+ 0217                   .dbsym l i 0 I
+ 0217                   .dbsym l str -5 pc
+ 0217                   .dbend
+ 0217                   .dbfunc e IsNumber _IsNumber fc
+ 0217           ;              i -> X+0
+ 0217           ;            str -> X-5
+ 0217           _IsNumber::
+ 0217                   .dbline -1
+ 0217 10                push X
+ 0218 4F                mov X,SP
+ 0219 3802              add SP,2
+ 021B                   .dbline 118
+ 021B           ; }
+ 021B           ; 
+ 021B           ; char IsNumber(char *str)
+ 021B           ; {
+ 021B                   .dbline 120
+ 021B           ;       int i;
+ 021B           ;       for (i = 0; str[i] != '\0'; ++i)
+ 021B 560100            mov [X+1],0
+ 021E 560000            mov [X+0],0
+ 0221 8038              xjmp L41
+ 0223           L38:
+ 0223                   .dbline 121
+ 0223           ;               if (!isdigit(str[i]))
+ 0223 62D000            mov REG[0xd0],>__r0
+ 0226 5201              mov A,[X+1]
+ 0228 03FC              add A,[X-4]
+ 022A 5300              mov [__r1],A
+ 022C 5200              mov A,[X+0]
+ 022E 0BFB              adc A,[X-5]
+ 0230 60D4              mov REG[0xd4],A
+ 0232 3E00              mvi A,[__r1]
+ 0234 5300              mov [__r1],A
+ 0236 5000              mov A,0
+ 0238 08                push A
+ 0239 5100              mov A,[__r1]
+ 023B 08                push A
+ 023C 7C0000            xcall _isdigit
+ 023F 38FE              add SP,-2
+ 0241 62D000            mov REG[0xd0],>__r0
+ 0244 3C0000            cmp [__r0],0
+ 0247 B00D              jnz L42
+ 0249 3C0000            cmp [__r1],0
+ 024C B008              jnz L42
+ 024E           X6:
+ 024E                   .dbline 122
+ 024E           ;                       return FALSE;
+ 024E 62D000            mov REG[0xd0],>__r0
+ 0251 5000              mov A,0
+ 0253 801D              xjmp L37
+ 0255           L42:
+ 0255           L39:
+ 0255                   .dbline 120
+ 0255 7701              inc [X+1]
+ 0257 0F0000            adc [X+0],0
+ 025A           L41:
+ 025A                   .dbline 120
+ 025A 62D000            mov REG[0xd0],>__r0
+ 025D 5201              mov A,[X+1]
+ 025F 03FC              add A,[X-4]
+ 0261 5300              mov [__r1],A
+ 0263 5200              mov A,[X+0]
+ 0265 0BFB              adc A,[X-5]
+ 0267 60D4              mov REG[0xd4],A
+ 0269 3E00              mvi A,[__r1]
+ 026B 3900              cmp A,0
+ 026D BFB5              jnz L38
+ 026F                   .dbline 124
+ 026F           ;               
+ 026F           ;       return TRUE;
+ 026F 5001              mov A,1
+ 0271                   .dbline -2
+ 0271           L37:
+ 0271 38FE              add SP,-2
+ 0273 20                pop X
+ 0274                   .dbline 0 ; func end
+ 0274 7F                ret
+ 0275                   .dbsym l i 0 I
+ 0275                   .dbsym l str -5 pc
+ 0275                   .dbend
+ 0275                   .dbfunc e CheckFan _CheckFan fV
+ 0275           _CheckFan::
+ 0275                   .dbline -1
+ 0275                   .dbline 128
+ 0275           ; }
+ 0275           ; 
+ 0275           ; void CheckFan(void)
+ 0275           ; {
+ 0275                   .dbline 129
+ 0275           ;       if (thermostatMode == 0 && fanMode == 1)
+ 0275 62D000            mov REG[0xd0],>_thermostatMode
+ 0278 3C0000            cmp [_thermostatMode],0
+ 027B B010              jnz L45
+ 027D 62D000            mov REG[0xd0],>_fanMode
+ 0280 3C0001            cmp [_fanMode],1
+ 0283 B008              jnz L45
+ 0285                   .dbline 130
+ 0285           ;               MotorDriver_Stop();
+ 0285 10                push X
+ 0286 7C0000            xcall _MotorDriver_Stop
+ 0289 20                pop X
+ 028A 8028              xjmp L46
+ 028C           L45:
+ 028C                   .dbline 131
+ 028C           ;       else if (fanMode == 0)
+ 028C 62D000            mov REG[0xd0],>_fanMode
+ 028F 3C0000            cmp [_fanMode],0
+ 0292 B008              jnz L47
+ 0294                   .dbline 132
+ 0294           ;               MotorDriver_Start();
+ 0294 10                push X
+ 0295 7C0000            xcall _MotorDriver_Start
+ 0298 20                pop X
+ 0299 8019              xjmp L48
+ 029B           L47:
+ 029B                   .dbline 133
+ 029B           ;       else if (Tout_Data_ADDR & Tout_MASK)
+ 029B 5D04              mov A,REG[0x4]
+ 029D 62D000            mov REG[0xd0],>__r0
+ 02A0 5300              mov [__r0],A
+ 02A2 470010            tst [__r0],16
+ 02A5 A008              jz L49
+ 02A7                   .dbline 134
+ 02A7           ;               MotorDriver_Start();
+ 02A7 10                push X
+ 02A8 7C0000            xcall _MotorDriver_Start
+ 02AB 20                pop X
+ 02AC 8006              xjmp L50
+ 02AE           L49:
+ 02AE                   .dbline 136
+ 02AE           ;       else
+ 02AE           ;               MotorDriver_Stop();
+ 02AE 10                push X
+ 02AF 7C0000            xcall _MotorDriver_Stop
+ 02B2 20                pop X
+ 02B3           L50:
+ 02B3           L48:
+ 02B3           L46:
+ 02B3                   .dbline -2
+ 02B3           L44:
+ 02B3                   .dbline 0 ; func end
+ 02B3 7F                ret
+ 02B4                   .dbend
+ 02B4                   .dbfunc e main _main fV
+ 02B4           ;     sThermMode -> X+23
+ 02B4           ;       sFanMode -> X+21
+ 02B4           ;            buf -> X+4
+ 02B4           ;       tempByte -> X+4
+ 02B4           ;          speed -> X+5
+ 02B4           ;           mode -> X+4
+ 02B4           ;           mode -> X+4
+ 02B4           ;            tol -> X+4
+ 02B4           ;           temp -> X+4
+ 02B4           ;         params -> X+2
+ 02B4           ;            cmd -> X+0
+ 02B4           _main::
+ 02B4                   .dbline -1
+ 02B4 10                push X
+ 02B5 4F                mov X,SP
+ 02B6 381D              add SP,29
+ 02B8                   .dbline 140
+ 02B8           ; }
+ 02B8           ; 
+ 02B8           ; void main(void)
+ 02B8           ; {     
+ 02B8                   .dbline 141
+ 02B8           ;       M8C_EnableGInt ; // Uncomment this line to enable Global Interrupts
+ 02B8 7101                      or  F, 01h
+ 02BA           
+ 02BA                   .dbline 142
+ 02BA           ;       M8C_EnableIntMask(INT_MSK0,INT_MSK0_GPIO); // Enable GPIO interrupt for Tout
+ 02BA 43E020            or REG[0xe0],32
+ 02BD                   .dbline 143
+ 02BD           ;       M8C_EnableIntMask(INT_MSK1, INT_MSK1_DBB01); // Enable DBB01 Interrupt for MotorDriver
+ 02BD 43E102            or REG[0xe1],2
+ 02C0                   .dbline 144
+ 02C0           ;       M8C_EnableIntMask(INT_MSK1, INT_MSK1_DBB11); // Enable DBB11 Interrupt for TempCounter
+ 02C0 43E120            or REG[0xe1],32
+ 02C3                   .dbline 147
+ 02C3           ;       
+ 02C3           ;       // Start the UART(with no parity), LCD, TempCounter and MotorDriver
+ 02C3           ;       UART_Start(UART_PARITY_NONE);
+ 02C3 10                push X
+ 02C4 5000              mov A,0
+ 02C6 7C0000            xcall _UART_Start
+ 02C9                   .dbline 148
+ 02C9           ;       LCD_Start();
+ 02C9 7C0000            xcall _LCD_Start
+ 02CC                   .dbline 149
+ 02CC           ;       TempCounter_EnableInt();
+ 02CC 7C0000            xcall _TempCounter_EnableInt
+ 02CF                   .dbline 150
+ 02CF           ;       TempCounter_Start();
+ 02CF 7C0000            xcall _TempCounter_Start
+ 02D2                   .dbline 151
+ 02D2           ;       MotorDriver_EnableInt();
+ 02D2 7C0000            xcall _MotorDriver_EnableInt
+ 02D5                   .dbline 154
+ 02D5           ;       
+ 02D5           ;       // Start I2CHW
+ 02D5           ;       I2CHW_Start();
+ 02D5 7C0000            xcall _I2CHW_Start
+ 02D8                   .dbline 155
+ 02D8           ;       I2CHW_EnableMstr();
+ 02D8 7C0000            xcall _I2CHW_EnableMstr
+ 02DB                   .dbline 156
+ 02DB           ;       I2CHW_EnableInt();
+ 02DB 7C0000            xcall _I2CHW_EnableInt
+ 02DE 20                pop X
+ 02DF                   .dbline 158
+ 02DF           ;       
+ 02DF           ;       WriteI2C(slaveAddress, 0xAC, 1, 0x02); // Write to Access Config
+ 02DF 5000              mov A,0
+ 02E1 08                push A
+ 02E2 5002              mov A,2
+ 02E4 08                push A
+ 02E5 5000              mov A,0
+ 02E7 08                push A
+ 02E8 5001              mov A,1
+ 02EA 08                push A
+ 02EB 50AC              mov A,-84
+ 02ED 08                push A
+ 02EE 62D000            mov REG[0xd0],>_slaveAddress
+ 02F1 5100              mov A,[_slaveAddress]
+ 02F3 08                push A
+ 02F4 9DAE              xcall _WriteI2C
+ 02F6                   .dbline 160
+ 02F6           ;       
+ 02F6           ;       WriteI2C(slaveAddress, 0xA1, 2, 0x02, 0x01); // Writes TH
+ 02F6 5000              mov A,0
+ 02F8 08                push A
+ 02F9 5001              mov A,1
+ 02FB 08                push A
+ 02FC 5000              mov A,0
+ 02FE 08                push A
+ 02FF 5002              mov A,2
+ 0301 08                push A
+ 0302 5000              mov A,0
+ 0304 08                push A
+ 0305 5002              mov A,2
+ 0307 08                push A
+ 0308 50A1              mov A,-95
+ 030A 08                push A
+ 030B 62D000            mov REG[0xd0],>_slaveAddress
+ 030E 5100              mov A,[_slaveAddress]
+ 0310 08                push A
+ 0311 9D91              xcall _WriteI2C
+ 0313 38F2              add SP,-14
+ 0315                   .dbline 161
+ 0315           ;       WriteI2C(slaveAddress, 0xA2, 2, 0x02, 0x01); // Writes TL
+ 0315 5000              mov A,0
+ 0317 08                push A
+ 0318 5001              mov A,1
+ 031A 08                push A
+ 031B 5000              mov A,0
+ 031D 08                push A
+ 031E 5002              mov A,2
+ 0320 08                push A
+ 0321 5000              mov A,0
+ 0323 08                push A
+ 0324 5002              mov A,2
+ 0326 08                push A
+ 0327 50A2              mov A,-94
+ 0329 08                push A
+ 032A 62D000            mov REG[0xd0],>_slaveAddress
+ 032D 5100              mov A,[_slaveAddress]
+ 032F 08                push A
+ 0330 9D72              xcall _WriteI2C
+ 0332                   .dbline 162
+ 0332           ;       WriteI2C(slaveAddress, 0xEE, 0); // Writes StartConvert
+ 0332 5000              mov A,0
+ 0334 08                push A
+ 0335 08                push A
+ 0336 50EE              mov A,-18
+ 0338 08                push A
+ 0339 62D000            mov REG[0xd0],>_slaveAddress
+ 033C 5100              mov A,[_slaveAddress]
+ 033E 08                push A
+ 033F 9D63              xcall _WriteI2C
+ 0341 38F4              add SP,-12
+ 0343                   .dbline 165
+ 0343           ;       
+ 0343           ;       // This is the command usage string
+ 0343           ;       UART_CPutString("#################### Heating/Cooling Stepper Motors ##################\r\n\
+ 0343 10                push X
+ 0344 506B              mov A,>L52
+ 0346 08                push A
+ 0347 506B              mov A,<L52
+ 0349 5C                mov X,A
+ 034A 18                pop A
+ 034B 7C0000            xcall _UART_CPutString
+ 034E 20                pop X
+ 034F 87AE              xjmp L54
+ 0351           L53:
+ 0351                   .dbline 184
+ 0351           ; #     S ##\r\n\
+ 0351           ; #             S - Set the desired Temperature\r\n\
+ 0351           ; #             ## - Desired temperature in celsius\r\n\
+ 0351           ; #\r\n\
+ 0351           ; #     T ##\r\n\
+ 0351           ; #             T - Set the desired tolerance\r\n\
+ 0351           ; #             ## - Desired tolerance in celsius\r\n\
+ 0351           ; #\r\n\
+ 0351           ; #     M X\r\n\
+ 0351           ; #             M - Change the mode of the thermostat\r\n\
+ 0351           ; #             X - C is for cool, H is for heat, F is for off\r\n\
+ 0351           ; #\r\n\
+ 0351           ; #     F X S\r\n\
+ 0351           ; #             F - Change the mode of the fan\r\n\
+ 0351           ; #             X - A is for automatic fan control, M is for always on\r\n\
+ 0351           ; #             S - Speed of the fan, H = high, M = medium, L = low\r\n\
+ 0351           ; #####################################################################\r\n");
+ 0351           ;       while (1)
+ 0351           ;       {
+ 0351                   .dbline 188
+ 0351           ;               char *cmd;
+ 0351           ;               char *params;
+ 0351           ;               
+ 0351           ;               GetLine(buf, 79); // Retrieves a line with a maximum length of 70 characters and put it in buf.
+ 0351 504F              mov A,79
+ 0353 08                push A
+ 0354 5000              mov A,>_buf
+ 0356 08                push A
+ 0357 5000              mov A,<_buf
+ 0359 08                push A
+ 035A 9CA4              xcall _GetLine
+ 035C                   .dbline 190
+ 035C           ;               
+ 035C           ;               cmd = Lowercase(cstrtok(buf, " ")); // Get the first word from the entered string and lowercase it.
+ 035C 5069              mov A,>L56
+ 035E 08                push A
+ 035F 5069              mov A,<L56
+ 0361 08                push A
+ 0362 5000              mov A,>_buf
+ 0364 08                push A
+ 0365 5000              mov A,<_buf
+ 0367 08                push A
+ 0368 7C0000            xcall _cstrtok
+ 036B 38F9              add SP,-7
+ 036D 62D000            mov REG[0xd0],>__r0
+ 0370 5100              mov A,[__r0]
+ 0372 08                push A
+ 0373 5100              mov A,[__r1]
+ 0375 08                push A
+ 0376 9E30              xcall _Lowercase
+ 0378 62D000            mov REG[0xd0],>__r0
+ 037B 5100              mov A,[__r1]
+ 037D 5401              mov [X+1],A
+ 037F 5100              mov A,[__r0]
+ 0381 5400              mov [X+0],A
+ 0383                   .dbline 191
+ 0383           ;               if (strlen(cmd) == 1 && cmd[0] == 's') // If the command is one letter and it is w, then write command
+ 0383 5200              mov A,[X+0]
+ 0385 08                push A
+ 0386 5201              mov A,[X+1]
+ 0388 08                push A
+ 0389 7C0000            xcall _strlenLMM
+ 038C 38FC              add SP,-4
+ 038E 62D000            mov REG[0xd0],>__r0
+ 0391 3C0000            cmp [__r0],0
+ 0394 B166              jnz L57
+ 0396 3C0001            cmp [__r1],1
+ 0399 B161              jnz L57
+ 039B           X8:
+ 039B 62D000            mov REG[0xd0],>__r0
+ 039E 5201              mov A,[X+1]
+ 03A0 5300              mov [__r1],A
+ 03A2 5200              mov A,[X+0]
+ 03A4 60D4              mov REG[0xd4],A
+ 03A6 3E00              mvi A,[__r1]
+ 03A8 3973              cmp A,115
+ 03AA B150              jnz L57
+ 03AC                   .dbline 193
+ 03AC           ;               {
+ 03AC           ;                       int temp;
+ 03AC                   .dbline 195
+ 03AC           ;                       
+ 03AC           ;                       params = cstrtok(0x00, " ");  // 0x00 indicates it will continue from last cstrtok command and get next word. This gets the next parameter
+ 03AC 5069              mov A,>L56
+ 03AE 08                push A
+ 03AF 5069              mov A,<L56
+ 03B1 08                push A
+ 03B2 5000              mov A,0
+ 03B4 08                push A
+ 03B5 08                push A
+ 03B6 7C0000            xcall _cstrtok
+ 03B9 62D000            mov REG[0xd0],>__r0
+ 03BC 5100              mov A,[__r1]
+ 03BE 5403              mov [X+3],A
+ 03C0 5100              mov A,[__r0]
+ 03C2 5402              mov [X+2],A
+ 03C4                   .dbline 201
+ 03C4           ;                       
+ 03C4           ;                       // csscanf if used to parse the string into values such as hexadecimal or integers
+ 03C4           ;                       // It returns the number of parameters it parsed which should be one
+ 03C4           ;                       // If the length of the params is not right or it does not parse the right amount, it returns an error
+ 03C4           ;                       // %d gets an integer, this is the temperature
+ 03C4           ;                       if (!IsNumber(params) || strlen(params) > 3 || strlen(params) < 1 || csscanf(params, "%d", &temp) != 1) goto error;
+ 03C4 5202              mov A,[X+2]
+ 03C6 08                push A
+ 03C7 5203              mov A,[X+3]
+ 03C9 08                push A
+ 03CA 9E4B              xcall _IsNumber
+ 03CC 38FA              add SP,-6
+ 03CE 62D000            mov REG[0xd0],>__r0
+ 03D1 3900              cmp A,0
+ 03D3 A05D              jz L64
+ 03D5 5202              mov A,[X+2]
+ 03D7 08                push A
+ 03D8 5203              mov A,[X+3]
+ 03DA 08                push A
+ 03DB 7C0000            xcall _strlenLMM
+ 03DE 38FE              add SP,-2
+ 03E0 62D000            mov REG[0xd0],>__r0
+ 03E3 5003              mov A,3
+ 03E5 1200              sub A,[__r1]
+ 03E7 5000              mov A,0
+ 03E9 1A00              sbb A,[__r0]
+ 03EB C045              jc L64
+ 03ED           X9:
+ 03ED 5202              mov A,[X+2]
+ 03EF 08                push A
+ 03F0 5203              mov A,[X+3]
+ 03F2 08                push A
+ 03F3 7C0000            xcall _strlenLMM
+ 03F6 38FE              add SP,-2
+ 03F8 62D000            mov REG[0xd0],>__r0
+ 03FB 5100              mov A,[__r1]
+ 03FD 1101              sub A,1
+ 03FF 5100              mov A,[__r0]
+ 0401 1900              sbb A,0
+ 0403 C02D              jc L64
+ 0405           X10:
+ 0405 62D000            mov REG[0xd0],>__r0
+ 0408 5A00              mov [__r1],X
+ 040A 060004            add [__r1],4
+ 040D 5007              mov A,7
+ 040F 08                push A
+ 0410 5100              mov A,[__r1]
+ 0412 08                push A
+ 0413 5066              mov A,>L61
+ 0415 08                push A
+ 0416 5066              mov A,<L61
+ 0418 08                push A
+ 0419 5202              mov A,[X+2]
+ 041B 08                push A
+ 041C 5203              mov A,[X+3]
+ 041E 08                push A
+ 041F 7C0000            xcall _csscanf
+ 0422 38FA              add SP,-6
+ 0424 62D000            mov REG[0xd0],>__r0
+ 0427 3C0000            cmp [__r0],0
+ 042A B006              jnz X11
+ 042C 3C0001            cmp [__r1],1
+ 042F A003              jz L59
+ 0431           X11:
+ 0431           L64:
+ 0431                   .dbline 201
+ 0431 86C0              xjmp L65
+ 0433           L59:
+ 0433                   .dbline 202
+ 0433           ;                       if (cstrtok(0x00, " ") != 0x00) goto error; // If there is any data after temp, throw an error
+ 0433 5069              mov A,>L56
+ 0435 08                push A
+ 0436 5069              mov A,<L56
+ 0438 08                push A
+ 0439 5000              mov A,0
+ 043B 08                push A
+ 043C 08                push A
+ 043D 7C0000            xcall _cstrtok
+ 0440 38FC              add SP,-4
+ 0442 62D000            mov REG[0xd0],>__r0
+ 0445 3C0000            cmp [__r0],0
+ 0448 B006              jnz X12
+ 044A 3C0000            cmp [__r1],0
+ 044D A003              jz L66
+ 044F           X12:
+ 044F                   .dbline 202
+ 044F 86A2              xjmp L65
+ 0451           L66:
+ 0451                   .dbline 204
+ 0451           ;                       
+ 0451           ;                       if (temp < 0 || temp > 125)
+ 0451 5205              mov A,[X+5]
+ 0453 1100              sub A,0
+ 0455 5204              mov A,[X+4]
+ 0457 3180              xor A,-128
+ 0459 1980              sbb A,(0 ^ 0x80)
+ 045B C014              jc L70
+ 045D           X13:
+ 045D 507D              mov A,125
+ 045F 1305              sub A,[X+5]
+ 0461 5204              mov A,[X+4]
+ 0463 3180              xor A,-128
+ 0465 62D000            mov REG[0xd0],>__r0
+ 0468 5300              mov [__rX],A
+ 046A 5080              mov A,(0 ^ 0x80)
+ 046C 1A00              sbb A,[__rX]
+ 046E D003              jnc L68
+ 0470           X14:
+ 0470           L70:
+ 0470                   .dbline 205
+ 0470           ;                               goto error; // temperature was not in range
+ 0470 8681              xjmp L65
+ 0472           L68:
+ 0472                   .dbline 207
+ 0472           ;                       
+ 0472           ;                       setTemp = temp;
+ 0472 5205              mov A,[X+5]
+ 0474 62D000            mov REG[0xd0],>_setTemp
+ 0477 5300              mov [_setTemp],A
+ 0479                   .dbline 209
+ 0479           ;                       
+ 0479           ;                       WriteI2C(slaveAddress, 0xA1, 2, (char)(setTemp + (tolerance / 2)), 0x00); // Writes TH
+ 0479 5000              mov A,0
+ 047B 08                push A
+ 047C 08                push A
+ 047D 62D000            mov REG[0xd0],>_tolerance
+ 0480 5002              mov A,2
+ 0482 08                push A
+ 0483 5100              mov A,[_tolerance]
+ 0485 08                push A
+ 0486 62D000            mov REG[0xd0],>__r0
+ 0489 7C0000            xcall __divmodu_8X8_8
+ 048C 18                pop A
+ 048D 5300              mov [__r0],A
+ 048F 38FF              add SP,-1
+ 0491 62D000            mov REG[0xd0],>_setTemp
+ 0494 5100              mov A,[_setTemp]
+ 0496 62D000            mov REG[0xd0],>__r0
+ 0499 0200              add A,[__r0]
+ 049B 5300              mov [__r1],A
+ 049D 5000              mov A,0
+ 049F 08                push A
+ 04A0 5100              mov A,[__r1]
+ 04A2 08                push A
+ 04A3 5000              mov A,0
+ 04A5 08                push A
+ 04A6 5002              mov A,2
+ 04A8 08                push A
+ 04A9 50A1              mov A,-95
+ 04AB 08                push A
+ 04AC 62D000            mov REG[0xd0],>_slaveAddress
+ 04AF 5100              mov A,[_slaveAddress]
+ 04B1 08                push A
+ 04B2 9BF0              xcall _WriteI2C
+ 04B4 38F8              add SP,-8
+ 04B6                   .dbline 210
+ 04B6           ;                       WriteI2C(slaveAddress, 0xA2, 2, (char)(setTemp - (tolerance / 2)), 0x00); // Writes TL
+ 04B6 5000              mov A,0
+ 04B8 08                push A
+ 04B9 08                push A
+ 04BA 62D000            mov REG[0xd0],>_tolerance
+ 04BD 5002              mov A,2
+ 04BF 08                push A
+ 04C0 5100              mov A,[_tolerance]
+ 04C2 08                push A
+ 04C3 62D000            mov REG[0xd0],>__r0
+ 04C6 7C0000            xcall __divmodu_8X8_8
+ 04C9 18                pop A
+ 04CA 5300              mov [__r0],A
+ 04CC 38FF              add SP,-1
+ 04CE 62D000            mov REG[0xd0],>_setTemp
+ 04D1 5100              mov A,[_setTemp]
+ 04D3 62D000            mov REG[0xd0],>__r0
+ 04D6 1200              sub A,[__r0]
+ 04D8 5300              mov [__r1],A
+ 04DA 5000              mov A,0
+ 04DC 08                push A
+ 04DD 5100              mov A,[__r1]
+ 04DF 08                push A
+ 04E0 5000              mov A,0
+ 04E2 08                push A
+ 04E3 5002              mov A,2
+ 04E5 08                push A
+ 04E6 50A2              mov A,-94
+ 04E8 08                push A
+ 04E9 62D000            mov REG[0xd0],>_slaveAddress
+ 04EC 5100              mov A,[_slaveAddress]
+ 04EE 08                push A
+ 04EF 9BB3              xcall _WriteI2C
+ 04F1 38F8              add SP,-8
+ 04F3                   .dbline 212
+ 04F3           ;                       
+ 04F3           ;                       lcdUpdate = TRUE;
+ 04F3 62D000            mov REG[0xd0],>_lcdUpdate
+ 04F6 550001            mov [_lcdUpdate],1
+ 04F9                   .dbline 213
+ 04F9           ;               }
+ 04F9 8485              xjmp L58
+ 04FB           L57:
+ 04FB                   .dbline 214
+ 04FB           ;               else if (strlen(cmd) == 1 && cmd[0] == 't') // If the command is one letter and it is r, then read command
+ 04FB 5200              mov A,[X+0]
+ 04FD 08                push A
+ 04FE 5201              mov A,[X+1]
+ 0500 08                push A
+ 0501 7C0000            xcall _strlenLMM
+ 0504 38FE              add SP,-2
+ 0506 62D000            mov REG[0xd0],>__r0
+ 0509 3C0000            cmp [__r0],0
+ 050C B163              jnz L71
+ 050E 3C0001            cmp [__r1],1
+ 0511 B15E              jnz L71
+ 0513           X15:
+ 0513 62D000            mov REG[0xd0],>__r0
+ 0516 5201              mov A,[X+1]
+ 0518 5300              mov [__r1],A
+ 051A 5200              mov A,[X+0]
+ 051C 60D4              mov REG[0xd4],A
+ 051E 3E00              mvi A,[__r1]
+ 0520 3974              cmp A,116
+ 0522 B14D              jnz L71
+ 0524                   .dbline 216
+ 0524           ;               {
+ 0524           ;                       int tol;
+ 0524                   .dbline 218
+ 0524           ;                       
+ 0524           ;                       params = cstrtok(0x00, " ");  // 0x00 indicates it will continue from last cstrtok command and get next word. This gets the next parameter
+ 0524 5069              mov A,>L56
+ 0526 08                push A
+ 0527 5069              mov A,<L56
+ 0529 08                push A
+ 052A 5000              mov A,0
+ 052C 08                push A
+ 052D 08                push A
+ 052E 7C0000            xcall _cstrtok
+ 0531 62D000            mov REG[0xd0],>__r0
+ 0534 5100              mov A,[__r1]
+ 0536 5403              mov [X+3],A
+ 0538 5100              mov A,[__r0]
+ 053A 5402              mov [X+2],A
+ 053C                   .dbline 224
+ 053C           ;                       
+ 053C           ;                       // csscanf if used to parse the string into values such as hexadecimal or integers
+ 053C           ;                       // It returns the number of parameters it parsed which should be one
+ 053C           ;                       // If the length of the params is not right or it does not parse the right amount, it returns an error
+ 053C           ;                       // %d gets an integer, this is the tolerance
+ 053C           ;                       if (!IsNumber(params) || strlen(params) > 3 || strlen(params) < 1 || csscanf(params, "%d", &tol) != 1) goto error;
+ 053C 5202              mov A,[X+2]
+ 053E 08                push A
+ 053F 5203              mov A,[X+3]
+ 0541 08                push A
+ 0542 9CD3              xcall _IsNumber
+ 0544 38FA              add SP,-6
+ 0546 62D000            mov REG[0xd0],>__r0
+ 0549 3900              cmp A,0
+ 054B A05D              jz L77
+ 054D 5202              mov A,[X+2]
+ 054F 08                push A
+ 0550 5203              mov A,[X+3]
+ 0552 08                push A
+ 0553 7C0000            xcall _strlenLMM
+ 0556 38FE              add SP,-2
+ 0558 62D000            mov REG[0xd0],>__r0
+ 055B 5003              mov A,3
+ 055D 1200              sub A,[__r1]
+ 055F 5000              mov A,0
+ 0561 1A00              sbb A,[__r0]
+ 0563 C045              jc L77
+ 0565           X16:
+ 0565 5202              mov A,[X+2]
+ 0567 08                push A
+ 0568 5203              mov A,[X+3]
+ 056A 08                push A
+ 056B 7C0000            xcall _strlenLMM
+ 056E 38FE              add SP,-2
+ 0570 62D000            mov REG[0xd0],>__r0
+ 0573 5100              mov A,[__r1]
+ 0575 1101              sub A,1
+ 0577 5100              mov A,[__r0]
+ 0579 1900              sbb A,0
+ 057B C02D              jc L77
+ 057D           X17:
+ 057D 62D000            mov REG[0xd0],>__r0
+ 0580 5A00              mov [__r1],X
+ 0582 060004            add [__r1],4
+ 0585 5007              mov A,7
+ 0587 08                push A
+ 0588 5100              mov A,[__r1]
+ 058A 08                push A
+ 058B 5066              mov A,>L61
+ 058D 08                push A
+ 058E 5066              mov A,<L61
+ 0590 08                push A
+ 0591 5202              mov A,[X+2]
+ 0593 08                push A
+ 0594 5203              mov A,[X+3]
+ 0596 08                push A
+ 0597 7C0000            xcall _csscanf
+ 059A 38FA              add SP,-6
+ 059C 62D000            mov REG[0xd0],>__r0
+ 059F 3C0000            cmp [__r0],0
+ 05A2 B006              jnz X18
+ 05A4 3C0001            cmp [__r1],1
+ 05A7 A003              jz L73
+ 05A9           X18:
+ 05A9           L77:
+ 05A9                   .dbline 224
+ 05A9 8548              xjmp L65
+ 05AB           L73:
+ 05AB                   .dbline 225
+ 05AB           ;                       if (cstrtok(0x00, " ") != 0x00) goto error; // If there is any data after temp, throw an error
+ 05AB 5069              mov A,>L56
+ 05AD 08                push A
+ 05AE 5069              mov A,<L56
+ 05B0 08                push A
+ 05B1 5000              mov A,0
+ 05B3 08                push A
+ 05B4 08                push A
+ 05B5 7C0000            xcall _cstrtok
+ 05B8 38FC              add SP,-4
+ 05BA 62D000            mov REG[0xd0],>__r0
+ 05BD 3C0000            cmp [__r0],0
+ 05C0 B006              jnz X19
+ 05C2 3C0000            cmp [__r1],0
+ 05C5 A003              jz L78
+ 05C7           X19:
+ 05C7                   .dbline 225
+ 05C7 852A              xjmp L65
+ 05C9           L78:
+ 05C9                   .dbline 227
+ 05C9           ;                       
+ 05C9           ;                       if (tol < 0 || tol > 99)
+ 05C9 5205              mov A,[X+5]
+ 05CB 1100              sub A,0
+ 05CD 5204              mov A,[X+4]
+ 05CF 3180              xor A,-128
+ 05D1 1980              sbb A,(0 ^ 0x80)
+ 05D3 C014              jc L82
+ 05D5           X20:
+ 05D5 5063              mov A,99
+ 05D7 1305              sub A,[X+5]
+ 05D9 5204              mov A,[X+4]
+ 05DB 3180              xor A,-128
+ 05DD 62D000            mov REG[0xd0],>__r0
+ 05E0 5300              mov [__rX],A
+ 05E2 5080              mov A,(0 ^ 0x80)
+ 05E4 1A00              sbb A,[__rX]
+ 05E6 D003              jnc L80
+ 05E8           X21:
+ 05E8           L82:
+ 05E8                   .dbline 228
+ 05E8           ;                               goto error; // tolerance was not in range
+ 05E8 8509              xjmp L65
+ 05EA           L80:
+ 05EA                   .dbline 230
+ 05EA           ;                       
+ 05EA           ;                       tolerance = tol;
+ 05EA 5205              mov A,[X+5]
+ 05EC 62D000            mov REG[0xd0],>_tolerance
+ 05EF 5300              mov [_tolerance],A
+ 05F1                   .dbline 232
+ 05F1           ; 
+ 05F1           ;                       WriteI2C(slaveAddress, 0xA1, 2, (char)(setTemp + (tolerance / 2)), 0x00); // Writes TH
+ 05F1 5000              mov A,0
+ 05F3 08                push A
+ 05F4 08                push A
+ 05F5 5002              mov A,2
+ 05F7 08                push A
+ 05F8 5100              mov A,[_tolerance]
+ 05FA 08                push A
+ 05FB 62D000            mov REG[0xd0],>__r0
+ 05FE 7C0000            xcall __divmodu_8X8_8
+ 0601 18                pop A
+ 0602 5300              mov [__r0],A
+ 0604 38FF              add SP,-1
+ 0606 62D000            mov REG[0xd0],>_setTemp
+ 0609 5100              mov A,[_setTemp]
+ 060B 62D000            mov REG[0xd0],>__r0
+ 060E 0200              add A,[__r0]
+ 0610 5300              mov [__r1],A
+ 0612 5000              mov A,0
+ 0614 08                push A
+ 0615 5100              mov A,[__r1]
+ 0617 08                push A
+ 0618 5000              mov A,0
+ 061A 08                push A
+ 061B 5002              mov A,2
+ 061D 08                push A
+ 061E 50A1              mov A,-95
+ 0620 08                push A
+ 0621 62D000            mov REG[0xd0],>_slaveAddress
+ 0624 5100              mov A,[_slaveAddress]
+ 0626 08                push A
+ 0627 9A7B              xcall _WriteI2C
+ 0629 38F8              add SP,-8
+ 062B                   .dbline 233
+ 062B           ;                       WriteI2C(slaveAddress, 0xA2, 2, (char)(setTemp - (tolerance / 2)), 0x00); // Writes TL
+ 062B 5000              mov A,0
+ 062D 08                push A
+ 062E 08                push A
+ 062F 62D000            mov REG[0xd0],>_tolerance
+ 0632 5002              mov A,2
+ 0634 08                push A
+ 0635 5100              mov A,[_tolerance]
+ 0637 08                push A
+ 0638 62D000            mov REG[0xd0],>__r0
+ 063B 7C0000            xcall __divmodu_8X8_8
+ 063E 18                pop A
+ 063F 5300              mov [__r0],A
+ 0641 38FF              add SP,-1
+ 0643 62D000            mov REG[0xd0],>_setTemp
+ 0646 5100              mov A,[_setTemp]
+ 0648 62D000            mov REG[0xd0],>__r0
+ 064B 1200              sub A,[__r0]
+ 064D 5300              mov [__r1],A
+ 064F 5000              mov A,0
+ 0651 08                push A
+ 0652 5100              mov A,[__r1]
+ 0654 08                push A
+ 0655 5000              mov A,0
+ 0657 08                push A
+ 0658 5002              mov A,2
+ 065A 08                push A
+ 065B 50A2              mov A,-94
+ 065D 08                push A
+ 065E 62D000            mov REG[0xd0],>_slaveAddress
+ 0661 5100              mov A,[_slaveAddress]
+ 0663 08                push A
+ 0664 9A3E              xcall _WriteI2C
+ 0666 38F8              add SP,-8
+ 0668                   .dbline 235
+ 0668           ;                       
+ 0668           ;                       lcdUpdate = TRUE;
+ 0668 62D000            mov REG[0xd0],>_lcdUpdate
+ 066B 550001            mov [_lcdUpdate],1
+ 066E                   .dbline 236
+ 066E           ;               }
+ 066E 8310              xjmp L72
+ 0670           L71:
+ 0670                   .dbline 237
+ 0670           ;               else if (strlen(cmd) == 1 && cmd[0] == 'm') // If the command is one letter and it is r, then read command
+ 0670 5200              mov A,[X+0]
+ 0672 08                push A
+ 0673 5201              mov A,[X+1]
+ 0675 08                push A
+ 0676 7C0000            xcall _strlenLMM
+ 0679 38FE              add SP,-2
+ 067B 62D000            mov REG[0xd0],>__r0
+ 067E 3C0000            cmp [__r0],0
+ 0681 B121              jnz L83
+ 0683 3C0001            cmp [__r1],1
+ 0686 B11C              jnz L83
+ 0688           X22:
+ 0688 62D000            mov REG[0xd0],>__r0
+ 068B 5201              mov A,[X+1]
+ 068D 5300              mov [__r1],A
+ 068F 5200              mov A,[X+0]
+ 0691 60D4              mov REG[0xd4],A
+ 0693 3E00              mvi A,[__r1]
+ 0695 396D              cmp A,109
+ 0697 B10B              jnz L83
+ 0699                   .dbline 239
+ 0699           ;               {
+ 0699           ;                       char mode;
+ 0699                   .dbline 245
+ 0699           ; 
+ 0699           ;                       // csscanf if used to parse the string into values such as hexadecimal or integers
+ 0699           ;                       // It returns the number of parameters it parsed which should be one
+ 0699           ;                       // If the length of the params is not right or it does not parse the right amount, it returns an error
+ 0699           ;                       // %c gets a character, the data type character
+ 0699           ;                       params = cstrtok(0x00, " ");
+ 0699 5069              mov A,>L56
+ 069B 08                push A
+ 069C 5069              mov A,<L56
+ 069E 08                push A
+ 069F 5000              mov A,0
+ 06A1 08                push A
+ 06A2 08                push A
+ 06A3 7C0000            xcall _cstrtok
+ 06A6 62D000            mov REG[0xd0],>__r0
+ 06A9 5100              mov A,[__r1]
+ 06AB 5403              mov [X+3],A
+ 06AD 5100              mov A,[__r0]
+ 06AF 5402              mov [X+2],A
+ 06B1                   .dbline 246
+ 06B1           ;                       if (strlen(params) != 1 || csscanf(params, "%c", &mode) != 1) goto error;
+ 06B1 5202              mov A,[X+2]
+ 06B3 08                push A
+ 06B4 5203              mov A,[X+3]
+ 06B6 08                push A
+ 06B7 7C0000            xcall _strlenLMM
+ 06BA 38FA              add SP,-6
+ 06BC 62D000            mov REG[0xd0],>__r0
+ 06BF 3C0000            cmp [__r0],0
+ 06C2 B032              jnz L88
+ 06C4 3C0001            cmp [__r1],1
+ 06C7 B02D              jnz L88
+ 06C9           X23:
+ 06C9 62D000            mov REG[0xd0],>__r0
+ 06CC 5A00              mov [__r1],X
+ 06CE 060004            add [__r1],4
+ 06D1 5007              mov A,7
+ 06D3 08                push A
+ 06D4 5100              mov A,[__r1]
+ 06D6 08                push A
+ 06D7 5063              mov A,>L87
+ 06D9 08                push A
+ 06DA 5063              mov A,<L87
+ 06DC 08                push A
+ 06DD 5202              mov A,[X+2]
+ 06DF 08                push A
+ 06E0 5203              mov A,[X+3]
+ 06E2 08                push A
+ 06E3 7C0000            xcall _csscanf
+ 06E6 38FA              add SP,-6
+ 06E8 62D000            mov REG[0xd0],>__r0
+ 06EB 3C0000            cmp [__r0],0
+ 06EE B006              jnz X24
+ 06F0 3C0001            cmp [__r1],1
+ 06F3 A003              jz L85
+ 06F5           X24:
+ 06F5           L88:
+ 06F5                   .dbline 246
+ 06F5 83FC              xjmp L65
+ 06F7           L85:
+ 06F7                   .dbline 249
+ 06F7           ;                       
+ 06F7           ;                       // If there is any data after the number of bytes, then the format is invalid and it should return an error
+ 06F7           ;                       if (cstrtok(0x00, " ") != 0x00) goto error;
+ 06F7 5069              mov A,>L56
+ 06F9 08                push A
+ 06FA 5069              mov A,<L56
+ 06FC 08                push A
+ 06FD 5000              mov A,0
+ 06FF 08                push A
+ 0700 08                push A
+ 0701 7C0000            xcall _cstrtok
+ 0704 38FC              add SP,-4
+ 0706 62D000            mov REG[0xd0],>__r0
+ 0709 3C0000            cmp [__r0],0
+ 070C B006              jnz X25
+ 070E 3C0000            cmp [__r1],0
+ 0711 A003              jz L89
+ 0713           X25:
+ 0713                   .dbline 249
+ 0713 83DE              xjmp L65
+ 0715           L89:
+ 0715                   .dbline 251
+ 0715           ;                       
+ 0715           ;                       mode = tolower(mode); // Lowercase the data type
+ 0715 62D000            mov REG[0xd0],>__r0
+ 0718 5204              mov A,[X+4]
+ 071A 5300              mov [__r1],A
+ 071C 5000              mov A,0
+ 071E 08                push A
+ 071F 5100              mov A,[__r1]
+ 0721 08                push A
+ 0722 7C0000            xcall _tolower
+ 0725 38FE              add SP,-2
+ 0727 62D000            mov REG[0xd0],>__r0
+ 072A 5100              mov A,[__r1]
+ 072C 5404              mov [X+4],A
+ 072E                   .dbline 253
+ 072E           ;                       
+ 072E           ;                       switch (mode)
+ 072E 5204              mov A,[X+4]
+ 0730 5406              mov [X+6],A
+ 0732 560500            mov [X+5],0
+ 0735 3D0500            cmp [X+5],0
+ 0738 B006              jnz X26
+ 073A 3D0663            cmp [X+6],99
+ 073D A03C              jz L96
+ 073F           X26:
+ 073F 3D0500            cmp [X+5],0
+ 0742 B006              jnz X27
+ 0744 3D0666            cmp [X+6],102
+ 0747 A00D              jz L94
+ 0749           X27:
+ 0749 3D0500            cmp [X+5],0
+ 074C B006              jnz X28
+ 074E 3D0668            cmp [X+6],104
+ 0751 A00B              jz L95
+ 0753           X28:
+ 0753 839E              xjmp L65
+ 0755           L94:
+ 0755                   .dbline 256
+ 0755           ;                       {
+ 0755           ;                               case 'f':
+ 0755           ;                                       thermostatMode = 0;
+ 0755 62D000            mov REG[0xd0],>_thermostatMode
+ 0758 550000            mov [_thermostatMode],0
+ 075B                   .dbline 257
+ 075B           ;                                       break;
+ 075B 803D              xjmp L92
+ 075D           L95:
+ 075D                   .dbline 260
+ 075D           ;                                       
+ 075D           ;                               case 'h':
+ 075D           ;                                       thermostatMode = 1;
+ 075D 62D000            mov REG[0xd0],>_thermostatMode
+ 0760 550001            mov [_thermostatMode],1
+ 0763                   .dbline 261
+ 0763           ;                                       WriteI2C(slaveAddress, 0xAC, 1, 0x00); // Write to Access Config, sets polarity bit to active low
+ 0763 5000              mov A,0
+ 0765 08                push A
+ 0766 08                push A
+ 0767 08                push A
+ 0768 5001              mov A,1
+ 076A 08                push A
+ 076B 50AC              mov A,-84
+ 076D 08                push A
+ 076E 62D000            mov REG[0xd0],>_slaveAddress
+ 0771 5100              mov A,[_slaveAddress]
+ 0773 08                push A
+ 0774 992E              xcall _WriteI2C
+ 0776 38FA              add SP,-6
+ 0778                   .dbline 262
+ 0778           ;                                       break;
+ 0778 8020              xjmp L92
+ 077A           L96:
+ 077A                   .dbline 265
+ 077A           ;                                       
+ 077A           ;                               case 'c':
+ 077A           ;                                       thermostatMode = 2;
+ 077A 62D000            mov REG[0xd0],>_thermostatMode
+ 077D 550002            mov [_thermostatMode],2
+ 0780                   .dbline 266
+ 0780           ;                                       WriteI2C(slaveAddress, 0xAC, 1, 0x02); // Write to Access Config, sets polarity bit to active high
+ 0780 5000              mov A,0
+ 0782 08                push A
+ 0783 5002              mov A,2
+ 0785 08                push A
+ 0786 5000              mov A,0
+ 0788 08                push A
+ 0789 5001              mov A,1
+ 078B 08                push A
+ 078C 50AC              mov A,-84
+ 078E 08                push A
+ 078F 62D000            mov REG[0xd0],>_slaveAddress
+ 0792 5100              mov A,[_slaveAddress]
+ 0794 08                push A
+ 0795 990D              xcall _WriteI2C
+ 0797 38FA              add SP,-6
+ 0799                   .dbline 267
+ 0799           ;                                       break;
+ 0799                   .dbline 269
+ 0799           ;                                       
+ 0799           ;                               default: goto error;
+ 0799           L92:
+ 0799                   .dbline 272
+ 0799           ;                       }
+ 0799           ;       
+ 0799           ;                       CheckFan();
+ 0799 9ADA              xcall _CheckFan
+ 079B                   .dbline 273
+ 079B           ;                       lcdUpdate = TRUE;
+ 079B 62D000            mov REG[0xd0],>_lcdUpdate
+ 079E 550001            mov [_lcdUpdate],1
+ 07A1                   .dbline 274
+ 07A1           ;               }
+ 07A1 81DD              xjmp L84
+ 07A3           L83:
+ 07A3                   .dbline 275
+ 07A3           ;               else if (strlen(cmd) == 1 && cmd[0] == 'f') // If the command is one letter and it is r, then read command
+ 07A3 5200              mov A,[X+0]
+ 07A5 08                push A
+ 07A6 5201              mov A,[X+1]
+ 07A8 08                push A
+ 07A9 7C0000            xcall _strlenLMM
+ 07AC 38FE              add SP,-2
+ 07AE 62D000            mov REG[0xd0],>__r0
+ 07B1 3C0000            cmp [__r0],0
+ 07B4 B33D              jnz L65
+ 07B6 3C0001            cmp [__r1],1
+ 07B9 B338              jnz L65
+ 07BB           X29:
+ 07BB 62D000            mov REG[0xd0],>__r0
+ 07BE 5201              mov A,[X+1]
+ 07C0 5300              mov [__r1],A
+ 07C2 5200              mov A,[X+0]
+ 07C4 60D4              mov REG[0xd4],A
+ 07C6 3E00              mvi A,[__r1]
+ 07C8 3966              cmp A,102
+ 07CA B327              jnz L65
+ 07CC                   .dbline 277
+ 07CC           ;               {
+ 07CC           ;                       char mode;
+ 07CC                   .dbline 284
+ 07CC           ;                       char speed;
+ 07CC           ; 
+ 07CC           ;                       // csscanf if used to parse the string into values such as hexadecimal or integers
+ 07CC           ;                       // It returns the number of parameters it parsed which should be one
+ 07CC           ;                       // If the length of the params is not right or it does not parse the right amount, it returns an error
+ 07CC           ;                       // %c gets a character, the data type character
+ 07CC           ;                       params = cstrtok(0x00, " ");
+ 07CC 5069              mov A,>L56
+ 07CE 08                push A
+ 07CF 5069              mov A,<L56
+ 07D1 08                push A
+ 07D2 5000              mov A,0
+ 07D4 08                push A
+ 07D5 08                push A
+ 07D6 7C0000            xcall _cstrtok
+ 07D9 62D000            mov REG[0xd0],>__r0
+ 07DC 5100              mov A,[__r1]
+ 07DE 5403              mov [X+3],A
+ 07E0 5100              mov A,[__r0]
+ 07E2 5402              mov [X+2],A
+ 07E4                   .dbline 285
+ 07E4           ;                       if (strlen(params) != 1 || csscanf(params, "%c", &mode) != 1) goto error;
+ 07E4 5202              mov A,[X+2]
+ 07E6 08                push A
+ 07E7 5203              mov A,[X+3]
+ 07E9 08                push A
+ 07EA 7C0000            xcall _strlenLMM
+ 07ED 38FA              add SP,-6
+ 07EF 62D000            mov REG[0xd0],>__r0
+ 07F2 3C0000            cmp [__r0],0
+ 07F5 B032              jnz L101
+ 07F7 3C0001            cmp [__r1],1
+ 07FA B02D              jnz L101
+ 07FC           X30:
+ 07FC 62D000            mov REG[0xd0],>__r0
+ 07FF 5A00              mov [__r1],X
+ 0801 060004            add [__r1],4
+ 0804 5007              mov A,7
+ 0806 08                push A
+ 0807 5100              mov A,[__r1]
+ 0809 08                push A
+ 080A 5063              mov A,>L87
+ 080C 08                push A
+ 080D 5063              mov A,<L87
+ 080F 08                push A
+ 0810 5202              mov A,[X+2]
+ 0812 08                push A
+ 0813 5203              mov A,[X+3]
+ 0815 08                push A
+ 0816 7C0000            xcall _csscanf
+ 0819 38FA              add SP,-6
+ 081B 62D000            mov REG[0xd0],>__r0
+ 081E 3C0000            cmp [__r0],0
+ 0821 B006              jnz X31
+ 0823 3C0001            cmp [__r1],1
+ 0826 A003              jz L99
+ 0828           X31:
+ 0828           L101:
+ 0828                   .dbline 285
+ 0828 82C9              xjmp L65
+ 082A           L99:
+ 082A                   .dbline 288
+ 082A           ;                       
+ 082A           ;                       // %c gets a character, the data type character
+ 082A           ;                       params = cstrtok(0x00, " ");
+ 082A 5069              mov A,>L56
+ 082C 08                push A
+ 082D 5069              mov A,<L56
+ 082F 08                push A
+ 0830 5000              mov A,0
+ 0832 08                push A
+ 0833 08                push A
+ 0834 7C0000            xcall _cstrtok
+ 0837 62D000            mov REG[0xd0],>__r0
+ 083A 5100              mov A,[__r1]
+ 083C 5403              mov [X+3],A
+ 083E 5100              mov A,[__r0]
+ 0840 5402              mov [X+2],A
+ 0842                   .dbline 289
+ 0842           ;                       if (strlen(params) != 1 || csscanf(params, "%c", &speed) != 1) goto error;
+ 0842 5202              mov A,[X+2]
+ 0844 08                push A
+ 0845 5203              mov A,[X+3]
+ 0847 08                push A
+ 0848 7C0000            xcall _strlenLMM
+ 084B 38FA              add SP,-6
+ 084D 62D000            mov REG[0xd0],>__r0
+ 0850 3C0000            cmp [__r0],0
+ 0853 B032              jnz L104
+ 0855 3C0001            cmp [__r1],1
+ 0858 B02D              jnz L104
+ 085A           X32:
+ 085A 62D000            mov REG[0xd0],>__r0
+ 085D 5A00              mov [__r1],X
+ 085F 060005            add [__r1],5
+ 0862 5007              mov A,7
+ 0864 08                push A
+ 0865 5100              mov A,[__r1]
+ 0867 08                push A
+ 0868 5063              mov A,>L87
+ 086A 08                push A
+ 086B 5063              mov A,<L87
+ 086D 08                push A
+ 086E 5202              mov A,[X+2]
+ 0870 08                push A
+ 0871 5203              mov A,[X+3]
+ 0873 08                push A
+ 0874 7C0000            xcall _csscanf
+ 0877 38FA              add SP,-6
+ 0879 62D000            mov REG[0xd0],>__r0
+ 087C 3C0000            cmp [__r0],0
+ 087F B006              jnz X33
+ 0881 3C0001            cmp [__r1],1
+ 0884 A003              jz L102
+ 0886           X33:
+ 0886           L104:
+ 0886                   .dbline 289
+ 0886 826B              xjmp L65
+ 0888           L102:
+ 0888                   .dbline 292
+ 0888           ;                       
+ 0888           ;                       // If there is any data after the number of bytes, then the format is invalid and it should return an error
+ 0888           ;                       if (cstrtok(0x00, " ") != 0x00) goto error;
+ 0888 5069              mov A,>L56
+ 088A 08                push A
+ 088B 5069              mov A,<L56
+ 088D 08                push A
+ 088E 5000              mov A,0
+ 0890 08                push A
+ 0891 08                push A
+ 0892 7C0000            xcall _cstrtok
+ 0895 38FC              add SP,-4
+ 0897 62D000            mov REG[0xd0],>__r0
+ 089A 3C0000            cmp [__r0],0
+ 089D B006              jnz X34
+ 089F 3C0000            cmp [__r1],0
+ 08A2 A003              jz L105
+ 08A4           X34:
+ 08A4                   .dbline 292
+ 08A4 824D              xjmp L65
+ 08A6           L105:
+ 08A6                   .dbline 294
+ 08A6           ;                       
+ 08A6           ;                       mode = tolower(mode); // Lowercase the mode character
+ 08A6 62D000            mov REG[0xd0],>__r0
+ 08A9 5204              mov A,[X+4]
+ 08AB 5300              mov [__r1],A
+ 08AD 5000              mov A,0
+ 08AF 08                push A
+ 08B0 5100              mov A,[__r1]
+ 08B2 08                push A
+ 08B3 7C0000            xcall _tolower
+ 08B6 62D000            mov REG[0xd0],>__r0
+ 08B9 5100              mov A,[__r1]
+ 08BB 5404              mov [X+4],A
+ 08BD                   .dbline 295
+ 08BD           ;                       speed = tolower(speed); // Lowercase the speed character
+ 08BD 5205              mov A,[X+5]
+ 08BF 5300              mov [__r1],A
+ 08C1 5000              mov A,0
+ 08C3 08                push A
+ 08C4 5100              mov A,[__r1]
+ 08C6 08                push A
+ 08C7 7C0000            xcall _tolower
+ 08CA 38FC              add SP,-4
+ 08CC 62D000            mov REG[0xd0],>__r0
+ 08CF 5100              mov A,[__r1]
+ 08D1 5405              mov [X+5],A
+ 08D3                   .dbline 297
+ 08D3           ;                       
+ 08D3           ;                       switch (mode)
+ 08D3 5204              mov A,[X+4]
+ 08D5 5407              mov [X+7],A
+ 08D7 560600            mov [X+6],0
+ 08DA 5207              mov A,[X+7]
+ 08DC 1161              sub A,97
+ 08DE 5300              mov [__rY],A
+ 08E0 5206              mov A,[X+6]
+ 08E2 3180              xor A,-128
+ 08E4 1980              sbb A,(0 ^ 0x80)
+ 08E6 C20B              jc L65
+ 08E8 2A00              or A,[__rY]
+ 08EA A015              jz L111
+ 08EC           X35:
+ 08EC           L112:
+ 08EC 3D0600            cmp [X+6],0
+ 08EF B006              jnz X36
+ 08F1 3D076D            cmp [X+7],109
+ 08F4 A003              jz L110
+ 08F6           X36:
+ 08F6 81FB              xjmp L65
+ 08F8           L110:
+ 08F8                   .dbline 299
+ 08F8           ;                       {
+ 08F8           ;                               case 'm': fanMode = 0; break;
+ 08F8 62D000            mov REG[0xd0],>_fanMode
+ 08FB 550000            mov [_fanMode],0
+ 08FE                   .dbline 299
+ 08FE 8007              xjmp L108
+ 0900           L111:
+ 0900                   .dbline 300
+ 0900           ;                               case 'a': fanMode = 1; break;
+ 0900 62D000            mov REG[0xd0],>_fanMode
+ 0903 550001            mov [_fanMode],1
+ 0906                   .dbline 300
+ 0906                   .dbline 301
+ 0906           ;                               default: goto error;
+ 0906           L108:
+ 0906                   .dbline 303
+ 0906           ;                       }
+ 0906           ;                       CheckFan();
+ 0906 996D              xcall _CheckFan
+ 0908                   .dbline 305
+ 0908           ;                       
+ 0908           ;                       MotorDriver_Stop();
+ 0908 10                push X
+ 0909 7C0000            xcall _MotorDriver_Stop
+ 090C 20                pop X
+ 090D                   .dbline 306
+ 090D           ;                       switch (speed)
+ 090D 5205              mov A,[X+5]
+ 090F 5409              mov [X+9],A
+ 0911 560800            mov [X+8],0
+ 0914 3D0800            cmp [X+8],0
+ 0917 B006              jnz X37
+ 0919 3D0968            cmp [X+9],104
+ 091C A047              jz L118
+ 091E           X37:
+ 091E 3D0800            cmp [X+8],0
+ 0921 B006              jnz X38
+ 0923 3D096C            cmp [X+9],108
+ 0926 A00D              jz L116
+ 0928           X38:
+ 0928 3D0800            cmp [X+8],0
+ 092B B006              jnz X39
+ 092D 3D096D            cmp [X+9],109
+ 0930 A01B              jz L117
+ 0932           X39:
+ 0932 81BF              xjmp L65
+ 0934           L116:
+ 0934                   .dbline 309
+ 0934           ;                       {
+ 0934           ;                               case 'l':
+ 0934           ;                                       fanSpeed = 0;
+ 0934 62D000            mov REG[0xd0],>_fanSpeed
+ 0937 550000            mov [_fanSpeed],0
+ 093A                   .dbline 311
+ 093A           ;                                       
+ 093A           ;                                       MotorDriver_WritePeriod(1999);
+ 093A 10                push X
+ 093B 5707              mov X,7
+ 093D 50CF              mov A,-49
+ 093F 7C0000            xcall _MotorDriver_WritePeriod
+ 0942                   .dbline 312
+ 0942           ;                                       MotorDriver_WriteCompareValue(1000);
+ 0942 5703              mov X,3
+ 0944 50E8              mov A,-24
+ 0946 7C0000            xcall _MotorDriver_WriteCompareValue
+ 0949 20                pop X
+ 094A                   .dbline 313
+ 094A           ;                                       break;
+ 094A 802F              xjmp L114
+ 094C           L117:
+ 094C                   .dbline 316
+ 094C           ;                                       
+ 094C           ;                               case 'm':
+ 094C           ;                                       fanSpeed = 1;
+ 094C 62D000            mov REG[0xd0],>_fanSpeed
+ 094F 550001            mov [_fanSpeed],1
+ 0952                   .dbline 318
+ 0952           ;                                       
+ 0952           ;                                       MotorDriver_WritePeriod(9999);
+ 0952 10                push X
+ 0953 5727              mov X,39
+ 0955 500F              mov A,15
+ 0957 7C0000            xcall _MotorDriver_WritePeriod
+ 095A                   .dbline 319
+ 095A           ;                                       MotorDriver_WriteCompareValue(5000);
+ 095A 5713              mov X,19
+ 095C 5088              mov A,-120
+ 095E 7C0000            xcall _MotorDriver_WriteCompareValue
+ 0961 20                pop X
+ 0962                   .dbline 320
+ 0962           ;                                       break;
+ 0962 8017              xjmp L114
+ 0964           L118:
+ 0964                   .dbline 323
+ 0964           ;                                       
+ 0964           ;                               case 'h':
+ 0964           ;                                       fanSpeed = 2;
+ 0964 62D000            mov REG[0xd0],>_fanSpeed
+ 0967 550002            mov [_fanSpeed],2
+ 096A                   .dbline 325
+ 096A           ;                                       
+ 096A           ;                                       MotorDriver_WritePeriod(49999);
+ 096A 10                push X
+ 096B 57C3              mov X,-61
+ 096D 504F              mov A,79
+ 096F 7C0000            xcall _MotorDriver_WritePeriod
+ 0972                   .dbline 326
+ 0972           ;                                       MotorDriver_WriteCompareValue(25000);
+ 0972 5761              mov X,97
+ 0974 50A8              mov A,-88
+ 0976 7C0000            xcall _MotorDriver_WriteCompareValue
+ 0979 20                pop X
+ 097A                   .dbline 327
+ 097A           ;                                       break;
+ 097A                   .dbline 329
+ 097A           ;                                       
+ 097A           ;                               default: goto error;
+ 097A           L114:
+ 097A                   .dbline 331
+ 097A           ;                       }
+ 097A           ;                       MotorDriver_Start();
+ 097A 10                push X
+ 097B 7C0000            xcall _MotorDriver_Start
+ 097E 20                pop X
+ 097F                   .dbline 332
+ 097F           ;               }
+ 097F                   .dbline 334
+ 097F           ;               else 
+ 097F           ;                       goto error;
+ 097F           L98:
+ 097F           L84:
+ 097F           L72:
+ 097F           L58:
+ 097F                   .dbline 336
+ 097F           ;               
+ 097F           ;               if (checkTemp)
+ 097F 62D000            mov REG[0xd0],>_checkTemp
+ 0982 3C0000            cmp [_checkTemp],0
+ 0985 A030              jz L119
+ 0987                   .dbline 338
+ 0987           ;               {
+ 0987           ;                       char tempByte[2];
+ 0987                   .dbline 340
+ 0987           ;                       
+ 0987           ;                       ReadI2C(slaveAddress, 0xAA, 2, tempByte);
+ 0987 62D000            mov REG[0xd0],>__r0
+ 098A 5A00              mov [__r1],X
+ 098C 060004            add [__r1],4
+ 098F 5007              mov A,7
+ 0991 08                push A
+ 0992 5100              mov A,[__r1]
+ 0994 08                push A
+ 0995 5000              mov A,0
+ 0997 08                push A
+ 0998 5002              mov A,2
+ 099A 08                push A
+ 099B 50AA              mov A,-86
+ 099D 08                push A
+ 099E 62D000            mov REG[0xd0],>_slaveAddress
+ 09A1 5100              mov A,[_slaveAddress]
+ 09A3 08                push A
+ 09A4 7C0145            xcall _ReadI2C
+ 09A7 38FA              add SP,-6
+ 09A9                   .dbline 341
+ 09A9           ;                       curTemp = tempByte[0];
+ 09A9 5204              mov A,[X+4]
+ 09AB 62D000            mov REG[0xd0],>_curTemp
+ 09AE 5300              mov [_curTemp],A
+ 09B0                   .dbline 342
+ 09B0           ;                       checkTemp = FALSE;      
+ 09B0 62D000            mov REG[0xd0],>_checkTemp
+ 09B3 550000            mov [_checkTemp],0
+ 09B6                   .dbline 343
+ 09B6           ;               }
+ 09B6           L119:
+ 09B6                   .dbline 345
+ 09B6           ;               
+ 09B6           ;               if (lcdUpdate)
+ 09B6 62D000            mov REG[0xd0],>_lcdUpdate
+ 09B9 3C0000            cmp [_lcdUpdate],0
+ 09BC A135              jz L121
+ 09BE                   .dbline 347
+ 09BE           ;               {
+ 09BE           ;                       char buf[17];
+ 09BE                   .dbline 351
+ 09BE           ;                       __flash char *sThermMode;
+ 09BE           ;                       __flash char *sFanMode;
+ 09BE           ;                       
+ 09BE           ;                       switch (thermostatMode)
+ 09BE 62D000            mov REG[0xd0],>_thermostatMode
+ 09C1 5100              mov A,[_thermostatMode]
+ 09C3 541A              mov [X+26],A
+ 09C5 561900            mov [X+25],0
+ 09C8 3D1900            cmp [X+25],0
+ 09CB B006              jnz X40
+ 09CD 3D1A00            cmp [X+26],0
+ 09D0 A017              jz L126
+ 09D2           X40:
+ 09D2 3D1900            cmp [X+25],0
+ 09D5 B006              jnz X41
+ 09D7 3D1A01            cmp [X+26],1
+ 09DA A015              jz L128
+ 09DC           X41:
+ 09DC 3D1900            cmp [X+25],0
+ 09DF B006              jnz X42
+ 09E1 3D1A02            cmp [X+26],2
+ 09E4 A013              jz L130
+ 09E6           X42:
+ 09E6 8017              xjmp L123
+ 09E8           L126:
+ 09E8                   .dbline 353
+ 09E8           ;                       {
+ 09E8           ;                               case 0: sThermMode = "OFF "; break;
+ 09E8 56185E            mov [X+24],<L127
+ 09EB 56175E            mov [X+23],>L127
+ 09EE                   .dbline 353
+ 09EE 800F              xjmp L124
+ 09F0           L128:
+ 09F0                   .dbline 354
+ 09F0           ;                               case 1: sThermMode = "HEAT"; break;
+ 09F0 561859            mov [X+24],<L129
+ 09F3 561759            mov [X+23],>L129
+ 09F6                   .dbline 354
+ 09F6 8007              xjmp L124
+ 09F8           L130:
+ 09F8                   .dbline 355
+ 09F8           ;                               case 2: sThermMode = "COOL"; break;
+ 09F8 561854            mov [X+24],<L131
+ 09FB 561754            mov [X+23],>L131
+ 09FE                   .dbline 355
+ 09FE           L123:
+ 09FE           L124:
+ 09FE                   .dbline 358
+ 09FE           ;                       }
+ 09FE           ;                       
+ 09FE           ;                       if (fanMode == 0 || Tout_Data_ADDR & Tout_MASK)
+ 09FE 62D000            mov REG[0xd0],>_fanMode
+ 0A01 3C0000            cmp [_fanMode],0
+ 0A04 A00D              jz L134
+ 0A06 5D04              mov A,REG[0x4]
+ 0A08 62D000            mov REG[0xd0],>__r0
+ 0A0B 5300              mov [__r0],A
+ 0A0D 470010            tst [__r0],16
+ 0A10 A043              jz L132
+ 0A12           L134:
+ 0A12                   .dbline 360
+ 0A12           ;                       {
+ 0A12           ;                               switch (fanSpeed)
+ 0A12                   .dbline 360
+ 0A12 62D000            mov REG[0xd0],>_fanSpeed
+ 0A15 5100              mov A,[_fanSpeed]
+ 0A17 541C              mov [X+28],A
+ 0A19 561B00            mov [X+27],0
+ 0A1C 3D1B00            cmp [X+27],0
+ 0A1F B006              jnz X43
+ 0A21 3D1C00            cmp [X+28],0
+ 0A24 A017              jz L138
+ 0A26           X43:
+ 0A26 3D1B00            cmp [X+27],0
+ 0A29 B006              jnz X44
+ 0A2B 3D1C01            cmp [X+28],1
+ 0A2E A015              jz L140
+ 0A30           X44:
+ 0A30 3D1B00            cmp [X+27],0
+ 0A33 B006              jnz X45
+ 0A35 3D1C02            cmp [X+28],2
+ 0A38 A013              jz L142
+ 0A3A           X45:
+ 0A3A 801F              xjmp L133
+ 0A3C           L138:
+ 0A3C                   .dbline 362
+ 0A3C           ;                               {
+ 0A3C           ;                                       case 0: sFanMode = "LO "; break;
+ 0A3C 561650            mov [X+22],<L139
+ 0A3F 561550            mov [X+21],>L139
+ 0A42                   .dbline 362
+ 0A42 8017              xjmp L133
+ 0A44           L140:
+ 0A44                   .dbline 363
+ 0A44           ;                                       case 1: sFanMode = "MD "; break;
+ 0A44 56164C            mov [X+22],<L141
+ 0A47 56154C            mov [X+21],>L141
+ 0A4A                   .dbline 363
+ 0A4A 800F              xjmp L133
+ 0A4C           L142:
+ 0A4C                   .dbline 364
+ 0A4C           ;                                       case 2: sFanMode = "HI "; break;
+ 0A4C 561648            mov [X+22],<L143
+ 0A4F 561548            mov [X+21],>L143
+ 0A52                   .dbline 364
+ 0A52                   .dbline 366
+ 0A52           ;                               }
+ 0A52           ;                       }
+ 0A52 8007              xjmp L133
+ 0A54           L132:
+ 0A54                   .dbline 368
+ 0A54           ;                       else 
+ 0A54           ;                               sFanMode = "OFF";
+ 0A54 561644            mov [X+22],<L144
+ 0A57 561544            mov [X+21],>L144
+ 0A5A           L133:
+ 0A5A                   .dbline 370
+ 0A5A           ;                       
+ 0A5A           ;                       csprintf(buf, "CUR: %03i %s", curTemp, sThermMode);
+ 0A5A 5217              mov A,[X+23]
+ 0A5C 08                push A
+ 0A5D 5218              mov A,[X+24]
+ 0A5F 08                push A
+ 0A60 62D000            mov REG[0xd0],>_curTemp
+ 0A63 5100              mov A,[_curTemp]
+ 0A65 62D000            mov REG[0xd0],>__r0
+ 0A68 5300              mov [__r1],A
+ 0A6A 5000              mov A,0
+ 0A6C 08                push A
+ 0A6D 5100              mov A,[__r1]
+ 0A6F 08                push A
+ 0A70 5037              mov A,>L145
+ 0A72 08                push A
+ 0A73 5037              mov A,<L145
+ 0A75 08                push A
+ 0A76 5A00              mov [__r1],X
+ 0A78 060004            add [__r1],4
+ 0A7B 5007              mov A,7
+ 0A7D 08                push A
+ 0A7E 5100              mov A,[__r1]
+ 0A80 08                push A
+ 0A81 7C0000            xcall _csprintf
+ 0A84 38F8              add SP,-8
+ 0A86                   .dbline 371
+ 0A86           ;                       LCD_Position(0, 0); LCD_PrString(buf);
+ 0A86 10                push X
+ 0A87 5000              mov A,0
+ 0A89 5700              mov X,0
+ 0A8B 7C0000            xcall _LCD_Position
+ 0A8E 20                pop X
+ 0A8F                   .dbline 371
+ 0A8F 62D000            mov REG[0xd0],>__r0
+ 0A92 5A00              mov [__r1],X
+ 0A94 060004            add [__r1],4
+ 0A97 10                push X
+ 0A98 5007              mov A,7
+ 0A9A 08                push A
+ 0A9B 5100              mov A,[__r1]
+ 0A9D 5C                mov X,A
+ 0A9E 18                pop A
+ 0A9F 7C0000            xcall _LCD_PrString
+ 0AA2 20                pop X
+ 0AA3                   .dbline 373
+ 0AA3           ;                       
+ 0AA3           ;                       csprintf(buf, "SET: %03i FAN %s", setTemp, sFanMode);
+ 0AA3 5215              mov A,[X+21]
+ 0AA5 08                push A
+ 0AA6 5216              mov A,[X+22]
+ 0AA8 08                push A
+ 0AA9 62D000            mov REG[0xd0],>_setTemp
+ 0AAC 5100              mov A,[_setTemp]
+ 0AAE 62D000            mov REG[0xd0],>__r0
+ 0AB1 5300              mov [__r1],A
+ 0AB3 5000              mov A,0
+ 0AB5 08                push A
+ 0AB6 5100              mov A,[__r1]
+ 0AB8 08                push A
+ 0AB9 5026              mov A,>L146
+ 0ABB 08                push A
+ 0ABC 5026              mov A,<L146
+ 0ABE 08                push A
+ 0ABF 5A00              mov [__r1],X
+ 0AC1 060004            add [__r1],4
+ 0AC4 5007              mov A,7
+ 0AC6 08                push A
+ 0AC7 5100              mov A,[__r1]
+ 0AC9 08                push A
+ 0ACA 7C0000            xcall _csprintf
+ 0ACD 38F8              add SP,-8
+ 0ACF                   .dbline 374
+ 0ACF           ;                       LCD_Position(1, 0); LCD_PrString(buf);
+ 0ACF 10                push X
+ 0AD0 5700              mov X,0
+ 0AD2 5001              mov A,1
+ 0AD4 7C0000            xcall _LCD_Position
+ 0AD7 20                pop X
+ 0AD8                   .dbline 374
+ 0AD8 62D000            mov REG[0xd0],>__r0
+ 0ADB 5A00              mov [__r1],X
+ 0ADD 060004            add [__r1],4
+ 0AE0 10                push X
+ 0AE1 5007              mov A,7
+ 0AE3 08                push A
+ 0AE4 5100              mov A,[__r1]
+ 0AE6 5C                mov X,A
+ 0AE7 18                pop A
+ 0AE8 7C0000            xcall _LCD_PrString
+ 0AEB 20                pop X
+ 0AEC                   .dbline 376
+ 0AEC           ;                       
+ 0AEC           ;                       lcdUpdate = FALSE;
+ 0AEC 62D000            mov REG[0xd0],>_lcdUpdate
+ 0AEF 550000            mov [_lcdUpdate],0
+ 0AF2                   .dbline 377
+ 0AF2           ;               }
+ 0AF2           L121:
+ 0AF2           L65:
+ 0AF2                   .dbline 380
+ 0AF2           ;               
+ 0AF2           ;               error: // This outputs an invalid format message and continues on to read another line
+ 0AF2           ;                       UART_CPutString("# Invalid format entered. Valid formats are:\r\n\
+ 0AF2 10                push X
+ 0AF3 5000              mov A,>L147
+ 0AF5 08                push A
+ 0AF6 5000              mov A,<L147
+ 0AF8 5C                mov X,A
+ 0AF9 18                pop A
+ 0AFA 7C0000            xcall _UART_CPutString
+ 0AFD 20                pop X
+ 0AFE                   .dbline 398
+ 0AFE           ; #     S ##\r\n\
+ 0AFE           ; #             S - Set the desired Temperature\r\n\
+ 0AFE           ; #             ## - Desired temperature in celsius\r\n\
+ 0AFE           ; #\r\n\
+ 0AFE           ; #     T ##\r\n\
+ 0AFE           ; #             T - Set the desired tolerance\r\n\
+ 0AFE           ; #             ## - Desired tolerance in celsius\r\n\
+ 0AFE           ; #\r\n\
+ 0AFE           ; #     M X\r\n\
+ 0AFE           ; #             M - Change the mode of the thermostat\r\n\
+ 0AFE           ; #             X - C is for cool, H is for heat, F is for off\r\n\
+ 0AFE           ; #\r\n\
+ 0AFE           ; #     F X S\r\n\
+ 0AFE           ; #             F - Change the mode of the fan\r\n\
+ 0AFE           ; #             X - A is for automatic fan control, M is for always on\r\n\
+ 0AFE           ; #             S - Speed of the fan, H = high, M = medium, L = low\r\n\
+ 0AFE           ; #####################################################################\r\n");
+ 0AFE           ;       }
+ 0AFE           L54:
+ 0AFE                   .dbline 183
+ 0AFE 8852              xjmp L53
+ 0B00           X7:
+ 0B00                   .dbline -2
+ 0B00           L51:
+ 0B00 38E3              add SP,-29
+ 0B02 20                pop X
+ 0B03                   .dbline 0 ; func end
+ 0B03 8FFF              jmp .
+ 0B05                   .dbsym l sThermMode 23 pkc
+ 0B05                   .dbsym l sFanMode 21 pkc
+ 0B05                   .dbsym l buf 4 A[17:17]c
+ 0B05                   .dbsym l tempByte 4 A[2:2]c
+ 0B05                   .dbsym l speed 5 c
+ 0B05                   .dbsym l mode 4 c
+ 0B05                   .dbsym l mode 4 c
+ 0B05                   .dbsym l tol 4 I
+ 0B05                   .dbsym l temp 4 I
+ 0B05                   .dbsym l params 2 pc
+ 0B05                   .dbsym l cmd 0 pc
+ 0B05                   .dbend
+ 0B05                   .dbfunc e PSoC_GPIO_ISR_C _PSoC_GPIO_ISR_C fV
+ 0B05           _PSoC_GPIO_ISR_C::
+ 0B05                   .dbline -1
+ 0B05 71C0              or F,-64
+ 0B07 08                push A
+ 0B08 5DD0              mov A,REG[0xd0]
+ 0B0A 08                push A
+ 0B0B 5DD3              mov A,REG[0xd3]
+ 0B0D 08                push A
+ 0B0E 5DD4              mov A,REG[0xd4]
+ 0B10 08                push A
+ 0B11 5DD5              mov A,REG[0xd5]
+ 0B13 08                push A
+ 0B14 62D000            mov REG[0xd0],>__r0
+ 0B17 5100              mov A,[__r0]
+ 0B19 08                push A
+ 0B1A 5100              mov A,[__r1]
+ 0B1C 08                push A
+ 0B1D 5100              mov A,[__r2]
+ 0B1F 08                push A
+ 0B20 5100              mov A,[__r3]
+ 0B22 08                push A
+ 0B23 5100              mov A,[__r4]
+ 0B25 08                push A
+ 0B26 5100              mov A,[__r5]
+ 0B28 08                push A
+ 0B29 5100              mov A,[__r6]
+ 0B2B 08                push A
+ 0B2C 5100              mov A,[__r7]
+ 0B2E 08                push A
+ 0B2F 5100              mov A,[__r8]
+ 0B31 08                push A
+ 0B32 5100              mov A,[__r9]
+ 0B34 08                push A
+ 0B35 5100              mov A,[__r10]
+ 0B37 08                push A
+ 0B38 5100              mov A,[__r11]
+ 0B3A 08                push A
+ 0B3B 5100              mov A,[__rX]
+ 0B3D 08                push A
+ 0B3E 5100              mov A,[__rY]
+ 0B40 08                push A
+ 0B41 5100              mov A,[__rZ]
+ 0B43 08                push A
+ 0B44                   .dbline 402
+ 0B44           ; }
+ 0B44           ; 
+ 0B44           ; void PSoC_GPIO_ISR_C(void)
+ 0B44           ; {
+ 0B44                   .dbline 403
+ 0B44           ;       if (fanMode == 1 && thermostatMode != 0)
+ 0B44 62D000            mov REG[0xd0],>_fanMode
+ 0B47 3C0001            cmp [_fanMode],1
+ 0B4A B027              jnz L149
+ 0B4C 62D000            mov REG[0xd0],>_thermostatMode
+ 0B4F 3C0000            cmp [_thermostatMode],0
+ 0B52 A01F              jz L149
+ 0B54                   .dbline 405
+ 0B54           ;       {
+ 0B54           ;               if (Tout_Data_ADDR & Tout_MASK)
+ 0B54                   .dbline 405
+ 0B54 5D04              mov A,REG[0x4]
+ 0B56 62D000            mov REG[0xd0],>__r0
+ 0B59 5300              mov [__r0],A
+ 0B5B 470010            tst [__r0],16
+ 0B5E A008              jz L151
+ 0B60                   .dbline 406
+ 0B60           ;                       MotorDriver_Start();
+ 0B60 10                push X
+ 0B61 7C0000            xcall _MotorDriver_Start
+ 0B64 20                pop X
+ 0B65 8006              xjmp L152
+ 0B67           L151:
+ 0B67                   .dbline 408
+ 0B67           ;               else
+ 0B67           ;                       MotorDriver_Stop();
+ 0B67 10                push X
+ 0B68 7C0000            xcall _MotorDriver_Stop
+ 0B6B 20                pop X
+ 0B6C           L152:
+ 0B6C                   .dbline 409
+ 0B6C           ;               lcdUpdate = TRUE;
+ 0B6C 62D000            mov REG[0xd0],>_lcdUpdate
+ 0B6F 550001            mov [_lcdUpdate],1
+ 0B72                   .dbline 410
+ 0B72           ;       }
+ 0B72           L149:
+ 0B72                   .dbline -2
+ 0B72           L148:
+ 0B72 62D000            mov REG[0xD0],>__r0
+ 0B75 18                pop A
+ 0B76 5300              mov [__rZ],A
+ 0B78 18                pop A
+ 0B79 5300              mov [__rY],A
+ 0B7B 18                pop A
+ 0B7C 5300              mov [__rX],A
+ 0B7E 18                pop A
+ 0B7F 5300              mov [__r11],A
+ 0B81 18                pop A
+ 0B82 5300              mov [__r10],A
+ 0B84 18                pop A
+ 0B85 5300              mov [__r9],A
+ 0B87 18                pop A
+ 0B88 5300              mov [__r8],A
+ 0B8A 18                pop A
+ 0B8B 5300              mov [__r7],A
+ 0B8D 18                pop A
+ 0B8E 5300              mov [__r6],A
+ 0B90 18                pop A
+ 0B91 5300              mov [__r5],A
+ 0B93 18                pop A
+ 0B94 5300              mov [__r4],A
+ 0B96 18                pop A
+ 0B97 5300              mov [__r3],A
+ 0B99 18                pop A
+ 0B9A 5300              mov [__r2],A
+ 0B9C 18                pop A
+ 0B9D 5300              mov [__r1],A
+ 0B9F 18                pop A
+ 0BA0 5300              mov [__r0],A
+ 0BA2 18                pop A
+ 0BA3 60D5              mov REG[213],A
+ 0BA5 18                pop A
+ 0BA6 60D4              mov REG[212],A
+ 0BA8 18                pop A
+ 0BA9 60D3              mov REG[211],A
+ 0BAB 18                pop A
+ 0BAC 60D0              mov REG[208],A
+ 0BAE 18                pop A
+ 0BAF                   .dbline 0 ; func end
+ 0BAF 7E                reti
+ 0BB0                   .dbend
+ 0BB0                   .dbfunc e PSoC_TempCounter_ISR_C _PSoC_TempCounter_ISR_C fV
+ 0BB0           _PSoC_TempCounter_ISR_C::
+ 0BB0                   .dbline -1
+ 0BB0 71C0              or F,-64
+ 0BB2 08                push A
+ 0BB3 5DD0              mov A,REG[0xd0]
+ 0BB5 08                push A
+ 0BB6                   .dbline 414
+ 0BB6           ; }
+ 0BB6           ; 
+ 0BB6           ; void PSoC_TempCounter_ISR_C(void)
+ 0BB6           ; {
+ 0BB6                   .dbline 415
+ 0BB6           ;       checkTemp = TRUE;
+ 0BB6 62D000            mov REG[0xd0],>_checkTemp
+ 0BB9 550001            mov [_checkTemp],1
+ 0BBC                   .dbline 416
+ 0BBC           ;       lcdUpdate = TRUE;
+ 0BBC 62D000            mov REG[0xd0],>_lcdUpdate
+ 0BBF 550001            mov [_lcdUpdate],1
+ 0BC2                   .dbline -2
+ 0BC2           L153:
+ 0BC2 18                pop A
+ 0BC3 60D0              mov REG[208],A
+ 0BC5 18                pop A
+ 0BC6                   .dbline 0 ; func end
+ 0BC6 7E                reti
+ 0BC7                   .dbend
+ 0BC7                   .dbfunc e PSoC_MotorDriver_ISR_C _PSoC_MotorDriver_ISR_C fV
+ 0BC7           _PSoC_MotorDriver_ISR_C::
+ 0BC7                   .dbline -1
+ 0BC7 71C0              or F,-64
+ 0BC9 08                push A
+ 0BCA 5DD0              mov A,REG[0xd0]
+ 0BCC 08                push A
+ 0BCD 5DD4              mov A,REG[0xd4]
+ 0BCF 08                push A
+ 0BD0 62D000            mov REG[0xd0],>__r0
+ 0BD3 5100              mov A,[__r0]
+ 0BD5 08                push A
+ 0BD6 5100              mov A,[__r1]
+ 0BD8 08                push A
+ 0BD9                   .dbline 420
+ 0BD9           ; }
+ 0BD9           ; 
+ 0BD9           ; void PSoC_MotorDriver_ISR_C(void)
+ 0BD9           ; {
+ 0BD9                   .dbline 421
+ 0BD9           ;       if (thermostatMode == 1) // Heating, clockwise
+ 0BD9 62D000            mov REG[0xd0],>_thermostatMode
+ 0BDC 3C0001            cmp [_thermostatMode],1
+ 0BDF B023              jnz L155
+ 0BE1                   .dbline 423
+ 0BE1           ;       {
+ 0BE1           ;               if (++motorStep > 3)
+ 0BE1                   .dbline 423
+ 0BE1 62D000            mov REG[0xd0],>_motorStep
+ 0BE4 5100              mov A,[_motorStep]
+ 0BE6 0101              add A,1
+ 0BE8 62D000            mov REG[0xd0],>__r0
+ 0BEB 5300              mov [__r0],A
+ 0BED 62D000            mov REG[0xd0],>_motorStep
+ 0BF0 5300              mov [_motorStep],A
+ 0BF2 62D000            mov REG[0xd0],>__r0
+ 0BF5 5003              mov A,3
+ 0BF7 3A00              cmp A,[__r0]
+ 0BF9 D027              jnc L156
+ 0BFB           X46:
+ 0BFB                   .dbline 424
+ 0BFB           ;                       motorStep = 0;
+ 0BFB 62D000            mov REG[0xd0],>_motorStep
+ 0BFE 550000            mov [_motorStep],0
+ 0C01                   .dbline 425
+ 0C01           ;       }
+ 0C01 801F              xjmp L156
+ 0C03           L155:
+ 0C03                   .dbline 426
+ 0C03           ;       else if (thermostatMode == 2) // Cooling
+ 0C03 62D000            mov REG[0xd0],>_thermostatMode
+ 0C06 3C0002            cmp [_thermostatMode],2
+ 0C09 B017              jnz L159
+ 0C0B                   .dbline 428
+ 0C0B           ;       {
+ 0C0B           ;               if (--motorStep < 0)
+ 0C0B                   .dbline 428
+ 0C0B 62D000            mov REG[0xd0],>_motorStep
+ 0C0E 5100              mov A,[_motorStep]
+ 0C10 1101              sub A,1
+ 0C12 5300              mov [_motorStep],A
+ 0C14 62D000            mov REG[0xd0],>__r0
+ 0C17 3900              cmp A,0
+ 0C19 D007              jnc L161
+ 0C1B           X47:
+ 0C1B                   .dbline 429
+ 0C1B           ;                       motorStep = 3;
+ 0C1B 62D000            mov REG[0xd0],>_motorStep
+ 0C1E 550003            mov [_motorStep],3
+ 0C21           L161:
+ 0C21                   .dbline 430
+ 0C21           ;       }
+ 0C21           L159:
+ 0C21           L156:
+ 0C21                   .dbline 432
+ 0C21           ;       
+ 0C21           ;       Motor1_Data_ADDR = stepperSequence[motorStep];
+ 0C21 62D000            mov REG[0xd0],>_motorStep
+ 0C24 5100              mov A,[_motorStep]
+ 0C26 62D000            mov REG[0xd0],>__r0
+ 0C29 5300              mov [__r1],A
+ 0C2B 550000            mov [__r0],0
+ 0C2E 060000            add [__r1],<_stepperSequence
+ 0C31 0E0000            adc [__r0],>_stepperSequence
+ 0C34 5100              mov A,[__r0]
+ 0C36 60D4              mov REG[0xd4],A
+ 0C38 3E00              mvi A,[__r1]
+ 0C3A 6000              mov REG[0],A
+ 0C3C                   .dbline -2
+ 0C3C           L154:
+ 0C3C 62D000            mov REG[0xD0],>__r0
+ 0C3F 18                pop A
+ 0C40 5300              mov [__r1],A
+ 0C42 18                pop A
+ 0C43 5300              mov [__r0],A
+ 0C45 18                pop A
+ 0C46 60D4              mov REG[212],A
+ 0C48 18                pop A
+ 0C49 60D0              mov REG[208],A
+ 0C4B 18                pop A
+ 0C4C                   .dbline 0 ; func end
+ 0C4C 7E                reti
+ 0C4D                   .dbend
+                        .area data(ram, con, rel)
+ 0000                   .dbfile C:\Users\addis\Desktop\ECE381\HEATIN~1\HEATIN~1\main.c
+ 0000           _buf::
+ 0000 000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000  .word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+ 003C 00000000000000000000      .word 0,0,0,0,0
+ 0046 00000000000000000000      .byte 0,0,0,0,0,0,0,0,0,0
+ 0050                   .dbsym e buf _buf A[80:80]c
+                        .area lit(rom, con, rel, lit)
+ 0000           L147:
+ 0000 2320496E76616C696420666F726D6174  .byte 35,32,'I,'n,'v,'a,'l,'i,'d,32,'f,'o,'r,'m,'a,'t
+ 0010 20656E74657265642E2056616C696420  .byte 32,'e,'n,'t,'e,'r,'e,'d,46,32,'V,'a,'l,'i,'d,32
+ 0020 666F726D617473206172653A0D0A2309  .byte 'f,'o,'r,'m,'a,'t,'s,32,'a,'r,'e,58,13,10,35,9
+ 0030 532023230D0A23090953202D20536574  .byte 'S,32,35,35,13,10,35,9,9,'S,32,45,32,'S,'e,'t
+ 0040 2074686520646573697265642054656D  .byte 32,'t,'h,'e,32,'d,'e,'s,'i,'r,'e,'d,32,'T,'e,'m
+ 0050 70657261747572650D0A230909232320  .byte 'p,'e,'r,'a,'t,'u,'r,'e,13,10,35,9,9,35,35,32
+ 0060 2D20446573697265642074656D706572  .byte 45,32,'D,'e,'s,'i,'r,'e,'d,32,'t,'e,'m,'p,'e,'r
+ 0070 617475726520696E2063656C73697573  .byte 'a,'t,'u,'r,'e,32,'i,'n,32,'c,'e,'l,'s,'i,'u,'s
+ 0080 0D0A230D0A2309542023230D0A230909  .byte 13,10,35,13,10,35,9,'T,32,35,35,13,10,35,9,9
+ 0090 54202D20536574207468652064657369  .byte 'T,32,45,32,'S,'e,'t,32,'t,'h,'e,32,'d,'e,'s,'i
+ 00A0 72656420746F6C6572616E63650D0A23  .byte 'r,'e,'d,32,'t,'o,'l,'e,'r,'a,'n,'c,'e,13,10,35
+ 00B0 09092323202D20446573697265642074  .byte 9,9,35,35,32,45,32,'D,'e,'s,'i,'r,'e,'d,32,'t
+ 00C0 6F6C6572616E636520696E2063656C73  .byte 'o,'l,'e,'r,'a,'n,'c,'e,32,'i,'n,32,'c,'e,'l,'s
+ 00D0 6975730D0A230D0A23094D20580D0A23  .byte 'i,'u,'s,13,10,35,13,10,35,9,'M,32,'X,13,10,35
+ 00E0 09094D202D204368616E676520746865  .byte 9,9,'M,32,45,32,'C,'h,'a,'n,'g,'e,32,'t,'h,'e
+ 00F0 206D6F6465206F662074686520746865  .byte 32,'m,'o,'d,'e,32,'o,'f,32,'t,'h,'e,32,'t,'h,'e
+ 0100 726D6F737461740D0A23090958202D20  .byte 'r,'m,'o,'s,'t,'a,'t,13,10,35,9,9,'X,32,45,32
+ 0110 4320697320666F7220636F6F6C2C2048  .byte 'C,32,'i,'s,32,'f,'o,'r,32,'c,'o,'o,'l,44,32,'H
+ 0120 20697320666F7220686561742C204620  .byte 32,'i,'s,32,'f,'o,'r,32,'h,'e,'a,'t,44,32,'F,32
+ 0130 697320666F72206F66660D0A230D0A23  .byte 'i,'s,32,'f,'o,'r,32,'o,'f,'f,13,10,35,13,10,35
+ 0140 0946205820530D0A23090946202D2043  .byte 9,'F,32,'X,32,'S,13,10,35,9,9,'F,32,45,32,'C
+ 0150 68616E676520746865206D6F6465206F  .byte 'h,'a,'n,'g,'e,32,'t,'h,'e,32,'m,'o,'d,'e,32,'o
+ 0160 66207468652066616E0D0A2309095820  .byte 'f,32,'t,'h,'e,32,'f,'a,'n,13,10,35,9,9,'X,32
+ 0170 2D204120697320666F72206175746F6D  .byte 45,32,'A,32,'i,'s,32,'f,'o,'r,32,'a,'u,'t,'o,'m
+ 0180 617469632066616E20636F6E74726F6C  .byte 'a,'t,'i,'c,32,'f,'a,'n,32,'c,'o,'n,'t,'r,'o,'l
+ 0190 2C204D20697320666F7220616C776179  .byte 44,32,'M,32,'i,'s,32,'f,'o,'r,32,'a,'l,'w,'a,'y
+ 01A0 73206F6E0D0A23090953202D20537065  .byte 's,32,'o,'n,13,10,35,9,9,'S,32,45,32,'S,'p,'e
+ 01B0 6564206F66207468652066616E2C2048  .byte 'e,'d,32,'o,'f,32,'t,'h,'e,32,'f,'a,'n,44,32,'H
+ 01C0 203D20686967682C204D203D206D6564  .byte 32,61,32,'h,'i,'g,'h,44,32,'M,32,61,32,'m,'e,'d
+ 01D0 69756D2C204C203D206C6F770D0A2323  .byte 'i,'u,'m,44,32,'L,32,61,32,'l,'o,'w,13,10,35,35
+ 01E0 23232323232323232323232323232323  .byte 35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35
+ 01F0 23232323232323232323232323232323  .byte 35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35
+ 0200 23232323232323232323232323232323  .byte 35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35
+ 0210 23232323232323232323232323232323  .byte 35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35
+ 0220 2323230D0A00      .byte 35,35,35,13,10,0
+ 0226           L146:
+ 0226 5345543A20253033692046414E202573  .byte 'S,'E,'T,58,32,37,48,51,'i,32,'F,'A,'N,32,37,'s
+ 0236 00                .byte 0
+ 0237           L145:
+ 0237 4355523A202530336920257300        .byte 'C,'U,'R,58,32,37,48,51,'i,32,37,'s,0
+ 0244           L144:
+ 0244 4F464600          .byte 'O,'F,'F,0
+ 0248           L143:
+ 0248 48492000          .byte 'H,'I,32,0
+ 024C           L141:
+ 024C 4D442000          .byte 'M,'D,32,0
+ 0250           L139:
+ 0250 4C4F2000          .byte 'L,'O,32,0
+ 0254           L131:
+ 0254 434F4F4C00        .byte 'C,'O,'O,'L,0
+ 0259           L129:
+ 0259 4845415400        .byte 'H,'E,'A,'T,0
+ 025E           L127:
+ 025E 4F46462000        .byte 'O,'F,'F,32,0
+ 0263           L87:
+ 0263 256300            .byte 37,'c,0
+ 0266           L61:
+ 0266 256400            .byte 37,'d,0
+ 0269           L56:
+ 0269 2000              .byte 32,0
+ 026B           L52:
+ 026B 23232323232323232323232323232323  .byte 35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35
+ 027B 232323232048656174696E672F436F6F  .byte 35,35,35,35,32,'H,'e,'a,'t,'i,'n,'g,47,'C,'o,'o
+ 028B 6C696E672053746570706572204D6F74  .byte 'l,'i,'n,'g,32,'S,'t,'e,'p,'p,'e,'r,32,'M,'o,'t
+ 029B 6F727320232323232323232323232323  .byte 'o,'r,'s,32,35,35,35,35,35,35,35,35,35,35,35,35
+ 02AB 2323232323230D0A2309532023230D0A  .byte 35,35,35,35,35,35,13,10,35,9,'S,32,35,35,13,10
+ 02BB 23090953202D20536574207468652064  .byte 35,9,9,'S,32,45,32,'S,'e,'t,32,'t,'h,'e,32,'d
+ 02CB 6573697265642054656D706572617475  .byte 'e,'s,'i,'r,'e,'d,32,'T,'e,'m,'p,'e,'r,'a,'t,'u
+ 02DB 72650D0A2309092323202D2044657369  .byte 'r,'e,13,10,35,9,9,35,35,32,45,32,'D,'e,'s,'i
+ 02EB 7265642074656D706572617475726520  .byte 'r,'e,'d,32,'t,'e,'m,'p,'e,'r,'a,'t,'u,'r,'e,32
+ 02FB 696E2063656C736975730D0A230D0A23  .byte 'i,'n,32,'c,'e,'l,'s,'i,'u,'s,13,10,35,13,10,35
+ 030B 09542023230D0A23090954202D205365  .byte 9,'T,32,35,35,13,10,35,9,9,'T,32,45,32,'S,'e
+ 031B 7420746865206465736972656420746F  .byte 't,32,'t,'h,'e,32,'d,'e,'s,'i,'r,'e,'d,32,'t,'o
+ 032B 6C6572616E63650D0A2309092323202D  .byte 'l,'e,'r,'a,'n,'c,'e,13,10,35,9,9,35,35,32,45
+ 033B 204465736972656420746F6C6572616E  .byte 32,'D,'e,'s,'i,'r,'e,'d,32,'t,'o,'l,'e,'r,'a,'n
+ 034B 636520696E2063656C736975730D0A23  .byte 'c,'e,32,'i,'n,32,'c,'e,'l,'s,'i,'u,'s,13,10,35
+ 035B 0D0A23094D20580D0A2309094D202D20  .byte 13,10,35,9,'M,32,'X,13,10,35,9,9,'M,32,45,32
+ 036B 4368616E676520746865206D6F646520  .byte 'C,'h,'a,'n,'g,'e,32,'t,'h,'e,32,'m,'o,'d,'e,32
+ 037B 6F662074686520746865726D6F737461  .byte 'o,'f,32,'t,'h,'e,32,'t,'h,'e,'r,'m,'o,'s,'t,'a
+ 038B 740D0A23090958202D20432069732066  .byte 't,13,10,35,9,9,'X,32,45,32,'C,32,'i,'s,32,'f
+ 039B 6F7220636F6F6C2C204820697320666F  .byte 'o,'r,32,'c,'o,'o,'l,44,32,'H,32,'i,'s,32,'f,'o
+ 03AB 7220686561742C204620697320666F72  .byte 'r,32,'h,'e,'a,'t,44,32,'F,32,'i,'s,32,'f,'o,'r
+ 03BB 206F66660D0A230D0A23094620582053  .byte 32,'o,'f,'f,13,10,35,13,10,35,9,'F,32,'X,32,'S
+ 03CB 0D0A23090946202D204368616E676520  .byte 13,10,35,9,9,'F,32,45,32,'C,'h,'a,'n,'g,'e,32
+ 03DB 746865206D6F6465206F662074686520  .byte 't,'h,'e,32,'m,'o,'d,'e,32,'o,'f,32,'t,'h,'e,32
+ 03EB 66616E0D0A23090958202D2041206973  .byte 'f,'a,'n,13,10,35,9,9,'X,32,45,32,'A,32,'i,'s
+ 03FB 20666F72206175746F6D617469632066  .byte 32,'f,'o,'r,32,'a,'u,'t,'o,'m,'a,'t,'i,'c,32,'f
+ 040B 616E20636F6E74726F6C2C204D206973  .byte 'a,'n,32,'c,'o,'n,'t,'r,'o,'l,44,32,'M,32,'i,'s
+ 041B 20666F7220616C77617973206F6E0D0A  .byte 32,'f,'o,'r,32,'a,'l,'w,'a,'y,'s,32,'o,'n,13,10
+ 042B 23090953202D205370656564206F6620  .byte 35,9,9,'S,32,45,32,'S,'p,'e,'e,'d,32,'o,'f,32
+ 043B 7468652066616E2C2048203D20686967  .byte 't,'h,'e,32,'f,'a,'n,44,32,'H,32,61,32,'h,'i,'g
+ 044B 682C204D203D206D656469756D2C204C  .byte 'h,44,32,'M,32,61,32,'m,'e,'d,'i,'u,'m,44,32,'L
+ 045B 203D206C6F770D0A2323232323232323  .byte 32,61,32,'l,'o,'w,13,10,35,35,35,35,35,35,35,35
+ 046B 23232323232323232323232323232323  .byte 35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35
+ 047B 23232323232323232323232323232323  .byte 35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35
+ 048B 23232323232323232323232323232323  .byte 35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35
+ 049B 232323232323232323232323230D0A00  .byte 35,35,35,35,35,35,35,35,35,35,35,35,35,13,10,0
