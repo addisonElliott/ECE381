@@ -375,6 +375,166 @@ R 00 00 00 01
 .end
 .start
 XH
+H 3 areas 1 global symbols
+M tempcounterint.asm
+A text size 0 flags 0
+dbfile lib/tempcounterint.asm
+dbfunc 0 ? 0 I
+dbfile TempCounter.inc
+dbfunc 0 ? 0 I
+dbfile C:/PROGRA~2/Cypress/PSOCDE~1/5.4/Common/CYPRES~1/tools/include/CY8C29~1/m8c.inc
+dbfunc 0 ? 0 I
+dbfile ./lib/TempCounter.inc
+dbfunc 0 ? 0 I
+dbfile lib/tempcounterint.asm
+dbfunc 0 ? 0 I
+dbfile memory.inc
+dbfunc 0 ? 0 I
+dbfile lib/tempcounterint.asm
+dbfunc 0 ? 0 I
+dbfile C:/PROGRA~2/Cypress/PSOCDE~1/5.4/Common/CYPRES~1/tools/include/CY8C29~1/m8c.inc
+dbfunc 0 ? 0 I
+A InterruptRAM size 0 flags 20
+A UserModules size 1 flags 0
+dbfile lib/tempcounterint.asm
+dbfunc 0 ? 0 I
+dbline 5A 0
+S _TempCounter_ISR Def0000
+T 00 00 7E
+R 00 00 00 02
+.end
+.start
+XH
+H 2 areas 24 global symbols
+M tempcounter.asm
+A text size 0 flags 0
+dbfile lib/tempcounter.asm
+dbfunc 0 ? 0 I
+dbfile TempCounter.inc
+dbfunc 0 ? 0 I
+dbfile C:/PROGRA~2/Cypress/PSOCDE~1/5.4/Common/CYPRES~1/tools/include/CY8C29~1/m8c.inc
+dbfunc 0 ? 0 I
+dbfile ./lib/TempCounter.inc
+dbfunc 0 ? 0 I
+dbfile lib/tempcounter.asm
+dbfunc 0 ? 0 I
+dbfile memory.inc
+dbfunc 0 ? 0 I
+dbfile lib/tempcounter.asm
+dbfunc 0 ? 0 I
+dbfile C:/PROGRA~2/Cypress/PSOCDE~1/5.4/Common/CYPRES~1/tools/include/CY8C29~1/m8c.inc
+dbfunc 0 ? 0 I
+A UserModules size 60 flags 0
+dbfile lib/tempcounter.asm
+dbfunc 0 ? 0 I
+dbline 2 0
+dbline 56 3
+dbline 2 4
+dbline 71 7
+dbline 2 8
+dbline 8E B
+dbline 2 C
+dbline AA F
+dbline C6 10
+dbline C7 12
+dbline C8 13
+dbline CA 15
+dbline E3 16
+dbline E4 18
+dbline E5 19
+dbline E7 1B
+dbline 102 1C
+dbline 103 1E
+dbline 104 1F
+dbline 106 21
+dbline 12C 22
+dbline 12D 23
+dbline 12E 25
+dbline 12F 26
+dbline 130 28
+dbline 131 29
+dbline 132 2B
+dbline 2 2C
+dbline 2 2F
+dbline 135 31
+dbline 136 33
+dbline 138 34
+dbline 2 37
+dbline 13A 39
+dbline 13B 3B
+dbline 13C 3D
+dbline 13D 3E
+dbline 13E 40
+dbline 13F 42
+dbline 140 43
+dbline 141 45
+dbline 142 47
+dbline 143 49
+dbline 2 4B
+dbline 145 4D
+dbline 146 4F
+dbline 2 51
+dbline 148 53
+dbline 149 55
+dbline 14A 57
+dbline 14B 58
+dbline 14C 59
+dbline 3 5B
+dbline 4 5D
+dbline 14E 5F
+S $sb$TempCounter_Start Def0008
+S $se$TempCounter_Start Def000C
+S _TempCounter_WriteCompareValue Def0016
+S _wTempCounter_ReadCounter Def0022
+S _TempCounter_wReadCounter Def0022
+S _TempCounter_DisableInt Def0004
+S _TempCounter_Start Def0008
+S TempCounter_WritePeriod Def0010
+S TempCounter_EnableInt Def0000
+S $sb$TempCounter_WritePeriod Def0010
+S $se$TempCounter_WritePeriod Def0016
+S $sb$TempCounter_EnableInt Def0000
+S $se$TempCounter_EnableInt Def0004
+S TempCounter_Stop Def000C
+S wTempCounter_ReadCompareValue Def001C
+S TempCounter_wReadCompareValue Def001C
+S $sb$TempCounter_Stop Def000C
+S $se$TempCounter_Stop Def0010
+S _TempCounter_WritePeriod Def0010
+S TempCounter_WriteCompareValue Def0016
+S _TempCounter_EnableInt Def0000
+S wTempCounter_ReadCounter Def0022
+S TempCounter_wReadCounter Def0022
+S $sb$TempCounter_wReadCompareValue Def001C
+S $se$TempCounter_wReadCompareValue Def0022
+S TempCounter_DisableInt Def0004
+S $sb$TempCounter_WriteCompareValue Def0016
+S $se$TempCounter_WriteCompareValue Def001C
+S $sb$TempCounter_wReadCounter Def0022
+S $se$TempCounter_wReadCounter Def0060
+S $sb$TempCounter_DisableInt Def0004
+S $se$TempCounter_DisableInt Def0008
+S _TempCounter_Stop Def000C
+S TempCounter_Start Def0008
+S _wTempCounter_ReadCompareValue Def001C
+S _TempCounter_wReadCompareValue Def001C
+T 00 00 43 E1 02 7F 41 E1 FD 7F 43 23 01 7F 41 23
+R 00 00 00 01
+T 00 0E FE 7F 60 21 5B 60 25 7F 60 22 5B 60 26 7F
+R 00 00 00 01
+T 00 1C 5D 26 5C 5D 22 7F 4F 5D 26 08 5D 22 08 5D
+R 00 00 00 01
+T 00 2A 23 08 41 23 FE 71 10 5D 21 08 62 21 00 70
+R 00 00 00 01
+T 00 38 EF 5D 24 5D 26 08 5D 20 5D 22 08 52 00 60
+R 00 00 00 01
+T 00 46 26 52 01 60 22 71 10 52 03 60 21 70 EF 52
+R 00 00 00 01
+T 00 54 02 60 23 18 20 38 FC 70 3F 71 C0 7F
+R 00 00 00 01
+.end
+.start
+XH
 H 3 areas 3 global symbols
 M psocconfigtbl.asm
 A text size 0 flags 0
@@ -382,135 +542,139 @@ dbfile lib/psocconfigtbl.asm
 dbfunc 0 ? 0 I
 dbfile C:/PROGRA~2/Cypress/PSOCDE~1/5.4/Common/CYPRES~1/tools/include/CY8C29~1/m8c.inc
 dbfunc 0 ? 0 I
-A lit size A4 flags 0
+A lit size BC flags 0
 S LoadConfigTBL_i2cram_Bank0 Def0000
-S LoadConfigTBL_i2cram_Bank1 Def0067
+S LoadConfigTBL_i2cram_Bank1 Def0073
 A psoc_config size 105 flags 0
 dbfile lib/psocconfigtbl.asm
 dbfunc 0 ? 0 I
 dbline 2 0
-dbline 81 2
+dbline 93 2
 dbline 2 5
-dbline 83 7
-dbline 84 A
+dbline 95 7
+dbline 96 A
 dbline 2 D
-dbline 86 F
-dbline 87 12
+dbline 98 F
+dbline 99 12
 dbline 2 15
-dbline 89 17
-dbline 8A 1A
+dbline 9B 17
+dbline 9C 1A
 dbline 2 1D
-dbline 8C 1F
-dbline 8D 22
+dbline 9E 1F
+dbline 9F 22
 dbline 2 25
-dbline 8F 27
-dbline 90 2A
+dbline A1 27
+dbline A2 2A
 dbline 2 2D
-dbline 92 2F
-dbline 93 32
+dbline A4 2F
+dbline A5 32
 dbline 2 35
-dbline 95 37
-dbline 96 3A
+dbline A7 37
+dbline A8 3A
 dbline 2 3D
-dbline 98 3F
-dbline 99 42
+dbline AA 3F
+dbline AB 42
 dbline 2 45
-dbline 9B 47
-dbline 9C 4A
+dbline AD 47
+dbline AE 4A
 dbline 2 4D
-dbline 9E 4F
-dbline 9F 52
+dbline B0 4F
+dbline B1 52
 dbline 2 55
-dbline A1 57
-dbline A2 5A
+dbline B3 57
+dbline B4 5A
 dbline 2 5D
-dbline A4 5F
-dbline A5 62
+dbline B6 5F
+dbline B7 62
 dbline 2 65
-dbline A7 67
-dbline A8 6A
+dbline B9 67
+dbline BA 6A
 dbline 2 6D
-dbline AA 6F
-dbline AB 72
+dbline BC 6F
+dbline BD 72
 dbline 2 75
-dbline AD 77
-dbline AE 7A
+dbline BF 77
+dbline C0 7A
 dbline 2 7D
-dbline B0 7F
-dbline B1 82
+dbline C2 7F
+dbline C3 82
 dbline 2 85
-dbline B3 87
-dbline B4 8A
+dbline C5 87
+dbline C6 8A
 dbline 2 8D
-dbline B6 8F
-dbline B7 92
+dbline C8 8F
+dbline C9 92
 dbline 2 95
-dbline B9 97
-dbline BA 9A
+dbline CB 97
+dbline CC 9A
 dbline 2 9D
-dbline BC 9F
-dbline BD A2
+dbline CE 9F
+dbline CF A2
 dbline 2 A5
-dbline BF A7
-dbline C0 AA
+dbline D1 A7
+dbline D2 AA
 dbline 2 AD
-dbline C2 AF
-dbline C3 B2
+dbline D4 AF
+dbline D5 B2
 dbline 2 B5
-dbline C5 B7
-dbline C6 BA
+dbline D7 B7
+dbline D8 BA
 dbline 2 BD
-dbline C8 BF
-dbline C9 C2
+dbline DA BF
+dbline DB C2
 dbline 2 C5
-dbline CB C7
-dbline CC CA
+dbline DD C7
+dbline DE CA
 dbline 2 CD
-dbline CE CF
-dbline CF D2
+dbline E0 CF
+dbline E1 D2
 dbline 2 D5
-dbline D1 D7
-dbline D2 DA
+dbline E3 D7
+dbline E4 DA
 dbline 2 DD
-dbline D4 DF
-dbline D5 E2
+dbline E6 DF
+dbline E7 E2
 dbline 2 E5
-dbline D7 E7
-dbline D8 EA
+dbline E9 E7
+dbline EA EA
 dbline 2 ED
-dbline DA EF
-dbline DB F2
+dbline EC EF
+dbline ED F2
 dbline 2 F5
-dbline DD F7
-dbline DE FA
+dbline EF F7
+dbline F0 FA
 dbline 2 FD
-dbline E0 FF
+dbline F2 FF
 dbline 2 102
-dbline E2 104
+dbline F4 104
 S LoadConfigTBL_i2cram_Ordered Def0000
-T 00 00 23 00 21 9E 22 4F 27 00 25 00 26 00 2F 00
+T 00 00 33 00 31 D0 32 E8 37 00 35 07 36 03 23 00
 R 00 00 00 01
-T 00 0E 2D 00 2E 00 2B 00 29 00 2A 00 60 28 66 00
+T 00 0E 21 FF 22 80 27 00 25 7C 26 3E 2F 00 2D 00
 R 00 00 00 01
-T 00 1C 63 05 65 00 E6 00 E7 00 D6 00 B0 30 B1 00
+T 00 1C 2E 00 2B 00 29 00 2A 00 60 28 66 00 63 05
 R 00 00 00 01
-T 00 2A B2 00 B3 33 B4 33 B5 00 B6 20 B8 55 B9 00
+T 00 2A 65 00 E6 00 E7 00 D6 00 B0 30 B1 00 B2 00
 R 00 00 00 01
-T 00 38 BA 10 BB 33 BC 33 BD 00 BE 00 C0 00 C1 00
+T 00 38 B3 33 B4 33 B5 00 B6 20 B8 55 B9 00 BA 10
 R 00 00 00 01
-T 00 46 C2 20 C3 33 C4 33 C5 00 C6 00 C8 55 C9 00
+T 00 46 BB 33 BC 33 BD 00 BE 00 C0 00 C1 00 C2 20
 R 00 00 00 01
-T 00 54 CA 30 CB 33 CC 33 CD 00 CE 00 6C 00 6D 00
+T 00 54 C3 33 C4 33 C5 00 C6 00 C8 55 C9 00 CA 30
 R 00 00 00 01
-T 00 62 6E 00 6F 00 FF 20 11 21 15 22 40 24 31 25
+T 00 62 CB 33 CC 33 CD 00 CE 00 6C 00 6D 00 6E 00
 R 00 00 00 01
-T 00 70 35 26 44 2C 05 2D E8 2E 40 28 0D 29 08 2A
+T 00 70 6F 00 FF 30 11 31 16 32 40 34 39 35 36 36
 R 00 00 00 01
-T 00 7E 47 61 00 69 00 60 00 62 00 67 33 68 33 63
+T 00 7E 40 20 11 21 17 22 40 24 39 25 37 26 40 2C
 R 00 00 00 01
-T 00 8C 00 66 00 D1 00 D3 00 D0 00 D2 00 E1 1F E2
+T 00 8C 05 2D E1 2E 40 28 0D 29 01 2A 47 61 00 69
 R 00 00 00 01
-T 00 9A 00 DF FF DE 02 DD 00 E7 00 FF
+T 00 9A 00 60 00 62 00 67 33 68 33 63 00 66 00 D1
+R 00 00 00 01
+T 00 A8 00 D3 00 D0 00 D2 00 E1 72 E2 00 DF 26 DE
+R 00 00 00 01
+T 00 B6 01 DD 00 E7 00 FF
 R 00 00 00 01
 T 00 00 70 EF 62 00 00 71 10 62 00 00 62 01 FF 70
 R 00 00 00 02
@@ -518,7 +682,7 @@ T 00 0E EF 62 03 FF 62 02 00 71 10 62 02 00 62 03
 R 00 00 00 02
 T 00 1C 00 70 EF 62 01 00 62 04 A0 71 10 62 04 A0
 R 00 00 00 02
-T 00 2A 62 05 FF 70 EF 62 07 BF 62 06 40 71 10 62
+T 00 2A 62 05 FF 70 EF 62 07 AF 62 06 40 71 10 62
 R 00 00 00 02
 T 00 38 06 00 62 07 00 70 EF 62 05 00 62 08 00 71
 R 00 00 00 02
@@ -665,6 +829,166 @@ R 00 00 00 01
 T 00 57 28 4F 59 FD 61 00 18 20 75 09 00 8F D7 38
 R 00 00 00 01
 T 00 65 FC 70 3F 71 C0 7F
+R 00 00 00 01
+.end
+.start
+XH
+H 3 areas 1 global symbols
+M motordriverint.asm
+A text size 0 flags 0
+dbfile lib/motordriverint.asm
+dbfunc 0 ? 0 I
+dbfile MotorDriver.inc
+dbfunc 0 ? 0 I
+dbfile C:/PROGRA~2/Cypress/PSOCDE~1/5.4/Common/CYPRES~1/tools/include/CY8C29~1/m8c.inc
+dbfunc 0 ? 0 I
+dbfile ./lib/MotorDriver.inc
+dbfunc 0 ? 0 I
+dbfile lib/motordriverint.asm
+dbfunc 0 ? 0 I
+dbfile memory.inc
+dbfunc 0 ? 0 I
+dbfile lib/motordriverint.asm
+dbfunc 0 ? 0 I
+dbfile C:/PROGRA~2/Cypress/PSOCDE~1/5.4/Common/CYPRES~1/tools/include/CY8C29~1/m8c.inc
+dbfunc 0 ? 0 I
+A InterruptRAM size 0 flags 20
+A UserModules size 1 flags 0
+dbfile lib/motordriverint.asm
+dbfunc 0 ? 0 I
+dbline 5A 0
+S _MotorDriver_ISR Def0000
+T 00 00 7E
+R 00 00 00 02
+.end
+.start
+XH
+H 2 areas 24 global symbols
+M motordriver.asm
+A text size 0 flags 0
+dbfile lib/motordriver.asm
+dbfunc 0 ? 0 I
+dbfile MotorDriver.inc
+dbfunc 0 ? 0 I
+dbfile C:/PROGRA~2/Cypress/PSOCDE~1/5.4/Common/CYPRES~1/tools/include/CY8C29~1/m8c.inc
+dbfunc 0 ? 0 I
+dbfile ./lib/MotorDriver.inc
+dbfunc 0 ? 0 I
+dbfile lib/motordriver.asm
+dbfunc 0 ? 0 I
+dbfile memory.inc
+dbfunc 0 ? 0 I
+dbfile lib/motordriver.asm
+dbfunc 0 ? 0 I
+dbfile C:/PROGRA~2/Cypress/PSOCDE~1/5.4/Common/CYPRES~1/tools/include/CY8C29~1/m8c.inc
+dbfunc 0 ? 0 I
+A UserModules size 60 flags 0
+dbfile lib/motordriver.asm
+dbfunc 0 ? 0 I
+dbline 2 0
+dbline 56 3
+dbline 2 4
+dbline 71 7
+dbline 2 8
+dbline 8E B
+dbline 2 C
+dbline AA F
+dbline C6 10
+dbline C7 12
+dbline C8 13
+dbline CA 15
+dbline E3 16
+dbline E4 18
+dbline E5 19
+dbline E7 1B
+dbline 102 1C
+dbline 103 1E
+dbline 104 1F
+dbline 106 21
+dbline 12C 22
+dbline 12D 23
+dbline 12E 25
+dbline 12F 26
+dbline 130 28
+dbline 131 29
+dbline 132 2B
+dbline 2 2C
+dbline 2 2F
+dbline 135 31
+dbline 136 33
+dbline 138 34
+dbline 2 37
+dbline 13A 39
+dbline 13B 3B
+dbline 13C 3D
+dbline 13D 3E
+dbline 13E 40
+dbline 13F 42
+dbline 140 43
+dbline 141 45
+dbline 142 47
+dbline 143 49
+dbline 2 4B
+dbline 145 4D
+dbline 146 4F
+dbline 2 51
+dbline 148 53
+dbline 149 55
+dbline 14A 57
+dbline 14B 58
+dbline 14C 59
+dbline 3 5B
+dbline 4 5D
+dbline 14E 5F
+S $sb$MotorDriver_Start Def0008
+S $se$MotorDriver_Start Def000C
+S _MotorDriver_WriteCompareValue Def0016
+S _wMotorDriver_ReadCounter Def0022
+S _MotorDriver_wReadCounter Def0022
+S _MotorDriver_DisableInt Def0004
+S _MotorDriver_Start Def0008
+S MotorDriver_WritePeriod Def0010
+S MotorDriver_EnableInt Def0000
+S $sb$MotorDriver_WritePeriod Def0010
+S $se$MotorDriver_WritePeriod Def0016
+S $sb$MotorDriver_EnableInt Def0000
+S $se$MotorDriver_EnableInt Def0004
+S MotorDriver_Stop Def000C
+S wMotorDriver_ReadCompareValue Def001C
+S MotorDriver_wReadCompareValue Def001C
+S $sb$MotorDriver_Stop Def000C
+S $se$MotorDriver_Stop Def0010
+S _MotorDriver_WritePeriod Def0010
+S MotorDriver_WriteCompareValue Def0016
+S _MotorDriver_EnableInt Def0000
+S wMotorDriver_ReadCounter Def0022
+S MotorDriver_wReadCounter Def0022
+S $sb$MotorDriver_wReadCompareValue Def001C
+S $se$MotorDriver_wReadCompareValue Def0022
+S MotorDriver_DisableInt Def0004
+S $sb$MotorDriver_WriteCompareValue Def0016
+S $se$MotorDriver_WriteCompareValue Def001C
+S $sb$MotorDriver_wReadCounter Def0022
+S $se$MotorDriver_wReadCounter Def0060
+S $sb$MotorDriver_DisableInt Def0004
+S $se$MotorDriver_DisableInt Def0008
+S _MotorDriver_Stop Def000C
+S MotorDriver_Start Def0008
+S _wMotorDriver_ReadCompareValue Def001C
+S _MotorDriver_wReadCompareValue Def001C
+T 00 00 43 E1 20 7F 41 E1 DF 7F 43 33 01 7F 41 33
+R 00 00 00 01
+T 00 0E FE 7F 60 31 5B 60 35 7F 60 32 5B 60 36 7F
+R 00 00 00 01
+T 00 1C 5D 36 5C 5D 32 7F 4F 5D 36 08 5D 32 08 5D
+R 00 00 00 01
+T 00 2A 33 08 41 33 FE 71 10 5D 31 08 62 31 00 70
+R 00 00 00 01
+T 00 38 EF 5D 34 5D 36 08 5D 30 5D 32 08 52 00 60
+R 00 00 00 01
+T 00 46 36 52 01 60 32 71 10 52 03 60 31 70 EF 52
+R 00 00 00 01
+T 00 54 02 60 33 18 20 38 FC 70 3F 71 C0 7F
 R 00 00 00 01
 .end
 .start
@@ -1074,6 +1398,22 @@ dbfile ./lib/UART.inc
 dbfunc 0 ? 0 I
 dbfile PSoCAPI.inc
 dbfunc 0 ? 0 I
+dbfile TempCounter.inc
+dbfunc 0 ? 0 I
+dbfile C:/PROGRA~2/Cypress/PSOCDE~1/5.4/Common/CYPRES~1/tools/include/CY8C29~1/m8c.inc
+dbfunc 0 ? 0 I
+dbfile ./lib/TempCounter.inc
+dbfunc 0 ? 0 I
+dbfile PSoCAPI.inc
+dbfunc 0 ? 0 I
+dbfile MotorDriver.inc
+dbfunc 0 ? 0 I
+dbfile C:/PROGRA~2/Cypress/PSOCDE~1/5.4/Common/CYPRES~1/tools/include/CY8C29~1/m8c.inc
+dbfunc 0 ? 0 I
+dbfile ./lib/MotorDriver.inc
+dbfunc 0 ? 0 I
+dbfile PSoCAPI.inc
+dbfunc 0 ? 0 I
 dbfile LCD.inc
 dbfunc 0 ? 0 I
 dbfile C:/PROGRA~2/Cypress/PSOCDE~1/5.4/Common/CYPRES~1/tools/include/CY8C29~1/m8c.inc
@@ -1087,14 +1427,6 @@ dbfunc 0 ? 0 I
 dbfile PSoCAPI.inc
 dbfunc 0 ? 0 I
 dbfile ./lib/I2CHWCommon.inc
-dbfunc 0 ? 0 I
-dbfile PSoCAPI.inc
-dbfunc 0 ? 0 I
-dbfile Counter16.inc
-dbfunc 0 ? 0 I
-dbfile C:/PROGRA~2/Cypress/PSOCDE~1/5.4/Common/CYPRES~1/tools/include/CY8C29~1/m8c.inc
-dbfunc 0 ? 0 I
-dbfile ./lib/Counter16.inc
 dbfunc 0 ? 0 I
 dbfile PSoCAPI.inc
 dbfunc 0 ? 0 I
@@ -1978,164 +2310,4 @@ T 00 6E 00 00 51 00 00 7F 62 D0 00 00 26
 R 00 00 00 01 43 02 00 07 03 05 00 07 43 0A 00 07
 T 00 76 00 00 F8 7F 62 D0 00 00 26 00 00 8F 7F
 R 00 00 00 01 03 02 00 07 43 08 00 07 03 0B 00 07
-.end
-.start
-XH
-H 3 areas 1 global symbols
-M counter16int.asm
-A text size 0 flags 0
-dbfile lib/counter16int.asm
-dbfunc 0 ? 0 I
-dbfile Counter16.inc
-dbfunc 0 ? 0 I
-dbfile C:/PROGRA~2/Cypress/PSOCDE~1/5.4/Common/CYPRES~1/tools/include/CY8C29~1/m8c.inc
-dbfunc 0 ? 0 I
-dbfile ./lib/Counter16.inc
-dbfunc 0 ? 0 I
-dbfile lib/counter16int.asm
-dbfunc 0 ? 0 I
-dbfile memory.inc
-dbfunc 0 ? 0 I
-dbfile lib/counter16int.asm
-dbfunc 0 ? 0 I
-dbfile C:/PROGRA~2/Cypress/PSOCDE~1/5.4/Common/CYPRES~1/tools/include/CY8C29~1/m8c.inc
-dbfunc 0 ? 0 I
-A InterruptRAM size 0 flags 20
-A UserModules size 1 flags 0
-dbfile lib/counter16int.asm
-dbfunc 0 ? 0 I
-dbline 5A 0
-S _Counter16_ISR Def0000
-T 00 00 7E
-R 00 00 00 02
-.end
-.start
-XH
-H 2 areas 24 global symbols
-M counter16.asm
-A text size 0 flags 0
-dbfile lib/counter16.asm
-dbfunc 0 ? 0 I
-dbfile Counter16.inc
-dbfunc 0 ? 0 I
-dbfile C:/PROGRA~2/Cypress/PSOCDE~1/5.4/Common/CYPRES~1/tools/include/CY8C29~1/m8c.inc
-dbfunc 0 ? 0 I
-dbfile ./lib/Counter16.inc
-dbfunc 0 ? 0 I
-dbfile lib/counter16.asm
-dbfunc 0 ? 0 I
-dbfile memory.inc
-dbfunc 0 ? 0 I
-dbfile lib/counter16.asm
-dbfunc 0 ? 0 I
-dbfile C:/PROGRA~2/Cypress/PSOCDE~1/5.4/Common/CYPRES~1/tools/include/CY8C29~1/m8c.inc
-dbfunc 0 ? 0 I
-A UserModules size 60 flags 0
-dbfile lib/counter16.asm
-dbfunc 0 ? 0 I
-dbline 2 0
-dbline 56 3
-dbline 2 4
-dbline 71 7
-dbline 2 8
-dbline 8E B
-dbline 2 C
-dbline AA F
-dbline C6 10
-dbline C7 12
-dbline C8 13
-dbline CA 15
-dbline E3 16
-dbline E4 18
-dbline E5 19
-dbline E7 1B
-dbline 102 1C
-dbline 103 1E
-dbline 104 1F
-dbline 106 21
-dbline 12C 22
-dbline 12D 23
-dbline 12E 25
-dbline 12F 26
-dbline 130 28
-dbline 131 29
-dbline 132 2B
-dbline 2 2C
-dbline 2 2F
-dbline 135 31
-dbline 136 33
-dbline 138 34
-dbline 2 37
-dbline 13A 39
-dbline 13B 3B
-dbline 13C 3D
-dbline 13D 3E
-dbline 13E 40
-dbline 13F 42
-dbline 140 43
-dbline 141 45
-dbline 142 47
-dbline 143 49
-dbline 2 4B
-dbline 145 4D
-dbline 146 4F
-dbline 2 51
-dbline 148 53
-dbline 149 55
-dbline 14A 57
-dbline 14B 58
-dbline 14C 59
-dbline 3 5B
-dbline 4 5D
-dbline 14E 5F
-S _Counter16_Start Def0008
-S Counter16_WritePeriod Def0010
-S Counter16_EnableInt Def0000
-S $sb$Counter16_WritePeriod Def0010
-S $se$Counter16_WritePeriod Def0016
-S $sb$Counter16_EnableInt Def0000
-S $se$Counter16_EnableInt Def0004
-S Counter16_Stop Def000C
-S wCounter16_ReadCompareValue Def001C
-S Counter16_wReadCompareValue Def001C
-S $sb$Counter16_Stop Def000C
-S $se$Counter16_Stop Def0010
-S _Counter16_WritePeriod Def0010
-S Counter16_WriteCompareValue Def0016
-S _Counter16_EnableInt Def0000
-S wCounter16_ReadCounter Def0022
-S Counter16_wReadCounter Def0022
-S $sb$Counter16_wReadCompareValue Def001C
-S $se$Counter16_wReadCompareValue Def0022
-S Counter16_DisableInt Def0004
-S $sb$Counter16_WriteCompareValue Def0016
-S $se$Counter16_WriteCompareValue Def001C
-S $sb$Counter16_wReadCounter Def0022
-S $se$Counter16_wReadCounter Def0060
-S $sb$Counter16_DisableInt Def0004
-S $se$Counter16_DisableInt Def0008
-S _Counter16_Stop Def000C
-S Counter16_Start Def0008
-S _wCounter16_ReadCompareValue Def001C
-S _Counter16_wReadCompareValue Def001C
-S $sb$Counter16_Start Def0008
-S $se$Counter16_Start Def000C
-S _Counter16_WriteCompareValue Def0016
-S _wCounter16_ReadCounter Def0022
-S _Counter16_wReadCounter Def0022
-S _Counter16_DisableInt Def0004
-T 00 00 43 E1 02 7F 41 E1 FD 7F 43 23 01 7F 41 23
-R 00 00 00 01
-T 00 0E FE 7F 60 21 5B 60 25 7F 60 22 5B 60 26 7F
-R 00 00 00 01
-T 00 1C 5D 26 5C 5D 22 7F 4F 5D 26 08 5D 22 08 5D
-R 00 00 00 01
-T 00 2A 23 08 41 23 FE 71 10 5D 21 08 62 21 00 70
-R 00 00 00 01
-T 00 38 EF 5D 24 5D 26 08 5D 20 5D 22 08 52 00 60
-R 00 00 00 01
-T 00 46 26 52 01 60 22 71 10 52 03 60 21 70 EF 52
-R 00 00 00 01
-T 00 54 02 60 23 18 20 38 FC 70 3F 71 C0 7F
-R 00 00 00 01
 .end
