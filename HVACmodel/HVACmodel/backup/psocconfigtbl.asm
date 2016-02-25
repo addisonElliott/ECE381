@@ -164,10 +164,10 @@ LoadConfigTBL_i2cram_Ordered:
 	mov	reg[07h], afh		; Port_1_DriveMode_2 register (PRT1DM2)
 	mov	reg[06h], 40h		; Port_1_GlobalSelect register (PRT1GS)
 	M8C_SetBank1
-	mov	reg[06h], 00h		; Port_1_IntCtrl_0 register (PRT1IC0)
-	mov	reg[07h], 00h		; Port_1_IntCtrl_1 register (PRT1IC1)
+	mov	reg[06h], 10h		; Port_1_IntCtrl_0 register (PRT1IC0)
+	mov	reg[07h], 10h		; Port_1_IntCtrl_1 register (PRT1IC1)
 	M8C_SetBank0
-	mov	reg[05h], 00h		; Port_1_IntEn register (PRT1IE)
+	mov	reg[05h], 10h		; Port_1_IntEn register (PRT1IE)
 	mov	reg[08h], 00h		; Port_2_Data register (PRT2DR)
 	M8C_SetBank1
 	mov	reg[08h], ffh		; Port_2_DriveMode_0 register (PRT2DM0)

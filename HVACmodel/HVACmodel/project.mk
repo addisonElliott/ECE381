@@ -1,14 +1,14 @@
 PROJNAME=HVACmodel
 DEVICE=CY8C29466
 BASEDEVICE=CY8C29000
-PROJPATH=C:/Users/Jacob/Desktop/ECE381/HVACMO~1/HVACMO~1
+PROJPATH=C:/Users/addis/Desktop/ECE381/HVACMO~1/HVACMO~1
 PSOCDIR=C:/PROGRA~2/Cypress/PSOCDE~1/5.4/Common/CYPRES~1
 INCLUDE_PATH=C:/PROGRA~2/Cypress/PSOCDE~1/5.4/Common/CYPRES~1/tools/include/CY8C29~1
 CSRCS= main.c
 LIBCSRCS=
 STDCSRCS=
 ASMSRCS=
-LIBASMSRCS= i2chwcommon.asm i2chwint.asm i2chwmstr.asm i2chwrsrcinits.asm lcd.asm motordriver.asm motordriverint.asm psocconfig.asm psocconfigtbl.asm tempcounter.asm tempcounterint.asm uart.asm uartint.asm uartplus.asm
+LIBASMSRCS= i2chwcommon.asm i2chwint.asm i2chwmstr.asm i2chwrsrcinits.asm lcd.asm motordriver.asm motordriverint.asm psocconfig.asm psocconfigtbl.asm psocgpioint.asm tempcounter.asm tempcounterint.asm uart.asm uartint.asm uartplus.asm
 STDASMSRCS=
 OBJECT_SOURCES= main.c
 FILLVALUE=0x30

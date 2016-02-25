@@ -1,245 +1,250 @@
 Project:      output/HVACmodel
 Build Number: 0
-Date:         Wed Feb 24 20:37:21 2016
+Date:         Thu Feb 25 01:32:02 2016
 Compiler:     ICCM8C
 Version:      7.05.00
 
 
 Area                               Addr   Size   Decimal Bytes (Attributes)
 --------------------------------   ----   ----   ------- ----- ------------
-                             lit   01A0   06DB =   1755. bytes (rel,con,rom,lit)
+                             lit   01A0   066C =   1644. bytes (rel,con,rom,lit)
 
        Addr  Global Symbol
       -----  --------------------------------
-       064A  LoadConfigTBL_i2cram_Bank0
-       06BD  LoadConfigTBL_i2cram_Bank1
-       0706  __ctype
-       087B  __lit_end
+       064F  LoadConfigTBL_i2cram_Bank0
+       06C2  LoadConfigTBL_i2cram_Bank1
+       070B  __ctype
+       080C  __lit_end
 
 Area                               Addr   Size   Decimal Bytes (Attributes)
 --------------------------------   ----   ----   ------- ----- ------------
-                        func_lit   087B   0004 =      4. bytes (rel,con,rom,proclab)
+                        func_lit   080C   0006 =      6. bytes (rel,con,rom,proclab)
 
        Addr  Global Symbol
       -----  --------------------------------
-       087B  __func_lit_start
-       087F  __func_lit_end
+       080C  __func_lit_start
+       0812  __func_lit_end
 
 Area                               Addr   Size   Decimal Bytes (Attributes)
 --------------------------------   ----   ----   ------- ----- ------------
-                     psoc_config   087F   0170 =    368. bytes (rel,con,rom,code)
+                     psoc_config   0812   0170 =    368. bytes (rel,con,rom,code)
 
        Addr  Global Symbol
       -----  --------------------------------
-       087F  LoadConfigTBL_i2cram_Ordered
-       0984  _LoadConfigInit
-       0984  LoadConfigInit
-       0994  _LoadConfig_i2cram
-       0994  LoadConfig_i2cram
-       09EF  __psoc_config_end
+       0812  LoadConfigTBL_i2cram_Ordered
+       0917  _LoadConfigInit
+       0917  LoadConfigInit
+       0927  _LoadConfig_i2cram
+       0927  LoadConfig_i2cram
+       0982  __psoc_config_end
 
 Area                               Addr   Size   Decimal Bytes (Attributes)
 --------------------------------   ----   ----   ------- ----- ------------
-                     UserModules   09EF   07A5 =   1957. bytes (rel,con,rom,code)
+                     UserModules   0982   07A5 =   1957. bytes (rel,con,rom,code)
 
        Addr  Global Symbol
       -----  --------------------------------
-       09EF  _UART_TX_ISR
-       09F0  _UART_RX_ISR
-       09F1  UART_EnableInt
-       09F1  _UART_EnableInt
-       09F8  _UART_DisableInt
-       09F8  UART_DisableInt
-       09FF  _UART_SetTxIntMode
-       09FF  UART_SetTxIntMode
-       0A11  UART_Start
-       0A11  _UART_Start
-       0A18  _UART_Stop
-       0A18  UART_Stop
-       0A1F  UART_SendData
-       0A1F  _UART_SendData
-       0A22  _UART_bReadTxStatus
-       0A22  _bUART_ReadTxStatus
-       0A22  UART_bReadTxStatus
-       0A22  bUART_ReadTxStatus
-       0A25  _UART_bReadRxData
-       0A25  UART_bReadRxData
-       0A25  _bUART_ReadRxData
-       0A25  bUART_ReadRxData
-       0A28  _bUART_ReadRxStatus
-       0A28  _UART_bReadRxStatus
-       0A28  UART_bReadRxStatus
-       0A28  bUART_ReadRxStatus
-       0A2B  _UART_TxIntMode
-       0A2B  UART_TxIntMode
-       0A3E  UART_IntCntl
-       0A3E  _UART_IntCntl
-       0A69  _UART_PutSHexByte
-       0A69  UART_PutSHexByte
-       0A7C  UART_PutSHexInt
-       0A7C  _UART_PutSHexInt
-       0A83  _UART_PutChar
-       0A83  UART_PutChar
-       0A8B  UART_cGetChar
-       0A8B  _UART_cGetChar
-       0A93  UART_cReadChar
-       0A93  _UART_cReadChar
-       0AAA  UART_iReadChar
-       0AAA  _UART_iReadChar
-       0AC0  _UART_PutString
-       0AC0  UART_PutString
-       0AD2  UART_Write
-       0AD2  _UART_Write
-       0AFA  _UART_CWrite
-       0AFA  UART_CWrite
-       0B26  _UART_CPutString
-       0B26  UART_CPutString
-       0B38  UART_PutCRLF
-       0B38  _UART_PutCRLF
-       0B41  TempCounter_EnableInt
-       0B41  _TempCounter_EnableInt
-       0B45  _TempCounter_DisableInt
-       0B45  TempCounter_DisableInt
-       0B49  _TempCounter_Start
-       0B49  TempCounter_Start
-       0B4D  TempCounter_Stop
-       0B4D  _TempCounter_Stop
-       0B51  _TempCounter_WritePeriod
-       0B51  TempCounter_WritePeriod
-       0B57  TempCounter_WriteCompareValue
-       0B57  _TempCounter_WriteCompareValue
-       0B5D  _TempCounter_wReadCompareValue
-       0B5D  TempCounter_wReadCompareValue
-       0B5D  wTempCounter_ReadCompareValue
-       0B5D  _wTempCounter_ReadCompareValue
-       0B63  _wTempCounter_ReadCounter
-       0B63  wTempCounter_ReadCounter
-       0B63  TempCounter_wReadCounter
-       0B63  _TempCounter_wReadCounter
-       0BA1  _MotorDriver_EnableInt
-       0BA1  MotorDriver_EnableInt
-       0BA5  MotorDriver_DisableInt
-       0BA5  _MotorDriver_DisableInt
-       0BA9  MotorDriver_Start
-       0BA9  _MotorDriver_Start
-       0BAD  _MotorDriver_Stop
-       0BAD  MotorDriver_Stop
-       0BB1  _MotorDriver_WritePeriod
-       0BB1  MotorDriver_WritePeriod
-       0BB7  MotorDriver_WriteCompareValue
-       0BB7  _MotorDriver_WriteCompareValue
-       0BBD  wMotorDriver_ReadCompareValue
-       0BBD  _wMotorDriver_ReadCompareValue
-       0BBD  MotorDriver_wReadCompareValue
-       0BBD  _MotorDriver_wReadCompareValue
-       0BC3  _MotorDriver_wReadCounter
-       0BC3  _wMotorDriver_ReadCounter
-       0BC3  MotorDriver_wReadCounter
-       0BC3  wMotorDriver_ReadCounter
-       0C01  LCD_PrCString
-       0C01  _LCD_PrCString
-       0C13  LCD_HEX_STR
-       0C23  LCD_PrHexByte
-       0C23  _LCD_PrHexByte
-       0C36  _LCD_PrHexInt
-       0C36  LCD_PrHexInt
-       0C3D  LCD_PrString
-       0C3D  _LCD_PrString
-       0C4F  _LCD_Write_Data
-       0C4F  LCD_WriteData
-       0C4F  LCD_Write_Data
-       0C4F  _LCD_WriteData
-       0C63  LCD_Control
-       0C63  _LCD_Control
-       0D13  LCD_Init
-       0D13  _LCD_Init
-       0D13  LCD_Start
-       0D13  _LCD_Start
-       0D82  LCD_ROW_OFFSET
-       0D86  _LCD_Position
-       0D86  LCD_Position
-       0D96  _LCD_Delay50uTimes
-       0D96  LCD_Delay50uTimes
-       0D9C  LCD_Delay50u_Table
-       0DA4  _LCD_Delay50u
-       0DA4  LCD_Delay50u
-       0DB8  _I2CHW_Start
-       0DB8  I2CHW_Start
-       0DB9  _I2CHW_ResumeInt
-       0DB9  I2CHW_ResumeInt
-       0DBB  _I2CHW_EnableInt
-       0DBB  I2CHW_EnableInt
-       0DC2  I2CHW_ClearInt
-       0DC2  _I2CHW_ClearInt
-       0DC6  _I2CHW_EnableMstr
-       0DC6  I2CHW_EnableMstr
-       0DD6  I2CHW_Stop
-       0DD6  _I2CHW_Stop
-       0DD6  I2CHW_DisableInt
-       0DD6  _I2CHW_DisableInt
-       0DDA  _I2CHW_DisableMstr
-       0DDA  I2CHW_DisableMstr
-       0DDE  _I2CHW_fReadBytes
-       0E22  _I2CHW_bWriteBytes
-       0E66  _I2CHW_bWriteCBytes
-       0ED2  _I2CHW_fSendRepeatStart
-       0ED2  I2CHW_fSendRepeatStart
-       0F0E  I2CHW_fSendStart
-       0F0E  _I2CHW_fSendStart
-       0F52  I2CHW_fWrite
-       0F52  _I2CHW_fWrite
-       0F92  _I2CHW_bRead
-       0F92  I2CHW_bRead
-       0FC8  _I2CHW_SendStop
-       0FC8  I2CHW_SendStop
-       0FD1  _I2CHW_bReadBusStatus
-       0FD1  I2CHW_bReadBusStatus
-       0FD7  _I2CHW_ISR
-       1114  I2CHW_InitWrite
-       1114  _I2CHW_InitWrite
-       1152  I2CHW_InitRamRead
-       1152  _I2CHW_InitRamRead
-       117F  I2CHW_InitFlashRead
-       117F  _I2CHW_InitFlashRead
-       1180  I2CHW_bReadI2CStatus
-       1180  _I2CHW_bReadI2CStatus
-       1186  _I2CHW_ClrRdStatus
-       1186  I2CHW_ClrRdStatus
-       118D  I2CHW_ClrWrStatus
-       118D  _I2CHW_ClrWrStatus
-       1194  __UserModules_end
+       0982  _UART_TX_ISR
+       0983  _UART_RX_ISR
+       0984  UART_EnableInt
+       0984  _UART_EnableInt
+       098B  _UART_DisableInt
+       098B  UART_DisableInt
+       0992  _UART_SetTxIntMode
+       0992  UART_SetTxIntMode
+       09A4  UART_Start
+       09A4  _UART_Start
+       09AB  _UART_Stop
+       09AB  UART_Stop
+       09B2  UART_SendData
+       09B2  _UART_SendData
+       09B5  _UART_bReadTxStatus
+       09B5  _bUART_ReadTxStatus
+       09B5  UART_bReadTxStatus
+       09B5  bUART_ReadTxStatus
+       09B8  _UART_bReadRxData
+       09B8  UART_bReadRxData
+       09B8  _bUART_ReadRxData
+       09B8  bUART_ReadRxData
+       09BB  _bUART_ReadRxStatus
+       09BB  _UART_bReadRxStatus
+       09BB  UART_bReadRxStatus
+       09BB  bUART_ReadRxStatus
+       09BE  _UART_TxIntMode
+       09BE  UART_TxIntMode
+       09D1  UART_IntCntl
+       09D1  _UART_IntCntl
+       09FC  _UART_PutSHexByte
+       09FC  UART_PutSHexByte
+       0A0F  UART_PutSHexInt
+       0A0F  _UART_PutSHexInt
+       0A16  _UART_PutChar
+       0A16  UART_PutChar
+       0A1E  UART_cGetChar
+       0A1E  _UART_cGetChar
+       0A26  UART_cReadChar
+       0A26  _UART_cReadChar
+       0A3D  UART_iReadChar
+       0A3D  _UART_iReadChar
+       0A53  _UART_PutString
+       0A53  UART_PutString
+       0A65  UART_Write
+       0A65  _UART_Write
+       0A8D  _UART_CWrite
+       0A8D  UART_CWrite
+       0AB9  _UART_CPutString
+       0AB9  UART_CPutString
+       0ACB  UART_PutCRLF
+       0ACB  _UART_PutCRLF
+       0AD4  TempCounter_EnableInt
+       0AD4  _TempCounter_EnableInt
+       0AD8  _TempCounter_DisableInt
+       0AD8  TempCounter_DisableInt
+       0ADC  _TempCounter_Start
+       0ADC  TempCounter_Start
+       0AE0  TempCounter_Stop
+       0AE0  _TempCounter_Stop
+       0AE4  _TempCounter_WritePeriod
+       0AE4  TempCounter_WritePeriod
+       0AEA  TempCounter_WriteCompareValue
+       0AEA  _TempCounter_WriteCompareValue
+       0AF0  _TempCounter_wReadCompareValue
+       0AF0  TempCounter_wReadCompareValue
+       0AF0  wTempCounter_ReadCompareValue
+       0AF0  _wTempCounter_ReadCompareValue
+       0AF6  _wTempCounter_ReadCounter
+       0AF6  wTempCounter_ReadCounter
+       0AF6  TempCounter_wReadCounter
+       0AF6  _TempCounter_wReadCounter
+       0B34  _MotorDriver_EnableInt
+       0B34  MotorDriver_EnableInt
+       0B38  MotorDriver_DisableInt
+       0B38  _MotorDriver_DisableInt
+       0B3C  MotorDriver_Start
+       0B3C  _MotorDriver_Start
+       0B40  _MotorDriver_Stop
+       0B40  MotorDriver_Stop
+       0B44  _MotorDriver_WritePeriod
+       0B44  MotorDriver_WritePeriod
+       0B4A  MotorDriver_WriteCompareValue
+       0B4A  _MotorDriver_WriteCompareValue
+       0B50  wMotorDriver_ReadCompareValue
+       0B50  _wMotorDriver_ReadCompareValue
+       0B50  MotorDriver_wReadCompareValue
+       0B50  _MotorDriver_wReadCompareValue
+       0B56  _MotorDriver_wReadCounter
+       0B56  _wMotorDriver_ReadCounter
+       0B56  MotorDriver_wReadCounter
+       0B56  wMotorDriver_ReadCounter
+       0B94  LCD_PrCString
+       0B94  _LCD_PrCString
+       0BA6  LCD_HEX_STR
+       0BB6  LCD_PrHexByte
+       0BB6  _LCD_PrHexByte
+       0BC9  _LCD_PrHexInt
+       0BC9  LCD_PrHexInt
+       0BD0  LCD_PrString
+       0BD0  _LCD_PrString
+       0BE2  _LCD_Write_Data
+       0BE2  LCD_WriteData
+       0BE2  LCD_Write_Data
+       0BE2  _LCD_WriteData
+       0BF6  LCD_Control
+       0BF6  _LCD_Control
+       0CA6  LCD_Init
+       0CA6  _LCD_Init
+       0CA6  LCD_Start
+       0CA6  _LCD_Start
+       0D15  LCD_ROW_OFFSET
+       0D19  _LCD_Position
+       0D19  LCD_Position
+       0D29  _LCD_Delay50uTimes
+       0D29  LCD_Delay50uTimes
+       0D2F  LCD_Delay50u_Table
+       0D37  _LCD_Delay50u
+       0D37  LCD_Delay50u
+       0D4B  _I2CHW_Start
+       0D4B  I2CHW_Start
+       0D4C  _I2CHW_ResumeInt
+       0D4C  I2CHW_ResumeInt
+       0D4E  _I2CHW_EnableInt
+       0D4E  I2CHW_EnableInt
+       0D55  I2CHW_ClearInt
+       0D55  _I2CHW_ClearInt
+       0D59  _I2CHW_EnableMstr
+       0D59  I2CHW_EnableMstr
+       0D69  I2CHW_Stop
+       0D69  _I2CHW_Stop
+       0D69  I2CHW_DisableInt
+       0D69  _I2CHW_DisableInt
+       0D6D  _I2CHW_DisableMstr
+       0D6D  I2CHW_DisableMstr
+       0D71  _I2CHW_fReadBytes
+       0DB5  _I2CHW_bWriteBytes
+       0DF9  _I2CHW_bWriteCBytes
+       0E65  _I2CHW_fSendRepeatStart
+       0E65  I2CHW_fSendRepeatStart
+       0EA1  I2CHW_fSendStart
+       0EA1  _I2CHW_fSendStart
+       0EE5  I2CHW_fWrite
+       0EE5  _I2CHW_fWrite
+       0F25  _I2CHW_bRead
+       0F25  I2CHW_bRead
+       0F5B  _I2CHW_SendStop
+       0F5B  I2CHW_SendStop
+       0F64  _I2CHW_bReadBusStatus
+       0F64  I2CHW_bReadBusStatus
+       0F6A  _I2CHW_ISR
+       10A7  I2CHW_InitWrite
+       10A7  _I2CHW_InitWrite
+       10E5  I2CHW_InitRamRead
+       10E5  _I2CHW_InitRamRead
+       1112  I2CHW_InitFlashRead
+       1112  _I2CHW_InitFlashRead
+       1113  I2CHW_bReadI2CStatus
+       1113  _I2CHW_bReadI2CStatus
+       1119  _I2CHW_ClrRdStatus
+       1119  I2CHW_ClrRdStatus
+       1120  I2CHW_ClrWrStatus
+       1120  _I2CHW_ClrWrStatus
+       1127  __UserModules_end
 
 Area                               Addr   Size   Decimal Bytes (Attributes)
 --------------------------------   ----   ----   ------- ----- ------------
-                            text   1194   0F25 =   3877. bytes (rel,con,rom,code)
+                            text   1127   1BE2 =   7138. bytes (rel,con,rom,code)
 
        Addr  Global Symbol
       -----  --------------------------------
-       1194  __text_start
-       1194  _GetLine
-       123D  _Lowercase
-       12AC  _IsNumber
-       130A  _WriteI2C
-       13A8  _ReadI2C
-       140B  _main
-       165F  _PSoC_TempCounter_ISR_C
-       1676  _PSoC_MotorDriver_ISR_C
-       1679  _PSoC_GPIO_ISR_C
-       16C0  __plcall
-       16CC  _itoa
-       18A5  _utoa
-       19E8  _isdigit
-       1A09  _islower
-       1A2A  _isspace
-       1A4B  _isupper
-       1A6C  _toupper
-       1AAA  _tolower
-       1AE8  __csdepi
-       1B1A  _csprintf
-       1B83  __cprint
-       20B9  __xidata_start
-       20B9  __text_end
-       20D0  __xidata_end
+       1127  __text_start
+       1127  _GetLine
+       122D  _Lowercase
+       129C  _IsNumber
+       12FA  _NumToStr
+       13A1  _WriteI2C
+       143F  _ReadI2C
+       14A2  _main
+       1B03  _PSoC_TempCounter_ISR_C
+       1B1A  _PSoC_MotorDriver_ISR_C
+       1B1D  _PSoC_GPIO_ISR_C
+       1C07  _strlenLMM
+       1C12  _strlen
+       1C2D  __plcall
+       1C39  _strtol
+       205B  _strtoul
+       23F1  _isdigit
+       2412  _isspace
+       2433  _isupper
+       2454  _isxdigit
+       2475  _tolower
+       2501  _csscanf
+       2745  __cscanf
+       2AAA  _cstrcspn
+       2B2C  _cstrpbrk
+       2B79  _cstrspn
+       2C26  _cstrtok
+       2D09  __xidata_start
+       2D09  __text_end
+       2D26  __xidata_end
 
 Area                               Start  End    Decimal Bytes (Attributes)
 --------------------------------   ----   ----   ------- ----- ------------
@@ -290,37 +295,41 @@ Area                               Addr   Size   Decimal Bytes (Attributes)
 
 Area                               Addr   Size   Decimal Bytes (Attributes)
 --------------------------------   ----   ----   ------- ----- ------------
-               virtual_registers   0075   0009 =      9. bytes (rel,con,ram)
+               virtual_registers   005C   000B =     11. bytes (rel,con,ram)
 
        Addr  Global Symbol
       -----  --------------------------------
-       0075  __rZ
-       0076  __rY
-       0077  __rX
-       0078  __r5
-       0079  __r4
-       007A  __r3
-       007B  __r2
-       007C  __r1
-       007D  __r0
+       005C  __rZ
+       005D  __rY
+       005E  __rX
+       005F  __r7
+       0060  __r6
+       0061  __r5
+       0062  __r4
+       0063  __r3
+       0064  __r2
+       0065  __r1
+       0066  __r0
 
 Area                               Addr   Size   Decimal Bytes (Attributes)
 --------------------------------   ----   ----   ------- ----- ------------
-                            data   0000   0077 =    119. bytes (rel,con,ram)
+                            data   0000   0066 =    102. bytes (rel,con,ram)
 
        Addr  Global Symbol
       -----  --------------------------------
        0000  __data_start
        000C  _buf
-       007E  main.c:rubout
-       0084  main.c:slaveAddress
-       0085  _fanSpeed
-       0086  _thermostatMode
-       0087  _setTemp
-       0088  _updateLCD
-       0089  _curTemp
-       008A  _checkTemp
-       008B  _fanMode
+       0067  main.c:rubout
+       006F  _errno
+       0073  _setTemp
+       0074  _curTemp
+       0075  _fanMode
+       0076  _fanSpeed
+       0077  _updateLCD
+       0079  _checkTemp
+       007A  _strPos
+       007B  main.c:slaveAddress
+       007C  _thermostatMode
 
 Files Linked      [ module(s) ]
 
@@ -328,16 +337,17 @@ Files Linked      [ module(s) ]
 obj/main.o	[ main.c ]
 <library>	[ uartint.asm, uart.asm, tempcounter.asm, psocconfigtbl.asm, psocconfig.asm, motordriver.asm ]
 [ lcd.asm, i2chwrsrcinits.asm, i2chwmstr.asm, i2chwint.asm, i2chwcommon.asm, rZ.asm, rY.asm, rX.asm ]
-[ r5.asm, r4.asm, r3.asm, r2.asm, r1.asm, r0.asm, divmodu_16x16_16_util.asm, i_div16_block_util.asm ]
-[ plcall.s, itoa.s, utoa.s, isdigit.s, islower.s, isspace.s, isupper.s, ctype.s, toupper.s, tolower.s ]
-[ sprintf.s, _printf.s ]
+[ r7.asm, r6.asm, r5.asm, r4.asm, r3.asm, r2.asm, r1.asm, r0.asm, divmodu_16x16_16_util.asm, i_div16_block_util.asm ]
+[ i_mulu8_block_util.asm, mul32_util.asm, strlen.s, plcall.s, strtol.s, strtoul.s, isdigit.s, isspace.s ]
+[ isupper.s, isxdigit.s, ctype.s, tolower.s, sscanf.s, _scanf.s, errno.s, strcspn.s, strpbrk.s, strspn.s ]
+[ strtok.s ]
 
 Area Definitions
 
 -blit:0x1a0.0x7fff
 -bdata:0.0x6ff
 -BInterruptRAM:0	allocated at: 0
--Bvirtual_registers	allocated at: 0x75
+-Bvirtual_registers	allocated at: 0x5c
 -Bi2cram_RAM
 -rwh:SSCParmBlk:0xf7.0xff
 

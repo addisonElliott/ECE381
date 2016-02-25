@@ -535,6 +535,24 @@ R 00 00 00 01
 .end
 .start
 XH
+H 1 areas 1 global symbols
+M psocgpioint.asm
+A text size 1 flags 0
+dbfile lib/psocgpioint.asm
+dbfunc 0 ? 0 I
+dbline 41 0
+dbfile ./lib/PSoCGPIOINT.inc
+dbfunc 0 ? 0 I
+dbfile lib/psocgpioint.asm
+dbfunc 0 ? 0 I
+dbfile C:/PROGRA~2/Cypress/PSOCDE~1/5.4/Common/CYPRES~1/tools/include/CY8C29~1/m8c.inc
+dbfunc 0 ? 0 I
+S PSoC_GPIO_ISR Def0000
+T 00 00 7E
+R 00 00 00 00
+.end
+.start
+XH
 H 3 areas 3 global symbols
 M psocconfigtbl.asm
 A text size 0 flags 0
@@ -684,7 +702,7 @@ T 00 1C 00 70 EF 62 01 00 62 04 A0 71 10 62 04 A0
 R 00 00 00 02
 T 00 2A 62 05 FF 70 EF 62 07 AF 62 06 40 71 10 62
 R 00 00 00 02
-T 00 38 06 00 62 07 00 70 EF 62 05 00 62 08 00 71
+T 00 38 06 10 62 07 10 70 EF 62 05 10 62 08 00 71
 R 00 00 00 02
 T 00 46 10 62 08 FF 62 09 00 70 EF 62 0B 00 62 0A
 R 00 00 00 02
