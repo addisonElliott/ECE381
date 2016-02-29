@@ -21,7 +21,6 @@
 #include "Counter16.h"
 #include "I2CHWMstr.h"
 #include "I2CHWCommon.h"
-#include "LCD.h"
 #include "UART.h"
 
 #endif

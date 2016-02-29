@@ -12,14 +12,6 @@ dbfile ./lib/UART.inc
 dbfunc 0 ? 0 I
 dbfile PSoCAPI.inc
 dbfunc 0 ? 0 I
-dbfile LCD.inc
-dbfunc 0 ? 0 I
-dbfile C:/PROGRA~2/Cypress/PSOCDE~1/5.4/Common/CYPRES~1/tools/include/CY8C29~1/m8c.inc
-dbfunc 0 ? 0 I
-dbfile ./lib/LCD.inc
-dbfunc 0 ? 0 I
-dbfile PSoCAPI.inc
-dbfunc 0 ? 0 I
 dbfile ./lib/I2CHWMstr.inc
 dbfunc 0 ? 0 I
 dbfile PSoCAPI.inc

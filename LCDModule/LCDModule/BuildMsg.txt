@@ -7,19 +7,19 @@ lib/psocconfig.asm
 
 lib/psocconfigtbl.asm
 
-!W C:\Users\addis\GOOGLE~1\DOCUME~1\ECE381\LCDMOD~1\LCDMOD~1\main.c(40):[warning] [MISRA 2200]calling an undeclared function may cause unexpected behavior if the function 
+!W C:\Users\addis\DOCUME~1\ECE381\LCDMOD~1\LCDMOD~1\main.c(33):[warning] [MISRA 2200]calling an undeclared function may cause unexpected behavior if the function 
 
 takes or returns values other than int
 
-!W C:\Users\addis\GOOGLE~1\DOCUME~1\ECE381\LCDMOD~1\LCDMOD~1\main.c(40):[warning] [MISRA 2714]calling a function without prototype may cause unexpected behavior if the function 
+!W C:\Users\addis\DOCUME~1\ECE381\LCDMOD~1\LCDMOD~1\main.c(33):[warning] [MISRA 2714]calling a function without prototype may cause unexpected behavior if the function 
 
 takes or returns values other than int
 
-!W C:\Users\addis\GOOGLE~1\DOCUME~1\ECE381\LCDMOD~1\LCDMOD~1\main.c(70):[warning] [MISRA 2200]calling an undeclared function may cause unexpected behavior if the function 
+!W C:\Users\addis\DOCUME~1\ECE381\LCDMOD~1\LCDMOD~1\main.c(63):[warning] [MISRA 2200]calling an undeclared function may cause unexpected behavior if the function 
 
 takes or returns values other than int
 
-!W C:\Users\addis\GOOGLE~1\DOCUME~1\ECE381\LCDMOD~1\LCDMOD~1\main.c(70):[warning] [MISRA 2714]calling a function without prototype may cause unexpected behavior if the function 
+!W C:\Users\addis\DOCUME~1\ECE381\LCDMOD~1\LCDMOD~1\main.c(63):[warning] [MISRA 2714]calling a function without prototype may cause unexpected behavior if the function 
 
 takes or returns values other than int
 
@@ -40,5 +40,5 @@ idata dump at output/LCDModule.idata
 Built with ICCM8C STD V7.05.00
 
  
-LCDModule - 0 error(s) 4 warning(s) 16:00:04
+LCDModule - 0 error(s) 4 warning(s) 10:38:39
 
