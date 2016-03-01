@@ -235,7 +235,7 @@ void main(void)
 				if (!IsNumber(params) || strlen(params) < 1 || strlen(params) > 2 || csscanf(params, "%d", &tol) != 1) goto error;
 				
 				if (cstrtok(0x00, " ") != 0x00) goto error;
-				if (tol > 0 || tol < 10) goto error;
+				if (tol < 0 || tol > 10) goto error;
 				
 				tolerance = tol;
 				
