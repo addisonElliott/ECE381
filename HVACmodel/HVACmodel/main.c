@@ -17,7 +17,9 @@
 
 static char rubout[4] = { 0x08, 0x20, 0x08, 0x00 }; // Rubout Sequence consists of Backspace Space Backspace. This is the null-terminated string
 static char slaveAddress = 0x48;		// '0'1001000 R/W shifted to front
-		
+static char motorState[4] = { 0x03, 0x06, 0x0C, 0x09 };
+
+char motorStep = 0;
 char buf[80];	// String that stores the string the user enters in serial console
 char strPos = 0; 	// Variable that is used for GetLine function, goes with buf
 char checkTemp = TRUE; // This is a boolean that gets set when its time to get a new temperature reading
@@ -117,6 +119,7 @@ void CheckFan(void)
 {
 	if (fanMode == 0 || Tout_Data_ADDR & Tout_MASK) MotorDriver_Start();
 	else MotorDriver_Stop();
+	updateLCD = TRUE;
 }
 
 // Writes a command to a device using I2C. The command character is sent first followed by len bytes. Limited to 31 bytes. Use the other
@@ -232,7 +235,7 @@ void main(void)
 				if (!IsNumber(params) || strlen(params) < 1 || strlen(params) > 2 || csscanf(params, "%d", &tol) != 1) goto error;
 				
 				if (cstrtok(0x00, " ") != 0x00) goto error;
-				if ( tol > 20 || tol < 2) goto error;
+				if (tol > 0 || tol < 10) goto error;
 				
 				tolerance = tol;
 				
@@ -279,14 +282,14 @@ void main(void)
 				char speed;
 			
 				params = cstrtok(0x00, " "); 	
-				if (strlen(params) != 1 || csscanf(params, "%c", &fanMode) != 1) goto error;
+				if (strlen(params) != 1 || csscanf(params, "%c", &mode) != 1) goto error;
 				
 				params = cstrtok(0x00, " ");
-				if (strlen(params) != 1 || csscanf(params, "%c", &fanSpeed) != 1) goto error;
+				if (strlen(params) != 1 || csscanf(params, "%c", &speed) != 1) goto error;
 				if (cstrtok(0x00, " ") != 0x00) goto error;
 				
-				fanSpeed = tolower(fanSpeed);
-				fanMode = tolower(fanMode);
+				speed = tolower(speed);
+				mode = tolower(mode);
 				
 				switch (mode)
 				{
@@ -307,8 +310,8 @@ void main(void)
 				{
 					case 'l':
 						fanSpeed = 0;
-						MotorDriver_WritePeriod(1999);
-						MotorDriver_WriteCompareValue(1000);
+						MotorDriver_WritePeriod(49999);
+						MotorDriver_WriteCompareValue(25000);
 						break;
 						
 					case 'm':
@@ -319,9 +322,12 @@ void main(void)
 						
 					case 'h':
 						fanSpeed = 2;
-						MotorDriver_WritePeriod(49999);
-						MotorDriver_WriteCompareValue(25000);
+						MotorDriver_WritePeriod(1999);
+						MotorDriver_WriteCompareValue(1000);
 						break;
+						
+					default:
+						goto error;
 				}
 				CheckFan();
 			}
@@ -396,10 +402,23 @@ void PSoC_TempCounter_ISR_C(void)
 
 void PSoC_MotorDriver_ISR_C(void)
 {
-
+	if (thermostatMode == 1)
+	{	
+		motorStep++;
+		if ( motorStep > 3 || motorStep < 0)
+			motorStep = 0;
+	}
+	else
+	{	
+		motorStep--;
+		if (motorStep < 0 || motorStep > 3)
+			motorStep = 3;
+	}
+	
+	motor1_Data_ADDR = motorState[motorStep];
 }
 
 void PSoC_GPIO_ISR_C(void)
 {
-
+	CheckFan();
 }

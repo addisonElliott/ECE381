@@ -26,7 +26,7 @@ MotorDriver_INT_MASK:                      equ 0x20
 ; Constants for MotorDriver user defined values
 ;--------------------------------------------------
 
-MotorDriver_PERIOD:                        equ 0x7d0
+MotorDriver_PERIOD:                        equ 0x7cf
 MotorDriver_COMPARE_VALUE:                 equ 0x3e8
 
 

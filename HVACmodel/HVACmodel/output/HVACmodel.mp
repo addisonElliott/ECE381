@@ -1,6 +1,6 @@
 Project:      output/HVACmodel
 Build Number: 0
-Date:         Thu Feb 25 15:22:34 2016
+Date:         Mon Feb 29 20:44:47 2016
 Compiler:     ICCM8C
 Version:      7.05.00
 
@@ -211,7 +211,7 @@ Area                               Addr   Size   Decimal Bytes (Attributes)
 
 Area                               Addr   Size   Decimal Bytes (Attributes)
 --------------------------------   ----   ----   ------- ----- ------------
-                            text   1127   1E64 =   7780. bytes (rel,con,rom,code)
+                            text   1127   1F5C =   8028. bytes (rel,con,rom,code)
 
        Addr  Global Symbol
       -----  --------------------------------
@@ -221,31 +221,31 @@ Area                               Addr   Size   Decimal Bytes (Attributes)
        12BA  _IsNumber
        1318  _NumToStr
        13B8  _CheckFan
-       13D9  _WriteI2C
-       1477  _ReadI2C
-       14DA  _main
-       1D85  _PSoC_TempCounter_ISR_C
-       1D9C  _PSoC_MotorDriver_ISR_C
-       1D9F  _PSoC_GPIO_ISR_C
-       1E89  _strlenLMM
-       1E94  _strlen
-       1EAF  __plcall
-       1EBB  _strtol
-       22DD  _strtoul
-       2673  _isdigit
-       2694  _isspace
-       26B5  _isupper
-       26D6  _isxdigit
-       26F7  _tolower
-       2783  _csscanf
-       29C7  __cscanf
-       2D2C  _cstrcspn
-       2DAE  _cstrpbrk
-       2DFB  _cstrspn
-       2EA8  _cstrtok
-       2F8B  __text_end
-       2F8B  __xidata_start
-       2FAA  __xidata_end
+       13DF  _WriteI2C
+       147D  _ReadI2C
+       14E0  _main
+       1D89  _PSoC_TempCounter_ISR_C
+       1DA0  _PSoC_MotorDriver_ISR_C
+       1E1A  _PSoC_GPIO_ISR_C
+       1F81  _strlenLMM
+       1F8C  _strlen
+       1FA7  __plcall
+       1FB3  _strtol
+       23D5  _strtoul
+       276B  _isdigit
+       278C  _isspace
+       27AD  _isupper
+       27CE  _isxdigit
+       27EF  _tolower
+       287B  _csscanf
+       2ABF  __cscanf
+       2E24  _cstrcspn
+       2EA6  _cstrpbrk
+       2EF3  _cstrspn
+       2FA0  _cstrtok
+       3083  __text_end
+       3083  __xidata_start
+       30A6  __xidata_end
 
 Area                               Start  End    Decimal Bytes (Attributes)
 --------------------------------   ----   ----   ------- ----- ------------
@@ -296,42 +296,48 @@ Area                               Addr   Size   Decimal Bytes (Attributes)
 
 Area                               Addr   Size   Decimal Bytes (Attributes)
 --------------------------------   ----   ----   ------- ----- ------------
-               virtual_registers   005C   000B =     11. bytes (rel,con,ram)
+               virtual_registers   005C   000F =     15. bytes (rel,con,ram)
 
        Addr  Global Symbol
       -----  --------------------------------
        005C  __rZ
        005D  __rY
        005E  __rX
-       005F  __r7
-       0060  __r6
-       0061  __r5
-       0062  __r4
-       0063  __r3
-       0064  __r2
-       0065  __r1
-       0066  __r0
+       005F  __r11
+       0060  __r10
+       0061  __r9
+       0062  __r8
+       0063  __r7
+       0064  __r6
+       0065  __r5
+       0066  __r4
+       0067  __r3
+       0068  __r2
+       0069  __r1
+       006A  __r0
 
 Area                               Addr   Size   Decimal Bytes (Attributes)
 --------------------------------   ----   ----   ------- ----- ------------
-                            data   0000   0068 =    104. bytes (rel,con,ram)
+                            data   0000   006D =    109. bytes (rel,con,ram)
 
        Addr  Global Symbol
       -----  --------------------------------
        0000  __data_start
        000C  _buf
-       0067  main.c:rubout
-       006F  _errno
-       0073  _setTemp
-       0074  _tolerance
-       0075  _curTemp
-       0076  _fanMode
-       0077  _fanSpeed
-       0079  _updateLCD
-       007B  _checkTemp
-       007C  _strPos
-       007D  main.c:slaveAddress
+       006B  main.c:motorState
+       006F  main.c:rubout
+       0077  _errno
+       007B  _curTemp
+       007C  _setTemp
+       007D  _updateLCD
        007E  _thermostatMode
+       007F  _fanMode
+       0080  _fanSpeed
+       0082  _checkTemp
+       0084  _strPos
+       0085  _motorStep
+       0086  main.c:slaveAddress
+       0087  _tolerance
 
 Files Linked      [ module(s) ]
 
@@ -339,10 +345,10 @@ Files Linked      [ module(s) ]
 obj/main.o	[ main.c ]
 <library>	[ uartint.asm, uart.asm, tempcounter.asm, psocconfigtbl.asm, psocconfig.asm, motordriver.asm ]
 [ lcd.asm, i2chwrsrcinits.asm, i2chwmstr.asm, i2chwint.asm, i2chwcommon.asm, rZ.asm, rY.asm, rX.asm ]
-[ r7.asm, r6.asm, r5.asm, r4.asm, r3.asm, r2.asm, r1.asm, r0.asm, divmodu_16x16_16_util.asm, i_div16_block_util.asm ]
-[ i_mulu8_block_util.asm, mul32_util.asm, strlen.s, plcall.s, strtol.s, strtoul.s, isdigit.s, isspace.s ]
-[ isupper.s, isxdigit.s, ctype.s, tolower.s, sscanf.s, _scanf.s, errno.s, strcspn.s, strpbrk.s, strspn.s ]
-[ strtok.s ]
+[ r11.asm, r10.asm, r9.asm, r8.asm, r7.asm, r6.asm, r5.asm, r4.asm, r3.asm, r2.asm, r1.asm, r0.asm, divmodu_16x16_16_util.asm ]
+[ i_div16_block_util.asm, i_mulu8_block_util.asm, mul32_util.asm, strlen.s, plcall.s, strtol.s ]
+[ strtoul.s, isdigit.s, isspace.s, isupper.s, isxdigit.s, ctype.s, tolower.s, sscanf.s, _scanf.s, errno.s ]
+[ strcspn.s, strpbrk.s, strspn.s, strtok.s ]
 
 Area Definitions
 

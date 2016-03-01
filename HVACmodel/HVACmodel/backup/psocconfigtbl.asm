@@ -25,7 +25,7 @@ LoadConfigTBL_i2cram_Bank0:
 ;  Instance name MotorDriver, User Module Counter16
 ;       Instance name MotorDriver, Block Name CNTR16_LSB(DBB10)
 	db		33h, 00h		;MotorDriver_CONTROL_LSB_REG(DBB10CR0)
-	db		31h, d0h		;MotorDriver_PERIOD_LSB_REG(DBB10DR1)
+	db		31h, cfh		;MotorDriver_PERIOD_LSB_REG(DBB10DR1)
 	db		32h, e8h		;MotorDriver_COMPARE_LSB_REG(DBB10DR2)
 ;       Instance name MotorDriver, Block Name CNTR16_MSB(DBB11)
 	db		37h, 00h		;MotorDriver_CONTROL_MSB_REG(DBB11CR0)
@@ -146,10 +146,10 @@ LoadConfigTBL_i2cram_Ordered:
 	M8C_SetBank0
 	mov	reg[00h], 00h		; Port_0_Data register (PRT0DR)
 	M8C_SetBank1
-	mov	reg[00h], 00h		; Port_0_DriveMode_0 register (PRT0DM0)
-	mov	reg[01h], ffh		; Port_0_DriveMode_1 register (PRT0DM1)
+	mov	reg[00h], 0fh		; Port_0_DriveMode_0 register (PRT0DM0)
+	mov	reg[01h], f0h		; Port_0_DriveMode_1 register (PRT0DM1)
 	M8C_SetBank0
-	mov	reg[03h], ffh		; Port_0_DriveMode_2 register (PRT0DM2)
+	mov	reg[03h], f0h		; Port_0_DriveMode_2 register (PRT0DM2)
 	mov	reg[02h], 00h		; Port_0_GlobalSelect register (PRT0GS)
 	M8C_SetBank1
 	mov	reg[02h], 00h		; Port_0_IntCtrl_0 register (PRT0IC0)

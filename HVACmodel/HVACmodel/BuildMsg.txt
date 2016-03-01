@@ -39,7 +39,9 @@ LMM info: area 'InterruptRAM' uses 12 bytes in SRAM bank 0
 
 LMM info: area 'data' item of 80 bytes allocated in SRAM page 0
 
-LMM info: area 'virtual_registers' uses 11 bytes in SRAM page 0
+LMM info: area 'virtual_registers' uses 15 bytes in SRAM page 0
+
+LMM info: area 'data' item of 4 bytes allocated in SRAM page 0
 
 LMM info: area 'data' item of 4 bytes allocated in SRAM page 0
 
@@ -75,14 +77,16 @@ LMM info: area 'data' item of 1 bytes allocated in SRAM page 0
 
 LMM info: area 'data' item of 1 bytes allocated in SRAM page 0
 
+LMM info: area 'data' item of 1 bytes allocated in SRAM page 0
+
 idata dump at output/HVACmodel.idata
 
-  ROM 36% full. 11755 out of 32768 bytes used (does not include absolute areas).
+  ROM 37% full. 12003 out of 32768 bytes used (does not include absolute areas).
 
-  RAM 8% full. 127 bytes used (does not include stack usage).
+  RAM 8% full. 136 bytes used (does not include stack usage).
 
 Built with ICCM8C STD V7.05.00
 
  
-HVACmodel - 0 error(s) 0 warning(s) 15:22:34
+HVACmodel - 0 error(s) 0 warning(s) 20:44:49
 

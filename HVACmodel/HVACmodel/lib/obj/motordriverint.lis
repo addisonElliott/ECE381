@@ -1910,7 +1910,7 @@
  0000           ; Constants for MotorDriver user defined values
  0000           ;--------------------------------------------------
  0000           
- 07D0           MotorDriver_PERIOD:                        equ 0x7d0
+ 07CF           MotorDriver_PERIOD:                        equ 0x7cf
  03E8           MotorDriver_COMPARE_VALUE:                 equ 0x3e8
  0000           
  0000           

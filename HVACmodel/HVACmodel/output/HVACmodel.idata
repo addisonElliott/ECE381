@@ -1,10 +1,10 @@
-flash 2F8B SRAM    C:
+flash 3083 SRAM    C:
  00 80 bytes
-flash 2F8F SRAM   67:
- <size at next line>   8 20  8
-  [size:] 3 bytes
-flash 2F95 SRAM   6A:
- 00 9 bytes
-flash 2F99 SRAM   73:
- <size at next line>  19  A  0  1  0  1  1  0  1  0 48  0
+flash 3087 SRAM   6B:
+ <size at next line>   3  6  C  9  8 20  8
+  [size:] 7 bytes
+flash 3091 SRAM   72:
+ 00 10 bytes
+flash 3095 SRAM   7C:
+ <size at next line>  19  1  0  1  0  1  1  0  0  0 48  A
   [size:] 12 bytes

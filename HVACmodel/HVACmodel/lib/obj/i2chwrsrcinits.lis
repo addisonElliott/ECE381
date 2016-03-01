@@ -1334,6 +1334,46 @@
  0107           Tout_IntCtrl_1_ADDR:	equ	107h
  0005           Tout_IntEn_ADDR:	equ	5h
  0010           Tout_MASK:	equ	10h
+ 0000           ; motor1 address and mask equates
+ 0000           motor1_Data_ADDR:	equ	0h
+ 0100           motor1_DriveMode_0_ADDR:	equ	100h
+ 0101           motor1_DriveMode_1_ADDR:	equ	101h
+ 0003           motor1_DriveMode_2_ADDR:	equ	3h
+ 0002           motor1_GlobalSelect_ADDR:	equ	2h
+ 0102           motor1_IntCtrl_0_ADDR:	equ	102h
+ 0103           motor1_IntCtrl_1_ADDR:	equ	103h
+ 0001           motor1_IntEn_ADDR:	equ	1h
+ 0001           motor1_MASK:	equ	1h
+ 0000           ; motor2 address and mask equates
+ 0000           motor2_Data_ADDR:	equ	0h
+ 0100           motor2_DriveMode_0_ADDR:	equ	100h
+ 0101           motor2_DriveMode_1_ADDR:	equ	101h
+ 0003           motor2_DriveMode_2_ADDR:	equ	3h
+ 0002           motor2_GlobalSelect_ADDR:	equ	2h
+ 0102           motor2_IntCtrl_0_ADDR:	equ	102h
+ 0103           motor2_IntCtrl_1_ADDR:	equ	103h
+ 0001           motor2_IntEn_ADDR:	equ	1h
+ 0002           motor2_MASK:	equ	2h
+ 0000           ; motor3 address and mask equates
+ 0000           motor3_Data_ADDR:	equ	0h
+ 0100           motor3_DriveMode_0_ADDR:	equ	100h
+ 0101           motor3_DriveMode_1_ADDR:	equ	101h
+ 0003           motor3_DriveMode_2_ADDR:	equ	3h
+ 0002           motor3_GlobalSelect_ADDR:	equ	2h
+ 0102           motor3_IntCtrl_0_ADDR:	equ	102h
+ 0103           motor3_IntCtrl_1_ADDR:	equ	103h
+ 0001           motor3_IntEn_ADDR:	equ	1h
+ 0004           motor3_MASK:	equ	4h
+ 0000           ; motor4 address and mask equates
+ 0000           motor4_Data_ADDR:	equ	0h
+ 0100           motor4_DriveMode_0_ADDR:	equ	100h
+ 0101           motor4_DriveMode_1_ADDR:	equ	101h
+ 0003           motor4_DriveMode_2_ADDR:	equ	3h
+ 0002           motor4_GlobalSelect_ADDR:	equ	2h
+ 0102           motor4_IntCtrl_0_ADDR:	equ	102h
+ 0103           motor4_IntCtrl_1_ADDR:	equ	103h
+ 0001           motor4_IntEn_ADDR:	equ	1h
+ 0008           motor4_MASK:	equ	8h
  0000           ; I2CHWSDA address and mask equates
  0004           I2CHWSDA_Data_ADDR:	equ	4h
  0104           I2CHWSDA_DriveMode_0_ADDR:	equ	104h
@@ -1672,6 +1712,46 @@
  0107           Tout_IntCtrl_1_ADDR:	equ	107h
  0005           Tout_IntEn_ADDR:	equ	5h
  0010           Tout_MASK:	equ	10h
+ 0000           ; motor1 address and mask equates
+ 0000           motor1_Data_ADDR:	equ	0h
+ 0100           motor1_DriveMode_0_ADDR:	equ	100h
+ 0101           motor1_DriveMode_1_ADDR:	equ	101h
+ 0003           motor1_DriveMode_2_ADDR:	equ	3h
+ 0002           motor1_GlobalSelect_ADDR:	equ	2h
+ 0102           motor1_IntCtrl_0_ADDR:	equ	102h
+ 0103           motor1_IntCtrl_1_ADDR:	equ	103h
+ 0001           motor1_IntEn_ADDR:	equ	1h
+ 0001           motor1_MASK:	equ	1h
+ 0000           ; motor2 address and mask equates
+ 0000           motor2_Data_ADDR:	equ	0h
+ 0100           motor2_DriveMode_0_ADDR:	equ	100h
+ 0101           motor2_DriveMode_1_ADDR:	equ	101h
+ 0003           motor2_DriveMode_2_ADDR:	equ	3h
+ 0002           motor2_GlobalSelect_ADDR:	equ	2h
+ 0102           motor2_IntCtrl_0_ADDR:	equ	102h
+ 0103           motor2_IntCtrl_1_ADDR:	equ	103h
+ 0001           motor2_IntEn_ADDR:	equ	1h
+ 0002           motor2_MASK:	equ	2h
+ 0000           ; motor3 address and mask equates
+ 0000           motor3_Data_ADDR:	equ	0h
+ 0100           motor3_DriveMode_0_ADDR:	equ	100h
+ 0101           motor3_DriveMode_1_ADDR:	equ	101h
+ 0003           motor3_DriveMode_2_ADDR:	equ	3h
+ 0002           motor3_GlobalSelect_ADDR:	equ	2h
+ 0102           motor3_IntCtrl_0_ADDR:	equ	102h
+ 0103           motor3_IntCtrl_1_ADDR:	equ	103h
+ 0001           motor3_IntEn_ADDR:	equ	1h
+ 0004           motor3_MASK:	equ	4h
+ 0000           ; motor4 address and mask equates
+ 0000           motor4_Data_ADDR:	equ	0h
+ 0100           motor4_DriveMode_0_ADDR:	equ	100h
+ 0101           motor4_DriveMode_1_ADDR:	equ	101h
+ 0003           motor4_DriveMode_2_ADDR:	equ	3h
+ 0002           motor4_GlobalSelect_ADDR:	equ	2h
+ 0102           motor4_IntCtrl_0_ADDR:	equ	102h
+ 0103           motor4_IntCtrl_1_ADDR:	equ	103h
+ 0001           motor4_IntEn_ADDR:	equ	1h
+ 0008           motor4_MASK:	equ	8h
  0000           ; I2CHWSDA address and mask equates
  0004           I2CHWSDA_Data_ADDR:	equ	4h
  0104           I2CHWSDA_DriveMode_0_ADDR:	equ	104h
@@ -3938,7 +4018,7 @@
  0000           ; Constants for MotorDriver user defined values
  0000           ;--------------------------------------------------
  0000           
- 07D0           MotorDriver_PERIOD:                        equ 0x7d0
+ 07CF           MotorDriver_PERIOD:                        equ 0x7cf
  03E8           MotorDriver_COMPARE_VALUE:                 equ 0x3e8
  0000           
  0000           

@@ -154,7 +154,7 @@ FILE m8ssc.inc
 FILE m8c.inc
 DIR .\lib\
 FILE GlobalParams.inc
-DIR C:\Users\addis\DOCUME~1\ECE381\I2CRAM\I2CRAM\
+DIR C:\Users\Jacob\Desktop\ECE381\I2CRAM\I2CRAM\
 FILE main.c
 FUNC GetNumber E1D fc
 LINE 19 E1D

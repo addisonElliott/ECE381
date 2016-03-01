@@ -61,7 +61,7 @@ extern WORD wMotorDriver_ReadCompareValue(void);       // Deprecated
 // Constants for MotorDriver user defined values
 //--------------------------------------------------
 
-#define MotorDriver_PERIOD                     ( 0x7d0 )
+#define MotorDriver_PERIOD                     ( 0x7cf )
 #define MotorDriver_COMPARE_VALUE              ( 0x3e8 )
 
 
