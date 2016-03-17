@@ -1,0 +1,9 @@
+flash 32D8 SRAM    4:
+ 00 16 bytes
+flash 32DC SRAM   23:
+ 00 48 bytes
+flash 32E0 SRAM   53:
+ <size at next line>   1  0 7F
+  [size:] 3 bytes
+flash 32E6 SRAM   56:
+ 00 26 bytes
