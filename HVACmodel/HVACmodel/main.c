@@ -17,9 +17,9 @@
 
 static char rubout[4] = { 0x08, 0x20, 0x08, 0x00 }; // Rubout Sequence consists of Backspace Space Backspace. This is the null-terminated string
 static char slaveAddress = 0x48;		// '0'1001000 R/W shifted to front
-static char motorState[4] = { 0x03, 0x06, 0x0C, 0x09 };
+static char motorState[4] = { 0x03, 0x06, 0x0C, 0x09 }; // Four sequences of stepper motor
 
-char motorStep = 0;
+char motorStep = 0; // Step at which the motor is at, valid numbers are 0-3
 char buf[80];	// String that stores the string the user enters in serial console
 char strPos = 0; 	// Variable that is used for GetLine function, goes with buf
 char checkTemp = TRUE; // This is a boolean that gets set when its time to get a new temperature reading
@@ -27,7 +27,7 @@ char updateLCD = TRUE; // This is a boolean that gets set when the LCD needs to 
 
 char curTemp = 0; // Current temperature
 char setTemp = 25; // Desired temperature
-char tolerance = 10;
+char tolerance = 5; // Temperature tolerance, plus or minus this amount until Tout goes high
 char thermostatMode = 0; // 0 = Off, 1 = Heating, 2 = Cooling
 char fanMode = 1; // 0 = Manual, 1 = Automatic
 char fanSpeed = 0; // 0 = Low, 1 = Medium, 2 = High
@@ -38,9 +38,9 @@ char fanSpeed = 0; // 0 = Low, 1 = Medium, 2 = High
 char GetLine(char *buffer, char *strPos, char bufferLen)
 {
 	char c;
-	static char newCommand = TRUE;
+	static char newCommand = TRUE; // Since this is static, only gets set to true once but is a global essentially
 	
-	if (newCommand)
+	if (newCommand) // If it is a new command, put a > character and set this to false
 	{
 		UART_PutChar('>');
 		newCommand = FALSE;
@@ -61,8 +61,8 @@ char GetLine(char *buffer, char *strPos, char bufferLen)
 			buffer[*strPos] = 0x00; // put the null character at the current strPos
 			UART_PutCRLF(); // Go to another line
 			*strPos = 0;
-			newCommand = TRUE;
-			return TRUE;
+			newCommand = TRUE; // Next time GetLine is called, > will be outputted
+			return TRUE; // This means that the program should handle the buffer
 		}
 		else if (c >= 0x20 && c < 0x7F) // only valid characters to the string. These are any alphabet, numeric, or symbols
 		{
@@ -76,7 +76,7 @@ char GetLine(char *buffer, char *strPos, char bufferLen)
 		}
 	}
 	
-	return FALSE;
+	return FALSE; // Data is not ready to be handled
 }
 
 // Takes input argument str and converts each character into a lowercase character. Returns that str. Note: This function alters str
@@ -117,9 +117,9 @@ char *NumToStr(char *buf, unsigned int value, int digits)
 
 void CheckFan(void)
 {
-	if (fanMode == 0 || Tout_Data_ADDR & Tout_MASK) MotorDriver_Start();
-	else MotorDriver_Stop();
-	updateLCD = TRUE;
+	if (fanMode == 0 || Tout_Data_ADDR & Tout_MASK) MotorDriver_Start(); // If fanMode is manual or Tout is on, start the motor
+	else MotorDriver_Stop(); // Otherwise dont start the motor
+	updateLCD = TRUE; // Regardless, update the LCD in case there was a change in the motor
 }
 
 // Writes a command to a device using I2C. The command character is sent first followed by len bytes. Limited to 31 bytes. Use the other
@@ -173,11 +173,11 @@ void main(void)
 	I2CHW_EnableMstr();
 	I2CHW_EnableInt();
 	
-	WriteI2C(slaveAddress, 0xAC, 1, 0x02);
+	WriteI2C(slaveAddress, 0xAC, 1, 0x02); // Write to access config, sets mode to cooling(POL = 1), also turns 1-SHOT off, continuous conversions
 	
-	WriteI2C(slaveAddress, 0xA1, 2, (setTemp + tolerance), 0x00);
-	WriteI2C(slaveAddress, 0xA2, 2, (setTemp - tolerance), 0x00);
-	WriteI2C(slaveAddress, 0xEE, 0);
+	WriteI2C(slaveAddress, 0xA1, 2, (setTemp + tolerance), 0x00); // Sets initial high temp to be setTemp + tolerance
+	WriteI2C(slaveAddress, 0xA2, 2, (setTemp - tolerance), 0x00); // Sets initial low temp to be setTemp - tolerance
+	WriteI2C(slaveAddress, 0xEE, 0); // This tells the temperature IC to start converting the temperatures
 	
 	// Writes initial string to LCD. When LCD is updated, only the numbers will be changed
 	LCD_Position(0,0); LCD_PrCString("CUR: 00 OFF     ");
@@ -207,163 +207,171 @@ void main(void)
 		char *cmd;
 		char *params;
 		
-		if (GetLine(buf, &strPos, 79)) // passing ref to global char array and max length of cmd entry
+		if (GetLine(buf, &strPos, 79)) // Only process the data if GetLine returns true
 		{
+			cmd = Lowercase(cstrtok(buf, " ")); // Lowercase the first word from the inputted string
 			
-			cmd = Lowercase(cstrtok(buf, " "));
-			
-			if (strlen(cmd) == 1 && cmd[0] == 's')
+			if (strlen(cmd) == 1 && cmd[0] == 's') // If the person entered s
 			{	
-				int temp; 
+				int temp;
 			
-				params = cstrtok(0x00, " "); 							
+				params = cstrtok(0x00, " "); // Read next word 							
+				// If next word isnt number or isnt 1 or 2 characters long, then return error
 				if (!IsNumber(params) || strlen(params) < 1 || strlen(params) > 2 || csscanf(params, "%d", &temp) != 1) goto error;
 				
+				// If there is additional data at end of string or if number is not within 0-99, return error
 				if (cstrtok(0x00, " ") != 0x00) goto error;
 				if ( temp > 99 || temp < 0) goto error; 
 				
 				setTemp = temp;
-				WriteI2C(slaveAddress, 0xA1, 2, (setTemp + tolerance), 0x00);
-				WriteI2C(slaveAddress, 0xA2, 2, (setTemp - tolerance), 0x00);
-				updateLCD = TRUE;
+				WriteI2C(slaveAddress, 0xA1, 2, (setTemp + tolerance), 0x00); // Sets high temp to be setTemp + tolerance
+				WriteI2C(slaveAddress, 0xA2, 2, (setTemp - tolerance), 0x00); // Sets low temp to be setTemp - tolerance
+				updateLCD = TRUE; // Update the LCD
 			}
-			else if (strlen(cmd) == 1 && cmd[0] == 't')
+			else if (strlen(cmd) == 1 && cmd[0] == 't') // If the person entered t
 			{	
 				int tol; 
 			
-				params = cstrtok(0x00, " "); 							
+				params = cstrtok(0x00, " "); // Read next word					
+				// If next word isnt number or isnt 1 or 2 characters long, then return error
 				if (!IsNumber(params) || strlen(params) < 1 || strlen(params) > 2 || csscanf(params, "%d", &tol) != 1) goto error;
 				
+				// If there is additional data at end of string or if number is not within 0-10, return error
 				if (cstrtok(0x00, " ") != 0x00) goto error;
 				if (tol < 0 || tol > 10) goto error;
 				
 				tolerance = tol;
 				
-				WriteI2C(slaveAddress, 0xA1, 2, (setTemp + tolerance), 0x00);
-				WriteI2C(slaveAddress, 0xA2, 2, (setTemp - tolerance), 0x00);
-				updateLCD = TRUE;
+				WriteI2C(slaveAddress, 0xA1, 2, (setTemp + tolerance), 0x00); // Sets high temp to be setTemp + tolerance
+				WriteI2C(slaveAddress, 0xA2, 2, (setTemp - tolerance), 0x00); // Sets low temp to be setTemp - tolerance
+				updateLCD = TRUE; // Update the LCD
 				
 			}
-			else if (strlen(cmd) == 1 && cmd[0] == 'm')
+			else if (strlen(cmd) == 1 && cmd[0] == 'm') // If the person entered m
 			{	
 				char mode;
 			
-				params = cstrtok(0x00, " "); 	
+				params = cstrtok(0x00, " "); // Read next word
 				
+				// If next word isnt 1 character long, return error
 				if (strlen(params) != 1 || csscanf(params, "%c", &mode) != 1) goto error;
+				// If there is additional data at end of string, return error
 				if (cstrtok(0x00, " ") != 0x00) goto error;
 				
-				mode = tolower(mode);
+				mode = tolower(mode); // Lowercase the character
 				
 				switch (mode)
 				{
 					case 'h':
-						thermostatMode = 1;
-						WriteI2C(slaveAddress,0xAC, 1, 0x00);
+						thermostatMode = 1; // Set mode to heating
+						WriteI2C(slaveAddress,0xAC, 1, 0x00); // Change access config on DS1621 to heating(POL = 0)
 						break;
 						
 					case 'c':
-						thermostatMode = 2;
-						WriteI2C(slaveAddress, 0xAC, 1, 0x02);
+						thermostatMode = 2; // Set mode to cooling
+						WriteI2C(slaveAddress, 0xAC, 1, 0x02); // Change access config on DS1621 to cooling(POL = 1)
 						break;
 						
-					case 'f':
-						thermostatMode = 0;
+					case 'f': 
+						thermostatMode = 0; // Set mode to off
 						break;
 						
 					default:
-						goto error;
+						goto error; // Invalid character entered, goto error
 				}
-				CheckFan();
+				CheckFan(); // Check the fan to see if it should be on
 			}
-			else if (strlen(cmd) == 1 && cmd[0] == 'f')
+			else if (strlen(cmd) == 1 && cmd[0] == 'f') // If the person entered f
 			{	
 				char mode;
 				char speed;
 			
-				params = cstrtok(0x00, " "); 	
+				params = cstrtok(0x00, " "); // Read next word
+				// If next word isnt 1 character long, then return error
 				if (strlen(params) != 1 || csscanf(params, "%c", &mode) != 1) goto error;
 				
-				params = cstrtok(0x00, " ");
+				params = cstrtok(0x00, " "); // Read next word
+				// If next word isnt 1 character long, then return error
 				if (strlen(params) != 1 || csscanf(params, "%c", &speed) != 1) goto error;
+				// If there is additional data at end of string, return error
 				if (cstrtok(0x00, " ") != 0x00) goto error;
 				
-				speed = tolower(speed);
+				speed = tolower(speed); // Lowercase the speed and mode characters entered
 				mode = tolower(mode);
 				
 				switch (mode)
 				{
 					case 'm':
-						fanMode = 0;
+						fanMode = 0; // Set fan mode to manual
 						break;
 						
 					case 'a':
-						fanMode = 1;
+						fanMode = 1; // Set fan mode to automatic
 						break;
 						
-					default:
+					default: // Otherwise go to error
 						goto error;
 				}
-				MotorDriver_Stop();
 				
+				MotorDriver_Stop(); // Stop the motor to change the period values
 				switch (speed)
 				{
 					case 'l':
-						fanSpeed = 0;
-						MotorDriver_WritePeriod(49999);
+						fanSpeed = 0; // Set fan speed to low
+						MotorDriver_WritePeriod(49999); // See report for where these numbers came from
 						MotorDriver_WriteCompareValue(25000);
 						break;
 						
 					case 'm':
-						fanSpeed = 1;
-						MotorDriver_WritePeriod(9999);
+						fanSpeed = 1; // Set fan speed to medium
+						MotorDriver_WritePeriod(9999); // See report for where these numbers came from
 						MotorDriver_WriteCompareValue(5000);
 						break;
 						
 					case 'h':
-						fanSpeed = 2;
-						MotorDriver_WritePeriod(1999);
+						fanSpeed = 2; // Set fan speed to high
+						MotorDriver_WritePeriod(1999); // See report for where these numbers came from
 						MotorDriver_WriteCompareValue(1000);
 						break;
 						
-					default:
+					default: // Otherwise go to error if invalid input entered
 						goto error;
 				}
-				CheckFan();
+				CheckFan(); // Check the fan to see if it should be on
 			}
 			else 
 				goto error;
 		}
 			
-		if (checkTemp)
+		if (checkTemp) // Check the temperature
 		{	
 			char buf[2];
 			
-			ReadI2C(slaveAddress, 0xAA, 2, buf);
-			curTemp = buf[0];
-			checkTemp = FALSE;
+			ReadI2C(slaveAddress, 0xAA, 2, buf); // Read the temperature from IC, returns 2 bytes
+			curTemp = buf[0]; // We just care about the first byte
+			checkTemp = FALSE; // Turn flag off so it doesnt keep doing this
 		}
 		
-		if (updateLCD)
+		if (updateLCD) // Update the LCD
 		{	
 			char buf[3];
 			
-			NumToStr(buf, curTemp, 2);
-			LCD_Position(0, 5); LCD_PrString(buf);
+			NumToStr(buf, curTemp, 2); // Convert current temp to str
+			LCD_Position(0, 5); LCD_PrString(buf); // Print it
 			
 			LCD_Position(0, 8);
-			switch(thermostatMode)
+			switch(thermostatMode) // Print thermostat mode
 			{
 				case 0: LCD_PrCString("OFF "); break;
 				case 1: LCD_PrCString("HEAT"); break;
 				case 2: LCD_PrCString("COOL"); break;
 			}
 			
-			NumToStr(buf, setTemp, 2);
-			LCD_Position(1, 5); LCD_PrString(buf);
+			NumToStr(buf, setTemp, 2); // Convert set temp to str
+			LCD_Position(1, 5); LCD_PrString(buf); // Print it
 			
 			LCD_Position(1, 12);
-			if (fanMode == 1 && thermostatMode == 0) LCD_PrCString("OFF");
+			if (fanMode == 1 && thermostatMode == 0) LCD_PrCString("OFF"); // Print current fan state
 			else if (fanSpeed == 0) LCD_PrCString("LOW");
 			else if (fanSpeed == 1) LCD_PrCString("MED");
 			else if (fanSpeed == 2) LCD_PrCString("HI ");
@@ -395,30 +403,29 @@ void main(void)
 
 void PSoC_TempCounter_ISR_C(void)
 {
- 	checkTemp = TRUE;
+ 	checkTemp = TRUE; // Check temp and update LCD when its time to check temp
 	updateLCD = TRUE;
-	
 }
 
 void PSoC_MotorDriver_ISR_C(void)
 {
-	if (thermostatMode == 1)
+	if (thermostatMode == 1) // If heating, increment motorStep and set it to 0 if it overflows
 	{	
 		motorStep++;
 		if ( motorStep > 3 || motorStep < 0)
 			motorStep = 0;
 	}
-	else
+	else // If cooling/manual, decrement motorStep and set it to 3 if it overflows
 	{	
 		motorStep--;
 		if (motorStep < 0 || motorStep > 3)
 			motorStep = 3;
 	}
 	
-	motor1_Data_ADDR = motorState[motorStep];
+	Motor1_Data_ADDR = motorState[motorStep]; // Set Port0 to the value of motorState at the current motorStep
 }
 
 void PSoC_GPIO_ISR_C(void)
 {
-	CheckFan();
+	CheckFan(); // Whenever GPIO is triggered, this means Tout changed, so CheckFan
 }
