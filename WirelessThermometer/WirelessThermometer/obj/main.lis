@@ -1,0 +1,214 @@
+ 0000                   cpu LMM
+                        .module main.c
+                        .area text(rom, con, rel)
+ 0000                   .dbfile ./main.c
+ 0000                   .dbfile C:\Users\Jacob\Desktop\ECE381\WIRELE~1\WIRELE~1\main.c
+ 0000                   .dbfunc e main _main fV
+ 0000           ;         status -> X+6
+ 0000           ;        voltage -> X+2
+ 0000           ;         result -> X+0
+ 0000           _main::
+ 0000                   .dbline -1
+ 0000 10                push X
+ 0001 4F                mov X,SP
+ 0002 3808              add SP,8
+ 0004                   .dbline 10
+ 0004           ; //----------------------------------------------------------------------------
+ 0004           ; // C main line
+ 0004           ; //----------------------------------------------------------------------------
+ 0004           ; 
+ 0004           ; #include <m8c.h>        // part specific constants and macros
+ 0004           ; #include "PSoCAPI.h"    // PSoC API definitions for all User Modules
+ 0004           ; #include <stdlib.h>
+ 0004           ; 
+ 0004           ; void main(void)
+ 0004           ; {
+ 0004                   .dbline 15
+ 0004           ;       int result;
+ 0004           ;       float voltage;
+ 0004           ;       int *status;
+ 0004           ;       
+ 0004           ;       M8C_EnableGInt;
+ 0004 7101                      or  F, 01h
+ 0006           
+ 0006                   .dbline 17
+ 0006           ;       
+ 0006           ;       PGA_Start(PGA_HIGHPOWER);
+ 0006 10                push X
+ 0007 5003              mov A,3
+ 0009 7C0000            xcall _PGA_Start
+ 000C                   .dbline 18
+ 000C           ;       ADCINC_Start(ADCINC_HIGHPOWER);
+ 000C 5003              mov A,3
+ 000E 7C0000            xcall _ADCINC_Start
+ 0011                   .dbline 20
+ 0011           ;       
+ 0011           ;       LCD_Start();
+ 0011 7C0000            xcall _LCD_Start
+ 0014                   .dbline 21
+ 0014           ;       ADCINC_GetSamples(0);
+ 0014 5000              mov A,0
+ 0016 7C0000            xcall _ADCINC_GetSamples
+ 0019 20                pop X
+ 001A 80B9              xjmp L3
+ 001C           L5:
+ 001C                   .dbline 25
+ 001C           ;       
+ 001C           ;       while (1)
+ 001C           ;       {
+ 001C           ;               while (ADCINC_fIsDataAvailable() == 0);
+ 001C           L6:
+ 001C                   .dbline 25
+ 001C 10                push X
+ 001D 7C0000            xcall _ADCINC_fIsDataAvailable
+ 0020 20                pop X
+ 0021 62D000            mov REG[0xd0],>__r0
+ 0024 3900              cmp A,0
+ 0026 AFF5              jz L5
+ 0028                   .dbline 27
+ 0028           ;               
+ 0028           ;               result = ADCINC_iClearFlagGetData();
+ 0028 10                push X
+ 0029 7C0000            xcall _ADCINC_iClearFlagGetData
+ 002C 62D000            mov REG[0xd0],>__r0
+ 002F 5A00              mov [__r0],X
+ 0031 20                pop X
+ 0032 5401              mov [X+1],A
+ 0034 5100              mov A,[__r0]
+ 0036 5400              mov [X+0],A
+ 0038                   .dbline 29
+ 0038           ;               
+ 0038           ;               voltage = result /** .00015869140625f*/;
+ 0038 5201              mov A,[X+1]
+ 003A 5405              mov [X+5],A
+ 003C 5200              mov A,[X+0]
+ 003E 5404              mov [X+4],A
+ 0040 480480            tst [X+4],-128
+ 0043 A009              jz X1
+ 0045 5603FF            mov [X+3],-1
+ 0048 5602FF            mov [X+2],-1
+ 004B 8007              jmp X2
+ 004D           X1:
+ 004D 560300            mov [X+3],0
+ 0050 560200            mov [X+2],0
+ 0053           X2:
+ 0053 5202              mov A,[X+2]
+ 0055 08                push A
+ 0056 5203              mov A,[X+3]
+ 0058 08                push A
+ 0059 5204              mov A,[X+4]
+ 005B 08                push A
+ 005C 5205              mov A,[X+5]
+ 005E 08                push A
+ 005F 62D000            mov REG[0xd0],>__r0
+ 0062 7C0000            xcall __long2fp
+ 0065 18                pop A
+ 0066 5405              mov [X+5],A
+ 0068 18                pop A
+ 0069 5404              mov [X+4],A
+ 006B 18                pop A
+ 006C 5403              mov [X+3],A
+ 006E 18                pop A
+ 006F 5402              mov [X+2],A
+ 0071                   .dbline 31
+ 0071           ;               
+ 0071           ;               LCD_Position(0,0);
+ 0071 10                push X
+ 0072 5000              mov A,0
+ 0074 5700              mov X,0
+ 0076 7C0000            xcall _LCD_Position
+ 0079                   .dbline 33
+ 0079           ;               //LCD_PrCString("Input Voltage is");
+ 0079           ;               LCD_PrCString("           ");
+ 0079 5011              mov A,>L8
+ 007B 08                push A
+ 007C 5011              mov A,<L8
+ 007E 5C                mov X,A
+ 007F 18                pop A
+ 0080 7C0000            xcall _LCD_PrCString
+ 0083                   .dbline 34
+ 0083           ;               LCD_Position(0, 0);
+ 0083 5000              mov A,0
+ 0085 5700              mov X,0
+ 0087 7C0000            xcall _LCD_Position
+ 008A 20                pop X
+ 008B                   .dbline 35
+ 008B           ;               LCD_PrHexInt(result);
+ 008B 10                push X
+ 008C 5200              mov A,[X+0]
+ 008E 08                push A
+ 008F 5201              mov A,[X+1]
+ 0091 20                pop X
+ 0092 7C0000            xcall _LCD_PrHexInt
+ 0095                   .dbline 37
+ 0095           ;               
+ 0095           ;               LCD_Position(1,0);
+ 0095 5700              mov X,0
+ 0097 5001              mov A,1
+ 0099 7C0000            xcall _LCD_Position
+ 009C                   .dbline 38
+ 009C           ;               LCD_PrCString("                ");
+ 009C 5000              mov A,>L9
+ 009E 08                push A
+ 009F 5000              mov A,<L9
+ 00A1 5C                mov X,A
+ 00A2 18                pop A
+ 00A3 7C0000            xcall _LCD_PrCString
+ 00A6                   .dbline 40
+ 00A6           ;               
+ 00A6           ;               LCD_Position(1,0);
+ 00A6 5700              mov X,0
+ 00A8 5001              mov A,1
+ 00AA 7C0000            xcall _LCD_Position
+ 00AD 20                pop X
+ 00AE                   .dbline 42
+ 00AE           ;               
+ 00AE           ;               LCD_PrString(ftoa(voltage, status));
+ 00AE 5206              mov A,[X+6]
+ 00B0 08                push A
+ 00B1 5207              mov A,[X+7]
+ 00B3 08                push A
+ 00B4 5202              mov A,[X+2]
+ 00B6 08                push A
+ 00B7 5203              mov A,[X+3]
+ 00B9 08                push A
+ 00BA 5204              mov A,[X+4]
+ 00BC 08                push A
+ 00BD 5205              mov A,[X+5]
+ 00BF 08                push A
+ 00C0 7C0000            xcall _ftoa
+ 00C3 38FA              add SP,-6
+ 00C5 10                push X
+ 00C6 62D000            mov REG[0xd0],>__r0
+ 00C9 5100              mov A,[__r0]
+ 00CB 08                push A
+ 00CC 5100              mov A,[__r1]
+ 00CE 5C                mov X,A
+ 00CF 18                pop A
+ 00D0 7C0000            xcall _LCD_PrString
+ 00D3 20                pop X
+ 00D4                   .dbline 46
+ 00D4           ;               
+ 00D4           ;       
+ 00D4           ;       
+ 00D4           ;       }
+ 00D4           L3:
+ 00D4                   .dbline 23
+ 00D4 8F47              xjmp L6
+ 00D6           X0:
+ 00D6                   .dbline -2
+ 00D6           L1:
+ 00D6 38F8              add SP,-8
+ 00D8 20                pop X
+ 00D9                   .dbline 0 ; func end
+ 00D9 8FFF              jmp .
+ 00DB                   .dbsym l status 6 pI
+ 00DB                   .dbsym l voltage 2 D
+ 00DB                   .dbsym l result 0 I
+ 00DB                   .dbend
+                        .area lit(rom, con, rel, lit)
+ 0000           L9:
+ 0000 20202020202020202020202020202020  .byte 32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32
+ 0010 00                .byte 0
+ 0011           L8:
+ 0011 202020202020202020202000  .byte 32,32,32,32,32,32,32,32,32,32,32,0
