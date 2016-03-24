@@ -73,5 +73,6 @@
 
 void nrfWriteRegister(BYTE address, BYTE data);
 BYTE nrfReadRegister(BYTE address);
-void nrfWriteAddress(BYTE address, ...);
+void nrfWriteAddress(BYTE address, BYTE *data);
 void nrfSendData(char *data);
+void nrfReadAddress(BYTE address, BYTE *data);

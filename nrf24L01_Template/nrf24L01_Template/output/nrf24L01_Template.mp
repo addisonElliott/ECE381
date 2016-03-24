@@ -1,6 +1,6 @@
 Project:      output/nrf24L01_Template
 Build Number: 0
-Date:         Wed Mar 23 22:58:04 2016
+Date:         Thu Mar 24 14:03:10 2016
 Compiler:     ICCM8C
 Version:      7.05.00
 
@@ -115,29 +115,30 @@ Area                               Addr   Size   Decimal Bytes (Attributes)
 
 Area                               Addr   Size   Decimal Bytes (Attributes)
 --------------------------------   ----   ----   ------- ----- ------------
-                            text   0764   0D84 =   3460. bytes (rel,con,rom,code)
+                            text   0764   0F3B =   3899. bytes (rel,con,rom,code)
 
        Addr  Global Symbol
       -----  --------------------------------
        0764  _main
        0764  __text_start
-       08B6  _nrfWriteRegister
-       0935  _nrfReadRegister
-       09B8  _nrfWriteAddress
-       0A68  _nrfSendData
-       0B4E  __plcall
-       0B5A  _itoa
-       0D33  _utoa
-       0E76  _isdigit
-       0E97  _islower
-       0EB8  _isspace
-       0ED9  _toupper
-       0F17  __csdepi
-       0F49  _csprintf
-       0FB2  __cprint
-       14E8  __xidata_start
-       14E8  __text_end
-       14F3  __xidata_end
+       09D3  _nrfWriteRegister
+       0A52  _nrfReadRegister
+       0AD5  _nrfWriteAddress
+       0B77  _nrfReadAddress
+       0C1F  _nrfSendData
+       0D05  __plcall
+       0D11  _itoa
+       0EEA  _utoa
+       102D  _isdigit
+       104E  _islower
+       106F  _isspace
+       1090  _toupper
+       10CE  __csdepi
+       1100  _csprintf
+       1169  __cprint
+       169F  __xidata_start
+       169F  __text_end
+       16AA  __xidata_end
 
 Area                               Start  End    Decimal Bytes (Attributes)
 --------------------------------   ----   ----   ------- ----- ------------

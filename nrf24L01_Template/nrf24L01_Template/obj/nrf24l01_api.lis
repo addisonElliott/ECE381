@@ -297,22 +297,22 @@
  0102                   .dbsym l address -4 c
  0102                   .dbend
  0102                   .dbfunc e nrfWriteAddress _nrfWriteAddress fV
- 0102           ;              v -> X+2
  0102           ;              i -> X+0
+ 0102           ;           data -> X-6
  0102           ;        address -> X-4
  0102           _nrfWriteAddress::
  0102                   .dbline -1
  0102 10                push X
  0103 4F                mov X,SP
- 0104 3804              add SP,4
+ 0104 3802              add SP,2
  0106                   .dbline 70
  0106           ; }
  0106           ; 
- 0106           ; void nrfWriteAddress(BYTE address, ...)
+ 0106           ; void nrfWriteAddress(BYTE address, BYTE *data)
  0106           ; {
  0106                   .dbline 74
  0106           ;       WORD i; // Dummy variable for delay timing
- 0106           ;       va_list v; // Variable argument list variable for the five byte address
+ 0106           ;       //va_list v; // Variable argument list variable for the five byte address
  0106           ;       
  0106           ;       CSN_LOW;        // Pull chip select low. Since chip select is low active, this will
  0106                   .dbline 74
@@ -381,252 +381,418 @@
  0146 7C0000            xcall _SPIM_bReadRxData
  0149 20                pop X
  014A 62D000            mov REG[0xd0],>__r0
- 014D                   .dbline 88
+ 014D                   .dbline 89
  014D           ;       
- 014D           ;       va_start(v, address);
- 014D 5A00              mov [__r1],X
- 014F 160004            sub [__r1],4
- 0152 5100              mov A,[__r1]
- 0154 5403              mov [X+3],A
- 0156 560207            mov [X+2],7
- 0159                   .dbline 89
- 0159           ;       for (i = 0; i < 5; i++) // This function assumes 5 bytes is the size of the arguments
- 0159 560100            mov [X+1],0
- 015C 560000            mov [X+0],0
- 015F 8041              xjmp L49
- 0161           L50:
- 0161                   .dbline 91
- 0161           ;       {       
- 0161           ;               while (!(SPIM_bReadStatus() & SPIM_SPIM_TX_BUFFER_EMPTY)); // Wait until TX Buffer is empty
- 0161           L51:
- 0161                   .dbline 91
- 0161 10                push X
- 0162 7C0000            xcall _SPIM_bReadStatus
- 0165 20                pop X
- 0166 62D000            mov REG[0xd0],>__r0
- 0169 5300              mov [__r0],A
- 016B 470010            tst [__r0],16
- 016E AFF2              jz L50
- 0170                   .dbline 92
- 0170           ;               SPIM_SendTxData(va_arg(v, char)); // Send given data, va_arg gets next argument in list
- 0170 0703FF            add [X+3],-1
- 0173 0F02FF            adc [X+2],-1
- 0176 5203              mov A,[X+3]
- 0178 5300              mov [__r1],A
- 017A 5202              mov A,[X+2]
- 017C 60D4              mov REG[0xd4],A
- 017E 3E00              mvi A,[__r1]
- 0180 10                push X
- 0181 7C0000            xcall _SPIM_SendTxData
- 0184 20                pop X
- 0185           L53:
- 0185                   .dbline 94
- 0185           ;               
- 0185           ;               while (!(SPIM_bReadStatus() & SPIM_SPIM_SPI_COMPLETE)); // Wait until SPI transaction complete
- 0185           L54:
- 0185                   .dbline 94
- 0185 10                push X
- 0186 7C0000            xcall _SPIM_bReadStatus
- 0189 20                pop X
- 018A 62D000            mov REG[0xd0],>__r0
- 018D 5300              mov [__r0],A
- 018F 470020            tst [__r0],32
- 0192 AFF2              jz L53
- 0194                   .dbline 95
- 0194           ;               SPIM_bReadRxData();     // Read dummy variable
- 0194 10                push X
- 0195 7C0000            xcall _SPIM_bReadRxData
- 0198 20                pop X
- 0199 62D000            mov REG[0xd0],>__r0
- 019C                   .dbline 96
- 019C           ;       }
- 019C           L47:
- 019C                   .dbline 89
- 019C 7701              inc [X+1]
- 019E 0F0000            adc [X+0],0
- 01A1           L49:
- 01A1                   .dbline 89
- 01A1 5201              mov A,[X+1]
- 01A3 1105              sub A,5
- 01A5 5200              mov A,[X+0]
- 01A7 1900              sbb A,0
- 01A9 CFB7              jc L51
- 01AB           X3:
- 01AB                   .dbline 98
+ 014D           ;       //va_start(v, address);
+ 014D           ;       for (i = 0; i < 5; i++) // This function assumes 5 bytes is the size of the arguments
+ 014D 560100            mov [X+1],0
+ 0150 560000            mov [X+0],0
+ 0153 803F              xjmp L49
+ 0155           L50:
+ 0155                   .dbline 91
+ 0155           ;       {       
+ 0155           ;               while (!(SPIM_bReadStatus() & SPIM_SPIM_TX_BUFFER_EMPTY)); // Wait until TX Buffer is empty
+ 0155           L51:
+ 0155                   .dbline 91
+ 0155 10                push X
+ 0156 7C0000            xcall _SPIM_bReadStatus
+ 0159 20                pop X
+ 015A 62D000            mov REG[0xd0],>__r0
+ 015D 5300              mov [__r0],A
+ 015F 470010            tst [__r0],16
+ 0162 AFF2              jz L50
+ 0164                   .dbline 92
+ 0164           ;               SPIM_SendTxData(data[i]); // Send given data, va_arg gets next argument in list
+ 0164 5201              mov A,[X+1]
+ 0166 03FB              add A,[X-5]
+ 0168 5300              mov [__r1],A
+ 016A 5200              mov A,[X+0]
+ 016C 0BFA              adc A,[X-6]
+ 016E 60D4              mov REG[0xd4],A
+ 0170 3E00              mvi A,[__r1]
+ 0172 10                push X
+ 0173 7C0000            xcall _SPIM_SendTxData
+ 0176 20                pop X
+ 0177           L53:
+ 0177                   .dbline 95
+ 0177           ;               //SPIM_SendTxData(0xC2);
+ 0177           ;               
+ 0177           ;               while (!(SPIM_bReadStatus() & SPIM_SPIM_SPI_COMPLETE)); // Wait until SPI transaction complete
+ 0177           L54:
+ 0177                   .dbline 95
+ 0177 10                push X
+ 0178 7C0000            xcall _SPIM_bReadStatus
+ 017B 20                pop X
+ 017C 62D000            mov REG[0xd0],>__r0
+ 017F 5300              mov [__r0],A
+ 0181 470020            tst [__r0],32
+ 0184 AFF2              jz L53
+ 0186                   .dbline 96
+ 0186           ;               SPIM_bReadRxData();     // Read dummy variable
+ 0186 10                push X
+ 0187 7C0000            xcall _SPIM_bReadRxData
+ 018A 20                pop X
+ 018B 62D000            mov REG[0xd0],>__r0
+ 018E                   .dbline 97
+ 018E           ;       }
+ 018E           L47:
+ 018E                   .dbline 89
+ 018E 7701              inc [X+1]
+ 0190 0F0000            adc [X+0],0
+ 0193           L49:
+ 0193                   .dbline 89
+ 0193 5201              mov A,[X+1]
+ 0195 1105              sub A,5
+ 0197 5200              mov A,[X+0]
+ 0199 1900              sbb A,0
+ 019B CFB9              jc L51
+ 019D           X3:
+ 019D                   .dbline 100
+ 019D           ;       //va_end(v);
+ 019D           ;       
+ 019D           ;       CSN_HIGH; // Pull chip select high. This tells the nrf24 to ignore future SPI commands
+ 019D                   .dbline 100
+ 019D 430404            or REG[0x4],4
+ 01A0                   .dbline 100
+ 01A0                   .dbline 100
+ 01A0                   .dbline -2
+ 01A0           L35:
+ 01A0 38FE              add SP,-2
+ 01A2 20                pop X
+ 01A3                   .dbline 0 ; func end
+ 01A3 7F                ret
+ 01A4                   .dbsym l i 0 i
+ 01A4                   .dbsym l data -6 pc
+ 01A4                   .dbsym l address -4 c
+ 01A4                   .dbend
+ 01A4                   .dbfunc e nrfReadAddress _nrfReadAddress fV
+ 01A4           ;              i -> X+0
+ 01A4           ;           data -> X-6
+ 01A4           ;        address -> X-4
+ 01A4           _nrfReadAddress::
+ 01A4                   .dbline -1
+ 01A4 10                push X
+ 01A5 4F                mov X,SP
+ 01A6 3802              add SP,2
+ 01A8                   .dbline 104
+ 01A8           ; }
+ 01A8           ; 
+ 01A8           ; void nrfReadAddress(BYTE address, BYTE *data)
+ 01A8           ; {
+ 01A8                   .dbline 107
+ 01A8           ;       WORD i; // Dummy variable for delay timing
+ 01A8           ;       
+ 01A8           ;       CSN_LOW;        // Pull chip select low. Since chip select is low active, this will
+ 01A8                   .dbline 107
+ 01A8 4104FB            and REG[0x4],-5
+ 01AB                   .dbline 107
+ 01AB                   .dbline 107
+ 01AB                   .dbline 110
+ 01AB           ;                               // tell the nrf24 to start listenting.
  01AB           ;       
- 01AB           ;       CSN_HIGH; // Pull chip select high. This tells the nrf24 to ignore future SPI commands
- 01AB                   .dbline 98
- 01AB 430404            or REG[0x4],4
- 01AE                   .dbline 98
- 01AE                   .dbline 98
- 01AE                   .dbline -2
- 01AE           L35:
- 01AE 38FC              add SP,-4
- 01B0 20                pop X
- 01B1                   .dbline 0 ; func end
- 01B1 7F                ret
- 01B2                   .dbsym l v 2 pc
- 01B2                   .dbsym l i 0 i
- 01B2                   .dbsym l address -4 c
- 01B2                   .dbend
- 01B2                   .dbfunc e nrfSendData _nrfSendData fV
- 01B2           ;              i -> X+0
- 01B2           ;           data -> X-5
- 01B2           _nrfSendData::
- 01B2                   .dbline -1
- 01B2 10                push X
- 01B3 4F                mov X,SP
- 01B4 3802              add SP,2
- 01B6                   .dbline 102
- 01B6           ; }
- 01B6           ; 
- 01B6           ; void nrfSendData(char *data)
- 01B6           ; {
- 01B6                   .dbline 104
- 01B6           ;       WORD i; // Dummy variable for delay timing
- 01B6           ;       CSN_LOW;        // Pull chip select low. Since chip select is low active, this will
- 01B6                   .dbline 104
- 01B6 4104FB            and REG[0x4],-5
- 01B9                   .dbline 104
- 01B9                   .dbline 104
- 01B9                   .dbline 107
- 01B9           ;                               // tell the nrf24 to start listenting.
- 01B9           ;       
- 01B9           ;       for (i = 0; i < 260; i++); // Kill some time to ensure proper setup.
- 01B9 560100            mov [X+1],0
- 01BC 560000            mov [X+0],0
- 01BF 8006              xjmp L60
- 01C1           L57:
- 01C1                   .dbline 107
- 01C1           L58:
- 01C1                   .dbline 107
- 01C1 7701              inc [X+1]
- 01C3 0F0000            adc [X+0],0
- 01C6           L60:
- 01C6                   .dbline 107
- 01C6 5201              mov A,[X+1]
- 01C8 1104              sub A,4
- 01CA 5200              mov A,[X+0]
- 01CC 1901              sbb A,1
- 01CE CFF2              jc L57
- 01D0           X4:
- 01D0           L61:
- 01D0                   .dbline 109
- 01D0           ;       
- 01D0           ;       while (!(SPIM_bReadStatus() & SPIM_SPIM_TX_BUFFER_EMPTY)); // Wait until TX Buffer is empty
- 01D0           L62:
- 01D0                   .dbline 109
- 01D0 10                push X
- 01D1 7C0000            xcall _SPIM_bReadStatus
- 01D4 20                pop X
- 01D5 62D000            mov REG[0xd0],>__r0
- 01D8 5300              mov [__r0],A
- 01DA 470010            tst [__r0],16
- 01DD AFF2              jz L61
- 01DF                   .dbline 110
- 01DF           ;       SPIM_SendTxData(NRF_WRITE_PAYLOAD); // Send given data, NRF_WRITE_PAYLOAD is to send data
- 01DF 10                push X
- 01E0 50A0              mov A,-96
- 01E2 7C0000            xcall _SPIM_SendTxData
- 01E5 20                pop X
- 01E6           L64:
- 01E6                   .dbline 114
- 01E6           ;       
- 01E6           ;       // Wait until SPI transaction complete, then read data out (chainsaw effect).
- 01E6           ;       // Note, we don't really care at this point what the returned value is.
- 01E6           ;       while (!(SPIM_bReadStatus() & SPIM_SPIM_SPI_COMPLETE));
- 01E6           L65:
- 01E6                   .dbline 114
- 01E6 10                push X
- 01E7 7C0000            xcall _SPIM_bReadStatus
- 01EA 20                pop X
- 01EB 62D000            mov REG[0xd0],>__r0
- 01EE 5300              mov [__r0],A
- 01F0 470020            tst [__r0],32
- 01F3 AFF2              jz L64
- 01F5                   .dbline 115
- 01F5           ;       SPIM_bReadRxData();
- 01F5 10                push X
- 01F6 7C0000            xcall _SPIM_bReadRxData
- 01F9 20                pop X
- 01FA 62D000            mov REG[0xd0],>__r0
- 01FD                   .dbline 117
- 01FD           ;       
- 01FD           ;       for ( i = 0; i < 7; i++) // Payload size is 8 bytes, so send that many
- 01FD 560100            mov [X+1],0
- 0200 560000            mov [X+0],0
- 0203 803F              xjmp L70
- 0205           L71:
- 0205                   .dbline 119
- 0205           ;       {       
- 0205           ;               while (!(SPIM_bReadStatus() & SPIM_SPIM_TX_BUFFER_EMPTY)); // Wait until TX Buffer is empty
- 0205           L72:
- 0205                   .dbline 119
- 0205 10                push X
- 0206 7C0000            xcall _SPIM_bReadStatus
- 0209 20                pop X
- 020A 62D000            mov REG[0xd0],>__r0
- 020D 5300              mov [__r0],A
- 020F 470010            tst [__r0],16
- 0212 AFF2              jz L71
- 0214                   .dbline 120
- 0214           ;               SPIM_SendTxData(data[i]); // Send given data
- 0214 5201              mov A,[X+1]
- 0216 03FC              add A,[X-4]
- 0218 5300              mov [__r1],A
- 021A 5200              mov A,[X+0]
- 021C 0BFB              adc A,[X-5]
- 021E 60D4              mov REG[0xd4],A
- 0220 3E00              mvi A,[__r1]
- 0222 10                push X
- 0223 7C0000            xcall _SPIM_SendTxData
- 0226 20                pop X
- 0227           L74:
- 0227                   .dbline 122
- 0227           ;               
- 0227           ;               while (!(SPIM_bReadStatus() & SPIM_SPIM_SPI_COMPLETE)); // Wait until SPI transaction complete
- 0227           L75:
- 0227                   .dbline 122
- 0227 10                push X
- 0228 7C0000            xcall _SPIM_bReadStatus
- 022B 20                pop X
- 022C 62D000            mov REG[0xd0],>__r0
- 022F 5300              mov [__r0],A
- 0231 470020            tst [__r0],32
- 0234 AFF2              jz L74
- 0236                   .dbline 123
- 0236           ;               SPIM_bReadRxData();     // Read dummy variable
- 0236 10                push X
- 0237 7C0000            xcall _SPIM_bReadRxData
- 023A 20                pop X
- 023B 62D000            mov REG[0xd0],>__r0
- 023E                   .dbline 124
- 023E           ;       }
- 023E           L68:
- 023E                   .dbline 117
- 023E 7701              inc [X+1]
- 0240 0F0000            adc [X+0],0
- 0243           L70:
- 0243                   .dbline 117
- 0243 5201              mov A,[X+1]
- 0245 1107              sub A,7
- 0247 5200              mov A,[X+0]
- 0249 1900              sbb A,0
- 024B CFB9              jc L72
- 024D           X5:
- 024D                   .dbline 126
- 024D           ;       
- 024D           ;       CSN_HIGH; // Pull chip select high. This tells the nrf24 to ignore future SPI commands
- 024D                   .dbline 126
- 024D 430404            or REG[0x4],4
- 0250                   .dbline 126
- 0250                   .dbline 126
- 0250                   .dbline -2
- 0250           L56:
- 0250 38FE              add SP,-2
- 0252 20                pop X
- 0253                   .dbline 0 ; func end
- 0253 7F                ret
- 0254                   .dbsym l i 0 i
- 0254                   .dbsym l data -5 pc
- 0254                   .dbend
+ 01AB           ;       for (i = 0; i < 260; i++); // Kill some time to ensure proper setup.
+ 01AB 560100            mov [X+1],0
+ 01AE 560000            mov [X+0],0
+ 01B1 8006              xjmp L60
+ 01B3           L57:
+ 01B3                   .dbline 110
+ 01B3           L58:
+ 01B3                   .dbline 110
+ 01B3 7701              inc [X+1]
+ 01B5 0F0000            adc [X+0],0
+ 01B8           L60:
+ 01B8                   .dbline 110
+ 01B8 5201              mov A,[X+1]
+ 01BA 1104              sub A,4
+ 01BC 5200              mov A,[X+0]
+ 01BE 1901              sbb A,1
+ 01C0 CFF2              jc L57
+ 01C2           X4:
+ 01C2           L61:
+ 01C2                   .dbline 113
+ 01C2           ;       
+ 01C2           ;       // Wait until TX Buffer is empty, then send command word to read
+ 01C2           ;       while (!(SPIM_bReadStatus() & SPIM_SPIM_TX_BUFFER_EMPTY));
+ 01C2           L62:
+ 01C2                   .dbline 113
+ 01C2 10                push X
+ 01C3 7C0000            xcall _SPIM_bReadStatus
+ 01C6 20                pop X
+ 01C7 62D000            mov REG[0xd0],>__r0
+ 01CA 5300              mov [__r0],A
+ 01CC 470010            tst [__r0],16
+ 01CF AFF2              jz L61
+ 01D1                   .dbline 114
+ 01D1           ;       SPIM_SendTxData(address);
+ 01D1 10                push X
+ 01D2 52FC              mov A,[X-4]
+ 01D4 7C0000            xcall _SPIM_SendTxData
+ 01D7 20                pop X
+ 01D8           L64:
+ 01D8                   .dbline 118
+ 01D8           ;       
+ 01D8           ;       // Wait until SPI transaction complete, then read data out (chainsaw effect).
+ 01D8           ;       // Note, we don't really care at this point what the returned value is.
+ 01D8           ;       while (!(SPIM_bReadStatus() & SPIM_SPIM_SPI_COMPLETE));
+ 01D8           L65:
+ 01D8                   .dbline 118
+ 01D8 10                push X
+ 01D9 7C0000            xcall _SPIM_bReadStatus
+ 01DC 20                pop X
+ 01DD 62D000            mov REG[0xd0],>__r0
+ 01E0 5300              mov [__r0],A
+ 01E2 470020            tst [__r0],32
+ 01E5 AFF2              jz L64
+ 01E7                   .dbline 119
+ 01E7           ;       SPIM_bReadRxData();             
+ 01E7 10                push X
+ 01E8 7C0000            xcall _SPIM_bReadRxData
+ 01EB 20                pop X
+ 01EC 62D000            mov REG[0xd0],>__r0
+ 01EF                   .dbline 121
+ 01EF           ;       
+ 01EF           ;       for (i = 0; i < 5; ++i)
+ 01EF 560100            mov [X+1],0
+ 01F2 560000            mov [X+0],0
+ 01F5 8045              xjmp L70
+ 01F7           L71:
+ 01F7                   .dbline 124
+ 01F7           ;       {
+ 01F7           ;               // Wait until TX buffer empty, then send a dummy byte
+ 01F7           ;               while (!(SPIM_bReadStatus() & SPIM_SPIM_TX_BUFFER_EMPTY));
+ 01F7           L72:
+ 01F7                   .dbline 124
+ 01F7 10                push X
+ 01F8 7C0000            xcall _SPIM_bReadStatus
+ 01FB 20                pop X
+ 01FC 62D000            mov REG[0xd0],>__r0
+ 01FF 5300              mov [__r0],A
+ 0201 470010            tst [__r0],16
+ 0204 AFF2              jz L71
+ 0206                   .dbline 125
+ 0206           ;               SPIM_SendTxData(SPIM_DUMMY_BYTE);
+ 0206 10                push X
+ 0207 5000              mov A,0
+ 0209 7C0000            xcall _SPIM_SendTxData
+ 020C 20                pop X
+ 020D           L74:
+ 020D                   .dbline 128
+ 020D           ;               
+ 020D           ;               // Dummy byte sent to push PLD out, so now read and return
+ 020D           ;               while (!(SPIM_bReadStatus() & SPIM_SPIM_SPI_COMPLETE));
+ 020D           L75:
+ 020D                   .dbline 128
+ 020D 10                push X
+ 020E 7C0000            xcall _SPIM_bReadStatus
+ 0211 20                pop X
+ 0212 62D000            mov REG[0xd0],>__r0
+ 0215 5300              mov [__r0],A
+ 0217 470020            tst [__r0],32
+ 021A AFF2              jz L74
+ 021C                   .dbline 129
+ 021C           ;               data[i] = SPIM_bReadRxData();
+ 021C 10                push X
+ 021D 7C0000            xcall _SPIM_bReadRxData
+ 0220 20                pop X
+ 0221 62D000            mov REG[0xd0],>__r0
+ 0224 5300              mov [__r0],A
+ 0226 5201              mov A,[X+1]
+ 0228 03FB              add A,[X-5]
+ 022A 5300              mov [__r3],A
+ 022C 5200              mov A,[X+0]
+ 022E 0BFA              adc A,[X-6]
+ 0230 60D5              mov REG[0xd5],A
+ 0232 5100              mov A,[__r0]
+ 0234 3F00              mvi [__r3],A
+ 0236                   .dbline 130
+ 0236           ;       }
+ 0236           L68:
+ 0236                   .dbline 121
+ 0236 7701              inc [X+1]
+ 0238 0F0000            adc [X+0],0
+ 023B           L70:
+ 023B                   .dbline 121
+ 023B 5201              mov A,[X+1]
+ 023D 1105              sub A,5
+ 023F 5200              mov A,[X+0]
+ 0241 1900              sbb A,0
+ 0243 CFB3              jc L72
+ 0245           X5:
+ 0245                   .dbline 132
+ 0245           ;               
+ 0245           ;       CSN_HIGH; // Pull chip select high. This tells the nrf24 to ignore future SPI commands
+ 0245                   .dbline 132
+ 0245 430404            or REG[0x4],4
+ 0248                   .dbline 132
+ 0248                   .dbline 132
+ 0248                   .dbline -2
+ 0248           L56:
+ 0248 38FE              add SP,-2
+ 024A 20                pop X
+ 024B                   .dbline 0 ; func end
+ 024B 7F                ret
+ 024C                   .dbsym l i 0 i
+ 024C                   .dbsym l data -6 pc
+ 024C                   .dbsym l address -4 c
+ 024C                   .dbend
+ 024C                   .dbfunc e nrfSendData _nrfSendData fV
+ 024C           ;              i -> X+0
+ 024C           ;           data -> X-5
+ 024C           _nrfSendData::
+ 024C                   .dbline -1
+ 024C 10                push X
+ 024D 4F                mov X,SP
+ 024E 3802              add SP,2
+ 0250                   .dbline 136
+ 0250           ; }
+ 0250           ; 
+ 0250           ; void nrfSendData(char *data)
+ 0250           ; {
+ 0250                   .dbline 138
+ 0250           ;       WORD i; // Dummy variable for delay timing
+ 0250           ;       CSN_LOW;        // Pull chip select low. Since chip select is low active, this will
+ 0250                   .dbline 138
+ 0250 4104FB            and REG[0x4],-5
+ 0253                   .dbline 138
+ 0253                   .dbline 138
+ 0253                   .dbline 141
+ 0253           ;                               // tell the nrf24 to start listenting.
+ 0253           ;       
+ 0253           ;       for (i = 0; i < 260; i++); // Kill some time to ensure proper setup.
+ 0253 560100            mov [X+1],0
+ 0256 560000            mov [X+0],0
+ 0259 8006              xjmp L81
+ 025B           L78:
+ 025B                   .dbline 141
+ 025B           L79:
+ 025B                   .dbline 141
+ 025B 7701              inc [X+1]
+ 025D 0F0000            adc [X+0],0
+ 0260           L81:
+ 0260                   .dbline 141
+ 0260 5201              mov A,[X+1]
+ 0262 1104              sub A,4
+ 0264 5200              mov A,[X+0]
+ 0266 1901              sbb A,1
+ 0268 CFF2              jc L78
+ 026A           X6:
+ 026A           L82:
+ 026A                   .dbline 143
+ 026A           ;       
+ 026A           ;       while (!(SPIM_bReadStatus() & SPIM_SPIM_TX_BUFFER_EMPTY)); // Wait until TX Buffer is empty
+ 026A           L83:
+ 026A                   .dbline 143
+ 026A 10                push X
+ 026B 7C0000            xcall _SPIM_bReadStatus
+ 026E 20                pop X
+ 026F 62D000            mov REG[0xd0],>__r0
+ 0272 5300              mov [__r0],A
+ 0274 470010            tst [__r0],16
+ 0277 AFF2              jz L82
+ 0279                   .dbline 144
+ 0279           ;       SPIM_SendTxData(NRF_WRITE_PAYLOAD); // Send given data, NRF_WRITE_PAYLOAD is to send data
+ 0279 10                push X
+ 027A 50A0              mov A,-96
+ 027C 7C0000            xcall _SPIM_SendTxData
+ 027F 20                pop X
+ 0280           L85:
+ 0280                   .dbline 148
+ 0280           ;       
+ 0280           ;       // Wait until SPI transaction complete, then read data out (chainsaw effect).
+ 0280           ;       // Note, we don't really care at this point what the returned value is.
+ 0280           ;       while (!(SPIM_bReadStatus() & SPIM_SPIM_SPI_COMPLETE));
+ 0280           L86:
+ 0280                   .dbline 148
+ 0280 10                push X
+ 0281 7C0000            xcall _SPIM_bReadStatus
+ 0284 20                pop X
+ 0285 62D000            mov REG[0xd0],>__r0
+ 0288 5300              mov [__r0],A
+ 028A 470020            tst [__r0],32
+ 028D AFF2              jz L85
+ 028F                   .dbline 149
+ 028F           ;       SPIM_bReadRxData();
+ 028F 10                push X
+ 0290 7C0000            xcall _SPIM_bReadRxData
+ 0293 20                pop X
+ 0294 62D000            mov REG[0xd0],>__r0
+ 0297                   .dbline 151
+ 0297           ;       
+ 0297           ;       for (i = 0; i < 8; i++) // Payload size is 8 bytes, so send that many
+ 0297 560100            mov [X+1],0
+ 029A 560000            mov [X+0],0
+ 029D 803F              xjmp L91
+ 029F           L92:
+ 029F                   .dbline 153
+ 029F           ;       {       
+ 029F           ;               while (!(SPIM_bReadStatus() & SPIM_SPIM_TX_BUFFER_EMPTY)); // Wait until TX Buffer is empty
+ 029F           L93:
+ 029F                   .dbline 153
+ 029F 10                push X
+ 02A0 7C0000            xcall _SPIM_bReadStatus
+ 02A3 20                pop X
+ 02A4 62D000            mov REG[0xd0],>__r0
+ 02A7 5300              mov [__r0],A
+ 02A9 470010            tst [__r0],16
+ 02AC AFF2              jz L92
+ 02AE                   .dbline 154
+ 02AE           ;               SPIM_SendTxData(data[i]); // Send given data
+ 02AE 5201              mov A,[X+1]
+ 02B0 03FC              add A,[X-4]
+ 02B2 5300              mov [__r1],A
+ 02B4 5200              mov A,[X+0]
+ 02B6 0BFB              adc A,[X-5]
+ 02B8 60D4              mov REG[0xd4],A
+ 02BA 3E00              mvi A,[__r1]
+ 02BC 10                push X
+ 02BD 7C0000            xcall _SPIM_SendTxData
+ 02C0 20                pop X
+ 02C1           L95:
+ 02C1                   .dbline 156
+ 02C1           ;               
+ 02C1           ;               while (!(SPIM_bReadStatus() & SPIM_SPIM_SPI_COMPLETE)); // Wait until SPI transaction complete
+ 02C1           L96:
+ 02C1                   .dbline 156
+ 02C1 10                push X
+ 02C2 7C0000            xcall _SPIM_bReadStatus
+ 02C5 20                pop X
+ 02C6 62D000            mov REG[0xd0],>__r0
+ 02C9 5300              mov [__r0],A
+ 02CB 470020            tst [__r0],32
+ 02CE AFF2              jz L95
+ 02D0                   .dbline 157
+ 02D0           ;               SPIM_bReadRxData();     // Read dummy variable
+ 02D0 10                push X
+ 02D1 7C0000            xcall _SPIM_bReadRxData
+ 02D4 20                pop X
+ 02D5 62D000            mov REG[0xd0],>__r0
+ 02D8                   .dbline 158
+ 02D8           ;       }
+ 02D8           L89:
+ 02D8                   .dbline 151
+ 02D8 7701              inc [X+1]
+ 02DA 0F0000            adc [X+0],0
+ 02DD           L91:
+ 02DD                   .dbline 151
+ 02DD 5201              mov A,[X+1]
+ 02DF 1108              sub A,8
+ 02E1 5200              mov A,[X+0]
+ 02E3 1900              sbb A,0
+ 02E5 CFB9              jc L93
+ 02E7           X7:
+ 02E7                   .dbline 160
+ 02E7           ;       
+ 02E7           ;       CSN_HIGH; // Pull chip select high. This tells the nrf24 to ignore future SPI commands
+ 02E7                   .dbline 160
+ 02E7 430404            or REG[0x4],4
+ 02EA                   .dbline 160
+ 02EA                   .dbline 160
+ 02EA                   .dbline -2
+ 02EA           L77:
+ 02EA 38FE              add SP,-2
+ 02EC 20                pop X
+ 02ED                   .dbline 0 ; func end
+ 02ED 7F                ret
+ 02EE                   .dbsym l i 0 i
+ 02EE                   .dbsym l data -5 pc
+ 02EE                   .dbend
