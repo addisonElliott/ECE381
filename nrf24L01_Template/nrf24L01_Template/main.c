@@ -20,7 +20,7 @@
 
 void main(void)
 {
-	char buf[9];
+	char buf[9]; // Temporary string to contain 8 bytes while sending to wireless module
 	
 	M8C_EnableGInt; // Enable Global Interrupts
 	M8C_EnableIntMask(INT_MSK0,INT_MSK0_GPIO);	
@@ -36,22 +36,21 @@ void main(void)
 	SleepTimer_Start();
 	
 	CE_HIGH; //Enable the nrf24 radio
-	nrfWriteRegister(NRF_WRITE_SETUP_RETR,0xFF);	
-	nrfWriteRegister(NRF_WRITE_RF_CH,0x60);
-	nrfWriteRegister(NRF_WRITE_RF_SETUP, 0x26);
-	nrfWriteAddress(NRF_WRITE_TX_ADDR, 0xc2, 0xc2, 0xc2, 0xc2, 0xc2);
-	nrfWriteAddress(NRF_WRITE_RX_ADDR_P0, 0xc2, 0xc2, 0xc2, 0xc2, 0xc2);
-	nrfWriteAddress(NRF_WRITE_RX_ADDR_P1, 0xe7, 0xe7, 0xe7, 0xe7, 0xe7);
-	nrfWriteRegister(NRF_WRITE_PW_P0, 0x08);
-	nrfWriteRegister(NRF_WRITE_PW_P1, 0x08);
-	nrfWriteRegister(NRF_WRITE_EN_AA, 0xFF);
-	nrfWriteRegister(NRF_WRITE_EN_RXADDR, 0x03);
-	nrfWriteRegister(NRF_WRITE_CONFIG, 0x0A);
+	nrfWriteRegister(NRF_WRITE_SETUP_RETR, 0xFF); // Setup automatic retransmission: 4000uS delay, 15 retransmit count
+	nrfWriteRegister(NRF_WRITE_RF_CH, 0x60); // Sets RF Channel to 0x60 
+	nrfWriteRegister(NRF_WRITE_RF_SETUP, 0x26); // Sets RF output power to 0dBm, data rate to 250kbps 
+	nrfWriteAddress(NRF_WRITE_TX_ADDR, 0xC2, 0xC2, 0xC2, 0xC2, 0xC2); // Sets TX address to 0xC2C2C2C2C2 (transmit address)
+	nrfWriteAddress(NRF_WRITE_RX_ADDR_P0, 0xC2, 0xC2, 0xC2, 0xC2, 0xC2); // Sets receive pipe 0 address to 0xC2C2C2C2C2 (also transmit address)
+	nrfWriteAddress(NRF_WRITE_RX_ADDR_P1, 0xE7, 0xE7, 0xE7, 0xE7, 0xE7); // Sets receive pipe 1 address to 0xE7E7E7E7E7 (receive address)
+	nrfWriteRegister(NRF_WRITE_PW_P0, 0x08); // Sets payload size to 8 bytes at transmit address
+	nrfWriteRegister(NRF_WRITE_PW_P1, 0x08); // Sets payload size to 8 bytes are receive address
+	nrfWriteRegister(NRF_WRITE_EN_AA, 0xFF); // Enable auto-acknowledge on all data pipes
+	nrfWriteRegister(NRF_WRITE_EN_RXADDR, 0x03); // Enable data pipes 0 and 1
+	nrfWriteRegister(NRF_WRITE_CONFIG, 0x0E); // Setup config: power on, TX mode, CRC 2-byte mode
 	
 	while (1) 
 	{
-		//This should wait for about 1 s
-		SleepTimer_SyncWait(10, SleepTimer_WAIT_RELOAD);
+		SleepTimer_SyncWait(10, SleepTimer_WAIT_RELOAD); // Wait for about 1 second
 		
 		LCD_Control(LCD_DISP_CLEAR_HOME);
 		LCD_Position(0, 0);

@@ -2,7 +2,7 @@
                         .module main.c
                         .area text(rom, con, rel)
  0000                   .dbfile ./main.c
- 0000                   .dbfile C:\Users\Jacob\Desktop\ECE381\NRF24L~1\NRF24L~1\main.c
+ 0000                   .dbfile C:\Users\addis\Desktop\ECE381\NRF24L~1\NRF24L~1\main.c
  0000                   .dbfunc e main _main fV
  0000           ;            buf -> X+0
  0000           _main::
@@ -34,7 +34,7 @@
  0004           ; void main(void)
  0004           ; {
  0004                   .dbline 25
- 0004           ;       char buf[9];
+ 0004           ;       char buf[9]; // Temporary string to contain 8 bytes while sending to wireless module
  0004           ;       
  0004           ;       M8C_EnableGInt; // Enable Global Interrupts
  0004 7101                      or  F, 01h
@@ -81,7 +81,7 @@
  0026                   .dbline 38
  0026                   .dbline 38
  0026                   .dbline 39
- 0026           ;       nrfWriteRegister(NRF_WRITE_SETUP_RETR,0xFF);    
+ 0026           ;       nrfWriteRegister(NRF_WRITE_SETUP_RETR, 0xFF); // Setup automatic retransmission: 4000uS delay, 15 retransmit count
  0026 50FF              mov A,-1
  0028 08                push A
  0029 5024              mov A,36
@@ -89,21 +89,21 @@
  002C 7C0000            xcall _nrfWriteRegister
  002F 38FE              add SP,-2
  0031                   .dbline 40
- 0031           ;       nrfWriteRegister(NRF_WRITE_RF_CH,0x60);
+ 0031           ;       nrfWriteRegister(NRF_WRITE_RF_CH, 0x60); // Sets RF Channel to 0x60 
  0031 5060              mov A,96
  0033 08                push A
  0034 5025              mov A,37
  0036 08                push A
  0037 7C0000            xcall _nrfWriteRegister
  003A                   .dbline 41
- 003A           ;       nrfWriteRegister(NRF_WRITE_RF_SETUP, 0x26);
+ 003A           ;       nrfWriteRegister(NRF_WRITE_RF_SETUP, 0x26); // Sets RF output power to 0dBm, data rate to 250kbps 
  003A 5026              mov A,38
  003C 08                push A
  003D 08                push A
  003E 7C0000            xcall _nrfWriteRegister
  0041 38FC              add SP,-4
  0043                   .dbline 42
- 0043           ;       nrfWriteAddress(NRF_WRITE_TX_ADDR, 0xc2, 0xc2, 0xc2, 0xc2, 0xc2);
+ 0043           ;       nrfWriteAddress(NRF_WRITE_TX_ADDR, 0xC2, 0xC2, 0xC2, 0xC2, 0xC2); // Sets TX address to 0xC2C2C2C2C2 (transmit address)
  0043 5000              mov A,0
  0045 08                push A
  0046 50C2              mov A,-62
@@ -128,7 +128,7 @@
  0063 08                push A
  0064 7C0000            xcall _nrfWriteAddress
  0067                   .dbline 43
- 0067           ;       nrfWriteAddress(NRF_WRITE_RX_ADDR_P0, 0xc2, 0xc2, 0xc2, 0xc2, 0xc2);
+ 0067           ;       nrfWriteAddress(NRF_WRITE_RX_ADDR_P0, 0xC2, 0xC2, 0xC2, 0xC2, 0xC2); // Sets receive pipe 0 address to 0xC2C2C2C2C2 (also transmit address)
  0067 5000              mov A,0
  0069 08                push A
  006A 50C2              mov A,-62
@@ -154,7 +154,7 @@
  0088 7C0000            xcall _nrfWriteAddress
  008B 38EA              add SP,-22
  008D                   .dbline 44
- 008D           ;       nrfWriteAddress(NRF_WRITE_RX_ADDR_P1, 0xe7, 0xe7, 0xe7, 0xe7, 0xe7);
+ 008D           ;       nrfWriteAddress(NRF_WRITE_RX_ADDR_P1, 0xE7, 0xE7, 0xE7, 0xE7, 0xE7); // Sets receive pipe 1 address to 0xE7E7E7E7E7 (receive address)
  008D 5000              mov A,0
  008F 08                push A
  0090 50E7              mov A,-25
@@ -179,7 +179,7 @@
  00AD 08                push A
  00AE 7C0000            xcall _nrfWriteAddress
  00B1                   .dbline 45
- 00B1           ;       nrfWriteRegister(NRF_WRITE_PW_P0, 0x08);
+ 00B1           ;       nrfWriteRegister(NRF_WRITE_PW_P0, 0x08); // Sets payload size to 8 bytes at transmit address
  00B1 5008              mov A,8
  00B3 08                push A
  00B4 5031              mov A,49
@@ -187,14 +187,14 @@
  00B7 7C0000            xcall _nrfWriteRegister
  00BA 38F3              add SP,-13
  00BC                   .dbline 46
- 00BC           ;       nrfWriteRegister(NRF_WRITE_PW_P1, 0x08);
+ 00BC           ;       nrfWriteRegister(NRF_WRITE_PW_P1, 0x08); // Sets payload size to 8 bytes are receive address
  00BC 5008              mov A,8
  00BE 08                push A
  00BF 5032              mov A,50
  00C1 08                push A
  00C2 7C0000            xcall _nrfWriteRegister
  00C5                   .dbline 47
- 00C5           ;       nrfWriteRegister(NRF_WRITE_EN_AA, 0xFF);
+ 00C5           ;       nrfWriteRegister(NRF_WRITE_EN_AA, 0xFF); // Enable auto-acknowledge on all data pipes
  00C5 50FF              mov A,-1
  00C7 08                push A
  00C8 5021              mov A,33
@@ -202,15 +202,15 @@
  00CB 7C0000            xcall _nrfWriteRegister
  00CE 38FC              add SP,-4
  00D0                   .dbline 48
- 00D0           ;       nrfWriteRegister(NRF_WRITE_EN_RXADDR, 0x03);
+ 00D0           ;       nrfWriteRegister(NRF_WRITE_EN_RXADDR, 0x03); // Enable data pipes 0 and 1
  00D0 5003              mov A,3
  00D2 08                push A
  00D3 5022              mov A,34
  00D5 08                push A
  00D6 7C0000            xcall _nrfWriteRegister
  00D9                   .dbline 49
- 00D9           ;       nrfWriteRegister(NRF_WRITE_CONFIG, 0x0A);
- 00D9 500A              mov A,10
+ 00D9           ;       nrfWriteRegister(NRF_WRITE_CONFIG, 0x0E); // Setup config: power on, TX mode, CRC 2-byte mode
+ 00D9 500E              mov A,14
  00DB 08                push A
  00DC 5020              mov A,32
  00DE 08                push A
@@ -222,24 +222,23 @@
  00E6           ;       
  00E6           ;       while (1) 
  00E6           ;       {
- 00E6                   .dbline 54
- 00E6           ;               //This should wait for about 1 s
- 00E6           ;               SleepTimer_SyncWait(10, SleepTimer_WAIT_RELOAD);
+ 00E6                   .dbline 53
+ 00E6           ;               SleepTimer_SyncWait(10, SleepTimer_WAIT_RELOAD); // Wait for about 1 second
  00E6 10                push X
  00E7 5700              mov X,0
  00E9 500A              mov A,10
  00EB 7C0000            xcall _SleepTimer_SyncWait
- 00EE                   .dbline 56
+ 00EE                   .dbline 55
  00EE           ;               
  00EE           ;               LCD_Control(LCD_DISP_CLEAR_HOME);
  00EE 5001              mov A,1
  00F0 7C0000            xcall _LCD_Control
- 00F3                   .dbline 57
+ 00F3                   .dbline 56
  00F3           ;               LCD_Position(0, 0);
  00F3 5000              mov A,0
  00F5 5700              mov X,0
  00F7 7C0000            xcall _LCD_Position
- 00FA                   .dbline 58
+ 00FA                   .dbline 57
  00FA           ;               LCD_PrCString("Send");
  00FA 500E              mov A,>L5
  00FC 08                push A
@@ -248,7 +247,7 @@
  0100 18                pop A
  0101 7C0000            xcall _LCD_PrCString
  0104 20                pop X
- 0105                   .dbline 59
+ 0105                   .dbline 58
  0105           ;               csprintf(buf, "9: 123.4");
  0105 5005              mov A,>L6
  0107 08                push A
@@ -259,7 +258,7 @@
  0110 08                push A
  0111 10                push X
  0112 7C0000            xcall _csprintf
- 0115                   .dbline 60
+ 0115                   .dbline 59
  0115           ;               nrfSendData(buf);
  0115 62D000            mov REG[0xd0],>__r0
  0118 5007              mov A,7
@@ -268,23 +267,23 @@
  011C 7C0000            xcall _nrfSendData
  011F 38FA              add SP,-6
  0121           L7:
- 0121                   .dbline 62
+ 0121                   .dbline 61
  0121           ;               
  0121           ;               while (IRQ_Data_ADDR & IRQ_MASK);
  0121           L8:
- 0121                   .dbline 62
+ 0121                   .dbline 61
  0121 5D04              mov A,REG[0x4]
  0123 62D000            mov REG[0xd0],>__r0
  0126 5300              mov [__r0],A
  0128 470080            tst [__r0],-128
  012B BFF5              jnz L7
- 012D                   .dbline 63
+ 012D                   .dbline 62
  012D           ;               LCD_Position(1, 0);
  012D 10                push X
  012E 5700              mov X,0
  0130 5001              mov A,1
  0132 7C0000            xcall _LCD_Position
- 0135                   .dbline 64
+ 0135                   .dbline 63
  0135           ;               LCD_PrCString("Sent");
  0135 5000              mov A,>L10
  0137 08                push A
@@ -293,7 +292,7 @@
  013B 18                pop A
  013C 7C0000            xcall _LCD_PrCString
  013F 20                pop X
- 0140                   .dbline 65
+ 0140                   .dbline 64
  0140           ;               nrfWriteRegister(NRF_WRITE_STATUS, 0x7D);
  0140 507D              mov A,125
  0142 08                push A
@@ -301,7 +300,7 @@
  0145 08                push A
  0146 7C0000            xcall _nrfWriteRegister
  0149 38FE              add SP,-2
- 014B                   .dbline 66
+ 014B                   .dbline 65
  014B           ;       }
  014B           L3:
  014B                   .dbline 51

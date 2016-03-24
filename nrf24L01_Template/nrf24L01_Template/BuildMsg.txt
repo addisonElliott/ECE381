@@ -36,5 +36,5 @@ idata dump at output/nrf24L01_Template.idata
 Built with ICCM8C STD V7.05.00
 
  
-nrf24L01_Template - 0 error(s) 0 warning(s) 21:15:38
+nrf24L01_Template - 0 error(s) 0 warning(s) 22:58:04
 

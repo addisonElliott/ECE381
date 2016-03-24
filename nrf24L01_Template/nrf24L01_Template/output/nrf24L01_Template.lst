@@ -3724,7 +3724,7 @@ FILE: lib\lcd.asm                       (0001) ;;*******************************
                                         (1352) ENDIF
                                         (1353) 
                                         (1354) ; End of File LCD.asm
-FILE: C:\Users\Jacob\Desktop\ECE381\NRF24L~1\NRF24L~1\main.c
+FILE: C:\Users\addis\Desktop\ECE381\NRF24L~1\NRF24L~1\main.c
 (0001) //----------------------------------------------------------------------------
 (0002) //
 (0003) //	Example Code for PSoC Interfacing with the nrf24L01+ SPI Radios
@@ -3752,7 +3752,7 @@ __UserModules_end|_main|__text_start|_main:
     0764: 10       PUSH  X
     0765: 4F       MOV   X,SP
     0766: 38 09    ADD   SP,0x9
-(0023) 	char buf[9];
+(0023) 	char buf[9]; // Temporary string to contain 8 bytes while sending to wireless module
 (0024) 	
 (0025) 	M8C_EnableGInt; // Enable Global Interrupts
     0768: 71 01    OR    F,0x1
@@ -3783,26 +3783,26 @@ __UserModules_end|_main|__text_start|_main:
 (0037) 	
 (0038) 	CE_HIGH; //Enable the nrf24 radio
     0787: 43 04 40 OR    REG[0x4],0x40
-(0039) 	nrfWriteRegister(NRF_WRITE_SETUP_RETR,0xFF);	
+(0039) 	nrfWriteRegister(NRF_WRITE_SETUP_RETR, 0xFF); // Setup automatic retransmission: 4000uS delay, 15 retransmit count
     078A: 50 FF    MOV   A,0xFF
     078C: 08       PUSH  A
     078D: 50 24    MOV   A,0x24
     078F: 08       PUSH  A
     0790: 7C 08 B6 LCALL _nrfWriteRegister
     0793: 38 FE    ADD   SP,0xFE
-(0040) 	nrfWriteRegister(NRF_WRITE_RF_CH,0x60);
+(0040) 	nrfWriteRegister(NRF_WRITE_RF_CH, 0x60); // Sets RF Channel to 0x60 
     0795: 50 60    MOV   A,0x60
     0797: 08       PUSH  A
     0798: 50 25    MOV   A,0x25
     079A: 08       PUSH  A
     079B: 7C 08 B6 LCALL _nrfWriteRegister
-(0041) 	nrfWriteRegister(NRF_WRITE_RF_SETUP, 0x26);
+(0041) 	nrfWriteRegister(NRF_WRITE_RF_SETUP, 0x26); // Sets RF output power to 0dBm, data rate to 250kbps 
     079E: 50 26    MOV   A,0x26
     07A0: 08       PUSH  A
     07A1: 08       PUSH  A
     07A2: 7C 08 B6 LCALL _nrfWriteRegister
     07A5: 38 FC    ADD   SP,0xFC
-(0042) 	nrfWriteAddress(NRF_WRITE_TX_ADDR, 0xc2, 0xc2, 0xc2, 0xc2, 0xc2);
+(0042) 	nrfWriteAddress(NRF_WRITE_TX_ADDR, 0xC2, 0xC2, 0xC2, 0xC2, 0xC2); // Sets TX address to 0xC2C2C2C2C2 (transmit address)
     07A7: 50 00    MOV   A,0x0
     07A9: 08       PUSH  A
     07AA: 50 C2    MOV   A,0xC2
@@ -3826,7 +3826,7 @@ __UserModules_end|_main|__text_start|_main:
     07C5: 50 30    MOV   A,0x30
     07C7: 08       PUSH  A
     07C8: 7C 09 B8 LCALL _nrfWriteAddress
-(0043) 	nrfWriteAddress(NRF_WRITE_RX_ADDR_P0, 0xc2, 0xc2, 0xc2, 0xc2, 0xc2);
+(0043) 	nrfWriteAddress(NRF_WRITE_RX_ADDR_P0, 0xC2, 0xC2, 0xC2, 0xC2, 0xC2); // Sets receive pipe 0 address to 0xC2C2C2C2C2 (also transmit address)
     07CB: 50 00    MOV   A,0x0
     07CD: 08       PUSH  A
     07CE: 50 C2    MOV   A,0xC2
@@ -3851,7 +3851,7 @@ __UserModules_end|_main|__text_start|_main:
     07EB: 08       PUSH  A
     07EC: 7C 09 B8 LCALL _nrfWriteAddress
     07EF: 38 EA    ADD   SP,0xEA
-(0044) 	nrfWriteAddress(NRF_WRITE_RX_ADDR_P1, 0xe7, 0xe7, 0xe7, 0xe7, 0xe7);
+(0044) 	nrfWriteAddress(NRF_WRITE_RX_ADDR_P1, 0xE7, 0xE7, 0xE7, 0xE7, 0xE7); // Sets receive pipe 1 address to 0xE7E7E7E7E7 (receive address)
     07F1: 50 00    MOV   A,0x0
     07F3: 08       PUSH  A
     07F4: 50 E7    MOV   A,0xE7
@@ -3875,34 +3875,34 @@ __UserModules_end|_main|__text_start|_main:
     080F: 50 2B    MOV   A,0x2B
     0811: 08       PUSH  A
     0812: 7C 09 B8 LCALL _nrfWriteAddress
-(0045) 	nrfWriteRegister(NRF_WRITE_PW_P0, 0x08);
+(0045) 	nrfWriteRegister(NRF_WRITE_PW_P0, 0x08); // Sets payload size to 8 bytes at transmit address
     0815: 50 08    MOV   A,0x8
     0817: 08       PUSH  A
     0818: 50 31    MOV   A,0x31
     081A: 08       PUSH  A
     081B: 7C 08 B6 LCALL _nrfWriteRegister
     081E: 38 F3    ADD   SP,0xF3
-(0046) 	nrfWriteRegister(NRF_WRITE_PW_P1, 0x08);
+(0046) 	nrfWriteRegister(NRF_WRITE_PW_P1, 0x08); // Sets payload size to 8 bytes are receive address
     0820: 50 08    MOV   A,0x8
     0822: 08       PUSH  A
     0823: 50 32    MOV   A,0x32
     0825: 08       PUSH  A
     0826: 7C 08 B6 LCALL _nrfWriteRegister
-(0047) 	nrfWriteRegister(NRF_WRITE_EN_AA, 0xFF);
+(0047) 	nrfWriteRegister(NRF_WRITE_EN_AA, 0xFF); // Enable auto-acknowledge on all data pipes
     0829: 50 FF    MOV   A,0xFF
     082B: 08       PUSH  A
     082C: 50 21    MOV   A,0x21
     082E: 08       PUSH  A
     082F: 7C 08 B6 LCALL _nrfWriteRegister
     0832: 38 FC    ADD   SP,0xFC
-(0048) 	nrfWriteRegister(NRF_WRITE_EN_RXADDR, 0x03);
+(0048) 	nrfWriteRegister(NRF_WRITE_EN_RXADDR, 0x03); // Enable data pipes 0 and 1
     0834: 50 03    MOV   A,0x3
     0836: 08       PUSH  A
     0837: 50 22    MOV   A,0x22
     0839: 08       PUSH  A
     083A: 7C 08 B6 LCALL _nrfWriteRegister
-(0049) 	nrfWriteRegister(NRF_WRITE_CONFIG, 0x0A);
-    083D: 50 0A    MOV   A,0xA
+(0049) 	nrfWriteRegister(NRF_WRITE_CONFIG, 0x0E); // Setup config: power on, TX mode, CRC 2-byte mode
+    083D: 50 0E    MOV   A,0xE
     083F: 08       PUSH  A
     0840: 50 20    MOV   A,0x20
     0842: 08       PUSH  A
@@ -3912,21 +3912,20 @@ __UserModules_end|_main|__text_start|_main:
 (0050) 	
 (0051) 	while (1) 
 (0052) 	{
-(0053) 		//This should wait for about 1 s
-(0054) 		SleepTimer_SyncWait(10, SleepTimer_WAIT_RELOAD);
+(0053) 		SleepTimer_SyncWait(10, SleepTimer_WAIT_RELOAD); // Wait for about 1 second
     084A: 10       PUSH  X
     084B: 57 00    MOV   X,0x0
     084D: 50 0A    MOV   A,0xA
     084F: 7C 05 8A LCALL _SleepTimer_SyncWait
-(0055) 		
-(0056) 		LCD_Control(LCD_DISP_CLEAR_HOME);
+(0054) 		
+(0055) 		LCD_Control(LCD_DISP_CLEAR_HOME);
     0852: 50 01    MOV   A,0x1
     0854: 7C 06 0F LCALL _LCD_Control
-(0057) 		LCD_Position(0, 0);
+(0056) 		LCD_Position(0, 0);
     0857: 50 00    MOV   A,0x0
     0859: 57 00    MOV   X,0x0
     085B: 7C 07 32 LCALL _LCD_Position
-(0058) 		LCD_PrCString("Send");
+(0057) 		LCD_PrCString("Send");
     085E: 50 01    MOV   A,0x1
     0860: 08       PUSH  A
     0861: 50 AE    MOV   A,0xAE
@@ -3934,7 +3933,7 @@ __UserModules_end|_main|__text_start|_main:
     0864: 18       POP   A
     0865: 7C 05 AD LCALL _LCD_PrCString
     0868: 20       POP   X
-(0059) 		csprintf(buf, "9: 123.4");
+(0058) 		csprintf(buf, "9: 123.4");
     0869: 50 01    MOV   A,0x1
     086B: 08       PUSH  A
     086C: 50 A5    MOV   A,0xA5
@@ -3944,26 +3943,26 @@ __UserModules_end|_main|__text_start|_main:
     0874: 08       PUSH  A
     0875: 10       PUSH  X
     0876: 7C 0F 49 LCALL _csprintf
-(0060) 		nrfSendData(buf);
+(0059) 		nrfSendData(buf);
     0879: 62 D0 00 MOV   REG[0xD0],0x0
     087C: 50 07    MOV   A,0x7
     087E: 08       PUSH  A
     087F: 10       PUSH  X
     0880: 7C 0A 68 LCALL _nrfSendData
     0883: 38 FA    ADD   SP,0xFA
-(0061) 		
-(0062) 		while (IRQ_Data_ADDR & IRQ_MASK);
+(0060) 		
+(0061) 		while (IRQ_Data_ADDR & IRQ_MASK);
     0885: 5D 04    MOV   A,REG[0x4]
     0887: 62 D0 00 MOV   REG[0xD0],0x0
     088A: 53 28    MOV   [__r0],A
     088C: 47 28 80 TST   [__r0],0x80
     088F: BF F5    JNZ   0x0885
-(0063) 		LCD_Position(1, 0);
+(0062) 		LCD_Position(1, 0);
     0891: 10       PUSH  X
     0892: 57 00    MOV   X,0x0
     0894: 50 01    MOV   A,0x1
     0896: 7C 07 32 LCALL _LCD_Position
-(0064) 		LCD_PrCString("Sent");
+(0063) 		LCD_PrCString("Sent");
     0899: 50 01    MOV   A,0x1
     089B: 08       PUSH  A
     089C: 50 A0    MOV   A,0xA0
@@ -3971,23 +3970,23 @@ __UserModules_end|_main|__text_start|_main:
     089F: 18       POP   A
     08A0: 7C 05 AD LCALL _LCD_PrCString
     08A3: 20       POP   X
-(0065) 		nrfWriteRegister(NRF_WRITE_STATUS, 0x7D);
+(0064) 		nrfWriteRegister(NRF_WRITE_STATUS, 0x7D);
     08A4: 50 7D    MOV   A,0x7D
     08A6: 08       PUSH  A
     08A7: 50 27    MOV   A,0x27
     08A9: 08       PUSH  A
     08AA: 7C 08 B6 LCALL _nrfWriteRegister
     08AD: 38 FE    ADD   SP,0xFE
-(0066) 	}
+(0065) 	}
     08AF: 8F 9A    JMP   0x084A
-(0067) }
-FILE: C:\Users\Jacob\Desktop\ECE381\NRF24L~1\NRF24L~1\nrf24l01_api.c
+(0066) }
+FILE: C:\Users\addis\Desktop\ECE381\NRF24L~1\NRF24L~1\nrf24l01_api.c
 (0001) #include <m8c.h>
 (0002) #include "PSoCAPI.h"
 (0003) #include "nrf24L01_API.h"
 (0004) 
-(0005) //This will write the BYTE data into the config register. See Section 9.1
-(0006) //for details on what bits configure which functionality.
+(0005) // This writes a BYTE data into the register at address. See Section 9.1
+(0006) // for details on the structure
 (0007) void nrfWriteRegister(BYTE address, BYTE data)
 (0008) {
 _nrfWriteRegister:
@@ -3997,13 +3996,13 @@ _nrfWriteRegister:
     08B6: 10       PUSH  X
     08B7: 4F       MOV   X,SP
     08B8: 38 02    ADD   SP,0x2
-(0009) 	WORD i; //Dummy variable for delay timing
+(0009) 	WORD i; // Dummy variable for delay timing
 (0010) 	
-(0011) 	CSN_LOW;	//Pull chip select low. Since chip select is low active, this will
+(0011) 	CSN_LOW;	// Pull chip select low. Since chip select is low active, this will
     08BA: 41 04 FB AND   REG[0x4],0xFB
-(0012) 				//tell the nrf24 to start listenting.
+(0012) 				// tell the nrf24 to start listenting.
 (0013) 	
-(0014) 	for (i = 0; i < 260; i++); //Kill some time to ensure proper setup.
+(0014) 	for (i = 0; i < 260; i++); // Kill some time to ensure proper setup.
     08BD: 56 01 00 MOV   [X+1],0x0
     08C0: 56 00 00 MOV   [X+0],0x0
     08C3: 80 06    JMP   0x08CA
@@ -4015,7 +4014,7 @@ _nrfWriteRegister:
     08D0: 19 01    SBB   A,0x1
     08D2: CF F2    JC    0x08C5
 (0015) 	
-(0016) 	//Wait until TX Buffer is empty, then send given data
+(0016) 	// Wait until TX Buffer is empty, then send given data
 (0017) 	while (!(SPIM_bReadStatus() & SPIM_SPIM_TX_BUFFER_EMPTY));
     08D4: 10       PUSH  X
     08D5: 7C 05 34 LCALL SPIM_bReadStatus|_bSPIM_ReadStatus|_SPIM_bReadStatus|bSPIM_ReadStatus
@@ -4030,8 +4029,8 @@ _nrfWriteRegister:
     08E6: 7C 05 2E LCALL _SPIM_SendTxData
     08E9: 20       POP   X
 (0019) 	
-(0020) 	//Wait until SPI transaction complete, then read data out (chainsaw effect).
-(0021) 	//Note, we don't really care at this point what the returned value is.
+(0020) 	// Wait until SPI transaction complete, then read data out (chainsaw effect).
+(0021) 	// Note, we don't really care at this point what the returned value is.
 (0022) 	while (!(SPIM_bReadStatus() & SPIM_SPIM_SPI_COMPLETE));
     08EA: 10       PUSH  X
     08EB: 7C 05 34 LCALL SPIM_bReadStatus|_bSPIM_ReadStatus|_SPIM_bReadStatus|bSPIM_ReadStatus
@@ -4046,7 +4045,7 @@ _nrfWriteRegister:
     08FD: 20       POP   X
     08FE: 62 D0 00 MOV   REG[0xD0],0x0
 (0024) 	
-(0025) 	//Wait until TX Buffer is empty, then send given data
+(0025) 	// Wait until TX Buffer is empty, then send given data
 (0026) 	while (!(SPIM_bReadStatus() & SPIM_SPIM_TX_BUFFER_EMPTY));
     0901: 10       PUSH  X
     0902: 7C 05 34 LCALL SPIM_bReadStatus|_bSPIM_ReadStatus|_SPIM_bReadStatus|bSPIM_ReadStatus
@@ -4061,8 +4060,8 @@ _nrfWriteRegister:
     0913: 7C 05 2E LCALL _SPIM_SendTxData
     0916: 20       POP   X
 (0028) 	
-(0029) 	//Wait until SPI transaction complete, then read data out (chainsaw effect).
-(0030) 	//Note, we don't really care at this point what the returned value is.
+(0029) 	// Wait until SPI transaction complete, then read data out (chainsaw effect).
+(0030) 	// Note, we don't really care at this point what the returned value is.
 (0031) 	while (!(SPIM_bReadStatus() & SPIM_SPIM_SPI_COMPLETE));
     0917: 10       PUSH  X
     0918: 7C 05 34 LCALL SPIM_bReadStatus|_bSPIM_ReadStatus|_SPIM_bReadStatus|bSPIM_ReadStatus
@@ -4077,7 +4076,7 @@ _nrfWriteRegister:
     092A: 20       POP   X
     092B: 62 D0 00 MOV   REG[0xD0],0x0
 (0033) 	
-(0034) 	CSN_HIGH; //Pull chip select high. This tells the nrf24 to ignore future SPI commands
+(0034) 	CSN_HIGH; // Pull chip select high. This tells the nrf24 to ignore future SPI commands
     092E: 43 04 04 OR    REG[0x4],0x4
     0931: 38 FE    ADD   SP,0xFE
     0933: 20       POP   X
@@ -4093,14 +4092,14 @@ _nrfReadRegister:
     0935: 10       PUSH  X
     0936: 4F       MOV   X,SP
     0937: 38 03    ADD   SP,0x3
-(0039) 	BYTE reg; //Variable to hold configuration register value
-(0040) 	WORD i; //Dummy variable for delay timing
+(0039) 	BYTE reg; // Variable to hold register value
+(0040) 	WORD i; // Dummy variable for delay timing
 (0041) 	
-(0042) 	CSN_LOW;	//Pull chip select low. Since chip select is low active, this will
+(0042) 	CSN_LOW;	// Pull chip select low. Since chip select is low active, this will
     0939: 41 04 FB AND   REG[0x4],0xFB
-(0043) 				//tell the nrf24 to start listenting.
+(0043) 				// tell the nrf24 to start listenting.
 (0044) 	
-(0045) 	for (i = 0; i < 260; i++); //Kill some time to ensure proper setup.
+(0045) 	for (i = 0; i < 260; i++); // Kill some time to ensure proper setup.
     093C: 56 01 00 MOV   [X+1],0x0
     093F: 56 00 00 MOV   [X+0],0x0
     0942: 80 06    JMP   0x0949
@@ -4112,7 +4111,7 @@ _nrfReadRegister:
     094F: 19 01    SBB   A,0x1
     0951: CF F2    JC    0x0944
 (0046) 	
-(0047) 	//Wait until TX Buffer is empty, then send command word to read the config
+(0047) 	// Wait until TX Buffer is empty, then send command word to read
 (0048) 	while (!(SPIM_bReadStatus() & SPIM_SPIM_TX_BUFFER_EMPTY));
     0953: 10       PUSH  X
     0954: 7C 05 34 LCALL SPIM_bReadStatus|_bSPIM_ReadStatus|_SPIM_bReadStatus|bSPIM_ReadStatus
@@ -4127,8 +4126,8 @@ _nrfReadRegister:
     0965: 7C 05 2E LCALL _SPIM_SendTxData
     0968: 20       POP   X
 (0050) 	
-(0051) 	//Wait until SPI transaction complete, then read data out (chainsaw effect).
-(0052) 	//Note, we don't really care at this point what the returned value is.
+(0051) 	// Wait until SPI transaction complete, then read data out (chainsaw effect).
+(0052) 	// Note, we don't really care at this point what the returned value is.
 (0053) 	while (!(SPIM_bReadStatus() & SPIM_SPIM_SPI_COMPLETE));
     0969: 10       PUSH  X
     096A: 7C 05 34 LCALL SPIM_bReadStatus|_bSPIM_ReadStatus|_SPIM_bReadStatus|bSPIM_ReadStatus
@@ -4143,7 +4142,7 @@ _nrfReadRegister:
     097C: 20       POP   X
     097D: 62 D0 00 MOV   REG[0xD0],0x0
 (0055) 	
-(0056) 	//Wait until TX buffer empty, then send a dummy byte
+(0056) 	// Wait until TX buffer empty, then send a dummy byte
 (0057) 	while (!(SPIM_bReadStatus() & SPIM_SPIM_TX_BUFFER_EMPTY));
     0980: 10       PUSH  X
     0981: 7C 05 34 LCALL SPIM_bReadStatus|_bSPIM_ReadStatus|_SPIM_bReadStatus|bSPIM_ReadStatus
@@ -4158,7 +4157,7 @@ _nrfReadRegister:
     0992: 7C 05 2E LCALL _SPIM_SendTxData
     0995: 20       POP   X
 (0059) 	
-(0060) 	//Dummy byte sent to push PLD out, so now read and return
+(0060) 	// Dummy byte sent to push PLD out, so now read and return
 (0061) 	while (!(SPIM_bReadStatus() & SPIM_SPIM_SPI_COMPLETE));
     0996: 10       PUSH  X
     0997: 7C 05 34 LCALL SPIM_bReadStatus|_bSPIM_ReadStatus|_SPIM_bReadStatus|bSPIM_ReadStatus
@@ -4174,10 +4173,10 @@ _nrfReadRegister:
     09AA: 62 D0 00 MOV   REG[0xD0],0x0
     09AD: 54 02    MOV   [X+2],A
 (0063) 	
-(0064) 	CSN_HIGH;
+(0064) 	CSN_HIGH; // Pull chip select high. This tells the nrf24 to ignore future SPI commands
     09AF: 43 04 04 OR    REG[0x4],0x4
 (0065) 	
-(0066) 	return(reg);
+(0066) 	return reg;
     09B2: 52 02    MOV   A,[X+2]
     09B4: 38 FD    ADD   SP,0xFD
     09B6: 20       POP   X
@@ -4193,13 +4192,14 @@ _nrfWriteAddress:
     09B8: 10       PUSH  X
     09B9: 4F       MOV   X,SP
     09BA: 38 04    ADD   SP,0x4
-(0071) 	WORD i; //Dummy variable for delay timing
-(0072) 	va_list v;
-(0073) 	CSN_LOW;	//Pull chip select low. Since chip select is low active, this will
+(0071) 	WORD i; // Dummy variable for delay timing
+(0072) 	va_list v; // Variable argument list variable for the five byte address
+(0073) 	
+(0074) 	CSN_LOW;	// Pull chip select low. Since chip select is low active, this will
     09BC: 41 04 FB AND   REG[0x4],0xFB
-(0074) 				//tell the nrf24 to start listenting.
-(0075) 	
-(0076) 	for (i = 0; i < 260; i++); //Kill some time to ensure proper setup.
+(0075) 				// tell the nrf24 to start listenting.
+(0076) 	
+(0077) 	for (i = 0; i < 260; i++); // Kill some time to ensure proper setup.
     09BF: 56 01 00 MOV   [X+1],0x0
     09C2: 56 00 00 MOV   [X+0],0x0
     09C5: 80 06    JMP   0x09CC
@@ -4210,9 +4210,9 @@ _nrfWriteAddress:
     09D0: 52 00    MOV   A,[X+0]
     09D2: 19 01    SBB   A,0x1
     09D4: CF F2    JC    0x09C7
-(0077) 	
-(0078) 	//Wait until TX Buffer is empty, then send given data
-(0079) 	while (!(SPIM_bReadStatus() & SPIM_SPIM_TX_BUFFER_EMPTY));
+(0078) 	
+(0079) 	// Wait until TX Buffer is empty, then send given data
+(0080) 	while (!(SPIM_bReadStatus() & SPIM_SPIM_TX_BUFFER_EMPTY));
     09D6: 10       PUSH  X
     09D7: 7C 05 34 LCALL SPIM_bReadStatus|_bSPIM_ReadStatus|_SPIM_bReadStatus|bSPIM_ReadStatus
     09DA: 20       POP   X
@@ -4220,15 +4220,15 @@ _nrfWriteAddress:
     09DE: 53 28    MOV   [__r0],A
     09E0: 47 28 10 TST   [__r0],0x10
     09E3: AF F2    JZ    0x09D6
-(0080) 	SPIM_SendTxData(address);
+(0081) 	SPIM_SendTxData(address);
     09E5: 10       PUSH  X
     09E6: 52 FC    MOV   A,[X-4]
     09E8: 7C 05 2E LCALL _SPIM_SendTxData
     09EB: 20       POP   X
-(0081) 	
-(0082) 	//Wait until SPI transaction complete, then read data out (chainsaw effect).
-(0083) 	//Note, we don't really care at this point what the returned value is.
-(0084) 	while (!(SPIM_bReadStatus() & SPIM_SPIM_SPI_COMPLETE));
+(0082) 	
+(0083) 	// Wait until SPI transaction complete, then read data out (chainsaw effect).
+(0084) 	// Note, we don't really care at this point what the returned value is.
+(0085) 	while (!(SPIM_bReadStatus() & SPIM_SPIM_SPI_COMPLETE));
     09EC: 10       PUSH  X
     09ED: 7C 05 34 LCALL SPIM_bReadStatus|_bSPIM_ReadStatus|_SPIM_bReadStatus|bSPIM_ReadStatus
     09F0: 20       POP   X
@@ -4236,25 +4236,24 @@ _nrfWriteAddress:
     09F4: 53 28    MOV   [__r0],A
     09F6: 47 28 20 TST   [__r0],0x20
     09F9: AF F2    JZ    0x09EC
-(0085) 	SPIM_bReadRxData();		
+(0086) 	SPIM_bReadRxData();	
     09FB: 10       PUSH  X
     09FC: 7C 05 31 LCALL SPIM_bReadRxData|bSPIM_ReadRxData|_bSPIM_ReadRxData|_SPIM_bReadRxData
     09FF: 20       POP   X
     0A00: 62 D0 00 MOV   REG[0xD0],0x0
-(0086) 	va_start(v, address);
+(0087) 	
+(0088) 	va_start(v, address);
     0A03: 5A 27    MOV   [__r1],X
     0A05: 16 27 04 SUB   [__r1],0x4
     0A08: 51 27    MOV   A,[__r1]
     0A0A: 54 03    MOV   [X+3],A
     0A0C: 56 02 07 MOV   [X+2],0x7
-(0087) 	
-(0088) 	for ( i = 0; i < 5; i++)
+(0089) 	for (i = 0; i < 5; i++) // This function assumes 5 bytes is the size of the arguments
     0A0F: 56 01 00 MOV   [X+1],0x0
     0A12: 56 00 00 MOV   [X+0],0x0
     0A15: 80 41    JMP   0x0A57
-(0089) 	{	
-(0090) 		
-(0091) 		while (!(SPIM_bReadStatus() & SPIM_SPIM_TX_BUFFER_EMPTY));
+(0090) 	{	
+(0091) 		while (!(SPIM_bReadStatus() & SPIM_SPIM_TX_BUFFER_EMPTY)); // Wait until TX Buffer is empty
     0A17: 10       PUSH  X
     0A18: 7C 05 34 LCALL SPIM_bReadStatus|_bSPIM_ReadStatus|_SPIM_bReadStatus|bSPIM_ReadStatus
     0A1B: 20       POP   X
@@ -4262,7 +4261,7 @@ _nrfWriteAddress:
     0A1F: 53 28    MOV   [__r0],A
     0A21: 47 28 10 TST   [__r0],0x10
     0A24: AF F2    JZ    0x0A17
-(0092) 		SPIM_SendTxData(va_arg(v,char ));
+(0092) 		SPIM_SendTxData(va_arg(v, char)); // Send given data, va_arg gets next argument in list
     0A26: 07 03 FF ADD   [X+3],0xFF
     0A29: 0F 02 FF ADC   [X+2],0xFF
     0A2C: 52 03    MOV   A,[X+3]
@@ -4274,7 +4273,7 @@ _nrfWriteAddress:
     0A37: 7C 05 2E LCALL _SPIM_SendTxData
     0A3A: 20       POP   X
 (0093) 		
-(0094) 		while (!(SPIM_bReadStatus() & SPIM_SPIM_SPI_COMPLETE));
+(0094) 		while (!(SPIM_bReadStatus() & SPIM_SPIM_SPI_COMPLETE)); // Wait until SPI transaction complete
     0A3B: 10       PUSH  X
     0A3C: 7C 05 34 LCALL SPIM_bReadStatus|_bSPIM_ReadStatus|_SPIM_bReadStatus|bSPIM_ReadStatus
     0A3F: 20       POP   X
@@ -4282,7 +4281,7 @@ _nrfWriteAddress:
     0A43: 53 28    MOV   [__r0],A
     0A45: 47 28 20 TST   [__r0],0x20
     0A48: AF F2    JZ    0x0A3B
-(0095) 		SPIM_bReadRxData();	
+(0095) 		SPIM_bReadRxData();	// Read dummy variable
     0A4A: 10       PUSH  X
     0A4B: 7C 05 31 LCALL SPIM_bReadRxData|bSPIM_ReadRxData|_bSPIM_ReadRxData|_SPIM_bReadRxData
     0A4E: 20       POP   X
@@ -4296,7 +4295,7 @@ _nrfWriteAddress:
     0A5D: 19 00    SBB   A,0x0
     0A5F: CF B7    JC    0x0A17
 (0097) 	
-(0098) 	CSN_HIGH; //Pull chip select high. This tells the nrf24 to ignore future SPI commands
+(0098) 	CSN_HIGH; // Pull chip select high. This tells the nrf24 to ignore future SPI commands
     0A61: 43 04 04 OR    REG[0x4],0x4
     0A64: 38 FC    ADD   SP,0xFC
     0A66: 20       POP   X
@@ -4311,12 +4310,12 @@ _nrfSendData:
     0A68: 10       PUSH  X
     0A69: 4F       MOV   X,SP
     0A6A: 38 02    ADD   SP,0x2
-(0103) 	WORD i;
-(0104) 	CSN_LOW;	//Pull chip select low. Since chip select is low active, this will
+(0103) 	WORD i; // Dummy variable for delay timing
+(0104) 	CSN_LOW;	// Pull chip select low. Since chip select is low active, this will
     0A6C: 41 04 FB AND   REG[0x4],0xFB
-(0105) 				//tell the nrf24 to start listenting.
+(0105) 				// tell the nrf24 to start listenting.
 (0106) 	
-(0107) 	for (i = 0; i < 260; i++);
+(0107) 	for (i = 0; i < 260; i++); // Kill some time to ensure proper setup.
     0A6F: 56 01 00 MOV   [X+1],0x0
     0A72: 56 00 00 MOV   [X+0],0x0
     0A75: 80 06    JMP   0x0A7C
@@ -4328,7 +4327,7 @@ _nrfSendData:
     0A82: 19 01    SBB   A,0x1
     0A84: CF F2    JC    0x0A77
 (0108) 	
-(0109) 	while (!(SPIM_bReadStatus() & SPIM_SPIM_TX_BUFFER_EMPTY));
+(0109) 	while (!(SPIM_bReadStatus() & SPIM_SPIM_TX_BUFFER_EMPTY)); // Wait until TX Buffer is empty
     0A86: 10       PUSH  X
     0A87: 7C 05 34 LCALL SPIM_bReadStatus|_bSPIM_ReadStatus|_SPIM_bReadStatus|bSPIM_ReadStatus
     0A8A: 20       POP   X
@@ -4336,16 +4335,15 @@ _nrfSendData:
     0A8E: 53 28    MOV   [__r0],A
     0A90: 47 28 10 TST   [__r0],0x10
     0A93: AF F2    JZ    0x0A86
-(0110) 	SPIM_SendTxData(NRF_WRITE_PAYLOAD);
+(0110) 	SPIM_SendTxData(NRF_WRITE_PAYLOAD); // Send given data, NRF_WRITE_PAYLOAD is to send data
     0A95: 10       PUSH  X
     0A96: 50 A0    MOV   A,0xA0
     0A98: 7C 05 2E LCALL _SPIM_SendTxData
     0A9B: 20       POP   X
 (0111) 	
-(0112) 	
-(0113) 	//Wait until SPI transaction complete, then read data out (chainsaw effect).
-(0114) 	//Note, we don't really care at this point what the returned value is.
-(0115) 	while (!(SPIM_bReadStatus() & SPIM_SPIM_SPI_COMPLETE));
+(0112) 	// Wait until SPI transaction complete, then read data out (chainsaw effect).
+(0113) 	// Note, we don't really care at this point what the returned value is.
+(0114) 	while (!(SPIM_bReadStatus() & SPIM_SPIM_SPI_COMPLETE));
     0A9C: 10       PUSH  X
     0A9D: 7C 05 34 LCALL SPIM_bReadStatus|_bSPIM_ReadStatus|_SPIM_bReadStatus|bSPIM_ReadStatus
     0AA0: 20       POP   X
@@ -4353,18 +4351,18 @@ _nrfSendData:
     0AA4: 53 28    MOV   [__r0],A
     0AA6: 47 28 20 TST   [__r0],0x20
     0AA9: AF F2    JZ    0x0A9C
-(0116) 	SPIM_bReadRxData();
+(0115) 	SPIM_bReadRxData();
     0AAB: 10       PUSH  X
     0AAC: 7C 05 31 LCALL SPIM_bReadRxData|bSPIM_ReadRxData|_bSPIM_ReadRxData|_SPIM_bReadRxData
     0AAF: 20       POP   X
     0AB0: 62 D0 00 MOV   REG[0xD0],0x0
-(0117) 	
-(0118) 	for ( i = 0; i < 7; i++)
+(0116) 	
+(0117) 	for ( i = 0; i < 7; i++) // Payload size is 8 bytes, so send that many
     0AB3: 56 01 00 MOV   [X+1],0x0
     0AB6: 56 00 00 MOV   [X+0],0x0
     0AB9: 80 3F    JMP   0x0AF9
-(0119) 	{	
-(0120) 		while (!(SPIM_bReadStatus() & SPIM_SPIM_TX_BUFFER_EMPTY));
+(0118) 	{	
+(0119) 		while (!(SPIM_bReadStatus() & SPIM_SPIM_TX_BUFFER_EMPTY)); // Wait until TX Buffer is empty
     0ABB: 10       PUSH  X
     0ABC: 7C 05 34 LCALL SPIM_bReadStatus|_bSPIM_ReadStatus|_SPIM_bReadStatus|bSPIM_ReadStatus
     0ABF: 20       POP   X
@@ -4372,7 +4370,7 @@ _nrfSendData:
     0AC3: 53 28    MOV   [__r0],A
     0AC5: 47 28 10 TST   [__r0],0x10
     0AC8: AF F2    JZ    0x0ABB
-(0121) 		SPIM_SendTxData(data[i]);
+(0120) 		SPIM_SendTxData(data[i]); // Send given data
     0ACA: 52 01    MOV   A,[X+1]
     0ACC: 03 FC    ADD   A,[X-4]
     0ACE: 53 27    MOV   [__r1],A
@@ -4383,8 +4381,8 @@ _nrfSendData:
     0AD8: 10       PUSH  X
     0AD9: 7C 05 2E LCALL _SPIM_SendTxData
     0ADC: 20       POP   X
-(0122) 		
-(0123) 		while (!(SPIM_bReadStatus() & SPIM_SPIM_SPI_COMPLETE));
+(0121) 		
+(0122) 		while (!(SPIM_bReadStatus() & SPIM_SPIM_SPI_COMPLETE)); // Wait until SPI transaction complete
     0ADD: 10       PUSH  X
     0ADE: 7C 05 34 LCALL SPIM_bReadStatus|_bSPIM_ReadStatus|_SPIM_bReadStatus|bSPIM_ReadStatus
     0AE1: 20       POP   X
@@ -4392,12 +4390,12 @@ _nrfSendData:
     0AE5: 53 28    MOV   [__r0],A
     0AE7: 47 28 20 TST   [__r0],0x20
     0AEA: AF F2    JZ    0x0ADD
-(0124) 		SPIM_bReadRxData();	
+(0123) 		SPIM_bReadRxData();	// Read dummy variable
     0AEC: 10       PUSH  X
     0AED: 7C 05 31 LCALL SPIM_bReadRxData|bSPIM_ReadRxData|_bSPIM_ReadRxData|_SPIM_bReadRxData
     0AF0: 20       POP   X
     0AF1: 62 D0 00 MOV   REG[0xD0],0x0
-(0125) 	}
+(0124) 	}
     0AF4: 77 01    INC   [X+1]
     0AF6: 0F 00 00 ADC   [X+0],0x0
     0AF9: 52 01    MOV   A,[X+1]
@@ -4405,8 +4403,8 @@ _nrfSendData:
     0AFD: 52 00    MOV   A,[X+0]
     0AFF: 19 00    SBB   A,0x0
     0B01: CF B9    JC    0x0ABB
-(0126) 	
-(0127) 	CSN_HIGH;
+(0125) 	
+(0126) 	CSN_HIGH; // Pull chip select high. This tells the nrf24 to ignore future SPI commands
     0B03: 43 04 04 OR    REG[0x4],0x4
     0B06: 38 FE    ADD   SP,0xFE
     0B08: 20       POP   X

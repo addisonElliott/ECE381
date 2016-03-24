@@ -2,8 +2,8 @@
 ./obj/boot.o : \
    C:/PROGRA~2/Cypress/PSOCDE~1/5.4/Common/CYPRES~1/tools/include/CY8C29~1/m8c.inc\
    C:/PROGRA~2/Cypress/PSOCDE~1/5.4/Common/CYPRES~1/tools/include/CY8C29~1/m8ssc.inc\
-   C:\Users\Jacob\Desktop\ECE381\NRF24L~1\NRF24L~1\lib\GLOBAL~1.INC\
-   C:\Users\Jacob\Desktop\ECE381\NRF24L~1\NRF24L~1\memory.inc
+   C:\Users\addis\Desktop\ECE381\NRF24L~1\NRF24L~1\lib\GLOBAL~1.INC\
+   C:\Users\addis\Desktop\ECE381\NRF24L~1\NRF24L~1\memory.inc
 ./obj/main.o :  ./lib/LCD.h ./lib/PSoCAPI.h ./lib/PSOCGP~1.H\
    ./lib/SPIM.h ./lib/SLEEPT~1.H\
    C:/PROGRA~2/Cypress/PSOCDE~1/5.4/Common/CYPRES~1/tools/include/CY8C29~1/m8c.h\
@@ -12,29 +12,29 @@
    C:/PROGRA~2/Cypress/PSOCDE~1/5.4/Common/CYPRES~1/tools/include/stdarg.h\
    C:/PROGRA~2/Cypress/PSOCDE~1/5.4/Common/CYPRES~1/tools/include/stdio.h\
    C:/PROGRA~2/Cypress/PSOCDE~1/5.4/Common/CYPRES~1/tools/include/stdlib.h\
-   C:\Users\Jacob\Desktop\ECE381\NRF24L~1\NRF24L~1\NRF24L~1.H
+   C:\Users\addis\Desktop\ECE381\NRF24L~1\NRF24L~1\NRF24L~1.H
 ./obj/nrf24l01_api.o :  ./lib/LCD.h ./lib/PSoCAPI.h ./lib/PSOCGP~1.H\
    ./lib/SPIM.h ./lib/SLEEPT~1.H\
    C:/PROGRA~2/Cypress/PSOCDE~1/5.4/Common/CYPRES~1/tools/include/CY8C29~1/m8c.h\
    C:/PROGRA~2/Cypress/PSOCDE~1/5.4/Common/CYPRES~1/tools/include/stdarg.h\
-   C:\Users\Jacob\Desktop\ECE381\NRF24L~1\NRF24L~1\NRF24L~1.H
+   C:\Users\addis\Desktop\ECE381\NRF24L~1\NRF24L~1\NRF24L~1.H
 ./lib/obj/lcd.o :  ./lib/LCD.inc\
    C:/PROGRA~2/Cypress/PSOCDE~1/5.4/Common/CYPRES~1/tools/include/CY8C29~1/m8c.inc\
-   C:\Users\Jacob\Desktop\ECE381\NRF24L~1\NRF24L~1\memory.inc
+   C:\Users\addis\Desktop\ECE381\NRF24L~1\NRF24L~1\memory.inc
 ./lib/obj/psocconfig.o :  ./lib/GLOBAL~1.INC\
    C:/PROGRA~2/Cypress/PSOCDE~1/5.4/Common/CYPRES~1/tools/include/CY8C29~1/m8c.inc\
-   C:\Users\Jacob\Desktop\ECE381\NRF24L~1\NRF24L~1\memory.inc
+   C:\Users\addis\Desktop\ECE381\NRF24L~1\NRF24L~1\memory.inc
 ./lib/obj/psocconfigtbl.o : \
    C:/PROGRA~2/Cypress/PSOCDE~1/5.4/Common/CYPRES~1/tools/include/CY8C29~1/m8c.inc
 ./lib/obj/sleeptimer.o :  ./lib/SLEEPT~1.INC\
    C:/PROGRA~2/Cypress/PSOCDE~1/5.4/Common/CYPRES~1/tools/include/CY8C29~1/m8c.inc\
-   C:\Users\Jacob\Desktop\ECE381\NRF24L~1\NRF24L~1\memory.inc
+   C:\Users\addis\Desktop\ECE381\NRF24L~1\NRF24L~1\memory.inc
 ./lib/obj/sleeptimerint.o :  ./lib/SLEEPT~1.INC\
    C:/PROGRA~2/Cypress/PSOCDE~1/5.4/Common/CYPRES~1/tools/include/CY8C29~1/m8c.inc\
-   C:\Users\Jacob\Desktop\ECE381\NRF24L~1\NRF24L~1\memory.inc
+   C:\Users\addis\Desktop\ECE381\NRF24L~1\NRF24L~1\memory.inc
 ./lib/obj/spim.o :  ./lib/SPIM.inc\
    C:/PROGRA~2/Cypress/PSOCDE~1/5.4/Common/CYPRES~1/tools/include/CY8C29~1/m8c.inc\
-   C:\Users\Jacob\Desktop\ECE381\NRF24L~1\NRF24L~1\memory.inc
+   C:\Users\addis\Desktop\ECE381\NRF24L~1\NRF24L~1\memory.inc
 ./lib/obj/spimint.o :  ./lib/SPIM.inc\
    C:/PROGRA~2/Cypress/PSOCDE~1/5.4/Common/CYPRES~1/tools/include/CY8C29~1/m8c.inc\
-   C:\Users\Jacob\Desktop\ECE381\NRF24L~1\NRF24L~1\memory.inc
+   C:\Users\addis\Desktop\ECE381\NRF24L~1\NRF24L~1\memory.inc

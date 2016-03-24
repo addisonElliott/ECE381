@@ -1,0 +1,265 @@
+ 0000                   cpu LMM
+                        .module main.c
+                        .area text(rom, con, rel)
+ 0000                   .dbfile ./main.c
+ 0000                   .dbfile C:\Users\addis\Desktop\ECE381\WIRELE~1\WIRELE~1\main.c
+ 0000                   .dbfunc e main _main fV
+ 0000           ;         status -> X+6
+ 0000           ;        voltage -> X+2
+ 0000           ;         result -> X+0
+ 0000           _main::
+ 0000                   .dbline -1
+ 0000 10                push X
+ 0001 4F                mov X,SP
+ 0002 3808              add SP,8
+ 0004                   .dbline 13
+ 0004           ; //----------------------------------------------------------------------------
+ 0004           ; // C main line
+ 0004           ; //----------------------------------------------------------------------------
+ 0004           ; 
+ 0004           ; #include <m8c.h>        // part specific constants and macros
+ 0004           ; #include "PSoCAPI.h"    // PSoC API definitions for all User Modules
+ 0004           ; #include "stdlib.h"
+ 0004           ; 
+ 0004           ; #define SCALE_FACTOR 0.000079345703125        //This is the scale factor used in the Analog to Digital conversion
+ 0004           ;                                                                               //(scale factor=(RefHIGH-RefLOW)/2^resolution)
+ 0004           ; 
+ 0004           ; void main(void)
+ 0004           ; {
+ 0004                   .dbline 18
+ 0004           ;       int result;
+ 0004           ;       float voltage;
+ 0004           ;       int status;
+ 0004           ;       
+ 0004           ;       M8C_EnableGInt ; // Uncomment this line to enable Global Interrupts
+ 0004 7101                      or  F, 01h
+ 0006           
+ 0006                   .dbline 22
+ 0006           ;       // Insert your main routine code here.
+ 0006           ;       
+ 0006           ;       //Start PGA in high power mode
+ 0006           ;       PGA_Start(PGA_HIGHPOWER);
+ 0006 10                push X
+ 0007 5003              mov A,3
+ 0009 7C0000            xcall _PGA_Start
+ 000C                   .dbline 25
+ 000C           ;       
+ 000C           ;       //Start ADCINC in high power mode
+ 000C           ;       ADCINC_Start(ADCINC_HIGHPOWER);
+ 000C 5003              mov A,3
+ 000E 7C0000            xcall _ADCINC_Start
+ 0011                   .dbline 28
+ 0011           ;       
+ 0011           ;       //Start LCD
+ 0011           ;       LCD_Start();
+ 0011 7C0000            xcall _LCD_Start
+ 0014                   .dbline 31
+ 0014           ;       
+ 0014           ;       //Run the ADC continuously
+ 0014           ;       ADCINC_GetSamples(0);
+ 0014 5000              mov A,0
+ 0016 7C0000            xcall _ADCINC_GetSamples
+ 0019                   .dbline 33
+ 0019           ;       
+ 0019           ;       SleepTimer_Start();
+ 0019 7C0000            xcall _SleepTimer_Start
+ 001C                   .dbline 34
+ 001C           ;       SleepTimer_SetInterval(SleepTimer_1_HZ);
+ 001C 5018              mov A,24
+ 001E 7C0000            xcall _SleepTimer_SetInterval
+ 0021                   .dbline 35
+ 0021           ;       SleepTimer_EnableInt();
+ 0021 7C0000            xcall _SleepTimer_EnableInt
+ 0024 20                pop X
+ 0025 80F0              xjmp L3
+ 0027           L2:
+ 0027                   .dbline 38
+ 0027           ;       
+ 0027           ;       while (1)
+ 0027           ;       {
+ 0027                   .dbline 39
+ 0027           ;               SleepTimer_SyncWait(1, SleepTimer_WAIT_RELOAD);
+ 0027 10                push X
+ 0028 5700              mov X,0
+ 002A 5001              mov A,1
+ 002C 7C0000            xcall _SleepTimer_SyncWait
+ 002F 20                pop X
+ 0030           L5:
+ 0030                   .dbline 42
+ 0030           ;               
+ 0030           ;               // Wait for data to be ready
+ 0030           ;               while (ADCINC_fIsDataAvailable() == 0);
+ 0030           L6:
+ 0030                   .dbline 42
+ 0030 10                push X
+ 0031 7C0000            xcall _ADCINC_fIsDataAvailable
+ 0034 20                pop X
+ 0035 62D000            mov REG[0xd0],>__r0
+ 0038 3900              cmp A,0
+ 003A AFF5              jz L5
+ 003C                   .dbline 45
+ 003C           ;               
+ 003C           ;               // Get Data and clear flag
+ 003C           ;               result=ADCINC_iClearFlagGetData();
+ 003C 10                push X
+ 003D 7C0000            xcall _ADCINC_iClearFlagGetData
+ 0040 62D000            mov REG[0xd0],>__r0
+ 0043 5A00              mov [__r0],X
+ 0045 20                pop X
+ 0046 5401              mov [X+1],A
+ 0048 5100              mov A,[__r0]
+ 004A 5400              mov [X+0],A
+ 004C                   .dbline 46
+ 004C           ;               voltage = result * SCALE_FACTOR;
+ 004C 5201              mov A,[X+1]
+ 004E 5300              mov [__r3],A
+ 0050 5200              mov A,[X+0]
+ 0052 5300              mov [__r2],A
+ 0054 470080            tst [__r2],-128
+ 0057 A009              jz X1
+ 0059 5500FF            mov [__r1],-1
+ 005C 5500FF            mov [__r0],-1
+ 005F 800A              jmp X2
+ 0061           X1:
+ 0061 62D000            mov REG[0xd0],>__r0
+ 0064 550000            mov [__r1],0
+ 0067 550000            mov [__r0],0
+ 006A           X2:
+ 006A 62D000            mov REG[0xd0],>__r0
+ 006D 5100              mov A,[__r0]
+ 006F 08                push A
+ 0070 5100              mov A,[__r1]
+ 0072 08                push A
+ 0073 5100              mov A,[__r2]
+ 0075 08                push A
+ 0076 5100              mov A,[__r3]
+ 0078 08                push A
+ 0079 7C0000            xcall __long2fp
+ 007C 18                pop A
+ 007D 5300              mov [__r3],A
+ 007F 18                pop A
+ 0080 5300              mov [__r2],A
+ 0082 18                pop A
+ 0083 5300              mov [__r1],A
+ 0085 18                pop A
+ 0086 08                push A
+ 0087 5100              mov A,[__r1]
+ 0089 08                push A
+ 008A 5100              mov A,[__r2]
+ 008C 08                push A
+ 008D 5100              mov A,[__r3]
+ 008F 08                push A
+ 0090 5038              mov A,56
+ 0092 08                push A
+ 0093 50A6              mov A,-90
+ 0095 08                push A
+ 0096 5066              mov A,102
+ 0098 08                push A
+ 0099 08                push A
+ 009A 7C0000            xcall __fpmul
+ 009D 18                pop A
+ 009E 5405              mov [X+5],A
+ 00A0 18                pop A
+ 00A1 5404              mov [X+4],A
+ 00A3 18                pop A
+ 00A4 5403              mov [X+3],A
+ 00A6 18                pop A
+ 00A7 5402              mov [X+2],A
+ 00A9 38FC              add SP,-4
+ 00AB                   .dbline 48
+ 00AB           ;               
+ 00AB           ;               LCD_Position(0, 0);
+ 00AB 10                push X
+ 00AC 5000              mov A,0
+ 00AE 5700              mov X,0
+ 00B0 7C0000            xcall _LCD_Position
+ 00B3                   .dbline 49
+ 00B3           ;               LCD_PrCString("                ");
+ 00B3 5000              mov A,>L8
+ 00B5 08                push A
+ 00B6 5000              mov A,<L8
+ 00B8 5C                mov X,A
+ 00B9 18                pop A
+ 00BA 7C0000            xcall _LCD_PrCString
+ 00BD                   .dbline 50
+ 00BD           ;               LCD_Position(0, 0);
+ 00BD 5000              mov A,0
+ 00BF 5700              mov X,0
+ 00C1 7C0000            xcall _LCD_Position
+ 00C4 20                pop X
+ 00C5                   .dbline 51
+ 00C5           ;               LCD_PrHexInt(result);
+ 00C5 10                push X
+ 00C6 5200              mov A,[X+0]
+ 00C8 08                push A
+ 00C9 5201              mov A,[X+1]
+ 00CB 20                pop X
+ 00CC 7C0000            xcall _LCD_PrHexInt
+ 00CF                   .dbline 53
+ 00CF           ;               
+ 00CF           ;               LCD_Position(1, 0);
+ 00CF 5700              mov X,0
+ 00D1 5001              mov A,1
+ 00D3 7C0000            xcall _LCD_Position
+ 00D6                   .dbline 54
+ 00D6           ;               LCD_PrCString("                ");
+ 00D6 5000              mov A,>L8
+ 00D8 08                push A
+ 00D9 5000              mov A,<L8
+ 00DB 5C                mov X,A
+ 00DC 18                pop A
+ 00DD 7C0000            xcall _LCD_PrCString
+ 00E0                   .dbline 55
+ 00E0           ;               LCD_Position(1, 0);
+ 00E0 5700              mov X,0
+ 00E2 5001              mov A,1
+ 00E4 7C0000            xcall _LCD_Position
+ 00E7 20                pop X
+ 00E8                   .dbline 56
+ 00E8           ;               LCD_PrString(ftoa(voltage, &status));
+ 00E8 62D000            mov REG[0xd0],>__r0
+ 00EB 5A00              mov [__r1],X
+ 00ED 060006            add [__r1],6
+ 00F0 5007              mov A,7
+ 00F2 08                push A
+ 00F3 5100              mov A,[__r1]
+ 00F5 08                push A
+ 00F6 5202              mov A,[X+2]
+ 00F8 08                push A
+ 00F9 5203              mov A,[X+3]
+ 00FB 08                push A
+ 00FC 5204              mov A,[X+4]
+ 00FE 08                push A
+ 00FF 5205              mov A,[X+5]
+ 0101 08                push A
+ 0102 7C0000            xcall _ftoa
+ 0105 38FA              add SP,-6
+ 0107 10                push X
+ 0108 62D000            mov REG[0xd0],>__r0
+ 010B 5100              mov A,[__r0]
+ 010D 08                push A
+ 010E 5100              mov A,[__r1]
+ 0110 5C                mov X,A
+ 0111 18                pop A
+ 0112 7C0000            xcall _LCD_PrString
+ 0115 20                pop X
+ 0116                   .dbline 57
+ 0116           ;       }
+ 0116           L3:
+ 0116                   .dbline 37
+ 0116 8F10              xjmp L2
+ 0118           X0:
+ 0118                   .dbline -2
+ 0118           L1:
+ 0118 38F8              add SP,-8
+ 011A 20                pop X
+ 011B                   .dbline 0 ; func end
+ 011B 8FFF              jmp .
+ 011D                   .dbsym l status 6 I
+ 011D                   .dbsym l voltage 2 D
+ 011D                   .dbsym l result 0 I
+ 011D                   .dbend
+                        .area lit(rom, con, rel, lit)
+ 0000           L8:
+ 0000 20202020202020202020202020202020  .byte 32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32
+ 0010 00                .byte 0

@@ -17,7 +17,7 @@ S _SleepTimer_SyncWait Ref0000
 S _nrfWriteRegister Ref0000
 A text size 152 flags 0
 dbfile ./main.c
-dbfile C:\Users\Jacob\Desktop\ECE381\NRF24L~1\NRF24L~1\main.c
+dbfile C:\Users\addis\Desktop\ECE381\NRF24L~1\NRF24L~1\main.c
 dbfunc e main 0 fV
 dbsym l buf 0 A[9:9]c
 dbline FFFFFFFF 0
@@ -49,18 +49,18 @@ dbline 2F C5
 dbline 30 D0
 dbline 31 D9
 dbline 34 E6
-dbline 36 E6
-dbline 38 EE
-dbline 39 F3
-dbline 3A FA
-dbline 3B 105
-dbline 3C 115
-dbline 3E 121
-dbline 3E 121
-dbline 3F 12D
-dbline 40 135
-dbline 41 140
-dbline 42 14B
+dbline 35 E6
+dbline 37 EE
+dbline 38 F3
+dbline 39 FA
+dbline 3A 105
+dbline 3B 115
+dbline 3D 121
+dbline 3D 121
+dbline 3E 12D
+dbline 3F 135
+dbline 40 140
+dbline 41 14B
 dbline 33 14B
 dbline FFFFFFFE 14D
 dbline 0 150
@@ -96,7 +96,7 @@ T 00 B6 08 7C 00 00 38 F3 50 08 08 50 32 08 7C
 R 00 00 00 00 02 04 00 0D
 T 00 C3 00 00 50 FF 08 50 21 08 7C 00 00 38 FC 50
 R 00 00 00 00 02 02 00 0D 02 0B 00 0D
-T 00 D1 03 08 50 22 08 7C 00 00 50 0A 08 50 20 08
+T 00 D1 03 08 50 22 08 7C 00 00 50 0E 08 50 20 08
 R 00 00 00 00 02 08 00 0D
 T 00 DF 7C 00 00 38 FC 80 66 10 57 00 50 0A 7C
 R 00 00 00 00 02 03 00 0D

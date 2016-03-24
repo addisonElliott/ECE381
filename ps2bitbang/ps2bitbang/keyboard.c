@@ -508,7 +508,6 @@ void KeyboardAction(BYTE scancode, BYTE codetype, BYTE keyspressed)
 	static BYTE shiftstatus = 0;
 	static BYTE ctrlstatus = 0;
 	static BYTE altstatus = 0;
-	static int pianoPeriod = 0;
 	static BYTE altStr[12];
 	static BYTE altIndex = 0;
 	
