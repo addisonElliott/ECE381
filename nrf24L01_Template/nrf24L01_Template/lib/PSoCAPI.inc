@@ -14,6 +14,8 @@
 ; =============================================================================
  
 include "PSoCGPIOINT.inc"
+include "ADCINC.inc"
 include "LCD.inc"
+include "PGA.inc"
 include "SPIM.inc"
 include "SleepTimer.inc"

@@ -78,9 +78,9 @@
  0000           OP_AMP_BIAS:			equ	0h	;Op amp bias level
  0040           OP_AMP_BIAS_MASK:		equ	40h	;Op amp bias level mask
  0000           OP_AMP_BIAS_JUST:		equ	0h	;Op amp bias level justified
- 0000           REF_MUX:				equ	0h	;Ref mux setting
+ 0006           REF_MUX:				equ	6h	;Ref mux setting
  0038           REF_MUX_MASK:			equ	38h	;Ref mux setting mask
- 0000           REF_MUX_JUST:			equ	0h	;Ref mux setting justified
+ 0030           REF_MUX_JUST:			equ	30h	;Ref mux setting justified
  0000           AGND_BYPASS:				equ	0h	;AGndBypass setting
  0040           AGND_BYPASS_MASK:			equ	40h	;AGndBypass setting mask
  0000           AGND_BYPASS_JUST:			equ	0h	;AGndBypass setting justified
@@ -1494,9 +1494,9 @@
  001C 7E            reti
  001D           
                     org   20h                      ;PSoC Block DBB00 Interrupt Vector
-                    // call     void_handler
- 0020 7E            reti
- 0021           
+ 0020 7D0000        ljmp        _ADCINC_ADConversion_ISR
+ 0023 7E            reti
+ 0024           
                     org   24h                      ;PSoC Block DBB01 Interrupt Vector
                     // call     void_handler
  0024 7E            reti

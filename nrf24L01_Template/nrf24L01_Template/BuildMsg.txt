@@ -1,7 +1,13 @@
 Starting MAKE...
 creating project.mk 
 
+lib/adcinc.asm
+
+lib/adcincint.asm
+
 lib/lcd.asm
+
+lib/pga.asm
 
 lib/psocconfig.asm
 
@@ -19,7 +25,7 @@ lib/spimint.asm
 
 Linking..
 
-LMM info: area 'InterruptRAM' uses 7 bytes in SRAM bank 0
+LMM info: area 'InterruptRAM' uses 15 bytes in SRAM bank 0
 
 LMM info: area 'data' item of 25 bytes allocated in SRAM page 0
 
@@ -29,12 +35,12 @@ LMM info: area 'data' item of 2 bytes allocated in SRAM page 0
 
 idata dump at output/nrf24L01_Template.idata
 
-  ROM 17% full. 5375 out of 32768 bytes used (does not include absolute areas).
+  ROM 18% full. 5805 out of 32768 bytes used (does not include absolute areas).
 
-  RAM 3% full. 43 bytes used (does not include stack usage).
+  RAM 3% full. 51 bytes used (does not include stack usage).
 
 Built with ICCM8C STD V7.05.00
 
  
-nrf24L01_Template - 0 error(s) 0 warning(s) 14:03:10
+nrf24L01_Template - 0 error(s) 0 warning(s) 14:28:58
 

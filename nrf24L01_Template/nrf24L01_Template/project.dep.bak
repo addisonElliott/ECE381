@@ -4,8 +4,9 @@
    C:/PROGRA~2/Cypress/PSOCDE~1/5.4/Common/CYPRES~1/tools/include/CY8C29~1/m8ssc.inc\
    C:\Users\addis\Desktop\ECE381\NRF24L~1\NRF24L~1\lib\GLOBAL~1.INC\
    C:\Users\addis\Desktop\ECE381\NRF24L~1\NRF24L~1\memory.inc
-./obj/main.o :  ./lib/LCD.h ./lib/PSoCAPI.h ./lib/PSOCGP~1.H\
-   ./lib/SPIM.h ./lib/SLEEPT~1.H\
+./obj/main.o :  ./lib/ADCINC.h ./lib/LCD.h ./lib/PGA.h ./lib/PSoCAPI.h\
+   ./lib/PSOCGP~1.H ./lib/SPIM.h ./lib/SLEEPT~1.H\
+   C:/PROGRA~2/Cypress/PSOCDE~1/5.4/Common/CYPRES~1/tools/include/CY8C29~1/M8C.h\
    C:/PROGRA~2/Cypress/PSOCDE~1/5.4/Common/CYPRES~1/tools/include/CY8C29~1/m8c.h\
    C:/PROGRA~2/Cypress/PSOCDE~1/5.4/Common/CYPRES~1/tools/include/_const.h\
    C:/PROGRA~2/Cypress/PSOCDE~1/5.4/Common/CYPRES~1/tools/include/limits.h\
@@ -13,12 +14,22 @@
    C:/PROGRA~2/Cypress/PSOCDE~1/5.4/Common/CYPRES~1/tools/include/stdio.h\
    C:/PROGRA~2/Cypress/PSOCDE~1/5.4/Common/CYPRES~1/tools/include/stdlib.h\
    C:\Users\addis\Desktop\ECE381\NRF24L~1\NRF24L~1\NRF24L~1.H
-./obj/nrf24l01_api.o :  ./lib/LCD.h ./lib/PSoCAPI.h ./lib/PSOCGP~1.H\
-   ./lib/SPIM.h ./lib/SLEEPT~1.H\
+./obj/nrf24l01_api.o :  ./lib/ADCINC.h ./lib/LCD.h ./lib/PGA.h\
+   ./lib/PSoCAPI.h ./lib/PSOCGP~1.H ./lib/SPIM.h ./lib/SLEEPT~1.H\
+   C:/PROGRA~2/Cypress/PSOCDE~1/5.4/Common/CYPRES~1/tools/include/CY8C29~1/M8C.h\
    C:/PROGRA~2/Cypress/PSOCDE~1/5.4/Common/CYPRES~1/tools/include/CY8C29~1/m8c.h\
    C:/PROGRA~2/Cypress/PSOCDE~1/5.4/Common/CYPRES~1/tools/include/stdarg.h\
    C:\Users\addis\Desktop\ECE381\NRF24L~1\NRF24L~1\NRF24L~1.H
+./lib/obj/adcinc.o :  ./lib/ADCINC.inc\
+   C:/PROGRA~2/Cypress/PSOCDE~1/5.4/Common/CYPRES~1/tools/include/CY8C29~1/m8c.inc\
+   C:\Users\addis\Desktop\ECE381\NRF24L~1\NRF24L~1\memory.inc
+./lib/obj/adcincint.o :  ./lib/ADCINC.inc\
+   C:/PROGRA~2/Cypress/PSOCDE~1/5.4/Common/CYPRES~1/tools/include/CY8C29~1/m8c.inc\
+   C:\Users\addis\Desktop\ECE381\NRF24L~1\NRF24L~1\memory.inc
 ./lib/obj/lcd.o :  ./lib/LCD.inc\
+   C:/PROGRA~2/Cypress/PSOCDE~1/5.4/Common/CYPRES~1/tools/include/CY8C29~1/m8c.inc\
+   C:\Users\addis\Desktop\ECE381\NRF24L~1\NRF24L~1\memory.inc
+./lib/obj/pga.o :  ./lib/PGA.inc\
    C:/PROGRA~2/Cypress/PSOCDE~1/5.4/Common/CYPRES~1/tools/include/CY8C29~1/m8c.inc\
    C:\Users\addis\Desktop\ECE381\NRF24L~1\NRF24L~1\memory.inc
 ./lib/obj/psocconfig.o :  ./lib/GLOBAL~1.INC\

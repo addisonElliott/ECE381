@@ -17,11 +17,17 @@
 #include "PSoCAPI.h"    // PSoC API definitions for all User Modules
 #include "PSoCGPIOINT.h"
 #include "nrf24L01_API.h"
+#define SCALE_FACTOR 0.000079345703125	//This is the scale factor used in the Analog to Digital conversion
+										//(scale factor=(RefHIGH-RefLOW)/(2^resolution * PGA_GAIN))
 
 void main(void)
 {
 	int test = 0;
 	char buf[9]; // Temporary string to contain 8 bytes while sending to wireless module
+	float voltage;
+	float temp;
+	char ftsr[16];
+	char *cptr;
 	
 	M8C_EnableGInt; // Enable Global Interrupts
 	M8C_EnableIntMask(INT_MSK0,INT_MSK0_GPIO);	
@@ -35,6 +41,8 @@ void main(void)
 	LCD_Start();
 	SPIM_Start(SPIM_SPIM_MODE_0 | SPIM_SPIM_MSB_FIRST);
 	SleepTimer_Start();
+	PGA_Start(PGA_HIGHPOWER); // Start PGA in high power mod
+	ADCINC_Start(ADCINC_HIGHPOWER); // Start ADCINC in high power mode
 	
 	CE_HIGH; //Enable the nrf24 radio
 	nrfWriteRegister(NRF_WRITE_SETUP_RETR, 0xFF); // Setup automatic retransmission: 4000uS delay, 15 retransmit count
@@ -73,17 +81,29 @@ void main(void)
 	{
 		SleepTimer_SyncWait(5, SleepTimer_WAIT_RELOAD); // Wait for about 1 second
 		
-		LCD_Control(LCD_DISP_CLEAR_HOME);
-		LCD_Position(0, 0);
-		LCD_PrCString("Send");
-		LCD_PrHexByte(test);
-		csprintf(buf, "9: 123.4");
+		while (ADCINC_fIsDataAvailable() == 0); // Wait for data to be ready
+		voltage = SCALE_FACTOR*(ADCINC_iClearFlagGetData()); // Get data and clear flag
+		temp = voltage * 10;
+		
+		// Round and and truncate the float string at the hundredths position.
+		// Note: This only rounds the string and not the original float.
+		fstr = ftoa(temp + 0.05, &status);
+		cptr = fstr;
+		while(*cptr > 0x0) {
+			if (*cptr == '.') {
+				if (*(cptr+1) == 0x0) {
+					*(cptr+) = '0';
+				}
+				*(cptr+2) = 0x0;
+				break;
+			}
+			cptr++;
+		}
+
+		csprintf(buf, "I: %s",fstr);
 		nrfSendData(buf);
 		
 		while (IRQ_Data_ADDR & IRQ_MASK);
-		LCD_Position(1, 0);
-		LCD_PrCString("Sent");
-		LCD_PrHexByte(test++);
 		nrfWriteRegister(NRF_WRITE_STATUS, 0x7E);
 	}
 }

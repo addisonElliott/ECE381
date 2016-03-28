@@ -18,7 +18,9 @@
 #define __PSOCAPI_H
 
 #include "PSoCGPIOINT.h"
+#include "ADCINC.h"
 #include "LCD.h"
+#include "PGA.h"
 #include "SPIM.h"
 #include "SleepTimer.h"
 

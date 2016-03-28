@@ -6,131 +6,135 @@ dbfile lib/psocconfigtbl.asm
 dbfunc 0 ? 0 I
 dbfile C:/PROGRA~2/Cypress/PSOCDE~1/5.4/Common/CYPRES~1/tools/include/CY8C29~1/m8c.inc
 dbfunc 0 ? 0 I
-A lit size 80 flags 0
+A lit size A4 flags 0
 S LoadConfigTBL_nrf24l01_template_Bank0 Def0000
-S LoadConfigTBL_nrf24l01_template_Bank1 Def0055
+S LoadConfigTBL_nrf24l01_template_Bank1 Def0073
 A psoc_config size 105 flags 0
 dbfile lib/psocconfigtbl.asm
 dbfunc 0 ? 0 I
 dbline 2 0
-dbline 67 2
+dbline 85 2
 dbline 2 5
-dbline 69 7
-dbline 6A A
+dbline 87 7
+dbline 88 A
 dbline 2 D
-dbline 6C F
-dbline 6D 12
+dbline 8A F
+dbline 8B 12
 dbline 2 15
-dbline 6F 17
-dbline 70 1A
+dbline 8D 17
+dbline 8E 1A
 dbline 2 1D
-dbline 72 1F
-dbline 73 22
+dbline 90 1F
+dbline 91 22
 dbline 2 25
-dbline 75 27
-dbline 76 2A
+dbline 93 27
+dbline 94 2A
 dbline 2 2D
-dbline 78 2F
-dbline 79 32
+dbline 96 2F
+dbline 97 32
 dbline 2 35
-dbline 7B 37
-dbline 7C 3A
+dbline 99 37
+dbline 9A 3A
 dbline 2 3D
-dbline 7E 3F
-dbline 7F 42
+dbline 9C 3F
+dbline 9D 42
 dbline 2 45
-dbline 81 47
-dbline 82 4A
+dbline 9F 47
+dbline A0 4A
 dbline 2 4D
-dbline 84 4F
-dbline 85 52
+dbline A2 4F
+dbline A3 52
 dbline 2 55
-dbline 87 57
-dbline 88 5A
+dbline A5 57
+dbline A6 5A
 dbline 2 5D
-dbline 8A 5F
-dbline 8B 62
+dbline A8 5F
+dbline A9 62
 dbline 2 65
-dbline 8D 67
-dbline 8E 6A
+dbline AB 67
+dbline AC 6A
 dbline 2 6D
-dbline 90 6F
-dbline 91 72
+dbline AE 6F
+dbline AF 72
 dbline 2 75
-dbline 93 77
-dbline 94 7A
+dbline B1 77
+dbline B2 7A
 dbline 2 7D
-dbline 96 7F
-dbline 97 82
+dbline B4 7F
+dbline B5 82
 dbline 2 85
-dbline 99 87
-dbline 9A 8A
+dbline B7 87
+dbline B8 8A
 dbline 2 8D
-dbline 9C 8F
-dbline 9D 92
+dbline BA 8F
+dbline BB 92
 dbline 2 95
-dbline 9F 97
-dbline A0 9A
+dbline BD 97
+dbline BE 9A
 dbline 2 9D
-dbline A2 9F
-dbline A3 A2
+dbline C0 9F
+dbline C1 A2
 dbline 2 A5
-dbline A5 A7
-dbline A6 AA
+dbline C3 A7
+dbline C4 AA
 dbline 2 AD
-dbline A8 AF
-dbline A9 B2
+dbline C6 AF
+dbline C7 B2
 dbline 2 B5
-dbline AB B7
-dbline AC BA
+dbline C9 B7
+dbline CA BA
 dbline 2 BD
-dbline AE BF
-dbline AF C2
+dbline CC BF
+dbline CD C2
 dbline 2 C5
-dbline B1 C7
-dbline B2 CA
+dbline CF C7
+dbline D0 CA
 dbline 2 CD
-dbline B4 CF
-dbline B5 D2
+dbline D2 CF
+dbline D3 D2
 dbline 2 D5
-dbline B7 D7
-dbline B8 DA
+dbline D5 D7
+dbline D6 DA
 dbline 2 DD
-dbline BA DF
-dbline BB E2
+dbline D8 DF
+dbline D9 E2
 dbline 2 E5
-dbline BD E7
-dbline BE EA
+dbline DB E7
+dbline DC EA
 dbline 2 ED
-dbline C0 EF
-dbline C1 F2
+dbline DE EF
+dbline DF F2
 dbline 2 F5
-dbline C3 F7
-dbline C4 FA
+dbline E1 F7
+dbline E2 FA
 dbline 2 FD
-dbline C6 FF
+dbline E4 FF
 dbline 2 102
-dbline C8 104
+dbline E6 104
 S LoadConfigTBL_nrf24l01_template_Ordered Def0000
-T 00 00 2B 00 29 00 2A 00 60 28 66 00 63 05 65 00
+T 00 00 80 88 81 00 82 20 83 F4 90 90 91 00 92 60
 R 00 00 00 01
-T 00 0E E6 00 E7 00 D6 00 B0 0C B1 00 B2 00 B3 33
+T 00 0E 93 F0 23 00 21 00 22 01 71 7E 72 21 73 20
 R 00 00 00 01
-T 00 1C B4 33 B5 08 B6 40 B8 55 B9 00 BA 10 BB 33
+T 00 1C 70 00 2B 00 29 00 2A 00 60 28 66 00 63 35
 R 00 00 00 01
-T 00 2A BC 33 BD 00 BE 00 C0 00 C1 00 C2 20 C3 33
+T 00 2A 65 00 E6 00 E7 42 D6 00 B0 0C B1 00 B2 00
 R 00 00 00 01
-T 00 38 C4 33 C5 00 C6 00 C8 55 C9 00 CA 30 CB 33
+T 00 38 B3 33 B4 33 B5 08 B6 40 B8 55 B9 00 BA 10
 R 00 00 00 01
-T 00 46 CC 33 CD 00 CE 00 6C 00 6D 00 6E 00 6F 00
+T 00 46 BB 33 BC 33 BD 00 BE 00 C0 00 C1 00 C2 20
 R 00 00 00 01
-T 00 54 FF 28 06 29 D5 2A 7C 61 00 69 00 60 00 62
+T 00 54 C3 33 C4 33 C5 00 C6 00 C8 55 C9 00 CA 30
 R 00 00 00 01
-T 00 62 00 67 33 68 33 63 00 66 00 D1 00 D3 00 D0
+T 00 62 CB 33 CC 33 CD 00 CE 00 6C 00 6D 00 6E 00
 R 00 00 00 01
-T 00 70 00 D2 00 E1 BF E2 00 DF FF DE 02 DD 00 E7
+T 00 70 6F 00 FF 20 31 21 15 22 40 28 06 29 D5 2A
 R 00 00 00 01
-T 00 7E 00 FF
+T 00 7E 7C 61 00 69 00 60 00 62 00 67 33 68 33 63
+R 00 00 00 01
+T 00 8C 00 66 00 D1 00 D3 00 D0 00 D2 00 E1 BF E2
+R 00 00 00 01
+T 00 9A 00 DF FF DE 02 DD 00 E7 48 FF
 R 00 00 00 01
 T 00 00 70 EF 62 00 00 71 10 62 00 00 62 01 FF 70
 R 00 00 00 02
