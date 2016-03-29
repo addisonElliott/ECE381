@@ -1,185 +1,187 @@
 Project:      output/nrf24L01_Template
 Build Number: 0
-Date:         Thu Mar 24 14:28:58 2016
+Date:         Mon Mar 28 19:08:55 2016
 Compiler:     ICCM8C
 Version:      7.05.00
 
 
 Area                               Addr   Size   Decimal Bytes (Attributes)
 --------------------------------   ----   ----   ------- ----- ------------
-                             lit   01A0   022C =    556. bytes (rel,con,rom,lit)
+                             lit   01A0   0228 =    552. bytes (rel,con,rom,lit)
 
        Addr  Global Symbol
       -----  --------------------------------
-       01B3  LoadConfigTBL_nrf24l01_template_Bank0
-       0226  LoadConfigTBL_nrf24l01_template_Bank1
-       0257  __ctype
-       03CC  __lit_end
+       01AF  LoadConfigTBL_nrf24l01_template_Bank0
+       0222  LoadConfigTBL_nrf24l01_template_Bank1
+       0253  __ctype
+       03C8  __lit_end
 
 Area                               Addr   Size   Decimal Bytes (Attributes)
 --------------------------------   ----   ----   ------- ----- ------------
-                        func_lit   03CC   0004 =      4. bytes (rel,con,rom,proclab)
+                        func_lit   03C8   0004 =      4. bytes (rel,con,rom,proclab)
 
        Addr  Global Symbol
       -----  --------------------------------
-       03CC  __func_lit_start
-       03D0  __func_lit_end
+       03C8  __func_lit_start
+       03CC  __func_lit_end
 
 Area                               Addr   Size   Decimal Bytes (Attributes)
 --------------------------------   ----   ----   ------- ----- ------------
-                     psoc_config   03D0   0170 =    368. bytes (rel,con,rom,code)
+                     psoc_config   03CC   0170 =    368. bytes (rel,con,rom,code)
 
        Addr  Global Symbol
       -----  --------------------------------
-       03D0  LoadConfigTBL_nrf24l01_template_Ordered
-       04D5  _LoadConfigInit
-       04D5  LoadConfigInit
-       04E5  _LoadConfig_nrf24l01_template
-       04E5  LoadConfig_nrf24l01_template
-       0540  __psoc_config_end
+       03CC  LoadConfigTBL_nrf24l01_template_Ordered
+       04D1  _LoadConfigInit
+       04D1  LoadConfigInit
+       04E1  _LoadConfig_nrf24l01_template
+       04E1  LoadConfig_nrf24l01_template
+       053C  __psoc_config_end
 
 Area                               Addr   Size   Decimal Bytes (Attributes)
 --------------------------------   ----   ----   ------- ----- ------------
-                     UserModules   0540   03C8 =    968. bytes (rel,con,rom,code)
+                     UserModules   053C   03C8 =    968. bytes (rel,con,rom,code)
 
        Addr  Global Symbol
       -----  --------------------------------
-       0540  _SPIM_ISR
-       0541  _SPIM_EnableInt
-       0541  SPIM_EnableInt
-       0545  _SPIM_DisableInt
-       0545  SPIM_DisableInt
-       0549  SPIM_Start
-       0549  _SPIM_Start
-       054E  _SPIM_Stop
-       054E  SPIM_Stop
-       0552  _SPIM_SendTxData
-       0552  SPIM_SendTxData
-       0555  _SPIM_bReadRxData
-       0555  _bSPIM_ReadRxData
-       0555  SPIM_bReadRxData
-       0555  bSPIM_ReadRxData
-       0558  _bSPIM_ReadStatus
-       0558  _SPIM_bReadStatus
-       0558  bSPIM_ReadStatus
-       0558  SPIM_bReadStatus
-       055B  _SleepTimer_ISR
-       056F  _SleepTimer_EnableInt
-       056F  SleepTimer_EnableInt
-       0573  SleepTimer_DisableInt
-       0573  _SleepTimer_DisableInt
-       0577  SleepTimer_Start
-       0577  _SleepTimer_Start
-       0585  SleepTimer_Stop
-       0585  _SleepTimer_Stop
-       0586  _SleepTimer_SetInterval
-       0586  SleepTimer_SetInterval
-       059C  _SleepTimer_TickWait
-       059C  SleepTimer_TickWait
-       05AE  _SleepTimer_SyncWait
-       05AE  SleepTimer_SyncWait
-       05BF  _SleepTimer_bGetTickCntr
-       05BF  SleepTimer_bGetTickCntr
-       05C5  _SleepTimer_SetTimer
-       05C5  SleepTimer_SetTimer
-       05CB  _SleepTimer_bGetTimer
-       05CB  SleepTimer_bGetTimer
-       05D1  _PGA_SetPower
-       05D1  _PGA_Start
-       05D1  PGA_SetPower
-       05D1  PGA_Start
-       05E3  _PGA_SetGain
-       05E3  PGA_SetGain
-       060D  _PGA_Stop
-       060D  PGA_Stop
-       0611  _LCD_PrCString
-       0611  LCD_PrCString
-       0623  LCD_HEX_STR
-       0633  LCD_PrHexByte
-       0633  _LCD_PrHexByte
-       0646  LCD_PrHexInt
-       0646  _LCD_PrHexInt
-       064D  LCD_PrString
-       064D  _LCD_PrString
-       065F  LCD_WriteData
-       065F  _LCD_Write_Data
-       065F  _LCD_WriteData
-       065F  LCD_Write_Data
-       0673  LCD_Control
-       0673  _LCD_Control
-       0723  _LCD_Init
-       0723  _LCD_Start
-       0723  LCD_Init
-       0723  LCD_Start
-       0792  LCD_ROW_OFFSET
-       0796  LCD_Position
-       0796  _LCD_Position
-       07A6  _LCD_Delay50uTimes
-       07A6  LCD_Delay50uTimes
-       07AC  LCD_Delay50u_Table
-       07B4  _LCD_Delay50u
-       07B4  LCD_Delay50u
-       07C8  _ADCINC_ADConversion_ISR
-       0848  _ADCINC_Start
-       0848  ADCINC_Start
-       085D  _ADCINC_SetPower
-       085D  ADCINC_SetPower
-       0879  ADCINC_Stop
-       0879  _ADCINC_Stop
-       0886  ADCINC_GetSamples
-       0886  _ADCINC_GetSamples
-       08B5  ADCINC_StopADC
-       08B5  _ADCINC_StopADC
-       08CF  ADCINC_fIsDataAvailable
-       08CF  _ADCINC_fIsDataAvailable
-       08D5  _ADCINC_wClearFlagGetData
-       08D5  ADCINC_iClearFlagGetData
-       08D5  ADCINC_wClearFlagGetData
-       08D5  _ADCINC_iClearFlagGetData
-       08E5  _ADCINC_bClearFlagGetData
-       08E5  ADCINC_bClearFlagGetData
-       08E5  ADCINC_cClearFlagGetData
-       08E5  _ADCINC_cClearFlagGetData
-       08EE  ADCINC_wGetData
-       08EE  ADCINC_iGetData
-       08EE  _ADCINC_iGetData
-       08EE  _ADCINC_wGetData
-       08F6  _ADCINC_cGetData
-       08F6  ADCINC_bGetData
-       08F6  ADCINC_cGetData
-       08F6  _ADCINC_bGetData
-       08FC  ADCINC_fClearFlag
-       08FC  _ADCINC_fClearFlag
-       0905  _ADCINC_WritePulseWidth
-       0905  ADCINC_WritePulseWidth
-       0908  __UserModules_end
+       053C  _SPIM_ISR
+       053D  _SPIM_EnableInt
+       053D  SPIM_EnableInt
+       0541  _SPIM_DisableInt
+       0541  SPIM_DisableInt
+       0545  SPIM_Start
+       0545  _SPIM_Start
+       054A  _SPIM_Stop
+       054A  SPIM_Stop
+       054E  _SPIM_SendTxData
+       054E  SPIM_SendTxData
+       0551  _SPIM_bReadRxData
+       0551  _bSPIM_ReadRxData
+       0551  SPIM_bReadRxData
+       0551  bSPIM_ReadRxData
+       0554  _bSPIM_ReadStatus
+       0554  _SPIM_bReadStatus
+       0554  bSPIM_ReadStatus
+       0554  SPIM_bReadStatus
+       0557  _SleepTimer_ISR
+       056B  _SleepTimer_EnableInt
+       056B  SleepTimer_EnableInt
+       056F  SleepTimer_DisableInt
+       056F  _SleepTimer_DisableInt
+       0573  SleepTimer_Start
+       0573  _SleepTimer_Start
+       0581  SleepTimer_Stop
+       0581  _SleepTimer_Stop
+       0582  _SleepTimer_SetInterval
+       0582  SleepTimer_SetInterval
+       0598  _SleepTimer_TickWait
+       0598  SleepTimer_TickWait
+       05AA  _SleepTimer_SyncWait
+       05AA  SleepTimer_SyncWait
+       05BB  _SleepTimer_bGetTickCntr
+       05BB  SleepTimer_bGetTickCntr
+       05C1  _SleepTimer_SetTimer
+       05C1  SleepTimer_SetTimer
+       05C7  _SleepTimer_bGetTimer
+       05C7  SleepTimer_bGetTimer
+       05CD  _PGA_SetPower
+       05CD  _PGA_Start
+       05CD  PGA_SetPower
+       05CD  PGA_Start
+       05DF  _PGA_SetGain
+       05DF  PGA_SetGain
+       0609  _PGA_Stop
+       0609  PGA_Stop
+       060D  _LCD_PrCString
+       060D  LCD_PrCString
+       061F  LCD_HEX_STR
+       062F  LCD_PrHexByte
+       062F  _LCD_PrHexByte
+       0642  LCD_PrHexInt
+       0642  _LCD_PrHexInt
+       0649  LCD_PrString
+       0649  _LCD_PrString
+       065B  LCD_WriteData
+       065B  _LCD_Write_Data
+       065B  LCD_Write_Data
+       065B  _LCD_WriteData
+       066F  LCD_Control
+       066F  _LCD_Control
+       071F  _LCD_Init
+       071F  _LCD_Start
+       071F  LCD_Init
+       071F  LCD_Start
+       078E  LCD_ROW_OFFSET
+       0792  LCD_Position
+       0792  _LCD_Position
+       07A2  _LCD_Delay50uTimes
+       07A2  LCD_Delay50uTimes
+       07A8  LCD_Delay50u_Table
+       07B0  _LCD_Delay50u
+       07B0  LCD_Delay50u
+       07C4  _ADCINC_ADConversion_ISR
+       0844  _ADCINC_Start
+       0844  ADCINC_Start
+       0859  _ADCINC_SetPower
+       0859  ADCINC_SetPower
+       0875  ADCINC_Stop
+       0875  _ADCINC_Stop
+       0882  ADCINC_GetSamples
+       0882  _ADCINC_GetSamples
+       08B1  ADCINC_StopADC
+       08B1  _ADCINC_StopADC
+       08CB  ADCINC_fIsDataAvailable
+       08CB  _ADCINC_fIsDataAvailable
+       08D1  _ADCINC_wClearFlagGetData
+       08D1  ADCINC_wClearFlagGetData
+       08D1  ADCINC_iClearFlagGetData
+       08D1  _ADCINC_iClearFlagGetData
+       08E1  ADCINC_bClearFlagGetData
+       08E1  _ADCINC_cClearFlagGetData
+       08E1  ADCINC_cClearFlagGetData
+       08E1  _ADCINC_bClearFlagGetData
+       08EA  _ADCINC_iGetData
+       08EA  ADCINC_wGetData
+       08EA  ADCINC_iGetData
+       08EA  _ADCINC_wGetData
+       08F2  ADCINC_cGetData
+       08F2  _ADCINC_bGetData
+       08F2  _ADCINC_cGetData
+       08F2  ADCINC_bGetData
+       08F8  ADCINC_fClearFlag
+       08F8  _ADCINC_fClearFlag
+       0901  _ADCINC_WritePulseWidth
+       0901  ADCINC_WritePulseWidth
+       0904  __UserModules_end
 
 Area                               Addr   Size   Decimal Bytes (Attributes)
 --------------------------------   ----   ----   ------- ----- ------------
-                            text   0908   0F45 =   3909. bytes (rel,con,rom,code)
+                            text   0904   1B9B =   7067. bytes (rel,con,rom,code)
 
        Addr  Global Symbol
       -----  --------------------------------
-       0908  _main
-       0908  __text_start
-       0B81  _nrfWriteRegister
-       0C00  _nrfReadRegister
-       0C83  _nrfWriteAddress
-       0D25  _nrfReadAddress
-       0DCD  _nrfSendData
-       0EB3  __plcall
-       0EBF  _itoa
-       1098  _utoa
-       11DB  _isdigit
-       11FC  _islower
-       121D  _isspace
-       123E  _toupper
-       127C  __csdepi
-       12AE  _csprintf
-       1317  __cprint
-       184D  __xidata_start
-       184D  __text_end
-       1858  __xidata_end
+       0904  __text_start
+       0904  _main
+       0BD4  _nrfWriteRegister
+       0C53  _nrfReadRegister
+       0CD6  _nrfWriteAddress
+       0D78  _nrfReadAddress
+       0E20  _nrfSendData
+       143D  __plcall
+       1449  _itoa
+       1622  _ltoa
+       189B  _utoa
+       19DE  _ftoa
+       1E2D  _isdigit
+       1E4E  _islower
+       1E6F  _isspace
+       1E90  _toupper
+       1ECE  __csdepi
+       1F00  _csprintf
+       1F69  __cprint
+       249F  __xidata_start
+       249F  __text_end
+       24AA  __xidata_end
 
 Area                               Start  End    Decimal Bytes (Attributes)
 --------------------------------   ----   ----   ------- ----- ------------
@@ -226,23 +228,25 @@ Area                               Addr   Size   Decimal Bytes (Attributes)
 
 Area                               Addr   Size   Decimal Bytes (Attributes)
 --------------------------------   ----   ----   ------- ----- ------------
-               virtual_registers   0028   0009 =      9. bytes (rel,con,ram)
+               virtual_registers   0037   000B =     11. bytes (rel,con,ram)
 
        Addr  Global Symbol
       -----  --------------------------------
-       0028  __rZ
-       0029  __rY
-       002A  __rX
-       002B  __r5
-       002C  __r4
-       002D  __r3
-       002E  __r2
-       002F  __r1
-       0030  __r0
+       0037  __rZ
+       0038  __rY
+       0039  __rX
+       003A  __r7
+       003B  __r6
+       003C  __r5
+       003D  __r4
+       003E  __r3
+       003F  __r2
+       0040  __r1
+       0041  __r0
 
 Area                               Addr   Size   Decimal Bytes (Attributes)
 --------------------------------   ----   ----   ------- ----- ------------
-                            data   0000   001B =     27. bytes (rel,con,ram)
+                            data   0000   002A =     42. bytes (rel,con,ram)
 
        Addr  Global Symbol
       -----  --------------------------------
@@ -254,16 +258,20 @@ Files Linked      [ module(s) ]
 obj/main.o	[ main.c ]
 obj/nrf24l01_api.o	[ nrf24l01_api.c ]
 <library>	[ spimint.asm, spim.asm, sleeptimerint.asm, sleeptimer.asm, psocconfigtbl.asm, psocconfig.asm ]
-[ pga.asm, lcd.asm, adcincint.asm, adcinc.asm, rZ.asm, rY.asm, rX.asm, r5.asm, r4.asm, r3.asm, r2.asm, r1.asm ]
-[ r0.asm, divmodu_16x16_16_util.asm, i_div16_block_util.asm, plcall.s, itoa.s, utoa.s, isdigit.s ]
-[ islower.s, isspace.s, ctype.s, toupper.s, sprintf.s, _printf.s ]
+[ pga.asm, lcd.asm, adcincint.asm, adcinc.asm, rZ.asm, rY.asm, rX.asm, r7.asm, r6.asm, r5.asm, r4.asm, r3.asm ]
+[ r2.asm, r1.asm, r0.asm, divmodu_16x16_16_util.asm, divmodu_32x32_32_util.asm, fp_analysiseject_util.asm ]
+[ fp_clrreg_util.asm, fp_nan_res_util.asm, fp_saveres_util.asm, fp_sendtoreg_util.asm, fp_sinf_res_util.asm ]
+[ fp_szero_res_util.asm, fp_type_oprnd_util.asm, fp_unnormal_util.asm, fpadd_util.asm, fpcmp_util.asm ]
+[ fpdiv_util.asm, fpmul_util.asm, i_div16_block_util.asm, i_div32_block_util.asm, i_div32_not_util.asm ]
+[ i_mulu8_block_util.asm, long2fp_util.asm, plcall.s, itoa.s, ltoa.s, utoa.s, ftoa.s, isdigit.s, islower.s ]
+[ isspace.s, ctype.s, toupper.s, sprintf.s, _printf.s ]
 
 Area Definitions
 
 -blit:0x1a0.0x7fff
 -bdata:0.0x6ff
 -BInterruptRAM:0	allocated at: 0
--Bvirtual_registers	allocated at: 0x28
+-Bvirtual_registers	allocated at: 0x37
 -Bnrf24l01_template_RAM
 -rwh:SSCParmBlk:0xf7.0xff
 

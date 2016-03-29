@@ -22,12 +22,12 @@
 
 void main(void)
 {
-	int test = 0;
 	char buf[9]; // Temporary string to contain 8 bytes while sending to wireless module
 	float voltage;
 	float temp;
-	char ftsr[16];
+	char *fstr;
 	char *cptr;
+	int status;
 	
 	M8C_EnableGInt; // Enable Global Interrupts
 	M8C_EnableIntMask(INT_MSK0,INT_MSK0_GPIO);	
@@ -60,30 +60,14 @@ void main(void)
 	nrfWriteRegister(NRF_WRITE_EN_RXADDR, 0x03); // Enable data pipes 0 and 1
 	nrfWriteRegister(NRF_WRITE_CONFIG, 0x0E); // Setup config: power on, TX mode, CRC 2-byte mode
 	
-	LCD_Position(0, 0);
-	LCD_PrHexByte(nrfReadRegister(NRF_READ_SETUP_RETR));
-	LCD_PrHexByte(nrfReadRegister(NRF_READ_RF_CH));
-	LCD_PrHexByte(nrfReadRegister(NRF_READ_RF_SETUP));
-	
-	LCD_PrHexByte(nrfReadRegister(NRF_READ_PW_P0));
-	LCD_PrHexByte(nrfReadRegister(NRF_READ_PW_P1));
-	LCD_PrHexByte(nrfReadRegister(NRF_READ_EN_AA));
-	
-	LCD_PrHexByte(nrfReadRegister(NRF_READ_EN_RXADDR));
-	LCD_PrHexByte(nrfReadRegister(NRF_READ_CONFIG));
-	
-	LCD_Position(1, 0);
-	nrfReadAddress(NRF_READ_RX_ADDR_P1, buf);
-	for (test = 0; test < 5; ++test)
-		LCD_PrHexByte(buf[test]);
-	SleepTimer_SyncWait(4, SleepTimer_WAIT_RELOAD);
 	while (1) 
 	{
-		SleepTimer_SyncWait(5, SleepTimer_WAIT_RELOAD); // Wait for about 1 second
+		SleepTimer_SyncWait(1, SleepTimer_WAIT_RELOAD); // Wait for about 1 second
 		
+		ADCINC_GetSamples(1);
 		while (ADCINC_fIsDataAvailable() == 0); // Wait for data to be ready
-		voltage = SCALE_FACTOR*(ADCINC_iClearFlagGetData()); // Get data and clear flag
-		temp = voltage * 10;
+		voltage = SCALE_FACTOR * (ADCINC_iClearFlagGetData()); // Get data and clear flag
+		temp = voltage / 0.01f;
 		
 		// Round and and truncate the float string at the hundredths position.
 		// Note: This only rounds the string and not the original float.
@@ -92,7 +76,7 @@ void main(void)
 		while(*cptr > 0x0) {
 			if (*cptr == '.') {
 				if (*(cptr+1) == 0x0) {
-					*(cptr+) = '0';
+					*(cptr+1) = '0';
 				}
 				*(cptr+2) = 0x0;
 				break;
@@ -102,6 +86,13 @@ void main(void)
 
 		csprintf(buf, "I: %s",fstr);
 		nrfSendData(buf);
+		
+		LCD_Control(LCD_DISP_CLEAR_HOME);
+		LCD_Position(1,0);
+		LCD_PrCString("Temp: ");
+		LCD_PrString(fstr);
+		LCD_WriteData(0xDF);
+		LCD_PrCString("F");
 		
 		while (IRQ_Data_ADDR & IRQ_MASK);
 		nrfWriteRegister(NRF_WRITE_STATUS, 0x7E);

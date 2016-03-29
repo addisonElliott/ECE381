@@ -29,18 +29,20 @@ LMM info: area 'InterruptRAM' uses 15 bytes in SRAM bank 0
 
 LMM info: area 'data' item of 25 bytes allocated in SRAM page 0
 
-LMM info: area 'virtual_registers' uses 9 bytes in SRAM page 0
+LMM info: area 'data' item of 15 bytes allocated in SRAM page 0
+
+LMM info: area 'virtual_registers' uses 11 bytes in SRAM page 0
 
 LMM info: area 'data' item of 2 bytes allocated in SRAM page 0
 
 idata dump at output/nrf24L01_Template.idata
 
-  ROM 18% full. 5805 out of 32768 bytes used (does not include absolute areas).
+  ROM 28% full. 8959 out of 32768 bytes used (does not include absolute areas).
 
-  RAM 3% full. 51 bytes used (does not include stack usage).
+  RAM 4% full. 68 bytes used (does not include stack usage).
 
 Built with ICCM8C STD V7.05.00
 
  
-nrf24L01_Template - 0 error(s) 0 warning(s) 14:28:58
+nrf24L01_Template - 0 error(s) 0 warning(s) 19:08:56
 

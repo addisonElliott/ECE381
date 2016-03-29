@@ -20,7 +20,28 @@ export LoadConfigTBL_nrf24l01_template_Bank0
 export LoadConfigTBL_nrf24l01_template_Ordered
 AREA lit(rom, rel)
 LoadConfigTBL_nrf24l01_template_Bank0:
+;  Instance name ADCINC, User Module ADCINC
+;       Instance name ADCINC, Block Name ADC1(ASC10)
+	db		80h, 88h		;ADCINC_AtoD1cr0(ASC10CR0)
+	db		81h, 00h		;ADCINC_AtoD1cr1(ASC10CR1)
+	db		82h, 20h		;ADCINC_AtoD1cr2(ASC10CR2)
+	db		83h, f4h		;ADCINC_AtoD1cr3(ASC10CR3)
+;       Instance name ADCINC, Block Name ADC2(ASD20)
+	db		90h, 90h		;ADCINC_AtoD2cr0(ASD20CR0)
+	db		91h, 00h		;ADCINC_AtoD2cr1(ASD20CR1)
+	db		92h, 60h		;ADCINC_AtoD2cr2(ASD20CR2)
+	db		93h, f0h		;ADCINC_AtoD2cr3(ASD20CR3)
+;       Instance name ADCINC, Block Name PWM(DBB00)
+	db		23h, 00h		;ADCINC_PWMcr0(DBB00CR0)
+	db		21h, 00h		;ADCINC_PWMdr1(DBB00DR1)
+	db		22h, 01h		;ADCINC_PWMdr2(DBB00DR2)
 ;  Instance name LCD, User Module LCD
+;  Instance name PGA, User Module PGA
+;       Instance name PGA, Block Name GAIN(ACB00)
+	db		71h, 7eh		;PGA_GAIN_CR0(ACB00CR0)
+	db		72h, 21h		;PGA_GAIN_CR1(ACB00CR1)
+	db		73h, 20h		;PGA_GAIN_CR2(ACB00CR2)
+	db		70h, 00h		;PGA_GAIN_CR3(ACB00CR3)
 ;  Instance name SPIM, User Module SPIM
 ;       Instance name SPIM, Block Name SPIM(DCB02)
 	db		2bh, 00h		;SPIM_CONTROL_REG  (DCB02CR0)
@@ -30,10 +51,10 @@ LoadConfigTBL_nrf24l01_template_Bank0:
 ;  Global Register values Bank 0
 	db		60h, 28h		; AnalogColumnInputSelect register (AMX_IN)
 	db		66h, 00h		; AnalogComparatorControl1 register (CMP_CR1)
-	db		63h, 05h		; AnalogReferenceControl register (ARF_CR)
+	db		63h, 35h		; AnalogReferenceControl register (ARF_CR)
 	db		65h, 00h		; AnalogSyncControl register (ASY_CR)
 	db		e6h, 00h		; DecimatorControl_0 register (DEC_CR0)
-	db		e7h, 00h		; DecimatorControl_1 register (DEC_CR1)
+	db		e7h, 42h		; DecimatorControl_1 register (DEC_CR1)
 	db		d6h, 00h		; I2CConfig register (I2C_CFG)
 	db		b0h, 0ch		; Row_0_InputMux register (RDI0RI)
 	db		b1h, 00h		; Row_0_InputSync register (RDI0SYN)
@@ -69,7 +90,16 @@ LoadConfigTBL_nrf24l01_template_Bank0:
 	db		6fh, 00h		; TMP_DR3 register (TMP_DR3)
 	db		ffh
 LoadConfigTBL_nrf24l01_template_Bank1:
+;  Instance name ADCINC, User Module ADCINC
+;       Instance name ADCINC, Block Name ADC1(ASC10)
+;       Instance name ADCINC, Block Name ADC2(ASD20)
+;       Instance name ADCINC, Block Name PWM(DBB00)
+	db		20h, 31h		;ADCINC_PWMfn(DBB00FN)
+	db		21h, 15h		;ADCINC_PWMsl(DBB00IN)
+	db		22h, 40h		;ADCINC_PWMos(DBB00OU)
 ;  Instance name LCD, User Module LCD
+;  Instance name PGA, User Module PGA
+;       Instance name PGA, Block Name GAIN(ACB00)
 ;  Instance name SPIM, User Module SPIM
 ;       Instance name SPIM, Block Name SPIM(DCB02)
 	db		28h, 06h		;SPIM_FUNCTION_REG (DCB02FN)
@@ -94,7 +124,7 @@ LoadConfigTBL_nrf24l01_template_Bank1:
 	db		dfh, ffh		; OscillatorControl_3 register (OSC_CR3)
 	db		deh, 02h		; OscillatorControl_4 register (OSC_CR4)
 	db		ddh, 00h		; OscillatorGlobalBusEnableControl register (OSC_GO_EN)
-	db		e7h, 00h		; Type2Decimator_Control register (DEC_CR2)
+	db		e7h, 48h		; Type2Decimator_Control register (DEC_CR2)
 	db		ffh
 AREA psoc_config(rom, rel)
 LoadConfigTBL_nrf24l01_template_Ordered:
