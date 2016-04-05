@@ -1,0 +1,1192 @@
+ 0000                   cpu LMM
+                        .module main.c
+                        .area text(rom, con, rel)
+ 0000                   .dbfile ./main.c
+                        .area lit(rom, con, rel, lit)
+ 0000           L2:
+ 0000 0001              .byte 0,1
+ 0002 4041              .byte 64,'A
+ 0004 8081              .byte 128,129
+                        .area text(rom, con, rel)
+ 0000                   .dbfile ./main.c
+ 0000                   .dbfile C:\Users\Jacob\Desktop\ECE381\SPI_SRAM\SPI_SRAM\main.c
+ 0000                   .dbfunc e SPIRAM_StatusRegisterTest _SPIRAM_StatusRegisterTest fc
+ 0000           ;         status -> X+7
+ 0000           ;           mode -> X+1
+ 0000           ;              b -> X+0
+ 0000           _SPIRAM_StatusRegisterTest::
+ 0000                   .dbline -1
+ 0000 10                push X
+ 0001 4F                mov X,SP
+ 0002 3808              add SP,8
+ 0004                   .dbline 111
+ 0004           ; //----------------------------------------------------------------------------
+ 0004           ; // 23K256 SPI SRAM Program
+ 0004           ; //
+ 0004           ; // PSoC Global Resources:
+ 0004           ; //   Power Setting     5.0V/24MHz
+ 0004           ; //   CPU_Clock         SysClk/1
+ 0004           ; //   32K_Select        Internal
+ 0004           ; //   PLL_Mode          Off
+ 0004           ; //   Sleep_Timer       8_Hz
+ 0004           ; //   VC1=SysClk/N     *12
+ 0004           ; //   VC2=VC1/N        *2
+ 0004           ; //                    * VC1 & VC2 values make VC2 = 1MHz = SPIM Clock
+ 0004           ; //   VC3_Source        SysClk/1
+ 0004           ; //   VC3 Divider      *52
+ 0004           ; //                    *Used to set UART baud rate to 57600
+ 0004           ; //   SysClk Source     Internal
+ 0004           ; //   SysClk*2 Disable  { Any }
+ 0004           ; //   Analog Power      { Any }
+ 0004           ; //   Ref Mux           { Any }
+ 0004           ; //   AGndBypass        { Any }
+ 0004           ; //   Op-Amp Bias       { Any }
+ 0004           ; //   A_Buff_Power      { Any }
+ 0004           ; //   SwitchModePump    OFF
+ 0004           ; //   Trip Voltage      { Any }
+ 0004           ; //   LVD ThrottleBack  Disable
+ 0004           ; //                    *When enabled, an LVD event forces the CPU Clock to SysClk/8.
+ 0004           ; //   Watchdog Enable  *{ Any }
+ 0004           ; //                    *Incautious use of the Watchdog may adversely affect timing
+ 0004           ; //
+ 0004           ; // SPIM Parameters
+ 0004           ; //   Name              SPIM
+ 0004           ; //   Clock            *VC2
+ 0004           ; //                    *1MHz = 500kbps SPI bit rate.
+ 0004           ; //   MISO              Row_2_Input_1
+ 0004           ; //   MOSI              Row_2_Output_0
+ 0004           ; //   SClk              Row_2_Output_3
+ 0004           ; //   Interrupt Mode    TXRegEmpty
+ 0004           ; //   ClockSync         Sync to SysClk
+ 0004           ; //   InvertMISO        Normal
+ 0004           ; //
+ 0004           ; // SPIM Module Notes
+ 0004           ; //   The 23K256 SPI SRAM has a maximum clock speed of 20MHz
+ 0004           ; //   SPIM Clock must be set to two times the desired bit rate
+ 0004           ; //   My prototype uses VC2 = SysClk/48 = 500kHz, yielding a bit rate of 250kbps
+ 0004           ; //   CS   = P12 (StdCPU:    Open Drain Low)
+ 0004           ; //   SCLK = P13 (GlobalOut: Open Drain Low)
+ 0004           ; //   MOSI = P14 (GlobalOut: Open Drain Low)
+ 0004           ; //   MISO = P15 (GlobalIn:  High Z)
+ 0004           ; //
+ 0004           ; // SPIM Modules Notes:
+ 0004           ; //  -Per Datasheet: The Row Input synchronization for MISO should be set to
+ 0004           ; //   Async for high SPI bit rates (>1Mbps).
+ 0004           ; //  -The SPIM Control Register contains the flags that are read by the
+ 0004           ; //   SPIM_bReadStatus() function. Reading clears all flags.
+ 0004           ; //  -The Datasheet for the SPIM Datasheet is inconsistent in its referral to
+ 0004           ; //   the SPIM_SPI_COMPLETE flag.  In the SPIM Control Register, it is named
+ 0004           ; //   SPI Done.
+ 0004           ; //  -The SPIM Module always transfers data present on the MISO pin when it
+ 0004           ; //   writes to the MOSI pin. In other words, it always transfers data into
+ 0004           ; //   the receive buffer while it is transferring data out of the transmit
+ 0004           ; //   buffer; it is essential to keep this in mind when checking flags.
+ 0004           ; //  -TX_BUFFER_EMPTY indicates that a new byte can be written to the TX Buffer.
+ 0004           ; //  -RX_BUFFER_FULL is set on the edge that captures the 8th bit of receive data.
+ 0004           ; //  -SPI_COMPLETE (an optional interrupt) is set when eight bits
+ 0004           ; //   of data and clock have been sent. In modes 0 and 1, this occurs one-half
+ 0004           ; //   cycle after RX_BUFFER_FULL is set; because in these modes, data is latched
+ 0004           ; //   on the leading edge of the clock and there is an additional one-half cycle
+ 0004           ; //   remaining to complete that clock. In modes 2 and 3, this occurs at the
+ 0004           ; //   same edge that the receive data is latched. This signal may be used to
+ 0004           ; //   read the received byte or it may be used by the SPIM to disable the
+ 0004           ; //   block after data transmission is complete.
+ 0004           ; //   See PSoC TRM, Document No. 001-14463 Rev. *G, Figure 17-19, page 358.
+ 0004           ; //  -Once the first byte to be transmitted is moved into the transmit buffer
+ 0004           ; //   by calling the SendTxData API, the SPIM module immediately moves the
+ 0004           ; //   byte into the transmit shift register one SPIM Clock Input cycle later
+ 0004           ; //   whereupon the TX_BUFFER_EMPTY flag is set immediately.
+ 0004           ; //   If another byte is written before the first byte has been fully shifted
+ 0004           ; //   out, it is placed in the transmit buffer and remains there until half-way
+ 0004           ; //   through the transmission of the 8th and final bit whereupon it is
+ 0004           ; //   automatically loaded into the transmit buffer which again sets the
+ 0004           ; //   TX_BUFFER_EMPTY flag and the 1st bit of the second byte begins
+ 0004           ; //   its transfer immediately after the 8th bit of the 1st byte. This allows
+ 0004           ; //   for uninterrupted back-to-back transmission.
+ 0004           ; //
+ 0004           ; // 23K256 Notes:
+ 0004           ; //  -Pins 4 & 8, the power pins, must have a 0.1uF decoupling capacitor
+ 0004           ; //   physically placed as close as possible to the IC package.
+ 0004           ; //  -Pin 7 (nHOLD) must be tied to Vcc since it is not used here.
+ 0004           ; //  -Pin 3 should be left floating since it is NC (no connection)
+ 0004           ; //  -3.3V SPI to 5V PSoC voltage translation is accomplished through 2.2k
+ 0004           ; //   pull-up resistors. This also limits the maximum reliable data transfer
+ 0004           ; //   rate due to the 2.2k*Cpin+wire time constant. Long wires are detrimental!
+ 0004           ; //
+ 0004           ; // bnoble@siue.edu 20140320
+ 0004           ; //----------------------------------------------------------------------------
+ 0004           ; 
+ 0004           ; #include <m8c.h>        // part specific constants and macros
+ 0004           ; #include "PSoCAPI.h"    // PSoC API definitions for all User Modules
+ 0004           ; #include "stdlib.h"
+ 0004           ; #include "spi_sram.h"
+ 0004           ; 
+ 0004           ; // Define our I/O array size. Powers of 2 are nice but not necessary
+ 0004           ; #define ARRAY_SIZE 64
+ 0004           ; 
+ 0004           ; // Globals
+ 0004           ; BYTE DataIn[ARRAY_SIZE];
+ 0004           ; BYTE DataOut[ARRAY_SIZE];
+ 0004           ; 
+ 0004           ; // Test reading and writing the 23K256 status register:
+ 0004           ; BYTE SPIRAM_StatusRegisterTest(void)
+ 0004           ; {
+ 0004                   .dbline 113
+ 0004           ;       // NOTE: SPIRAM_SEQUENTIAL_MODE|SPIRAM_PAGE_MODE is "Reserved", don't use it
+ 0004           ;       BYTE mode[6] = { SPIRAM_BYTE_MODE,
+ 0004 62D000            mov REG[0xd0],>__r0
+ 0007 550000            mov [__r1],<L2
+ 000A 550000            mov [__r0],>L2
+ 000D 5A00              mov [__r3],X
+ 000F 060001            add [__r3],1
+ 0012 62D507            mov REG[0xd5],7
+ 0015 10                push X
+ 0016 550000            mov [__rX],0
+ 0019 5100              mov A,[__r0]
+ 001B 5800              mov X,[__r1]
+ 001D           X0:
+ 001D 08                push A
+ 001E 28                romx
+ 001F 62D000            mov REG[0xd0],>__r0
+ 0022 3F00              mvi [__r3],A
+ 0024 18                pop A
+ 0025 75                inc X
+ 0026 0900              adc A,0
+ 0028 7600              inc [__rX]
+ 002A 3C0006            cmp [__rX],6
+ 002D BFEF              jnz X0
+ 002F                   .dbline 122
+ 002F           ;                                        SPIRAM_BYTE_MODE|SPIRAM_DISABLE_HOLD,
+ 002F           ;                                        SPIRAM_SEQUENTIAL_MODE,
+ 002F           ;                                        SPIRAM_SEQUENTIAL_MODE|SPIRAM_DISABLE_HOLD,
+ 002F           ;                                        SPIRAM_PAGE_MODE,
+ 002F           ;                                        SPIRAM_PAGE_MODE|SPIRAM_DISABLE_HOLD };
+ 002F           ;       BYTE status;
+ 002F           ;       BYTE b;
+ 002F           ; 
+ 002F           ;       UART_CPutString("Status Register W/R Test: 0x  ");
+ 002F 50BC              mov A,>L3
+ 0031 08                push A
+ 0032 50BC              mov A,<L3
+ 0034 5C                mov X,A
+ 0035 18                pop A
+ 0036 7C0000            xcall _UART_CPutString
+ 0039 20                pop X
+ 003A                   .dbline 123
+ 003A           ;       for (b=0; b<6 ; b++) {
+ 003A 560000            mov [X+0],0
+ 003D 809B              xjmp L7
+ 003F           L4:
+ 003F                   .dbline 123
+ 003F                   .dbline 124
+ 003F           ;               UART_PutChar(0x08);
+ 003F 10                push X
+ 0040 5008              mov A,8
+ 0042 7C0000            xcall _UART_PutChar
+ 0045                   .dbline 125
+ 0045           ;               UART_PutChar(0x08);
+ 0045 5008              mov A,8
+ 0047 7C0000            xcall _UART_PutChar
+ 004A 20                pop X
+ 004B                   .dbline 126
+ 004B           ;               UART_PutSHexByte(mode[b]);
+ 004B 62D000            mov REG[0xd0],>__r0
+ 004E 550007            mov [__r0],7
+ 0051 5A00              mov [__r1],X
+ 0053 060001            add [__r1],1
+ 0056 5200              mov A,[X+0]
+ 0058 0200              add A,[__r1]
+ 005A 5300              mov [__r1],A
+ 005C 5000              mov A,0
+ 005E 0A00              adc A,[__r0]
+ 0060 60D4              mov REG[0xd4],A
+ 0062 3E00              mvi A,[__r1]
+ 0064 10                push X
+ 0065 7C0000            xcall _UART_PutSHexByte
+ 0068 20                pop X
+ 0069                   .dbline 127
+ 0069           ;               if (SPIRAM_WriteStatusRegister(mode[b])) {
+ 0069 62D000            mov REG[0xd0],>__r0
+ 006C 550007            mov [__r0],7
+ 006F 5A00              mov [__r1],X
+ 0071 060001            add [__r1],1
+ 0074 5200              mov A,[X+0]
+ 0076 0200              add A,[__r1]
+ 0078 5300              mov [__r1],A
+ 007A 5000              mov A,0
+ 007C 0A00              adc A,[__r0]
+ 007E 60D4              mov REG[0xd4],A
+ 0080 3E00              mvi A,[__r1]
+ 0082 08                push A
+ 0083 7C0000            xcall _SPIRAM_WriteStatusRegister
+ 0086 38FF              add SP,-1
+ 0088 62D000            mov REG[0xd0],>__r0
+ 008B 3900              cmp A,0
+ 008D A010              jz L8
+ 008F                   .dbline 128
+ 008F           ;                       UART_CPutString("\r\nWrite of invalid Status Register value. System halted.\r\n");
+ 008F                   .dbline 128
+ 008F 10                push X
+ 0090 5081              mov A,>L10
+ 0092 08                push A
+ 0093 5081              mov A,<L10
+ 0095 5C                mov X,A
+ 0096 18                pop A
+ 0097 7C0000            xcall _UART_CPutString
+ 009A 20                pop X
+ 009B                   .dbline 129
+ 009B           ;                       M8C_Stop;
+ 009B 43FF01            or REG[0xff],1
+ 009E                   .dbline 130
+ 009E           ;               }
+ 009E           L8:
+ 009E                   .dbline 131
+ 009E           ;               status = SPIRAM_ReadStatusRegister();
+ 009E 7C0000            xcall _SPIRAM_ReadStatusRegister
+ 00A1 62D000            mov REG[0xd0],>__r0
+ 00A4 5407              mov [X+7],A
+ 00A6                   .dbline 132
+ 00A6           ;               if (status != mode[b]) {
+ 00A6 550007            mov [__r0],7
+ 00A9 5A00              mov [__r1],X
+ 00AB 060001            add [__r1],1
+ 00AE 5200              mov A,[X+0]
+ 00B0 0200              add A,[__r1]
+ 00B2 5300              mov [__r1],A
+ 00B4 5000              mov A,0
+ 00B6 0A00              adc A,[__r0]
+ 00B8 60D4              mov REG[0xd4],A
+ 00BA 3E00              mvi A,[__r1]
+ 00BC 5300              mov [__r0],A
+ 00BE 5207              mov A,[X+7]
+ 00C0 3A00              cmp A,[__r0]
+ 00C2 A014              jz L11
+ 00C4                   .dbline 133
+ 00C4           ;                       UART_CPutString(" FAIL\r\n");
+ 00C4                   .dbline 133
+ 00C4 10                push X
+ 00C5 5079              mov A,>L13
+ 00C7 08                push A
+ 00C8 5079              mov A,<L13
+ 00CA 5C                mov X,A
+ 00CB 18                pop A
+ 00CC 7C0000            xcall _UART_CPutString
+ 00CF 20                pop X
+ 00D0                   .dbline 134
+ 00D0           ;                       return(1);
+ 00D0 62D000            mov REG[0xd0],>__r0
+ 00D3 5001              mov A,1
+ 00D5 8021              xjmp L1
+ 00D7           L11:
+ 00D7                   .dbline 136
+ 00D7           ;               }
+ 00D7           ;       }
+ 00D7           L5:
+ 00D7                   .dbline 123
+ 00D7 7700              inc [X+0]
+ 00D9           L7:
+ 00D9                   .dbline 123
+ 00D9 3D0006            cmp [X+0],6
+ 00DC CF62              jc L4
+ 00DE           X1:
+ 00DE                   .dbline 137
+ 00DE           ;       UART_CPutString("\b\b\b\b\b PASS\r\n");
+ 00DE 10                push X
+ 00DF 506C              mov A,>L14
+ 00E1 08                push A
+ 00E2 506C              mov A,<L14
+ 00E4 5C                mov X,A
+ 00E5 18                pop A
+ 00E6 7C0000            xcall _UART_CPutString
+ 00E9 20                pop X
+ 00EA                   .dbline 139
+ 00EA           ;       // Place the SRAM back in Byte Mode
+ 00EA           ;       SPIRAM_WriteStatusRegister(SPIRAM_BYTE_MODE|SPIRAM_DISABLE_HOLD);
+ 00EA 5001              mov A,1
+ 00EC 08                push A
+ 00ED 7C0000            xcall _SPIRAM_WriteStatusRegister
+ 00F0 38FF              add SP,-1
+ 00F2 62D000            mov REG[0xd0],>__r0
+ 00F5                   .dbline 140
+ 00F5           ;       return(0);
+ 00F5 5000              mov A,0
+ 00F7                   .dbline -2
+ 00F7           L1:
+ 00F7 38F8              add SP,-8
+ 00F9 20                pop X
+ 00FA                   .dbline 0 ; func end
+ 00FA 7F                ret
+ 00FB                   .dbsym l status 7 c
+ 00FB                   .dbsym l mode 1 A[6:6]c
+ 00FB                   .dbsym l b 0 c
+ 00FB                   .dbend
+ 00FB                   .dbfunc e SPIRAM_ByteModeTest _SPIRAM_ByteModeTest fi
+ 00FB           ;         status -> X+4
+ 00FB           ;             in -> X+3
+ 00FB           ;           addr -> X+1
+ 00FB           ;              b -> X+0
+ 00FB           _SPIRAM_ByteModeTest::
+ 00FB                   .dbline -1
+ 00FB 10                push X
+ 00FC 4F                mov X,SP
+ 00FD 3805              add SP,5
+ 00FF                   .dbline 145
+ 00FF           ; }
+ 00FF           ; 
+ 00FF           ; // Test reading and writing the 23K256 in Byte Mode:
+ 00FF           ; WORD SPIRAM_ByteModeTest(void)
+ 00FF           ; {
+ 00FF                   .dbline 151
+ 00FF           ;       BYTE status;
+ 00FF           ;       BYTE b;
+ 00FF           ;       BYTE in;
+ 00FF           ;       WORD addr;
+ 00FF           ; 
+ 00FF           ;       SPIRAM_WriteStatusRegister(SPIRAM_BYTE_MODE|SPIRAM_DISABLE_HOLD);
+ 00FF 5001              mov A,1
+ 0101 08                push A
+ 0102 7C0000            xcall _SPIRAM_WriteStatusRegister
+ 0105 38FF              add SP,-1
+ 0107 62D000            mov REG[0xd0],>__r0
+ 010A                   .dbline 152
+ 010A           ;       UART_CPutString("      Byte Mode W/R Test: Addr 0x    ");
+ 010A 10                push X
+ 010B 5046              mov A,>L16
+ 010D 08                push A
+ 010E 5046              mov A,<L16
+ 0110 5C                mov X,A
+ 0111 18                pop A
+ 0112 7C0000            xcall _UART_CPutString
+ 0115 20                pop X
+ 0116                   .dbline 154
+ 0116           ; 
+ 0116           ;       for (addr=0; addr<0x8000 ; addr++) {
+ 0116 560200            mov [X+2],0
+ 0119 560100            mov [X+1],0
+ 011C 80BE              xjmp L20
+ 011E           L17:
+ 011E                   .dbline 154
+ 011E                   .dbline 155
+ 011E           ;               if (((addr-1) & 0x000f) == 0x000f) {
+ 011E 62D000            mov REG[0xd0],>__r0
+ 0121 5202              mov A,[X+2]
+ 0123 1101              sub A,1
+ 0125 5300              mov [__r1],A
+ 0127 5201              mov A,[X+1]
+ 0129 1900              sbb A,0
+ 012B 5300              mov [__r0],A
+ 012D 26000F            and [__r1],15
+ 0130 260000            and [__r0],0
+ 0133 B01D              jnz L21
+ 0135 3C000F            cmp [__r1],15
+ 0138 B018              jnz L21
+ 013A           X2:
+ 013A                   .dbline 156
+ 013A           ;                       UART_CPutString("\b\b\b\b");
+ 013A                   .dbline 156
+ 013A 10                push X
+ 013B 5041              mov A,>L23
+ 013D 08                push A
+ 013E 5041              mov A,<L23
+ 0140 5C                mov X,A
+ 0141 18                pop A
+ 0142 7C0000            xcall _UART_CPutString
+ 0145 20                pop X
+ 0146                   .dbline 157
+ 0146           ;                       UART_PutSHexInt(addr);
+ 0146 10                push X
+ 0147 5201              mov A,[X+1]
+ 0149 08                push A
+ 014A 5202              mov A,[X+2]
+ 014C 20                pop X
+ 014D 7C0000            xcall _UART_PutSHexInt
+ 0150 20                pop X
+ 0151                   .dbline 158
+ 0151           ;               }
+ 0151           L21:
+ 0151                   .dbline 159
+ 0151           ;               b = 0;
+ 0151 560000            mov [X+0],0
+ 0154           L24:
+ 0154                   .dbline 160
+ 0154           ;               do {
+ 0154                   .dbline 161
+ 0154           ;                       SPIRAM_WriteByte(addr, b);
+ 0154 5200              mov A,[X+0]
+ 0156 08                push A
+ 0157 5201              mov A,[X+1]
+ 0159 08                push A
+ 015A 5202              mov A,[X+2]
+ 015C 08                push A
+ 015D 7C0000            xcall _SPIRAM_WriteByte
+ 0160                   .dbline 162
+ 0160           ;                       in = SPIRAM_ReadByte(addr);
+ 0160 5201              mov A,[X+1]
+ 0162 08                push A
+ 0163 5202              mov A,[X+2]
+ 0165 08                push A
+ 0166 7C0000            xcall _SPIRAM_ReadByte
+ 0169 38FB              add SP,-5
+ 016B 62D000            mov REG[0xd0],>__r0
+ 016E 5403              mov [X+3],A
+ 0170                   .dbline 163
+ 0170           ;                       if (in != b) {
+ 0170 5203              mov A,[X+3]
+ 0172 3B00              cmp A,[X+0]
+ 0174 A02D              jz L27
+ 0176                   .dbline 164
+ 0176           ;                               UART_CPutString("\b\b\b\b");
+ 0176                   .dbline 164
+ 0176 10                push X
+ 0177 5041              mov A,>L23
+ 0179 08                push A
+ 017A 5041              mov A,<L23
+ 017C 5C                mov X,A
+ 017D 18                pop A
+ 017E 7C0000            xcall _UART_CPutString
+ 0181 20                pop X
+ 0182                   .dbline 165
+ 0182           ;                               UART_PutSHexInt(addr);
+ 0182 10                push X
+ 0183 5201              mov A,[X+1]
+ 0185 08                push A
+ 0186 5202              mov A,[X+2]
+ 0188 20                pop X
+ 0189 7C0000            xcall _UART_PutSHexInt
+ 018C                   .dbline 166
+ 018C           ;                               UART_CPutString(" FAIL\r\n");
+ 018C 5079              mov A,>L13
+ 018E 08                push A
+ 018F 5079              mov A,<L13
+ 0191 5C                mov X,A
+ 0192 18                pop A
+ 0193 7C0000            xcall _UART_CPutString
+ 0196 20                pop X
+ 0197                   .dbline 167
+ 0197           ;                               return(1);
+ 0197 62D000            mov REG[0xd0],>__r0
+ 019A 550001            mov [__r1],1
+ 019D 550000            mov [__r0],0
+ 01A0 8059              xjmp L15
+ 01A2           L27:
+ 01A2                   .dbline 169
+ 01A2           ;                       }
+ 01A2           ;                       if (!b)
+ 01A2 3D0000            cmp [X+0],0
+ 01A5 B006              jnz L29
+ 01A7                   .dbline 170
+ 01A7           ;                               b = 0x01;
+ 01A7 560001            mov [X+0],1
+ 01AA 8003              xjmp L30
+ 01AC           L29:
+ 01AC                   .dbline 172
+ 01AC           ;                       else
+ 01AC           ;                               b = b << 1;
+ 01AC 6600              asl [X+0]
+ 01AE           L30:
+ 01AE                   .dbline 173
+ 01AE           ;               } while(b);
+ 01AE           L25:
+ 01AE                   .dbline 173
+ 01AE 3D0000            cmp [X+0],0
+ 01B1 BFA2              jnz L24
+ 01B3                   .dbline 174
+ 01B3           ;               if (UART_cReadChar()) {
+ 01B3 10                push X
+ 01B4 7C0000            xcall _UART_cReadChar
+ 01B7 20                pop X
+ 01B8 62D000            mov REG[0xd0],>__r0
+ 01BB 3900              cmp A,0
+ 01BD A018              jz L31
+ 01BF                   .dbline 175
+ 01BF           ;                       UART_CPutString("\b\b\b\b\b\b\b\b\b\b\b\b ABORTED    \r\n");
+ 01BF                   .dbline 175
+ 01BF 10                push X
+ 01C0 5026              mov A,>L33
+ 01C2 08                push A
+ 01C3 5026              mov A,<L33
+ 01C5 5C                mov X,A
+ 01C6 18                pop A
+ 01C7 7C0000            xcall _UART_CPutString
+ 01CA 20                pop X
+ 01CB                   .dbline 176
+ 01CB           ;                       return(0);
+ 01CB 62D000            mov REG[0xd0],>__r0
+ 01CE 550000            mov [__r1],0
+ 01D1 550000            mov [__r0],0
+ 01D4 8025              xjmp L15
+ 01D6           L31:
+ 01D6                   .dbline 178
+ 01D6           ;               }
+ 01D6           ;       }
+ 01D6           L18:
+ 01D6                   .dbline 154
+ 01D6 7702              inc [X+2]
+ 01D8 0F0100            adc [X+1],0
+ 01DB           L20:
+ 01DB                   .dbline 154
+ 01DB 5202              mov A,[X+2]
+ 01DD 1100              sub A,0
+ 01DF 5201              mov A,[X+1]
+ 01E1 1980              sbb A,-128
+ 01E3 CF3A              jc L17
+ 01E5           X3:
+ 01E5                   .dbline 179
+ 01E5           ;       UART_CPutString("\b\b\b\b\b\b\b\b\b\b\b\b PASS       \r\n");
+ 01E5 10                push X
+ 01E6 500B              mov A,>L34
+ 01E8 08                push A
+ 01E9 500B              mov A,<L34
+ 01EB 5C                mov X,A
+ 01EC 18                pop A
+ 01ED 7C0000            xcall _UART_CPutString
+ 01F0 20                pop X
+ 01F1                   .dbline 180
+ 01F1           ;       return(0);
+ 01F1 62D000            mov REG[0xd0],>__r0
+ 01F4 550000            mov [__r1],0
+ 01F7 550000            mov [__r0],0
+ 01FA                   .dbline -2
+ 01FA           L15:
+ 01FA 38FB              add SP,-5
+ 01FC 20                pop X
+ 01FD                   .dbline 0 ; func end
+ 01FD 7F                ret
+ 01FE                   .dbsym l status 4 c
+ 01FE                   .dbsym l in 3 c
+ 01FE                   .dbsym l addr 1 i
+ 01FE                   .dbsym l b 0 c
+ 01FE                   .dbend
+ 01FE                   .dbfunc e SPIRAM_SequentialModeTest _SPIRAM_SequentialModeTest fi
+ 01FE           ;             in -> X+5
+ 01FE           ;         status -> X+4
+ 01FE           ;           addr -> X+2
+ 01FE           ;              b -> X+1
+ 01FE           ;              a -> X+0
+ 01FE           _SPIRAM_SequentialModeTest::
+ 01FE                   .dbline -1
+ 01FE 10                push X
+ 01FF 4F                mov X,SP
+ 0200 3806              add SP,6
+ 0202                   .dbline 185
+ 0202           ; }
+ 0202           ; 
+ 0202           ; // Test reading and writing the 23K256 in Sequential Mode:
+ 0202           ; WORD SPIRAM_SequentialModeTest(void)
+ 0202           ; {
+ 0202                   .dbline 192
+ 0202           ;       BYTE status;
+ 0202           ;       BYTE a;
+ 0202           ;       BYTE b;
+ 0202           ;       BYTE in;
+ 0202           ;       WORD addr;
+ 0202           ; 
+ 0202           ;       SPIRAM_WriteStatusRegister(SPIRAM_SEQUENTIAL_MODE|SPIRAM_DISABLE_HOLD);
+ 0202 5041              mov A,65
+ 0204 08                push A
+ 0205 7C0000            xcall _SPIRAM_WriteStatusRegister
+ 0208 38FF              add SP,-1
+ 020A 62D000            mov REG[0xd0],>__r0
+ 020D                   .dbline 193
+ 020D           ;       UART_CPutString("Sequential Mode W/R Test: Addr 0x    ");
+ 020D 10                push X
+ 020E 50E5              mov A,>L36
+ 0210 08                push A
+ 0211 50E5              mov A,<L36
+ 0213 5C                mov X,A
+ 0214 18                pop A
+ 0215 7C0000            xcall _UART_CPutString
+ 0218 20                pop X
+ 0219                   .dbline 195
+ 0219           ; 
+ 0219           ;       for (addr=0; addr<0x8000 ; addr+=ARRAY_SIZE) {
+ 0219 560300            mov [X+3],0
+ 021C 560200            mov [X+2],0
+ 021F 8103              xjmp L40
+ 0221           L37:
+ 0221                   .dbline 195
+ 0221                   .dbline 196
+ 0221           ;               UART_CPutString("\b\b\b\b");
+ 0221 10                push X
+ 0222 5041              mov A,>L23
+ 0224 08                push A
+ 0225 5041              mov A,<L23
+ 0227 5C                mov X,A
+ 0228 18                pop A
+ 0229 7C0000            xcall _UART_CPutString
+ 022C 20                pop X
+ 022D                   .dbline 197
+ 022D           ;               UART_PutSHexInt(addr);
+ 022D 10                push X
+ 022E 5202              mov A,[X+2]
+ 0230 08                push A
+ 0231 5203              mov A,[X+3]
+ 0233 20                pop X
+ 0234 7C0000            xcall _UART_PutSHexInt
+ 0237 20                pop X
+ 0238                   .dbline 198
+ 0238           ;               b = 0;
+ 0238 560100            mov [X+1],0
+ 023B           L41:
+ 023B                   .dbline 199
+ 023B           ;               do {
+ 023B                   .dbline 200
+ 023B           ;                       for (a=0 ; a<ARRAY_SIZE ; a++) {
+ 023B 560000            mov [X+0],0
+ 023E 801B              xjmp L47
+ 0240           L44:
+ 0240                   .dbline 200
+ 0240                   .dbline 201
+ 0240           ;                               DataOut[a] = b;
+ 0240 62D000            mov REG[0xd0],>__r0
+ 0243 5200              mov A,[X+0]
+ 0245 5300              mov [__r1],A
+ 0247 550000            mov [__r0],0
+ 024A 060000            add [__r1],<_DataOut
+ 024D 0E0000            adc [__r0],>_DataOut
+ 0250 5100              mov A,[__r0]
+ 0252 60D5              mov REG[0xd5],A
+ 0254 5201              mov A,[X+1]
+ 0256 3F00              mvi [__r1],A
+ 0258                   .dbline 202
+ 0258           ;                       }
+ 0258           L45:
+ 0258                   .dbline 200
+ 0258 7700              inc [X+0]
+ 025A           L47:
+ 025A                   .dbline 200
+ 025A 3D0040            cmp [X+0],64
+ 025D CFE2              jc L44
+ 025F           X4:
+ 025F                   .dbline 203
+ 025F           ;                       SPIRAM_WriteArray(addr, DataOut, ARRAY_SIZE);
+ 025F 5040              mov A,64
+ 0261 08                push A
+ 0262 5000              mov A,>_DataOut
+ 0264 08                push A
+ 0265 5000              mov A,<_DataOut
+ 0267 08                push A
+ 0268 5202              mov A,[X+2]
+ 026A 08                push A
+ 026B 5203              mov A,[X+3]
+ 026D 08                push A
+ 026E 7C0000            xcall _SPIRAM_WriteArray
+ 0271                   .dbline 204
+ 0271           ;                       SPIRAM_ReadArray(addr, DataIn, ARRAY_SIZE);
+ 0271 5040              mov A,64
+ 0273 08                push A
+ 0274 5000              mov A,>_DataIn
+ 0276 08                push A
+ 0277 5000              mov A,<_DataIn
+ 0279 08                push A
+ 027A 5202              mov A,[X+2]
+ 027C 08                push A
+ 027D 5203              mov A,[X+3]
+ 027F 08                push A
+ 0280 7C0000            xcall _SPIRAM_ReadArray
+ 0283 38F6              add SP,-10
+ 0285                   .dbline 205
+ 0285           ;                       for (a=0 ; a<ARRAY_SIZE ; a++) {
+ 0285 560000            mov [X+0],0
+ 0288 805B              xjmp L51
+ 028A           L48:
+ 028A                   .dbline 205
+ 028A                   .dbline 206
+ 028A           ;                               if (DataIn[a] != b) {
+ 028A 62D000            mov REG[0xd0],>__r0
+ 028D 5200              mov A,[X+0]
+ 028F 5300              mov [__r1],A
+ 0291 550000            mov [__r0],0
+ 0294 060000            add [__r1],<_DataIn
+ 0297 0E0000            adc [__r0],>_DataIn
+ 029A 5100              mov A,[__r0]
+ 029C 60D4              mov REG[0xd4],A
+ 029E 3E00              mvi A,[__r1]
+ 02A0 3B01              cmp A,[X+1]
+ 02A2 A03F              jz L52
+ 02A4                   .dbline 207
+ 02A4           ;                                       UART_CPutString("\b\b\b\b");
+ 02A4                   .dbline 207
+ 02A4 10                push X
+ 02A5 5041              mov A,>L23
+ 02A7 08                push A
+ 02A8 5041              mov A,<L23
+ 02AA 5C                mov X,A
+ 02AB 18                pop A
+ 02AC 7C0000            xcall _UART_CPutString
+ 02AF 20                pop X
+ 02B0                   .dbline 208
+ 02B0           ;                                       UART_PutSHexInt(addr+a);
+ 02B0 62D000            mov REG[0xd0],>__r0
+ 02B3 5200              mov A,[X+0]
+ 02B5 5300              mov [__r1],A
+ 02B7 550000            mov [__r0],0
+ 02BA 5203              mov A,[X+3]
+ 02BC 0200              add A,[__r1]
+ 02BE 5300              mov [__r1],A
+ 02C0 5202              mov A,[X+2]
+ 02C2 0A00              adc A,[__r0]
+ 02C4 10                push X
+ 02C5 08                push A
+ 02C6 5100              mov A,[__r1]
+ 02C8 20                pop X
+ 02C9 7C0000            xcall _UART_PutSHexInt
+ 02CC                   .dbline 209
+ 02CC           ;                                       UART_CPutString(" FAIL\r\n");
+ 02CC 5079              mov A,>L13
+ 02CE 08                push A
+ 02CF 5079              mov A,<L13
+ 02D1 5C                mov X,A
+ 02D2 18                pop A
+ 02D3 7C0000            xcall _UART_CPutString
+ 02D6 20                pop X
+ 02D7                   .dbline 210
+ 02D7           ;                                       return(1);
+ 02D7 62D000            mov REG[0xd0],>__r0
+ 02DA 550001            mov [__r1],1
+ 02DD 550000            mov [__r0],0
+ 02E0 8061              xjmp L35
+ 02E2           L52:
+ 02E2                   .dbline 212
+ 02E2           ;                               }
+ 02E2           ;                       }
+ 02E2           L49:
+ 02E2                   .dbline 205
+ 02E2 7700              inc [X+0]
+ 02E4           L51:
+ 02E4                   .dbline 205
+ 02E4 3D0040            cmp [X+0],64
+ 02E7 CFA2              jc L48
+ 02E9           X5:
+ 02E9                   .dbline 213
+ 02E9           ;                       if (!b)
+ 02E9 3D0100            cmp [X+1],0
+ 02EC B006              jnz L54
+ 02EE                   .dbline 214
+ 02EE           ;                               b = 0x01;
+ 02EE 560101            mov [X+1],1
+ 02F1 8003              xjmp L55
+ 02F3           L54:
+ 02F3                   .dbline 216
+ 02F3           ;                       else
+ 02F3           ;                               b = b << 1;
+ 02F3 6601              asl [X+1]
+ 02F5           L55:
+ 02F5                   .dbline 217
+ 02F5           ;               } while(b);
+ 02F5           L42:
+ 02F5                   .dbline 217
+ 02F5 3D0100            cmp [X+1],0
+ 02F8 BF42              jnz L41
+ 02FA                   .dbline 218
+ 02FA           ;               if (UART_cReadChar()) {
+ 02FA 10                push X
+ 02FB 7C0000            xcall _UART_cReadChar
+ 02FE 20                pop X
+ 02FF 62D000            mov REG[0xd0],>__r0
+ 0302 3900              cmp A,0
+ 0304 A018              jz L56
+ 0306                   .dbline 219
+ 0306           ;                       UART_CPutString("\b\b\b\b\b\b\b\b\b\b\b\b ABORTED    \r\n");
+ 0306                   .dbline 219
+ 0306 10                push X
+ 0307 5026              mov A,>L33
+ 0309 08                push A
+ 030A 5026              mov A,<L33
+ 030C 5C                mov X,A
+ 030D 18                pop A
+ 030E 7C0000            xcall _UART_CPutString
+ 0311 20                pop X
+ 0312                   .dbline 220
+ 0312           ;                       return(0);
+ 0312 62D000            mov REG[0xd0],>__r0
+ 0315 550000            mov [__r1],0
+ 0318 550000            mov [__r0],0
+ 031B 8026              xjmp L35
+ 031D           L56:
+ 031D                   .dbline 222
+ 031D           ;               }
+ 031D           ;       }
+ 031D           L38:
+ 031D                   .dbline 195
+ 031D 070340            add [X+3],64
+ 0320 0F0200            adc [X+2],0
+ 0323           L40:
+ 0323                   .dbline 195
+ 0323 5203              mov A,[X+3]
+ 0325 1100              sub A,0
+ 0327 5202              mov A,[X+2]
+ 0329 1980              sbb A,-128
+ 032B CEF5              jc L37
+ 032D           X6:
+ 032D                   .dbline 223
+ 032D           ;       UART_CPutString("\b\b\b\b\b\b\b\b\b\b\b\b PASS       \r\n");
+ 032D 10                push X
+ 032E 500B              mov A,>L34
+ 0330 08                push A
+ 0331 500B              mov A,<L34
+ 0333 5C                mov X,A
+ 0334 18                pop A
+ 0335 7C0000            xcall _UART_CPutString
+ 0338 20                pop X
+ 0339                   .dbline 224
+ 0339           ;       return(0);
+ 0339 62D000            mov REG[0xd0],>__r0
+ 033C 550000            mov [__r1],0
+ 033F 550000            mov [__r0],0
+ 0342                   .dbline -2
+ 0342           L35:
+ 0342 38FA              add SP,-6
+ 0344 20                pop X
+ 0345                   .dbline 0 ; func end
+ 0345 7F                ret
+ 0346                   .dbsym l in 5 c
+ 0346                   .dbsym l status 4 c
+ 0346                   .dbsym l addr 2 i
+ 0346                   .dbsym l b 1 c
+ 0346                   .dbsym l a 0 c
+ 0346                   .dbend
+ 0346                   .dbfunc e GetNumber _GetNumber fc
+ 0346           ;              c -> X+0
+ 0346           ;            max -> X-5
+ 0346           ;            min -> X-4
+ 0346           _GetNumber::
+ 0346                   .dbline -1
+ 0346 10                push X
+ 0347 4F                mov X,SP
+ 0348 3801              add SP,1
+ 034A                   .dbline 228
+ 034A           ; }
+ 034A           ; 
+ 034A           ; char GetNumber(char min, char max)
+ 034A           ; {
+ 034A                   .dbline 231
+ 034A           ;       char c;
+ 034A           ;       
+ 034A           ;       UART_CPutString(">");
+ 034A 10                push X
+ 034B 50E3              mov A,>L59
+ 034D 08                push A
+ 034E 50E3              mov A,<L59
+ 0350 5C                mov X,A
+ 0351 18                pop A
+ 0352 7C0000            xcall _UART_CPutString
+ 0355 20                pop X
+ 0356 8034              xjmp L61
+ 0358           L60:
+ 0358                   .dbline 233
+ 0358           ;       while (1)
+ 0358           ;       {
+ 0358                   .dbline 234
+ 0358           ;               c = UART_cReadChar();
+ 0358 10                push X
+ 0359 7C0000            xcall _UART_cReadChar
+ 035C 20                pop X
+ 035D 62D000            mov REG[0xd0],>__r0
+ 0360 5400              mov [X+0],A
+ 0362                   .dbline 235
+ 0362           ;               if (c < ('0' + min) || c > ('0' + max)) 
+ 0362 52FC              mov A,[X-4]
+ 0364 0130              add A,48
+ 0366 5300              mov [__r0],A
+ 0368 5200              mov A,[X+0]
+ 036A 3A00              cmp A,[__r0]
+ 036C C00C              jc L65
+ 036E           X8:
+ 036E 62D000            mov REG[0xd0],>__r0
+ 0371 52FB              mov A,[X-5]
+ 0373 0130              add A,48
+ 0375 3B00              cmp A,[X+0]
+ 0377 D003              jnc L63
+ 0379           X9:
+ 0379           L65:
+ 0379                   .dbline 236
+ 0379           ;                       continue;
+ 0379 8011              xjmp L61
+ 037B           L63:
+ 037B                   .dbline 238
+ 037B           ;               
+ 037B           ;               UART_PutChar(c);
+ 037B 10                push X
+ 037C 5200              mov A,[X+0]
+ 037E 7C0000            xcall _UART_PutChar
+ 0381 20                pop X
+ 0382                   .dbline 240
+ 0382           ;               
+ 0382           ;               return (c - '0');
+ 0382 62D000            mov REG[0xd0],>__r0
+ 0385 5200              mov A,[X+0]
+ 0387 1130              sub A,48
+ 0389 8003              xjmp L58
+ 038B           L61:
+ 038B                   .dbline 232
+ 038B 8FCC              xjmp L60
+ 038D           X7:
+ 038D                   .dbline -2
+ 038D           L58:
+ 038D 38FF              add SP,-1
+ 038F 20                pop X
+ 0390                   .dbline 0 ; func end
+ 0390 7F                ret
+ 0391                   .dbsym l c 0 c
+ 0391                   .dbsym l max -5 c
+ 0391                   .dbsym l min -4 c
+ 0391                   .dbend
+ 0391                   .dbfunc e main _main fV
+ 0391           ;            opt -> X+0
+ 0391           _main::
+ 0391                   .dbline -1
+ 0391 10                push X
+ 0392 4F                mov X,SP
+ 0393 3803              add SP,3
+ 0395                   .dbline 246
+ 0395           ;       }
+ 0395           ;       return 0;
+ 0395           ; }
+ 0395           ; 
+ 0395           ; void main(void)
+ 0395           ; {
+ 0395                   .dbline 249
+ 0395           ;       char opt;
+ 0395           ;       // Make sure nCS is high before doing anything
+ 0395           ;       nCS_HIGH;
+ 0395                   .dbline 249
+ 0395 430404            or REG[0x4],4
+ 0398                   .dbline 249
+ 0398                   .dbline 249
+ 0398                   .dbline 252
+ 0398           ;       
+ 0398           ;       // Enable user module interrupts
+ 0398           ;       SleepTimer_EnableInt();
+ 0398 10                push X
+ 0399 7C0000            xcall _SleepTimer_EnableInt
+ 039C 20                pop X
+ 039D                   .dbline 255
+ 039D           ; 
+ 039D           ;       // Enable global interrutps
+ 039D           ;       M8C_EnableGInt;
+ 039D 7101                      or  F, 01h
+ 039F           
+ 039F                   .dbline 258
+ 039F           ; 
+ 039F           ;       // Start the user modules
+ 039F           ;       UART_Start(UART_PARITY_NONE);
+ 039F 10                push X
+ 03A0 5000              mov A,0
+ 03A2 7C0000            xcall _UART_Start
+ 03A5                   .dbline 259
+ 03A5           ;       UART_PutCRLF();
+ 03A5 7C0000            xcall _UART_PutCRLF
+ 03A8                   .dbline 260
+ 03A8           ;       SPIM_Start(SPIM_SPIM_MODE_0 | SPIM_SPIM_MSB_FIRST);
+ 03A8 5000              mov A,0
+ 03AA 7C0000            xcall _SPIM_Start
+ 03AD                   .dbline 261
+ 03AD           ;       SleepTimer_Start();
+ 03AD 7C0000            xcall _SleepTimer_Start
+ 03B0                   .dbline 262
+ 03B0           ;       DAC8_Start(DAC8_FULLPOWER);
+ 03B0 5003              mov A,3
+ 03B2 7C0000            xcall _DAC8_Start
+ 03B5 20                pop X
+ 03B6 8089              xjmp L68
+ 03B8           L67:
+ 03B8                   .dbline 264
+ 03B8           ; 
+ 03B8           ;       while(1) {
+ 03B8                   .dbline 265
+ 03B8           ;               UART_CPutString("Synthetic wave output is on Port0[4]\r\nCowabunga Dude! Time to catch some waves.\r\n\r\n0. Play block 0\r\n1. Play block 1\r\n2. Play block 2\r\n3. Play block 3\r\n4. Test status register\r\n5. Test byte mode\r\n6. Test sequential mode\r\n");
+ 03B8 10                push X
+ 03B9 5006              mov A,>L70
+ 03BB 08                push A
+ 03BC 5006              mov A,<L70
+ 03BE 5C                mov X,A
+ 03BF 18                pop A
+ 03C0 7C0000            xcall _UART_CPutString
+ 03C3 20                pop X
+ 03C4                   .dbline 266
+ 03C4           ;               opt = GetNumber(0, 6);
+ 03C4 5006              mov A,6
+ 03C6 08                push A
+ 03C7 5000              mov A,0
+ 03C9 08                push A
+ 03CA 9F7A              xcall _GetNumber
+ 03CC 38FE              add SP,-2
+ 03CE 62D000            mov REG[0xd0],>__r0
+ 03D1 5400              mov [X+0],A
+ 03D3                   .dbline 267
+ 03D3           ;               switch (opt)
+ 03D3 5200              mov A,[X+0]
+ 03D5 5402              mov [X+2],A
+ 03D7 560100            mov [X+1],0
+ 03DA 3D0100            cmp [X+1],0
+ 03DD B006              jnz X11
+ 03DF 3D0204            cmp [X+2],4
+ 03E2 A020              jz L76
+ 03E4           X11:
+ 03E4 3D0100            cmp [X+1],0
+ 03E7 B006              jnz X12
+ 03E9 3D0205            cmp [X+2],5
+ 03EC A02A              jz L80
+ 03EE           X12:
+ 03EE 3D0100            cmp [X+1],0
+ 03F1 B006              jnz X13
+ 03F3 3D0206            cmp [X+2],6
+ 03F6 A03A              jz L84
+ 03F8           X13:
+ 03F8 8047              xjmp L71
+ 03FA           L75:
+ 03FA                   .dbline 273
+ 03FA           ;               {
+ 03FA           ;                       
+ 03FA           ;                       case 4:
+ 03FA           ;                               // Test the status register, looping every 1/2s until it succeeds
+ 03FA           ;                               while(SPIRAM_StatusRegisterTest()) 
+ 03FA           ;                               {
+ 03FA                   .dbline 274
+ 03FA           ;                                       SleepTimer_SyncWait(4, SleepTimer_WAIT_RELOAD);
+ 03FA 10                push X
+ 03FB 5700              mov X,0
+ 03FD 5004              mov A,4
+ 03FF 7C0000            xcall _SleepTimer_SyncWait
+ 0402 20                pop X
+ 0403                   .dbline 275
+ 0403           ;                               }
+ 0403           L76:
+ 0403                   .dbline 272
+ 0403 9BFB              xcall _SPIRAM_StatusRegisterTest
+ 0405 62D000            mov REG[0xd0],>__r0
+ 0408 3900              cmp A,0
+ 040A BFEF              jnz L75
+ 040C                   .dbline 276
+ 040C           ;                               break;
+ 040C 8033              xjmp L72
+ 040E           L79:
+ 040E                   .dbline 280
+ 040E           ;                       
+ 040E           ;                       case 5:
+ 040E           ;                               while(SPIRAM_ByteModeTest()) 
+ 040E           ;                               {
+ 040E                   .dbline 281
+ 040E           ;                                       SleepTimer_SyncWait(4, SleepTimer_WAIT_RELOAD);
+ 040E 10                push X
+ 040F 5700              mov X,0
+ 0411 5004              mov A,4
+ 0413 7C0000            xcall _SleepTimer_SyncWait
+ 0416 20                pop X
+ 0417                   .dbline 282
+ 0417           ;                               }               
+ 0417           L80:
+ 0417                   .dbline 279
+ 0417 9CE2              xcall _SPIRAM_ByteModeTest
+ 0419 62D000            mov REG[0xd0],>__r0
+ 041C 3C0000            cmp [__r0],0
+ 041F BFEE              jnz L79
+ 0421 3C0000            cmp [__r1],0
+ 0424 BFE9              jnz L79
+ 0426           X14:
+ 0426                   .dbline 283
+ 0426           ;                               break;
+ 0426 8019              xjmp L72
+ 0428           L83:
+ 0428                   .dbline 287
+ 0428           ;                       
+ 0428           ;                       case 6:
+ 0428           ;                               while(SPIRAM_SequentialModeTest()) 
+ 0428           ;                               {
+ 0428                   .dbline 288
+ 0428           ;                                       SleepTimer_SyncWait(4, SleepTimer_WAIT_RELOAD);
+ 0428 10                push X
+ 0429 5700              mov X,0
+ 042B 5004              mov A,4
+ 042D 7C0000            xcall _SleepTimer_SyncWait
+ 0430 20                pop X
+ 0431                   .dbline 289
+ 0431           ;                               }
+ 0431           L84:
+ 0431                   .dbline 286
+ 0431 9DCB              xcall _SPIRAM_SequentialModeTest
+ 0433 62D000            mov REG[0xd0],>__r0
+ 0436 3C0000            cmp [__r0],0
+ 0439 BFEE              jnz L83
+ 043B 3C0000            cmp [__r1],0
+ 043E BFE9              jnz L83
+ 0440           X15:
+ 0440                   .dbline 290
+ 0440           ;                               break;
+ 0440           L71:
+ 0440           L72:
+ 0440                   .dbline 293
+ 0440           ;                               
+ 0440           ;               }
+ 0440           ;       }
+ 0440           L68:
+ 0440                   .dbline 264
+ 0440 8F77              xjmp L67
+ 0442           X10:
+ 0442                   .dbline -2
+ 0442           L66:
+ 0442 38FD              add SP,-3
+ 0444 20                pop X
+ 0445                   .dbline 0 ; func end
+ 0445 8FFF              jmp .
+ 0447                   .dbsym l opt 0 c
+ 0447                   .dbend
+                        .area data(ram, con, rel)
+ 0000                   .dbfile C:\Users\Jacob\Desktop\ECE381\SPI_SRAM\SPI_SRAM\main.c
+ 0000           _DataOut::
+ 0000 000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000  .word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+ 003C 00000000          .byte 0,0,0,0
+ 0040                   .dbsym e DataOut _DataOut A[64:64]c
+                        .area data(ram, con, rel)
+ 0000                   .dbfile C:\Users\Jacob\Desktop\ECE381\SPI_SRAM\SPI_SRAM\main.c
+ 0000           _DataIn::
+ 0000 000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000  .word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+ 003C 00000000          .byte 0,0,0,0
+ 0040                   .dbsym e DataIn _DataIn A[64:64]c
+                        .area lit(rom, con, rel, lit)
+ 0006           L70:
+ 0006 53796E7468657469632077617665206F  .byte 'S,'y,'n,'t,'h,'e,'t,'i,'c,32,'w,'a,'v,'e,32,'o
+ 0016 7574707574206973206F6E20506F7274  .byte 'u,'t,'p,'u,'t,32,'i,'s,32,'o,'n,32,'P,'o,'r,'t
+ 0026 305B345D0D0A436F776162756E676120  .byte 48,91,52,93,13,10,'C,'o,'w,'a,'b,'u,'n,'g,'a,32
+ 0036 44756465212054696D6520746F206361  .byte 'D,'u,'d,'e,33,32,'T,'i,'m,'e,32,'t,'o,32,'c,'a
+ 0046 74636820736F6D652077617665732E0D  .byte 't,'c,'h,32,'s,'o,'m,'e,32,'w,'a,'v,'e,'s,46,13
+ 0056 0A0D0A302E20506C617920626C6F636B  .byte 10,13,10,48,46,32,'P,'l,'a,'y,32,'b,'l,'o,'c,'k
+ 0066 20300D0A312E20506C617920626C6F63  .byte 32,48,13,10,49,46,32,'P,'l,'a,'y,32,'b,'l,'o,'c
+ 0076 6B20310D0A322E20506C617920626C6F  .byte 'k,32,49,13,10,50,46,32,'P,'l,'a,'y,32,'b,'l,'o
+ 0086 636B20320D0A332E20506C617920626C  .byte 'c,'k,32,50,13,10,51,46,32,'P,'l,'a,'y,32,'b,'l
+ 0096 6F636B20330D0A342E20546573742073  .byte 'o,'c,'k,32,51,13,10,52,46,32,'T,'e,'s,'t,32,'s
+ 00A6 74617475732072656769737465720D0A  .byte 't,'a,'t,'u,'s,32,'r,'e,'g,'i,'s,'t,'e,'r,13,10
+ 00B6 352E20546573742062797465206D6F64  .byte 53,46,32,'T,'e,'s,'t,32,'b,'y,'t,'e,32,'m,'o,'d
+ 00C6 650D0A362E2054657374207365717565  .byte 'e,13,10,54,46,32,'T,'e,'s,'t,32,'s,'e,'q,'u,'e
+ 00D6 6E7469616C206D6F64650D0A00        .byte 'n,'t,'i,'a,'l,32,'m,'o,'d,'e,13,10,0
+ 00E3           L59:
+ 00E3 3E00              .byte 62,0
+ 00E5           L36:
+ 00E5 53657175656E7469616C204D6F646520  .byte 'S,'e,'q,'u,'e,'n,'t,'i,'a,'l,32,'M,'o,'d,'e,32
+ 00F5 572F5220546573743A20416464722030  .byte 'W,47,'R,32,'T,'e,'s,'t,58,32,'A,'d,'d,'r,32,48
+ 0105 782020202000      .byte 'x,32,32,32,32,0
+ 010B           L34:
+ 010B 08080808080808080808080820504153  .byte 8,8,8,8,8,8,8,8,8,8,8,8,32,'P,'A,'S
+ 011B 53202020202020200D0A00    .byte 'S,32,32,32,32,32,32,32,13,10,0
+ 0126           L33:
+ 0126 0808080808080808080808082041424F  .byte 8,8,8,8,8,8,8,8,8,8,8,8,32,'A,'B,'O
+ 0136 52544544202020200D0A00    .byte 'R,'T,'E,'D,32,32,32,32,13,10,0
+ 0141           L23:
+ 0141 0808080800        .byte 8,8,8,8,0
+ 0146           L16:
+ 0146 20202020202042797465204D6F646520  .byte 32,32,32,32,32,32,'B,'y,'t,'e,32,'M,'o,'d,'e,32
+ 0156 572F5220546573743A20416464722030  .byte 'W,47,'R,32,'T,'e,'s,'t,58,32,'A,'d,'d,'r,32,48
+ 0166 782020202000      .byte 'x,32,32,32,32,0
+ 016C           L14:
+ 016C 080808080820504153530D0A00        .byte 8,8,8,8,8,32,'P,'A,'S,'S,13,10,0
+ 0179           L13:
+ 0179 204641494C0D0A00  .byte 32,'F,'A,'I,'L,13,10,0
+ 0181           L10:
+ 0181 0D0A5772697465206F6620696E76616C  .byte 13,10,'W,'r,'i,'t,'e,32,'o,'f,32,'i,'n,'v,'a,'l
+ 0191 69642053746174757320526567697374  .byte 'i,'d,32,'S,'t,'a,'t,'u,'s,32,'R,'e,'g,'i,'s,'t
+ 01A1 65722076616C75652E2053797374656D  .byte 'e,'r,32,'v,'a,'l,'u,'e,46,32,'S,'y,'s,'t,'e,'m
+ 01B1 2068616C7465642E0D0A00    .byte 32,'h,'a,'l,'t,'e,'d,46,13,10,0
+ 01BC           L3:
+ 01BC 53746174757320526567697374657220  .byte 'S,'t,'a,'t,'u,'s,32,'R,'e,'g,'i,'s,'t,'e,'r,32
+ 01CC 572F5220546573743A203078202000    .byte 'W,47,'R,32,'T,'e,'s,'t,58,32,48,'x,32,32,0
