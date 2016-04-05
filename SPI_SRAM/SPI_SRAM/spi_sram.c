@@ -79,39 +79,34 @@ void SPIRAM_WriteByte(WORD addr, BYTE out)
 	// Break the SRAM word address into two bytes
 	hiAddr = (BYTE)((addr >> 8) & 0x00ff);
 	loAddr = (BYTE)(addr & 0x00ff);
-	/************** do SPI SRAM byte write stuff **************/
-	// If bits 5 through 1 aren't zero, return an error as per
-	// Section 2.5 in the 23K256 datasheet
 	
 	// Make sure the TX buffer is empty (it should be but let's be proper)
 	while(!(SPIM_bReadStatus() & SPIM_SPIM_TX_BUFFER_EMPTY));
 	// SPI transfers begin by bringing CS LOW
 	nCS_LOW;
-	// Send the Status Register Write command
+	// Send the Write command
 	SPIM_SendTxData(SPIRAM_WRITE);
 	// It will be almost immediately loaded into the TX shift register, freeing
 	// up the TX buffer, and the SPIM module will start transmission.
 	while(!(SPIM_bReadStatus() & SPIM_SPIM_TX_BUFFER_EMPTY));
-	// Prime the TX buffer for the next byte by loading it with the new status
-	// register byte while the first byte is still transmitting.
+	// Prime the TX buffer with the MSB of the address while first byte is still transmitting.
 	SPIM_SendTxData(hiAddr);
 	// Wait for the first TX/RX cycle to finish. We don't care what we read.
 	while(!(SPIM_bReadStatus() & SPIM_SPIM_SPI_COMPLETE));
 	// Reading the data clears the RX_BUFFER_FULL flag, even if we don't want it.
-	SPIM_bReadRxData(); // ignore byte from SPIRAM_WRITE_STATUS_REG TX
+	SPIM_bReadRxData();
 	// Wait for the second TX/RX cycle to finish so that we know that the entire
 	// two byte transaction is finished.
 	while(!(SPIM_bReadStatus() & SPIM_SPIM_SPI_COMPLETE));
 	SPIM_bReadRxData(); // We don't care about this read either
 	
 	while(!(SPIM_bReadStatus() & SPIM_SPIM_TX_BUFFER_EMPTY));
-	// Send the Status Register Write command
+	// Send the LSB of address
 	SPIM_SendTxData(loAddr);
 	// It will be almost immediately loaded into the TX shift register, freeing
 	// up the TX buffer, and the SPIM module will start transmission.
 	while(!(SPIM_bReadStatus() & SPIM_SPIM_TX_BUFFER_EMPTY));
-	// Prime the TX buffer for the next byte by loading it with the new status
-	// register byte while the first byte is still transmitting.
+	// Prime the TX buffer for the next byte by loading it with the byte to be written while the first byte is still transmitting.
 	SPIM_SendTxData(out);
 	// Wait for the first TX/RX cycle to finish. We don't care what we read.
 	while(!(SPIM_bReadStatus() & SPIM_SPIM_SPI_COMPLETE));
@@ -136,13 +131,13 @@ BYTE SPIRAM_ReadByte(WORD addr)
 	// Break the SRAM word address into two bytes
 	hiAddr = (BYTE)((addr >> 8) & 0x00ff);
 	loAddr = (BYTE)(addr & 0x00ff);
-	/************** do SPI SRAM byte read stuff **************/
+	
 	while(!(SPIM_bReadStatus() & SPIM_SPIM_TX_BUFFER_EMPTY));
 	nCS_LOW;
-	// Send the Read Status Register command
+	// Send the Read command
 	SPIM_SendTxData(SPIRAM_READ);
 	while(!(SPIM_bReadStatus() & SPIM_SPIM_TX_BUFFER_EMPTY));
-	// Send a dummy byte in order to initiate a TX/RX transfer
+	// Send MSB of address
 	SPIM_SendTxData(hiAddr);
 	// Wait for the first RX byte to arrive and ignore it; it is meaningless.
 	while(!(SPIM_bReadStatus() & SPIM_SPIM_SPI_COMPLETE));
@@ -152,13 +147,12 @@ BYTE SPIRAM_ReadByte(WORD addr)
 	SPIM_bReadRxData();
 	
 	while(!(SPIM_bReadStatus() & SPIM_SPIM_TX_BUFFER_EMPTY));
-	// Send the Status Register Write command
+	// Send LSB of address
 	SPIM_SendTxData(loAddr);
 	// It will be almost immediately loaded into the TX shift register, freeing
 	// up the TX buffer, and the SPIM module will start transmission.
 	while(!(SPIM_bReadStatus() & SPIM_SPIM_TX_BUFFER_EMPTY));
-	// Prime the TX buffer for the next byte by loading it with the new status
-	// register byte while the first byte is still transmitting.
+	// Prime the TX buffer for the next byte by loading it with a dummy byte while the first byte is still transmitting.
 	SPIM_SendTxData(SPIRAM_DUMMY_BYTE);
 	// Wait for the first TX/RX cycle to finish. We don't care what we read.
 	while(!(SPIM_bReadStatus() & SPIM_SPIM_SPI_COMPLETE));
@@ -167,10 +161,10 @@ BYTE SPIRAM_ReadByte(WORD addr)
 	// Wait for the second TX/RX cycle to finish so that we know that the entire
 	// two byte transaction is finished.
 	while(!(SPIM_bReadStatus() & SPIM_SPIM_SPI_COMPLETE));
-	in = SPIM_bReadRxData(); // We don't care about this read either
+	in = SPIM_bReadRxData(); // This is the output byte
 	
 	nCS_HIGH;
-	return(in);
+	return in;
 }
 
 // Write "count" bytes starting at address "addr" from array "out".
@@ -183,6 +177,7 @@ void SPIRAM_WriteArray(WORD addr, BYTE *out, BYTE count)
 	BYTE hiAddr;
 	BYTE loAddr;
 	BYTE i;
+	
 	// If some clown tries to write 0 bytes, just return.
 	// XXX - Always beware of clowns!
 	if (!count)
@@ -190,47 +185,45 @@ void SPIRAM_WriteArray(WORD addr, BYTE *out, BYTE count)
 	// Break the SRAM word address into two bytes
 	hiAddr = (BYTE)((addr >> 8) & 0x00ff);
 	loAddr = (BYTE)(addr & 0x00ff);
-	/************** do SPI SRAM sequential write stuff **************/
-		// Make sure the TX buffer is empty (it should be but let's be proper)
+	
+	// Make sure the TX buffer is empty (it should be but let's be proper)
 	while(!(SPIM_bReadStatus() & SPIM_SPIM_TX_BUFFER_EMPTY));
 	// SPI transfers begin by bringing CS LOW
 	nCS_LOW;
-	// Send the Status Register Write command
+	// Send the Write command
 	SPIM_SendTxData(SPIRAM_WRITE);
 	// It will be almost immediately loaded into the TX shift register, freeing
 	// up the TX buffer, and the SPIM module will start transmission.
 	while(!(SPIM_bReadStatus() & SPIM_SPIM_TX_BUFFER_EMPTY));
-	// Prime the TX buffer for the next byte by loading it with the new status
-	// register byte while the first byte is still transmitting.
+	// Prime the TX buffer for the next byte by loading it with the MSB of address while the first byte is still transmitting.
 	SPIM_SendTxData(hiAddr);
 	// Wait for the first TX/RX cycle to finish. We don't care what we read.
 	while(!(SPIM_bReadStatus() & SPIM_SPIM_SPI_COMPLETE));
 	// Reading the data clears the RX_BUFFER_FULL flag, even if we don't want it.
-	SPIM_bReadRxData(); // ignore byte from SPIRAM_WRITE_STATUS_REG TX
+	SPIM_bReadRxData();
 	// Wait for the second TX/RX cycle to finish so that we know that the entire
 	// two byte transaction is finished.
 	while(!(SPIM_bReadStatus() & SPIM_SPIM_SPI_COMPLETE));
 	SPIM_bReadRxData(); // We don't care about this read either
 	
 	while(!(SPIM_bReadStatus() & SPIM_SPIM_TX_BUFFER_EMPTY));
-	// Send the Status Register Write command
+	// Send LSB of address
 	SPIM_SendTxData(loAddr);
 	// It will be almost immediately loaded into the TX shift register, freeing
 	// up the TX buffer, and the SPIM module will start transmission.
 	while(!(SPIM_bReadStatus() & SPIM_SPIM_SPI_COMPLETE));
 	SPIM_bReadRxData(); // We don't care about this read either
 	
-	for (i = 0; i < count; ++i)
+	for (i = 0; i < count; ++i) // Loop through the array
 	{
 		while(!(SPIM_bReadStatus() & SPIM_SPIM_TX_BUFFER_EMPTY));
-		// Send the Status Register Write command
+		// Send the byte at index i in string out
 		SPIM_SendTxData(out[i]);
-		// It will be almost immediately loaded into the TX shift register, freeing
-		// up the TX buffer, and the SPIM module will start transmission.
 		while(!(SPIM_bReadStatus() & SPIM_SPIM_SPI_COMPLETE));
 		SPIM_bReadRxData(); // We don't care about this read either
 			
 	}
+	
 	nCS_HIGH;
 }
 
@@ -252,45 +245,42 @@ void SPIRAM_ReadArray(WORD addr, BYTE *in, BYTE count)
 	// Break the SRAM word address into two bytes
 	hiAddr = (BYTE)((addr >> 8) & 0x00ff);
 	loAddr = (BYTE)(addr & 0x00ff);
-	/************** do SPI SRAM sequential read stuff **************/
+	
 	while(!(SPIM_bReadStatus() & SPIM_SPIM_TX_BUFFER_EMPTY));
 	// SPI transfers begin by bringing CS LOW
 	nCS_LOW;
-	// Send the Status Register Write command
+	// Send the Read command
 	SPIM_SendTxData(SPIRAM_READ);
 	// It will be almost immediately loaded into the TX shift register, freeing
 	// up the TX buffer, and the SPIM module will start transmission.
 	while(!(SPIM_bReadStatus() & SPIM_SPIM_TX_BUFFER_EMPTY));
-	// Prime the TX buffer for the next byte by loading it with the new status
-	// register byte while the first byte is still transmitting.
+	// Prime the TX buffer for the next byte by loading it with the MSB of address while the first byte is still transmitting.
 	SPIM_SendTxData(hiAddr);
 	// Wait for the first TX/RX cycle to finish. We don't care what we read.
 	while(!(SPIM_bReadStatus() & SPIM_SPIM_SPI_COMPLETE));
 	// Reading the data clears the RX_BUFFER_FULL flag, even if we don't want it.
-	SPIM_bReadRxData(); // ignore byte from SPIRAM_WRITE_STATUS_REG TX
+	SPIM_bReadRxData();
 	// Wait for the second TX/RX cycle to finish so that we know that the entire
 	// two byte transaction is finished.
 	while(!(SPIM_bReadStatus() & SPIM_SPIM_SPI_COMPLETE));
 	SPIM_bReadRxData(); // We don't care about this read either
 	
 	while(!(SPIM_bReadStatus() & SPIM_SPIM_TX_BUFFER_EMPTY));
-	// Send the Status Register Write command
+	// Send LSB of address
 	SPIM_SendTxData(loAddr);
 	// It will be almost immediately loaded into the TX shift register, freeing
 	// up the TX buffer, and the SPIM module will start transmission.
 	while(!(SPIM_bReadStatus() & SPIM_SPIM_SPI_COMPLETE));
 	SPIM_bReadRxData(); // We don't care about this read either
 	
-	for (i = 0; i < count; ++i)
+	for (i = 0; i < count; ++i) // Loop through count
 	{
 		while(!(SPIM_bReadStatus() & SPIM_SPIM_TX_BUFFER_EMPTY));
-		// Send the Status Register Write command
+		// Send dummy byte; we just want to read data
 		SPIM_SendTxData(SPIRAM_DUMMY_BYTE);
-		// It will be almost immediately loaded into the TX shift register, freeing
-		// up the TX buffer, and the SPIM module will start transmission.
 		while(!(SPIM_bReadStatus() & SPIM_SPIM_SPI_COMPLETE));
-		in[i] = SPIM_bReadRxData(); // We don't care about this read either
-			
+		in[i] = SPIM_bReadRxData(); // Set character in string to be the data read
 	}
+	
 	nCS_HIGH;
 }

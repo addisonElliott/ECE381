@@ -68,18 +68,18 @@ CLOCK_INPUT_VC3_JUST:	equ	0h	;VC3 clock source justified
 CLOCK_DIV_VC3:			equ	33h	;VC3 clock divider
 CLOCK_DIV_VC3_MASK:		equ	ffh	;VC3 clock divider mask
 CLOCK_DIV_VC3_JUST:		equ	33h	;VC3 clock divider justified
-ANALOG_BUFFER_PWR:		equ	0h	;Analog buffer power level
+ANALOG_BUFFER_PWR:		equ	1h	;Analog buffer power level
 ANALOG_BUFFER_PWR_MASK:	equ	1h	;Analog buffer power level mask
-ANALOG_BUFFER_PWR_JUST:	equ	0h	;Analog buffer power level justified
-ANALOG_POWER:			equ	5h	;Analog power control
+ANALOG_BUFFER_PWR_JUST:	equ	1h	;Analog buffer power level justified
+ANALOG_POWER:			equ	7h	;Analog power control
 ANALOG_POWER_MASK:		equ	7h	;Analog power control mask
-ANALOG_POWER_JUST:		equ	5h	;Analog power control justified
+ANALOG_POWER_JUST:		equ	7h	;Analog power control justified
 OP_AMP_BIAS:			equ	0h	;Op amp bias level
 OP_AMP_BIAS_MASK:		equ	40h	;Op amp bias level mask
 OP_AMP_BIAS_JUST:		equ	0h	;Op amp bias level justified
-REF_MUX:				equ	0h	;Ref mux setting
+REF_MUX:				equ	2h	;Ref mux setting
 REF_MUX_MASK:			equ	38h	;Ref mux setting mask
-REF_MUX_JUST:			equ	0h	;Ref mux setting justified
+REF_MUX_JUST:			equ	10h	;Ref mux setting justified
 AGND_BYPASS:				equ	0h	;AGndBypass setting
 AGND_BYPASS_MASK:			equ	40h	;AGndBypass setting mask
 AGND_BYPASS_JUST:			equ	0h	;AGndBypass setting justified
@@ -92,7 +92,7 @@ SYSCLK_2_DISABLE_JUST:			equ	0h	;SysClk*2 Disable setting justified
 ;
 ; register initial values
 ;
-ANALOG_IO_CONTROL:		equ 0h	;Analog IO Control register (ABF_CR)
+ANALOG_IO_CONTROL:		equ 11h	;Analog IO Control register (ABF_CR)
 PORT_0_GLOBAL_SELECT:	equ 0h	;Port 0 global select register (PRT0GS)
 PORT_0_DRIVE_0:			equ 0h	;Port 0 drive mode 0 register (PRT0DM0)
 PORT_0_DRIVE_1:			equ ffh	;Port 0 drive mode 1 register (PRT0DM1)

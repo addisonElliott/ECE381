@@ -224,35 +224,41 @@ WORD SPIRAM_SequentialModeTest(void)
 	return(0);
 }
 
+// This function reads characters from the serial until a character is entered that is within the min & max ASCII characters.
+// That character is returned
 char GetNumber(char min, char max)
 {
 	char c;
 	
-	UART_CPutString(">");
 	while (1)
 	{
-		c = UART_cReadChar();
-		if (c < ('0' + min) || c > ('0' + max)) 
+		c = UART_cReadChar(); // Read the character
+		if (c < ('0' + min) || c > ('0' + max)) // If the character is not within min to max range, continue the loop
 			continue;
 		
-		UART_PutChar(c);
-		
-		return (c - '0');
+		UART_PutChar(c); // Put the character on the serial
+		return (c - '0'); // This returns the integer number entered instead of the ASCII value
 	}
+	
 	return 0;
 }
 
-void PlayBlock(char opt)
+// This function plays a block of data where opt is the data block 0-3.
+void PlayBlock(char id)
 {	
-	WORD endAddr = opt*0x2000 + 0x2000;
+	WORD startAddr = id * 0x2000; // Where the address starts for block
+	WORD endAddr = startAddr + 0x2000; // Where the address ends for block
 	WORD addr;
+	
 	SPIRAM_WriteStatusRegister(SPIRAM_BYTE_MODE | SPIRAM_DISABLE_HOLD);
-	for(addr = opt*0x2000; addr < endAddr; addr++)
+	for (addr = startAddr; addr < endAddr; addr++)
 		DAC8_WriteStall(SPIRAM_ReadByte(addr));
 }
+
 void main(void)
 {
 	char opt;
+	
 	// Make sure nCS is high before doing anything
 	nCS_HIGH;
 	
@@ -269,8 +275,10 @@ void main(void)
 	SleepTimer_Start();
 	DAC8_Start(DAC8_FULLPOWER);
 
-	while(1) {
+	while(1) 
+	{
 		UART_CPutString("Synthetic wave output is on Port0[4]\r\nCowabunga Dude! Time to catch some waves.\r\n\r\n0. Play block 0\r\n1. Play block 1\r\n2. Play block 2\r\n3. Play block 3\r\n4. Test status register\r\n5. Test byte mode\r\n6. Test sequential mode\r\n");
+		
 		opt = GetNumber(0, 6);
 		switch (opt)
 		{

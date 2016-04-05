@@ -1,177 +1,178 @@
 Project:      output/SPI_SRAM
 Build Number: 0
-Date:         Mon Apr 04 20:09:15 2016
+Date:         Mon Apr 04 23:37:04 2016
 Compiler:     ICCM8C
 Version:      7.05.00
 
 
 Area                               Addr   Size   Decimal Bytes (Attributes)
 --------------------------------   ----   ----   ------- ----- ------------
-                             lit   01A0   0283 =    643. bytes (rel,con,rom,lit)
+                             lit   01A0   0281 =    641. bytes (rel,con,rom,lit)
 
        Addr  Global Symbol
       -----  --------------------------------
-       037B  LoadConfigTBL_spi_sram_Bank0
-       03EC  LoadConfigTBL_spi_sram_Bank1
-       0423  __lit_end
+       0379  LoadConfigTBL_spi_sram_Bank0
+       03EA  LoadConfigTBL_spi_sram_Bank1
+       0421  __lit_end
 
 Area                               Addr   Size   Decimal Bytes (Attributes)
 --------------------------------   ----   ----   ------- ----- ------------
-                        func_lit   0423   0002 =      2. bytes (rel,con,rom,proclab)
+                        func_lit   0421   0002 =      2. bytes (rel,con,rom,proclab)
 
        Addr  Global Symbol
       -----  --------------------------------
-       0423  __func_lit_start
-       0425  __func_lit_end
+       0421  __func_lit_start
+       0423  __func_lit_end
 
 Area                               Addr   Size   Decimal Bytes (Attributes)
 --------------------------------   ----   ----   ------- ----- ------------
-                     psoc_config   0425   0167 =    359. bytes (rel,con,rom,code)
+                     psoc_config   0423   0167 =    359. bytes (rel,con,rom,code)
 
        Addr  Global Symbol
       -----  --------------------------------
-       0425  LoadConfigTBL_spi_sram_Ordered
-       052A  LoadConfigInit
-       052A  _LoadConfigInit
-       0531  LoadConfig_spi_sram
-       0531  _LoadConfig_spi_sram
-       058C  __psoc_config_end
+       0423  LoadConfigTBL_spi_sram_Ordered
+       0528  LoadConfigInit
+       0528  _LoadConfigInit
+       052F  LoadConfig_spi_sram
+       052F  _LoadConfig_spi_sram
+       058A  __psoc_config_end
 
 Area                               Addr   Size   Decimal Bytes (Attributes)
 --------------------------------   ----   ----   ------- ----- ------------
-                     UserModules   058C   029A =    666. bytes (rel,con,rom,code)
+                     UserModules   058A   029A =    666. bytes (rel,con,rom,code)
 
        Addr  Global Symbol
       -----  --------------------------------
-       058C  _UART_TX_ISR
-       058D  _UART_RX_ISR
-       058E  _UART_EnableInt
-       058E  UART_EnableInt
-       0595  UART_DisableInt
-       0595  _UART_DisableInt
-       059C  _UART_SetTxIntMode
-       059C  UART_SetTxIntMode
-       05AE  _UART_Start
-       05AE  UART_Start
-       05B5  _UART_Stop
-       05B5  UART_Stop
-       05BC  _UART_SendData
-       05BC  UART_SendData
-       05BF  _bUART_ReadTxStatus
-       05BF  _UART_bReadTxStatus
-       05BF  bUART_ReadTxStatus
-       05BF  UART_bReadTxStatus
-       05C2  bUART_ReadRxData
-       05C2  _bUART_ReadRxData
-       05C2  UART_bReadRxData
-       05C2  _UART_bReadRxData
-       05C5  _bUART_ReadRxStatus
-       05C5  _UART_bReadRxStatus
-       05C5  UART_bReadRxStatus
-       05C5  bUART_ReadRxStatus
-       05C8  UART_TxIntMode
-       05C8  _UART_TxIntMode
-       05DB  UART_IntCntl
-       05DB  _UART_IntCntl
-       0606  _UART_PutSHexByte
-       0606  UART_PutSHexByte
-       0619  UART_PutSHexInt
-       0619  _UART_PutSHexInt
-       0620  UART_PutChar
-       0620  _UART_PutChar
-       0628  _UART_cGetChar
-       0628  UART_cGetChar
-       0630  UART_cReadChar
-       0630  _UART_cReadChar
-       0647  UART_iReadChar
-       0647  _UART_iReadChar
-       065D  _UART_PutString
-       065D  UART_PutString
-       066F  _UART_Write
-       066F  UART_Write
-       0697  _UART_CWrite
-       0697  UART_CWrite
-       06C3  UART_CPutString
-       06C3  _UART_CPutString
-       06D5  UART_PutCRLF
-       06D5  _UART_PutCRLF
-       06DE  _SPIM_ISR
-       06DF  SPIM_EnableInt
-       06DF  _SPIM_EnableInt
-       06E3  SPIM_DisableInt
-       06E3  _SPIM_DisableInt
-       06E7  _SPIM_Start
-       06E7  SPIM_Start
-       06EC  SPIM_Stop
-       06EC  _SPIM_Stop
-       06F0  SPIM_SendTxData
-       06F0  _SPIM_SendTxData
-       06F3  bSPIM_ReadRxData
-       06F3  SPIM_bReadRxData
-       06F3  _bSPIM_ReadRxData
-       06F3  _SPIM_bReadRxData
-       06F6  _bSPIM_ReadStatus
-       06F6  SPIM_bReadStatus
-       06F6  bSPIM_ReadStatus
-       06F6  _SPIM_bReadStatus
-       06F9  _SleepTimer_ISR
-       070D  SleepTimer_EnableInt
-       070D  _SleepTimer_EnableInt
-       0711  _SleepTimer_DisableInt
-       0711  SleepTimer_DisableInt
-       0715  _SleepTimer_Start
-       0715  SleepTimer_Start
-       0723  SleepTimer_Stop
-       0723  _SleepTimer_Stop
-       0724  _SleepTimer_SetInterval
-       0724  SleepTimer_SetInterval
-       073A  SleepTimer_TickWait
-       073A  _SleepTimer_TickWait
-       074C  SleepTimer_SyncWait
-       074C  _SleepTimer_SyncWait
-       075D  _SleepTimer_bGetTickCntr
-       075D  SleepTimer_bGetTickCntr
-       0763  _SleepTimer_SetTimer
-       0763  SleepTimer_SetTimer
-       0769  _SleepTimer_bGetTimer
-       0769  SleepTimer_bGetTimer
-       076F  DAC8_SetPower
-       076F  DAC8_Start
-       076F  _DAC8_SetPower
-       076F  _DAC8_Start
-       0789  DAC8_WriteBlind
-       0789  _DAC8_WriteBlind
-       07C3  DAC8_WriteBlind2B
-       07C3  _DAC8_WriteBlind2B
-       07CE  _DAC8_WriteStall
-       07CE  DAC8_WriteStall
-       080E  DAC8_WriteStall2B
-       080E  _DAC8_WriteStall2B
-       081F  _DAC8_Stop
-       081F  DAC8_Stop
-       0826  __UserModules_end
+       058A  _UART_TX_ISR
+       058B  _UART_RX_ISR
+       058C  _UART_EnableInt
+       058C  UART_EnableInt
+       0593  UART_DisableInt
+       0593  _UART_DisableInt
+       059A  _UART_SetTxIntMode
+       059A  UART_SetTxIntMode
+       05AC  _UART_Start
+       05AC  UART_Start
+       05B3  _UART_Stop
+       05B3  UART_Stop
+       05BA  _UART_SendData
+       05BA  UART_SendData
+       05BD  _bUART_ReadTxStatus
+       05BD  _UART_bReadTxStatus
+       05BD  bUART_ReadTxStatus
+       05BD  UART_bReadTxStatus
+       05C0  bUART_ReadRxData
+       05C0  _bUART_ReadRxData
+       05C0  UART_bReadRxData
+       05C0  _UART_bReadRxData
+       05C3  _bUART_ReadRxStatus
+       05C3  _UART_bReadRxStatus
+       05C3  UART_bReadRxStatus
+       05C3  bUART_ReadRxStatus
+       05C6  UART_TxIntMode
+       05C6  _UART_TxIntMode
+       05D9  UART_IntCntl
+       05D9  _UART_IntCntl
+       0604  _UART_PutSHexByte
+       0604  UART_PutSHexByte
+       0617  UART_PutSHexInt
+       0617  _UART_PutSHexInt
+       061E  UART_PutChar
+       061E  _UART_PutChar
+       0626  _UART_cGetChar
+       0626  UART_cGetChar
+       062E  UART_cReadChar
+       062E  _UART_cReadChar
+       0645  UART_iReadChar
+       0645  _UART_iReadChar
+       065B  _UART_PutString
+       065B  UART_PutString
+       066D  _UART_Write
+       066D  UART_Write
+       0695  _UART_CWrite
+       0695  UART_CWrite
+       06C1  UART_CPutString
+       06C1  _UART_CPutString
+       06D3  UART_PutCRLF
+       06D3  _UART_PutCRLF
+       06DC  _SPIM_ISR
+       06DD  SPIM_EnableInt
+       06DD  _SPIM_EnableInt
+       06E1  SPIM_DisableInt
+       06E1  _SPIM_DisableInt
+       06E5  _SPIM_Start
+       06E5  SPIM_Start
+       06EA  SPIM_Stop
+       06EA  _SPIM_Stop
+       06EE  SPIM_SendTxData
+       06EE  _SPIM_SendTxData
+       06F1  bSPIM_ReadRxData
+       06F1  SPIM_bReadRxData
+       06F1  _bSPIM_ReadRxData
+       06F1  _SPIM_bReadRxData
+       06F4  _bSPIM_ReadStatus
+       06F4  SPIM_bReadStatus
+       06F4  bSPIM_ReadStatus
+       06F4  _SPIM_bReadStatus
+       06F7  _SleepTimer_ISR
+       070B  SleepTimer_EnableInt
+       070B  _SleepTimer_EnableInt
+       070F  _SleepTimer_DisableInt
+       070F  SleepTimer_DisableInt
+       0713  _SleepTimer_Start
+       0713  SleepTimer_Start
+       0721  SleepTimer_Stop
+       0721  _SleepTimer_Stop
+       0722  _SleepTimer_SetInterval
+       0722  SleepTimer_SetInterval
+       0738  SleepTimer_TickWait
+       0738  _SleepTimer_TickWait
+       074A  SleepTimer_SyncWait
+       074A  _SleepTimer_SyncWait
+       075B  _SleepTimer_bGetTickCntr
+       075B  SleepTimer_bGetTickCntr
+       0761  _SleepTimer_SetTimer
+       0761  SleepTimer_SetTimer
+       0767  _SleepTimer_bGetTimer
+       0767  SleepTimer_bGetTimer
+       076D  DAC8_SetPower
+       076D  DAC8_Start
+       076D  _DAC8_SetPower
+       076D  _DAC8_Start
+       0787  DAC8_WriteBlind
+       0787  _DAC8_WriteBlind
+       07C1  DAC8_WriteBlind2B
+       07C1  _DAC8_WriteBlind2B
+       07CC  _DAC8_WriteStall
+       07CC  DAC8_WriteStall
+       080C  DAC8_WriteStall2B
+       080C  _DAC8_WriteStall2B
+       081D  _DAC8_Stop
+       081D  DAC8_Stop
+       0824  __UserModules_end
 
 Area                               Addr   Size   Decimal Bytes (Attributes)
 --------------------------------   ----   ----   ------- ----- ------------
-                            text   0826   08C4 =   2244. bytes (rel,con,rom,code)
+                            text   0824   0930 =   2352. bytes (rel,con,rom,code)
 
        Addr  Global Symbol
       -----  --------------------------------
-       0826  __text_start
-       0826  _SPIRAM_StatusRegisterTest
-       0921  _SPIRAM_ByteModeTest
-       0A24  _SPIRAM_SequentialModeTest
-       0B6C  _GetNumber
-       0BB7  _main
-       0C6D  _SPIRAM_WriteStatusRegister
-       0CF2  _SPIRAM_ReadStatusRegister
-       0D5E  _SPIRAM_WriteByte
-       0E2B  _SPIRAM_ReadByte
-       0EFC  _SPIRAM_WriteArray
-       0FF0  _SPIRAM_ReadArray
-       10EA  __text_end
-       10EA  __xidata_start
-       10F0  __xidata_end
+       0824  __text_start
+       0824  _SPIRAM_StatusRegisterTest
+       091F  _SPIRAM_ByteModeTest
+       0A22  _SPIRAM_SequentialModeTest
+       0B6A  _GetNumber
+       0BA9  _PlayBlock
+       0C18  _main
+       0CD7  _SPIRAM_WriteStatusRegister
+       0D5C  _SPIRAM_ReadStatusRegister
+       0DC8  _SPIRAM_WriteByte
+       0E95  _SPIRAM_ReadByte
+       0F66  _SPIRAM_WriteArray
+       105A  _SPIRAM_ReadArray
+       1154  __text_end
+       1154  __xidata_start
+       115A  __xidata_end
 
 Area                               Start  End    Decimal Bytes (Attributes)
 --------------------------------   ----   ----   ------- ----- ------------

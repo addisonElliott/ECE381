@@ -9,7 +9,7 @@
  0004 8081              .byte 128,129
                         .area text(rom, con, rel)
  0000                   .dbfile ./main.c
- 0000                   .dbfile C:\Users\Jacob\Desktop\ECE381\SPI_SRAM\SPI_SRAM\main.c
+ 0000                   .dbfile C:\Users\addis\Desktop\ECE381\SPI_SRAM\SPI_SRAM\main.c
  0000                   .dbfunc e SPIRAM_StatusRegisterTest _SPIRAM_StatusRegisterTest fc
  0000           ;         status -> X+7
  0000           ;           mode -> X+1
@@ -165,9 +165,9 @@
  002F           ;       BYTE b;
  002F           ; 
  002F           ;       UART_CPutString("Status Register W/R Test: 0x  ");
- 002F 50BC              mov A,>L3
+ 002F 50BA              mov A,>L3
  0031 08                push A
- 0032 50BC              mov A,<L3
+ 0032 50BA              mov A,<L3
  0034 5C                mov X,A
  0035 18                pop A
  0036 7C0000            xcall _UART_CPutString
@@ -227,9 +227,9 @@
  008F           ;                       UART_CPutString("\r\nWrite of invalid Status Register value. System halted.\r\n");
  008F                   .dbline 128
  008F 10                push X
- 0090 5081              mov A,>L10
+ 0090 507F              mov A,>L10
  0092 08                push A
- 0093 5081              mov A,<L10
+ 0093 507F              mov A,<L10
  0095 5C                mov X,A
  0096 18                pop A
  0097 7C0000            xcall _UART_CPutString
@@ -265,9 +265,9 @@
  00C4           ;                       UART_CPutString(" FAIL\r\n");
  00C4                   .dbline 133
  00C4 10                push X
- 00C5 5079              mov A,>L13
+ 00C5 5077              mov A,>L13
  00C7 08                push A
- 00C8 5079              mov A,<L13
+ 00C8 5077              mov A,<L13
  00CA 5C                mov X,A
  00CB 18                pop A
  00CC 7C0000            xcall _UART_CPutString
@@ -292,9 +292,9 @@
  00DE                   .dbline 137
  00DE           ;       UART_CPutString("\b\b\b\b\b PASS\r\n");
  00DE 10                push X
- 00DF 506C              mov A,>L14
+ 00DF 506A              mov A,>L14
  00E1 08                push A
- 00E2 506C              mov A,<L14
+ 00E2 506A              mov A,<L14
  00E4 5C                mov X,A
  00E5 18                pop A
  00E6 7C0000            xcall _UART_CPutString
@@ -351,9 +351,9 @@
  010A                   .dbline 152
  010A           ;       UART_CPutString("      Byte Mode W/R Test: Addr 0x    ");
  010A 10                push X
- 010B 5046              mov A,>L16
+ 010B 5044              mov A,>L16
  010D 08                push A
- 010E 5046              mov A,<L16
+ 010E 5044              mov A,<L16
  0110 5C                mov X,A
  0111 18                pop A
  0112 7C0000            xcall _UART_CPutString
@@ -385,9 +385,9 @@
  013A           ;                       UART_CPutString("\b\b\b\b");
  013A                   .dbline 156
  013A 10                push X
- 013B 5041              mov A,>L23
+ 013B 503F              mov A,>L23
  013D 08                push A
- 013E 5041              mov A,<L23
+ 013E 503F              mov A,<L23
  0140 5C                mov X,A
  0141 18                pop A
  0142 7C0000            xcall _UART_CPutString
@@ -438,9 +438,9 @@
  0176           ;                               UART_CPutString("\b\b\b\b");
  0176                   .dbline 164
  0176 10                push X
- 0177 5041              mov A,>L23
+ 0177 503F              mov A,>L23
  0179 08                push A
- 017A 5041              mov A,<L23
+ 017A 503F              mov A,<L23
  017C 5C                mov X,A
  017D 18                pop A
  017E 7C0000            xcall _UART_CPutString
@@ -455,9 +455,9 @@
  0189 7C0000            xcall _UART_PutSHexInt
  018C                   .dbline 166
  018C           ;                               UART_CPutString(" FAIL\r\n");
- 018C 5079              mov A,>L13
+ 018C 5077              mov A,>L13
  018E 08                push A
- 018F 5079              mov A,<L13
+ 018F 5077              mov A,<L13
  0191 5C                mov X,A
  0192 18                pop A
  0193 7C0000            xcall _UART_CPutString
@@ -502,9 +502,9 @@
  01BF           ;                       UART_CPutString("\b\b\b\b\b\b\b\b\b\b\b\b ABORTED    \r\n");
  01BF                   .dbline 175
  01BF 10                push X
- 01C0 5026              mov A,>L33
+ 01C0 5024              mov A,>L33
  01C2 08                push A
- 01C3 5026              mov A,<L33
+ 01C3 5024              mov A,<L33
  01C5 5C                mov X,A
  01C6 18                pop A
  01C7 7C0000            xcall _UART_CPutString
@@ -534,9 +534,9 @@
  01E5                   .dbline 179
  01E5           ;       UART_CPutString("\b\b\b\b\b\b\b\b\b\b\b\b PASS       \r\n");
  01E5 10                push X
- 01E6 500B              mov A,>L34
+ 01E6 5009              mov A,>L34
  01E8 08                push A
- 01E9 500B              mov A,<L34
+ 01E9 5009              mov A,<L34
  01EB 5C                mov X,A
  01EC 18                pop A
  01ED 7C0000            xcall _UART_CPutString
@@ -590,9 +590,9 @@
  020D                   .dbline 193
  020D           ;       UART_CPutString("Sequential Mode W/R Test: Addr 0x    ");
  020D 10                push X
- 020E 50E5              mov A,>L36
+ 020E 50E3              mov A,>L36
  0210 08                push A
- 0211 50E5              mov A,<L36
+ 0211 50E3              mov A,<L36
  0213 5C                mov X,A
  0214 18                pop A
  0215 7C0000            xcall _UART_CPutString
@@ -608,9 +608,9 @@
  0221                   .dbline 196
  0221           ;               UART_CPutString("\b\b\b\b");
  0221 10                push X
- 0222 5041              mov A,>L23
+ 0222 503F              mov A,>L23
  0224 08                push A
- 0225 5041              mov A,<L23
+ 0225 503F              mov A,<L23
  0227 5C                mov X,A
  0228 18                pop A
  0229 7C0000            xcall _UART_CPutString
@@ -708,9 +708,9 @@
  02A4           ;                                       UART_CPutString("\b\b\b\b");
  02A4                   .dbline 207
  02A4 10                push X
- 02A5 5041              mov A,>L23
+ 02A5 503F              mov A,>L23
  02A7 08                push A
- 02A8 5041              mov A,<L23
+ 02A8 503F              mov A,<L23
  02AA 5C                mov X,A
  02AB 18                pop A
  02AC 7C0000            xcall _UART_CPutString
@@ -733,9 +733,9 @@
  02C9 7C0000            xcall _UART_PutSHexInt
  02CC                   .dbline 209
  02CC           ;                                       UART_CPutString(" FAIL\r\n");
- 02CC 5079              mov A,>L13
+ 02CC 5077              mov A,>L13
  02CE 08                push A
- 02CF 5079              mov A,<L13
+ 02CF 5077              mov A,<L13
  02D1 5C                mov X,A
  02D2 18                pop A
  02D3 7C0000            xcall _UART_CPutString
@@ -790,9 +790,9 @@
  0306           ;                       UART_CPutString("\b\b\b\b\b\b\b\b\b\b\b\b ABORTED    \r\n");
  0306                   .dbline 219
  0306 10                push X
- 0307 5026              mov A,>L33
+ 0307 5024              mov A,>L33
  0309 08                push A
- 030A 5026              mov A,<L33
+ 030A 5024              mov A,<L33
  030C 5C                mov X,A
  030D 18                pop A
  030E 7C0000            xcall _UART_CPutString
@@ -822,9 +822,9 @@
  032D                   .dbline 223
  032D           ;       UART_CPutString("\b\b\b\b\b\b\b\b\b\b\b\b PASS       \r\n");
  032D 10                push X
- 032E 500B              mov A,>L34
+ 032E 5009              mov A,>L34
  0330 08                push A
- 0331 500B              mov A,<L34
+ 0331 5009              mov A,<L34
  0333 5C                mov X,A
  0334 18                pop A
  0335 7C0000            xcall _UART_CPutString
@@ -855,297 +855,383 @@
  0346 10                push X
  0347 4F                mov X,SP
  0348 3801              add SP,1
- 034A                   .dbline 228
+ 034A                   .dbline 230
  034A           ; }
  034A           ; 
+ 034A           ; // This function reads characters from the serial until a character is entered that is within the min & max ASCII characters.
+ 034A           ; // That character is returned
  034A           ; char GetNumber(char min, char max)
  034A           ; {
- 034A                   .dbline 231
- 034A           ;       char c;
- 034A           ;       
- 034A           ;       UART_CPutString(">");
- 034A 10                push X
- 034B 50E3              mov A,>L59
- 034D 08                push A
- 034E 50E3              mov A,<L59
- 0350 5C                mov X,A
- 0351 18                pop A
- 0352 7C0000            xcall _UART_CPutString
- 0355 20                pop X
- 0356 8034              xjmp L61
- 0358           L60:
- 0358                   .dbline 233
- 0358           ;       while (1)
- 0358           ;       {
- 0358                   .dbline 234
- 0358           ;               c = UART_cReadChar();
- 0358 10                push X
- 0359 7C0000            xcall _UART_cReadChar
- 035C 20                pop X
- 035D 62D000            mov REG[0xd0],>__r0
- 0360 5400              mov [X+0],A
- 0362                   .dbline 235
- 0362           ;               if (c < ('0' + min) || c > ('0' + max)) 
- 0362 52FC              mov A,[X-4]
- 0364 0130              add A,48
- 0366 5300              mov [__r0],A
- 0368 5200              mov A,[X+0]
- 036A 3A00              cmp A,[__r0]
- 036C C00C              jc L65
- 036E           X8:
- 036E 62D000            mov REG[0xd0],>__r0
- 0371 52FB              mov A,[X-5]
- 0373 0130              add A,48
- 0375 3B00              cmp A,[X+0]
- 0377 D003              jnc L63
- 0379           X9:
- 0379           L65:
- 0379                   .dbline 236
- 0379           ;                       continue;
- 0379 8011              xjmp L61
- 037B           L63:
- 037B                   .dbline 238
- 037B           ;               
- 037B           ;               UART_PutChar(c);
- 037B 10                push X
- 037C 5200              mov A,[X+0]
- 037E 7C0000            xcall _UART_PutChar
- 0381 20                pop X
- 0382                   .dbline 240
- 0382           ;               
- 0382           ;               return (c - '0');
- 0382 62D000            mov REG[0xd0],>__r0
- 0385 5200              mov A,[X+0]
- 0387 1130              sub A,48
- 0389 8003              xjmp L58
- 038B           L61:
- 038B                   .dbline 232
- 038B 8FCC              xjmp L60
- 038D           X7:
- 038D                   .dbline -2
- 038D           L58:
- 038D 38FF              add SP,-1
- 038F 20                pop X
- 0390                   .dbline 0 ; func end
- 0390 7F                ret
- 0391                   .dbsym l c 0 c
- 0391                   .dbsym l max -5 c
- 0391                   .dbsym l min -4 c
- 0391                   .dbend
- 0391                   .dbfunc e main _main fV
- 0391           ;            opt -> X+0
- 0391           _main::
- 0391                   .dbline -1
- 0391 10                push X
- 0392 4F                mov X,SP
- 0393 3803              add SP,3
- 0395                   .dbline 246
- 0395           ;       }
- 0395           ;       return 0;
- 0395           ; }
- 0395           ; 
- 0395           ; void main(void)
- 0395           ; {
- 0395                   .dbline 249
- 0395           ;       char opt;
- 0395           ;       // Make sure nCS is high before doing anything
- 0395           ;       nCS_HIGH;
- 0395                   .dbline 249
- 0395 430404            or REG[0x4],4
- 0398                   .dbline 249
- 0398                   .dbline 249
- 0398                   .dbline 252
- 0398           ;       
- 0398           ;       // Enable user module interrupts
- 0398           ;       SleepTimer_EnableInt();
- 0398 10                push X
- 0399 7C0000            xcall _SleepTimer_EnableInt
- 039C 20                pop X
- 039D                   .dbline 255
- 039D           ; 
- 039D           ;       // Enable global interrutps
- 039D           ;       M8C_EnableGInt;
- 039D 7101                      or  F, 01h
- 039F           
- 039F                   .dbline 258
- 039F           ; 
- 039F           ;       // Start the user modules
- 039F           ;       UART_Start(UART_PARITY_NONE);
- 039F 10                push X
- 03A0 5000              mov A,0
- 03A2 7C0000            xcall _UART_Start
- 03A5                   .dbline 259
- 03A5           ;       UART_PutCRLF();
- 03A5 7C0000            xcall _UART_PutCRLF
- 03A8                   .dbline 260
- 03A8           ;       SPIM_Start(SPIM_SPIM_MODE_0 | SPIM_SPIM_MSB_FIRST);
- 03A8 5000              mov A,0
- 03AA 7C0000            xcall _SPIM_Start
- 03AD                   .dbline 261
- 03AD           ;       SleepTimer_Start();
- 03AD 7C0000            xcall _SleepTimer_Start
- 03B0                   .dbline 262
- 03B0           ;       DAC8_Start(DAC8_FULLPOWER);
- 03B0 5003              mov A,3
- 03B2 7C0000            xcall _DAC8_Start
- 03B5 20                pop X
- 03B6 8089              xjmp L68
- 03B8           L67:
- 03B8                   .dbline 264
- 03B8           ; 
- 03B8           ;       while(1) {
- 03B8                   .dbline 265
- 03B8           ;               UART_CPutString("Synthetic wave output is on Port0[4]\r\nCowabunga Dude! Time to catch some waves.\r\n\r\n0. Play block 0\r\n1. Play block 1\r\n2. Play block 2\r\n3. Play block 3\r\n4. Test status register\r\n5. Test byte mode\r\n6. Test sequential mode\r\n");
- 03B8 10                push X
- 03B9 5006              mov A,>L70
+ 034A 8034              xjmp L60
+ 034C           L59:
+ 034C                   .dbline 234
+ 034C           ;       char c;
+ 034C           ;       
+ 034C           ;       while (1)
+ 034C           ;       {
+ 034C                   .dbline 235
+ 034C           ;               c = UART_cReadChar(); // Read the character
+ 034C 10                push X
+ 034D 7C0000            xcall _UART_cReadChar
+ 0350 20                pop X
+ 0351 62D000            mov REG[0xd0],>__r0
+ 0354 5400              mov [X+0],A
+ 0356                   .dbline 236
+ 0356           ;               if (c < ('0' + min) || c > ('0' + max)) // If the character is not within min to max range, continue the loop
+ 0356 52FC              mov A,[X-4]
+ 0358 0130              add A,48
+ 035A 5300              mov [__r0],A
+ 035C 5200              mov A,[X+0]
+ 035E 3A00              cmp A,[__r0]
+ 0360 C00C              jc L64
+ 0362           X8:
+ 0362 62D000            mov REG[0xd0],>__r0
+ 0365 52FB              mov A,[X-5]
+ 0367 0130              add A,48
+ 0369 3B00              cmp A,[X+0]
+ 036B D003              jnc L62
+ 036D           X9:
+ 036D           L64:
+ 036D                   .dbline 237
+ 036D           ;                       continue;
+ 036D 8011              xjmp L60
+ 036F           L62:
+ 036F                   .dbline 239
+ 036F           ;               
+ 036F           ;               UART_PutChar(c); // Put the character on the serial
+ 036F 10                push X
+ 0370 5200              mov A,[X+0]
+ 0372 7C0000            xcall _UART_PutChar
+ 0375 20                pop X
+ 0376                   .dbline 240
+ 0376           ;               return (c - '0'); // This returns the integer number entered instead of the ASCII value
+ 0376 62D000            mov REG[0xd0],>__r0
+ 0379 5200              mov A,[X+0]
+ 037B 1130              sub A,48
+ 037D 8003              xjmp L58
+ 037F           L60:
+ 037F                   .dbline 233
+ 037F 8FCC              xjmp L59
+ 0381           X7:
+ 0381                   .dbline -2
+ 0381           L58:
+ 0381 38FF              add SP,-1
+ 0383 20                pop X
+ 0384                   .dbline 0 ; func end
+ 0384 7F                ret
+ 0385                   .dbsym l c 0 c
+ 0385                   .dbsym l max -5 c
+ 0385                   .dbsym l min -4 c
+ 0385                   .dbend
+ 0385                   .dbfunc e PlayBlock _PlayBlock fV
+ 0385           ;      startAddr -> X+4
+ 0385           ;        endAddr -> X+2
+ 0385           ;           addr -> X+0
+ 0385           ;             id -> X-4
+ 0385           _PlayBlock::
+ 0385                   .dbline -1
+ 0385 10                push X
+ 0386 4F                mov X,SP
+ 0387 3806              add SP,6
+ 0389                   .dbline 248
+ 0389           ;       }
+ 0389           ;       
+ 0389           ;       return 0;
+ 0389           ; }
+ 0389           ; 
+ 0389           ; // This function plays a block of data where opt is the data block 0-3.
+ 0389           ; void PlayBlock(char id)
+ 0389           ; {     
+ 0389                   .dbline 249
+ 0389           ;       WORD startAddr = id * 0x2000; // Where the address starts for block
+ 0389 62D000            mov REG[0xd0],>__r0
+ 038C 52FC              mov A,[X-4]
+ 038E 5300              mov [__r0],A
+ 0390 550000            mov [__r1],0
+ 0393 6500              asl [__r0]
+ 0395 6500              asl [__r1]
+ 0397 6B00              rlc [__r0]
+ 0399 6500              asl [__r1]
+ 039B 6B00              rlc [__r0]
+ 039D 6500              asl [__r1]
+ 039F 6B00              rlc [__r0]
+ 03A1 6500              asl [__r1]
+ 03A3 6B00              rlc [__r0]
+ 03A5 5100              mov A,[__r1]
+ 03A7 5405              mov [X+5],A
+ 03A9 5100              mov A,[__r0]
+ 03AB 5404              mov [X+4],A
+ 03AD                   .dbline 250
+ 03AD           ;       WORD endAddr = startAddr + 0x2000; // Where the address ends for block
+ 03AD 5205              mov A,[X+5]
+ 03AF 0100              add A,0
+ 03B1 5403              mov [X+3],A
+ 03B3 5204              mov A,[X+4]
+ 03B5 0920              adc A,32
+ 03B7 5402              mov [X+2],A
+ 03B9                   .dbline 253
+ 03B9           ;       WORD addr;
+ 03B9           ;       
+ 03B9           ;       SPIRAM_WriteStatusRegister(SPIRAM_BYTE_MODE | SPIRAM_DISABLE_HOLD);
+ 03B9 5001              mov A,1
  03BB 08                push A
- 03BC 5006              mov A,<L70
- 03BE 5C                mov X,A
- 03BF 18                pop A
- 03C0 7C0000            xcall _UART_CPutString
- 03C3 20                pop X
- 03C4                   .dbline 266
- 03C4           ;               opt = GetNumber(0, 6);
- 03C4 5006              mov A,6
- 03C6 08                push A
- 03C7 5000              mov A,0
- 03C9 08                push A
- 03CA 9F7A              xcall _GetNumber
- 03CC 38FE              add SP,-2
- 03CE 62D000            mov REG[0xd0],>__r0
- 03D1 5400              mov [X+0],A
- 03D3                   .dbline 267
- 03D3           ;               switch (opt)
- 03D3 5200              mov A,[X+0]
- 03D5 5402              mov [X+2],A
- 03D7 560100            mov [X+1],0
- 03DA 3D0100            cmp [X+1],0
- 03DD B006              jnz X11
- 03DF 3D0204            cmp [X+2],4
- 03E2 A020              jz L76
- 03E4           X11:
- 03E4 3D0100            cmp [X+1],0
- 03E7 B006              jnz X12
- 03E9 3D0205            cmp [X+2],5
- 03EC A02A              jz L80
- 03EE           X12:
- 03EE 3D0100            cmp [X+1],0
- 03F1 B006              jnz X13
- 03F3 3D0206            cmp [X+2],6
- 03F6 A03A              jz L84
- 03F8           X13:
- 03F8 8047              xjmp L71
- 03FA           L75:
- 03FA                   .dbline 273
- 03FA           ;               {
- 03FA           ;                       
- 03FA           ;                       case 4:
- 03FA           ;                               // Test the status register, looping every 1/2s until it succeeds
- 03FA           ;                               while(SPIRAM_StatusRegisterTest()) 
- 03FA           ;                               {
- 03FA                   .dbline 274
- 03FA           ;                                       SleepTimer_SyncWait(4, SleepTimer_WAIT_RELOAD);
- 03FA 10                push X
- 03FB 5700              mov X,0
- 03FD 5004              mov A,4
- 03FF 7C0000            xcall _SleepTimer_SyncWait
- 0402 20                pop X
- 0403                   .dbline 275
- 0403           ;                               }
- 0403           L76:
- 0403                   .dbline 272
- 0403 9BFB              xcall _SPIRAM_StatusRegisterTest
- 0405 62D000            mov REG[0xd0],>__r0
- 0408 3900              cmp A,0
- 040A BFEF              jnz L75
- 040C                   .dbline 276
- 040C           ;                               break;
- 040C 8033              xjmp L72
- 040E           L79:
- 040E                   .dbline 280
- 040E           ;                       
- 040E           ;                       case 5:
- 040E           ;                               while(SPIRAM_ByteModeTest()) 
- 040E           ;                               {
- 040E                   .dbline 281
- 040E           ;                                       SleepTimer_SyncWait(4, SleepTimer_WAIT_RELOAD);
- 040E 10                push X
- 040F 5700              mov X,0
- 0411 5004              mov A,4
- 0413 7C0000            xcall _SleepTimer_SyncWait
- 0416 20                pop X
- 0417                   .dbline 282
- 0417           ;                               }               
- 0417           L80:
- 0417                   .dbline 279
- 0417 9CE2              xcall _SPIRAM_ByteModeTest
- 0419 62D000            mov REG[0xd0],>__r0
- 041C 3C0000            cmp [__r0],0
- 041F BFEE              jnz L79
- 0421 3C0000            cmp [__r1],0
- 0424 BFE9              jnz L79
- 0426           X14:
- 0426                   .dbline 283
- 0426           ;                               break;
- 0426 8019              xjmp L72
- 0428           L83:
- 0428                   .dbline 287
- 0428           ;                       
- 0428           ;                       case 6:
- 0428           ;                               while(SPIRAM_SequentialModeTest()) 
- 0428           ;                               {
- 0428                   .dbline 288
- 0428           ;                                       SleepTimer_SyncWait(4, SleepTimer_WAIT_RELOAD);
- 0428 10                push X
- 0429 5700              mov X,0
- 042B 5004              mov A,4
- 042D 7C0000            xcall _SleepTimer_SyncWait
- 0430 20                pop X
- 0431                   .dbline 289
- 0431           ;                               }
- 0431           L84:
- 0431                   .dbline 286
- 0431 9DCB              xcall _SPIRAM_SequentialModeTest
- 0433 62D000            mov REG[0xd0],>__r0
- 0436 3C0000            cmp [__r0],0
- 0439 BFEE              jnz L83
- 043B 3C0000            cmp [__r1],0
- 043E BFE9              jnz L83
- 0440           X15:
- 0440                   .dbline 290
- 0440           ;                               break;
- 0440           L71:
- 0440           L72:
- 0440                   .dbline 293
- 0440           ;                               
- 0440           ;               }
- 0440           ;       }
- 0440           L68:
- 0440                   .dbline 264
- 0440 8F77              xjmp L67
- 0442           X10:
- 0442                   .dbline -2
- 0442           L66:
- 0442 38FD              add SP,-3
- 0444 20                pop X
- 0445                   .dbline 0 ; func end
- 0445 8FFF              jmp .
- 0447                   .dbsym l opt 0 c
- 0447                   .dbend
+ 03BC 7C0000            xcall _SPIRAM_WriteStatusRegister
+ 03BF 38FF              add SP,-1
+ 03C1 62D000            mov REG[0xd0],>__r0
+ 03C4                   .dbline 254
+ 03C4           ;       for (addr = startAddr; addr < endAddr; addr++)
+ 03C4 5205              mov A,[X+5]
+ 03C6 5401              mov [X+1],A
+ 03C8 5204              mov A,[X+4]
+ 03CA 5400              mov [X+0],A
+ 03CC 8019              xjmp L69
+ 03CE           L66:
+ 03CE                   .dbline 255
+ 03CE           ;               DAC8_WriteStall(SPIRAM_ReadByte(addr));
+ 03CE 5200              mov A,[X+0]
+ 03D0 08                push A
+ 03D1 5201              mov A,[X+1]
+ 03D3 08                push A
+ 03D4 7C0000            xcall _SPIRAM_ReadByte
+ 03D7 38FE              add SP,-2
+ 03D9 62D000            mov REG[0xd0],>__r0
+ 03DC 10                push X
+ 03DD 7C0000            xcall _DAC8_WriteStall
+ 03E0 20                pop X
+ 03E1           L67:
+ 03E1                   .dbline 254
+ 03E1 7701              inc [X+1]
+ 03E3 0F0000            adc [X+0],0
+ 03E6           L69:
+ 03E6                   .dbline 254
+ 03E6 5201              mov A,[X+1]
+ 03E8 1303              sub A,[X+3]
+ 03EA 5200              mov A,[X+0]
+ 03EC 1B02              sbb A,[X+2]
+ 03EE CFDF              jc L66
+ 03F0           X10:
+ 03F0                   .dbline -2
+ 03F0           L65:
+ 03F0 38FA              add SP,-6
+ 03F2 20                pop X
+ 03F3                   .dbline 0 ; func end
+ 03F3 7F                ret
+ 03F4                   .dbsym l startAddr 4 i
+ 03F4                   .dbsym l endAddr 2 i
+ 03F4                   .dbsym l addr 0 i
+ 03F4                   .dbsym l id -4 c
+ 03F4                   .dbend
+ 03F4                   .dbfunc e main _main fV
+ 03F4           ;            opt -> X+0
+ 03F4           _main::
+ 03F4                   .dbline -1
+ 03F4 10                push X
+ 03F5 4F                mov X,SP
+ 03F6 3803              add SP,3
+ 03F8                   .dbline 259
+ 03F8           ; }
+ 03F8           ; 
+ 03F8           ; void main(void)
+ 03F8           ; {
+ 03F8                   .dbline 263
+ 03F8           ;       char opt;
+ 03F8           ;       
+ 03F8           ;       // Make sure nCS is high before doing anything
+ 03F8           ;       nCS_HIGH;
+ 03F8                   .dbline 263
+ 03F8 430404            or REG[0x4],4
+ 03FB                   .dbline 263
+ 03FB                   .dbline 263
+ 03FB                   .dbline 266
+ 03FB           ;       
+ 03FB           ;       // Enable user module interrupts
+ 03FB           ;       SleepTimer_EnableInt();
+ 03FB 10                push X
+ 03FC 7C0000            xcall _SleepTimer_EnableInt
+ 03FF 20                pop X
+ 0400                   .dbline 269
+ 0400           ; 
+ 0400           ;       // Enable global interrutps
+ 0400           ;       M8C_EnableGInt;
+ 0400 7101                      or  F, 01h
+ 0402           
+ 0402                   .dbline 272
+ 0402           ; 
+ 0402           ;       // Start the user modules
+ 0402           ;       UART_Start(UART_PARITY_NONE);
+ 0402 10                push X
+ 0403 5000              mov A,0
+ 0405 7C0000            xcall _UART_Start
+ 0408                   .dbline 273
+ 0408           ;       UART_PutCRLF();
+ 0408 7C0000            xcall _UART_PutCRLF
+ 040B                   .dbline 274
+ 040B           ;       SPIM_Start(SPIM_SPIM_MODE_0 | SPIM_SPIM_MSB_FIRST);
+ 040B 5000              mov A,0
+ 040D 7C0000            xcall _SPIM_Start
+ 0410                   .dbline 275
+ 0410           ;       SleepTimer_Start();
+ 0410 7C0000            xcall _SleepTimer_Start
+ 0413                   .dbline 276
+ 0413           ;       DAC8_Start(DAC8_FULLPOWER);
+ 0413 5003              mov A,3
+ 0415 7C0000            xcall _DAC8_Start
+ 0418 20                pop X
+ 0419 8092              xjmp L72
+ 041B           L71:
+ 041B                   .dbline 279
+ 041B           ; 
+ 041B           ;       while(1) 
+ 041B           ;       {
+ 041B                   .dbline 280
+ 041B           ;               UART_CPutString("Synthetic wave output is on Port0[4]\r\nCowabunga Dude! Time to catch some waves.\r\n\r\n0. Play block 0\r\n1. Play block 1\r\n2. Play block 2\r\n3. Play block 3\r\n4. Test status register\r\n5. Test byte mode\r\n6. Test sequential mode\r\n");
+ 041B 10                push X
+ 041C 5006              mov A,>L74
+ 041E 08                push A
+ 041F 5006              mov A,<L74
+ 0421 5C                mov X,A
+ 0422 18                pop A
+ 0423 7C0000            xcall _UART_CPutString
+ 0426 20                pop X
+ 0427                   .dbline 282
+ 0427           ;               
+ 0427           ;               opt = GetNumber(0, 6);
+ 0427 5006              mov A,6
+ 0429 08                push A
+ 042A 5000              mov A,0
+ 042C 08                push A
+ 042D 9F17              xcall _GetNumber
+ 042F 38FE              add SP,-2
+ 0431 62D000            mov REG[0xd0],>__r0
+ 0434 5400              mov [X+0],A
+ 0436                   .dbline 283
+ 0436           ;               switch (opt)
+ 0436 5200              mov A,[X+0]
+ 0438 5402              mov [X+2],A
+ 043A 560100            mov [X+1],0
+ 043D 3D0100            cmp [X+1],0
+ 0440 B006              jnz X12
+ 0442 3D0204            cmp [X+2],4
+ 0445 A020              jz L80
+ 0447           X12:
+ 0447 3D0100            cmp [X+1],0
+ 044A B006              jnz X13
+ 044C 3D0205            cmp [X+2],5
+ 044F A02A              jz L84
+ 0451           X13:
+ 0451 3D0100            cmp [X+1],0
+ 0454 B006              jnz X14
+ 0456 3D0206            cmp [X+2],6
+ 0459 A03A              jz L88
+ 045B           X14:
+ 045B 8049              xjmp L75
+ 045D           L79:
+ 045D                   .dbline 287
+ 045D           ;               {
+ 045D           ;                       case 4:
+ 045D           ;                               while(SPIRAM_StatusRegisterTest()) 
+ 045D           ;                                       SleepTimer_SyncWait(4, SleepTimer_WAIT_RELOAD);
+ 045D 10                push X
+ 045E 5700              mov X,0
+ 0460 5004              mov A,4
+ 0462 7C0000            xcall _SleepTimer_SyncWait
+ 0465 20                pop X
+ 0466           L80:
+ 0466                   .dbline 286
+ 0466 9B98              xcall _SPIRAM_StatusRegisterTest
+ 0468 62D000            mov REG[0xd0],>__r0
+ 046B 3900              cmp A,0
+ 046D BFEF              jnz L79
+ 046F                   .dbline 288
+ 046F           ;                               break;
+ 046F 803C              xjmp L76
+ 0471           L83:
+ 0471                   .dbline 292
+ 0471           ;                       
+ 0471           ;                       case 5:
+ 0471           ;                               while(SPIRAM_ByteModeTest()) 
+ 0471           ;                                       SleepTimer_SyncWait(4, SleepTimer_WAIT_RELOAD); 
+ 0471 10                push X
+ 0472 5700              mov X,0
+ 0474 5004              mov A,4
+ 0476 7C0000            xcall _SleepTimer_SyncWait
+ 0479 20                pop X
+ 047A           L84:
+ 047A                   .dbline 291
+ 047A 9C7F              xcall _SPIRAM_ByteModeTest
+ 047C 62D000            mov REG[0xd0],>__r0
+ 047F 3C0000            cmp [__r0],0
+ 0482 BFEE              jnz L83
+ 0484 3C0000            cmp [__r1],0
+ 0487 BFE9              jnz L83
+ 0489           X15:
+ 0489                   .dbline 293
+ 0489           ;                               break;
+ 0489 8022              xjmp L76
+ 048B           L87:
+ 048B                   .dbline 297
+ 048B           ;                       
+ 048B           ;                       case 6:
+ 048B           ;                               while(SPIRAM_SequentialModeTest()) 
+ 048B           ;                                       SleepTimer_SyncWait(4, SleepTimer_WAIT_RELOAD);
+ 048B 10                push X
+ 048C 5700              mov X,0
+ 048E 5004              mov A,4
+ 0490 7C0000            xcall _SleepTimer_SyncWait
+ 0493 20                pop X
+ 0494           L88:
+ 0494                   .dbline 296
+ 0494 9D68              xcall _SPIRAM_SequentialModeTest
+ 0496 62D000            mov REG[0xd0],>__r0
+ 0499 3C0000            cmp [__r0],0
+ 049C BFEE              jnz L87
+ 049E 3C0000            cmp [__r1],0
+ 04A1 BFE9              jnz L87
+ 04A3           X16:
+ 04A3                   .dbline 298
+ 04A3           ;                               break;
+ 04A3 8008              xjmp L76
+ 04A5           L75:
+ 04A5                   .dbline 301
+ 04A5           ;                       
+ 04A5           ;                       default:
+ 04A5           ;                               PlayBlock(opt);
+ 04A5 5200              mov A,[X+0]
+ 04A7 08                push A
+ 04A8 9EDB              xcall _PlayBlock
+ 04AA 38FF              add SP,-1
+ 04AC                   .dbline 302
+ 04AC           ;                               break;  
+ 04AC           L76:
+ 04AC                   .dbline 304
+ 04AC           ;               }
+ 04AC           ;       }
+ 04AC           L72:
+ 04AC                   .dbline 278
+ 04AC 8F6E              xjmp L71
+ 04AE           X11:
+ 04AE                   .dbline -2
+ 04AE           L70:
+ 04AE 38FD              add SP,-3
+ 04B0 20                pop X
+ 04B1                   .dbline 0 ; func end
+ 04B1 8FFF              jmp .
+ 04B3                   .dbsym l opt 0 c
+ 04B3                   .dbend
                         .area data(ram, con, rel)
- 0000                   .dbfile C:\Users\Jacob\Desktop\ECE381\SPI_SRAM\SPI_SRAM\main.c
+ 0000                   .dbfile C:\Users\addis\Desktop\ECE381\SPI_SRAM\SPI_SRAM\main.c
  0000           _DataOut::
  0000 000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000  .word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
  003C 00000000          .byte 0,0,0,0
  0040                   .dbsym e DataOut _DataOut A[64:64]c
                         .area data(ram, con, rel)
- 0000                   .dbfile C:\Users\Jacob\Desktop\ECE381\SPI_SRAM\SPI_SRAM\main.c
+ 0000                   .dbfile C:\Users\addis\Desktop\ECE381\SPI_SRAM\SPI_SRAM\main.c
  0000           _DataIn::
  0000 000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000  .word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
  003C 00000000          .byte 0,0,0,0
  0040                   .dbsym e DataIn _DataIn A[64:64]c
                         .area lit(rom, con, rel, lit)
- 0006           L70:
+ 0006           L74:
  0006 53796E7468657469632077617665206F  .byte 'S,'y,'n,'t,'h,'e,'t,'i,'c,32,'w,'a,'v,'e,32,'o
  0016 7574707574206973206F6E20506F7274  .byte 'u,'t,'p,'u,'t,32,'i,'s,32,'o,'n,32,'P,'o,'r,'t
  0026 305B345D0D0A436F776162756E676120  .byte 48,91,52,93,13,10,'C,'o,'w,'a,'b,'u,'n,'g,'a,32
@@ -1160,33 +1246,31 @@
  00B6 352E20546573742062797465206D6F64  .byte 53,46,32,'T,'e,'s,'t,32,'b,'y,'t,'e,32,'m,'o,'d
  00C6 650D0A362E2054657374207365717565  .byte 'e,13,10,54,46,32,'T,'e,'s,'t,32,'s,'e,'q,'u,'e
  00D6 6E7469616C206D6F64650D0A00        .byte 'n,'t,'i,'a,'l,32,'m,'o,'d,'e,13,10,0
- 00E3           L59:
- 00E3 3E00              .byte 62,0
- 00E5           L36:
- 00E5 53657175656E7469616C204D6F646520  .byte 'S,'e,'q,'u,'e,'n,'t,'i,'a,'l,32,'M,'o,'d,'e,32
- 00F5 572F5220546573743A20416464722030  .byte 'W,47,'R,32,'T,'e,'s,'t,58,32,'A,'d,'d,'r,32,48
- 0105 782020202000      .byte 'x,32,32,32,32,0
- 010B           L34:
- 010B 08080808080808080808080820504153  .byte 8,8,8,8,8,8,8,8,8,8,8,8,32,'P,'A,'S
- 011B 53202020202020200D0A00    .byte 'S,32,32,32,32,32,32,32,13,10,0
- 0126           L33:
- 0126 0808080808080808080808082041424F  .byte 8,8,8,8,8,8,8,8,8,8,8,8,32,'A,'B,'O
- 0136 52544544202020200D0A00    .byte 'R,'T,'E,'D,32,32,32,32,13,10,0
- 0141           L23:
- 0141 0808080800        .byte 8,8,8,8,0
- 0146           L16:
- 0146 20202020202042797465204D6F646520  .byte 32,32,32,32,32,32,'B,'y,'t,'e,32,'M,'o,'d,'e,32
- 0156 572F5220546573743A20416464722030  .byte 'W,47,'R,32,'T,'e,'s,'t,58,32,'A,'d,'d,'r,32,48
- 0166 782020202000      .byte 'x,32,32,32,32,0
- 016C           L14:
- 016C 080808080820504153530D0A00        .byte 8,8,8,8,8,32,'P,'A,'S,'S,13,10,0
- 0179           L13:
- 0179 204641494C0D0A00  .byte 32,'F,'A,'I,'L,13,10,0
- 0181           L10:
- 0181 0D0A5772697465206F6620696E76616C  .byte 13,10,'W,'r,'i,'t,'e,32,'o,'f,32,'i,'n,'v,'a,'l
- 0191 69642053746174757320526567697374  .byte 'i,'d,32,'S,'t,'a,'t,'u,'s,32,'R,'e,'g,'i,'s,'t
- 01A1 65722076616C75652E2053797374656D  .byte 'e,'r,32,'v,'a,'l,'u,'e,46,32,'S,'y,'s,'t,'e,'m
- 01B1 2068616C7465642E0D0A00    .byte 32,'h,'a,'l,'t,'e,'d,46,13,10,0
- 01BC           L3:
- 01BC 53746174757320526567697374657220  .byte 'S,'t,'a,'t,'u,'s,32,'R,'e,'g,'i,'s,'t,'e,'r,32
- 01CC 572F5220546573743A203078202000    .byte 'W,47,'R,32,'T,'e,'s,'t,58,32,48,'x,32,32,0
+ 00E3           L36:
+ 00E3 53657175656E7469616C204D6F646520  .byte 'S,'e,'q,'u,'e,'n,'t,'i,'a,'l,32,'M,'o,'d,'e,32
+ 00F3 572F5220546573743A20416464722030  .byte 'W,47,'R,32,'T,'e,'s,'t,58,32,'A,'d,'d,'r,32,48
+ 0103 782020202000      .byte 'x,32,32,32,32,0
+ 0109           L34:
+ 0109 08080808080808080808080820504153  .byte 8,8,8,8,8,8,8,8,8,8,8,8,32,'P,'A,'S
+ 0119 53202020202020200D0A00    .byte 'S,32,32,32,32,32,32,32,13,10,0
+ 0124           L33:
+ 0124 0808080808080808080808082041424F  .byte 8,8,8,8,8,8,8,8,8,8,8,8,32,'A,'B,'O
+ 0134 52544544202020200D0A00    .byte 'R,'T,'E,'D,32,32,32,32,13,10,0
+ 013F           L23:
+ 013F 0808080800        .byte 8,8,8,8,0
+ 0144           L16:
+ 0144 20202020202042797465204D6F646520  .byte 32,32,32,32,32,32,'B,'y,'t,'e,32,'M,'o,'d,'e,32
+ 0154 572F5220546573743A20416464722030  .byte 'W,47,'R,32,'T,'e,'s,'t,58,32,'A,'d,'d,'r,32,48
+ 0164 782020202000      .byte 'x,32,32,32,32,0
+ 016A           L14:
+ 016A 080808080820504153530D0A00        .byte 8,8,8,8,8,32,'P,'A,'S,'S,13,10,0
+ 0177           L13:
+ 0177 204641494C0D0A00  .byte 32,'F,'A,'I,'L,13,10,0
+ 017F           L10:
+ 017F 0D0A5772697465206F6620696E76616C  .byte 13,10,'W,'r,'i,'t,'e,32,'o,'f,32,'i,'n,'v,'a,'l
+ 018F 69642053746174757320526567697374  .byte 'i,'d,32,'S,'t,'a,'t,'u,'s,32,'R,'e,'g,'i,'s,'t
+ 019F 65722076616C75652E2053797374656D  .byte 'e,'r,32,'v,'a,'l,'u,'e,46,32,'S,'y,'s,'t,'e,'m
+ 01AF 2068616C7465642E0D0A00    .byte 32,'h,'a,'l,'t,'e,'d,46,13,10,0
+ 01BA           L3:
+ 01BA 53746174757320526567697374657220  .byte 'S,'t,'a,'t,'u,'s,32,'R,'e,'g,'i,'s,'t,'e,'r,32
+ 01CA 572F5220546573743A203078202000    .byte 'W,47,'R,32,'T,'e,'s,'t,58,32,48,'x,32,32,0

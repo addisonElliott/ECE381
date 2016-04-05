@@ -20,6 +20,17 @@ export LoadConfigTBL_spi_sram_Bank0
 export LoadConfigTBL_spi_sram_Ordered
 AREA lit(rom, rel)
 LoadConfigTBL_spi_sram_Bank0:
+;  Instance name DAC8, User Module DAC8
+;       Instance name DAC8, Block Name LSB(ASD22)
+	db		98h, 80h		;DAC8_LSB_CR0(ASD22CR0)
+	db		99h, 80h		;DAC8_LSB_CR1(ASD22CR1)
+	db		9ah, 20h		;DAC8_LSB_CR2(ASD22CR2)
+	db		9bh, 30h		;DAC8_LSB_CR3(ASD22CR3)
+;       Instance name DAC8, Block Name MSB(ASC12)
+	db		88h, a0h		;DAC8_MSB_CR0(ASC12CR0)
+	db		89h, 41h		;DAC8_MSB_CR1(ASC12CR1)
+	db		8ah, a0h		;DAC8_MSB_CR2(ASC12CR2)
+	db		8bh, 3ch		;DAC8_MSB_CR3(ASC12CR3)
 ;  Instance name SPIM, User Module SPIM
 ;       Instance name SPIM, Block Name SPIM(DCB23)
 	db		4fh, 00h		;SPIM_CONTROL_REG  (DCB23CR0)
@@ -38,7 +49,7 @@ LoadConfigTBL_spi_sram_Bank0:
 ;  Global Register values Bank 0
 	db		60h, 28h		; AnalogColumnInputSelect register (AMX_IN)
 	db		66h, 00h		; AnalogComparatorControl1 register (CMP_CR1)
-	db		63h, 05h		; AnalogReferenceControl register (ARF_CR)
+	db		63h, 17h		; AnalogReferenceControl register (ARF_CR)
 	db		65h, 00h		; AnalogSyncControl register (ASY_CR)
 	db		e6h, 00h		; DecimatorControl_0 register (DEC_CR0)
 	db		e7h, 00h		; DecimatorControl_1 register (DEC_CR1)
@@ -77,6 +88,9 @@ LoadConfigTBL_spi_sram_Bank0:
 	db		6fh, 00h		; TMP_DR3 register (TMP_DR3)
 	db		ffh
 LoadConfigTBL_spi_sram_Bank1:
+;  Instance name DAC8, User Module DAC8
+;       Instance name DAC8, Block Name LSB(ASD22)
+;       Instance name DAC8, Block Name MSB(ASC12)
 ;  Instance name SPIM, User Module SPIM
 ;       Instance name SPIM, Block Name SPIM(DCB23)
 	db		4ch, 06h		;SPIM_FUNCTION_REG (DCB23FN)
@@ -96,7 +110,7 @@ LoadConfigTBL_spi_sram_Bank1:
 	db		61h, 00h		; AnalogClockSelect1 register (CLK_CR1)
 	db		69h, 00h		; AnalogClockSelect2 register (CLK_CR2)
 	db		60h, 00h		; AnalogColumnClockSelect register (CLK_CR0)
-	db		62h, 00h		; AnalogIOControl_0 register (ABF_CR0)
+	db		62h, 11h		; AnalogIOControl_0 register (ABF_CR0)
 	db		67h, 33h		; AnalogLUTControl0 register (ALT_CR0)
 	db		68h, 33h		; AnalogLUTControl1 register (ALT_CR1)
 	db		63h, 00h		; AnalogModulatorControl_0 register (AMD_CR0)
