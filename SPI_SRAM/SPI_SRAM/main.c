@@ -1,3 +1,4 @@
+
 //----------------------------------------------------------------------------
 // 23K256 SPI SRAM Program
 //
@@ -98,7 +99,7 @@
 #include "PSoCAPI.h"    // PSoC API definitions for all User Modules
 #include "stdlib.h"
 #include "spi_sram.h"
-
+#include "math.h"
 // Define our I/O array size. Powers of 2 are nice but not necessary
 #define ARRAY_SIZE 64
 
@@ -237,6 +238,7 @@ char GetNumber(char min, char max)
 			continue;
 		
 		UART_PutChar(c); // Put the character on the serial
+		UART_PutCRLF();
 		return (c - '0'); // This returns the integer number entered instead of the ASCII value
 	}
 	
@@ -248,11 +250,77 @@ void PlayBlock(char id)
 {	
 	WORD startAddr = id * 0x2000; // Where the address starts for block
 	WORD endAddr = startAddr + 0x2000; // Where the address ends for block
-	WORD addr;
+	WORD addr = startAddr;
 	
 	SPIRAM_WriteStatusRegister(SPIRAM_BYTE_MODE | SPIRAM_DISABLE_HOLD);
-	for (addr = startAddr; addr < endAddr; addr++)
+	UART_CPutString("Press any key to abort\r\n");
+	while (!UART_cReadChar())
+	{
 		DAC8_WriteStall(SPIRAM_ReadByte(addr));
+		if (++addr > endAddr) addr = startAddr;
+	}
+}
+void WriteBlock(char id)
+{	
+
+	WORD startAddr = 0x2000 *id; // Where the address starts for block
+	WORD endAddr = startAddr + 0x2000; // Where the address ends for block
+	WORD addr;
+	BYTE i, ii;
+	float pi = 3.1415;
+	char temp[128];
+	
+	SPIRAM_WriteStatusRegister(SPIRAM_SEQUENTIAL_MODE | SPIRAM_DISABLE_HOLD);
+	switch (id)
+	{
+		case 0:	
+			for (addr = startAddr; addr < endAddr; addr += 128)
+			{
+				for(i = 0; i < 128; i++)
+				{
+					temp[i] = (char)(0.5 + 0.5*sin(800*pi*((addr - startAddr) + i)) + 0.5*sin(800*pi*((addr - startAddr) + i))*(128/2.5));	
+				}	
+				SPIRAM_WriteArray(addr, temp, 128);
+				UART_CPutString("Writing to ");
+				UART_PutSHexInt(addr);
+				UART_CPutString("\r\n");
+			}
+			break;
+		
+		case 1:	
+			for (addr = startAddr; addr < endAddr; addr += 128)
+			{
+				for(i = 0; i < 128; i++)
+				{
+					temp[i] = (char)(0.2 + 0.5*sin(600*pi*((addr - startAddr) + i)) + 0.5*sin(200*pi*((addr - startAddr) + i))*(128/2.5));
+				}	
+				SPIRAM_WriteArray(addr, temp, 128);
+			}
+			break;
+		
+		case 2:	
+			for (addr = startAddr; addr < endAddr; addr += 128)
+			{
+				for(i = 0; i < 128; i++)
+				{
+					temp[i] = (char)(0.1 + 0.5*sin(1500*pi*((addr - startAddr) + i)) + 0.5*sin(700*pi*((addr - startAddr) + i))*(128/2.5));	
+				}	
+				SPIRAM_WriteArray(addr, temp, 128);
+			}
+			break;
+		
+		case 3:
+			for (addr = startAddr; addr < endAddr; addr += 128)
+			{
+				for(i = 0; i < 128; i++)
+				{
+					temp[i] = (char)(0.4 + 0.5*sin(100*pi*((addr - startAddr) + i))*(128/2.5));
+				}	
+				SPIRAM_WriteArray(addr, temp, 128);
+			}
+			break;
+	}
+	
 }
 
 void main(void)
@@ -274,7 +342,11 @@ void main(void)
 	SPIM_Start(SPIM_SPIM_MODE_0 | SPIM_SPIM_MSB_FIRST);
 	SleepTimer_Start();
 	DAC8_Start(DAC8_FULLPOWER);
-
+	UART_CPutString("Synthesiszing waveforms\r\n");
+	WriteBlock(0);
+	WriteBlock(1);
+	WriteBlock(2);
+	WriteBlock(3);
 	while(1) 
 	{
 		UART_CPutString("Synthetic wave output is on Port0[4]\r\nCowabunga Dude! Time to catch some waves.\r\n\r\n0. Play block 0\r\n1. Play block 1\r\n2. Play block 2\r\n3. Play block 3\r\n4. Test status register\r\n5. Test byte mode\r\n6. Test sequential mode\r\n");

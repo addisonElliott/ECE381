@@ -39,18 +39,18 @@
 #define CLOCK_DIV_VC3          0x33    // VC3 clock divider
 #define CLOCK_DIV_VC3_MASK     0xff    // VC3 clock divider mask
 #define CLOCK_DIV_VC3_JUST     0x33    // VC3 clock divider justified
-#define ANALOG_BUFFER_PWR      0x0     // Analog buffer power level
+#define ANALOG_BUFFER_PWR      0x1     // Analog buffer power level
 #define ANALOG_BUFFER_PWR_MASK 0x1     // Analog buffer power level mask
-#define ANALOG_BUFFER_PWR_JUST 0x0     // Analog buffer power level justified
-#define ANALOG_POWER           0x5     // Analog power control
+#define ANALOG_BUFFER_PWR_JUST 0x1     // Analog buffer power level justified
+#define ANALOG_POWER           0x7     // Analog power control
 #define ANALOG_POWER_MASK      0x7     // Analog power control mask
-#define ANALOG_POWER_JUST      0x5     // Analog power control justified
+#define ANALOG_POWER_JUST      0x7     // Analog power control justified
 #define OP_AMP_BIAS            0x0     // Op amp bias level
 #define OP_AMP_BIAS_MASK       0x40    // Op amp bias level mask
 #define OP_AMP_BIAS_JUST       0x0     // Op amp bias level justified
-#define REF_MUX                0x0     // Ref mux setting
+#define REF_MUX                0x2     // Ref mux setting
 #define REF_MUX_MASK           0x38    // Ref mux setting mask
-#define REF_MUX_JUST           0x0     // Ref mux setting justified
+#define REF_MUX_JUST           0x10    // Ref mux setting justified
 #define AGND_BYPASS            0x0     // AGndBypass setting
 #define AGND_BYPASS_MASK       0x40    // AGndBypass setting mask
 #define AGND_BYPASS_JUST       0x0     // AGndBypass setting justified
@@ -63,7 +63,7 @@
 //
 // register initial values
 //
-#define ANALOG_IO_CONTROL      0x0     //Analog IO Control register (ABF_CR)
+#define ANALOG_IO_CONTROL      0x11    //Analog IO Control register (ABF_CR)
 #define PORT_0_GLOBAL_SELECT   0x0     //Port 0 global select register (PRT0GS)
 #define PORT_0_DRIVE_0         0x0     //Port 0 drive mode 0 register (PRT0DM0)
 #define PORT_0_DRIVE_1         0xff    //Port 0 drive mode 1 register (PRT0DM1)

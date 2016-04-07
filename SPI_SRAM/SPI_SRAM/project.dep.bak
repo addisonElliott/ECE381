@@ -2,43 +2,44 @@
 ./obj/boot.o : \
    C:/PROGRA~2/Cypress/PSOCDE~1/5.4/Common/CYPRES~1/tools/include/CY8C29~1/m8c.inc\
    C:/PROGRA~2/Cypress/PSOCDE~1/5.4/Common/CYPRES~1/tools/include/CY8C29~1/m8ssc.inc\
-   C:\Users\addis\Desktop\ECE381\SPI_SRAM\SPI_SRAM\lib\GLOBAL~1.INC\
-   C:\Users\addis\Desktop\ECE381\SPI_SRAM\SPI_SRAM\memory.inc
+   C:\Users\Jacob\Desktop\ECE381\SPI_SRAM\SPI_SRAM\lib\GLOBAL~1.INC\
+   C:\Users\Jacob\Desktop\ECE381\SPI_SRAM\SPI_SRAM\memory.inc
 ./obj/main.o :  ./lib/DAC8.h ./lib/PSoCAPI.h ./lib/PSOCGP~1.H\
    ./lib/SPIM.h ./lib/SLEEPT~1.H ./lib/UART.h\
    C:/PROGRA~2/Cypress/PSOCDE~1/5.4/Common/CYPRES~1/tools/include/CY8C29~1/m8c.h\
    C:/PROGRA~2/Cypress/PSOCDE~1/5.4/Common/CYPRES~1/tools/include/_const.h\
    C:/PROGRA~2/Cypress/PSOCDE~1/5.4/Common/CYPRES~1/tools/include/limits.h\
+   C:/PROGRA~2/Cypress/PSOCDE~1/5.4/Common/CYPRES~1/tools/include/math.h\
    C:/PROGRA~2/Cypress/PSOCDE~1/5.4/Common/CYPRES~1/tools/include/stdlib.h\
-   C:\Users\addis\Desktop\ECE381\SPI_SRAM\SPI_SRAM\spi_sram.h
+   C:\Users\Jacob\Desktop\ECE381\SPI_SRAM\SPI_SRAM\spi_sram.h
 ./obj/spi_sram.o :  ./lib/DAC8.h ./lib/PSoCAPI.h ./lib/PSOCGP~1.H\
    ./lib/SPIM.h ./lib/SLEEPT~1.H ./lib/UART.h\
    C:/PROGRA~2/Cypress/PSOCDE~1/5.4/Common/CYPRES~1/tools/include/CY8C29~1/m8c.h\
-   C:\Users\addis\Desktop\ECE381\SPI_SRAM\SPI_SRAM\spi_sram.h
+   C:\Users\Jacob\Desktop\ECE381\SPI_SRAM\SPI_SRAM\spi_sram.h
 ./lib/obj/dac8.o :  ./lib/DAC8.inc\
    C:/PROGRA~2/Cypress/PSOCDE~1/5.4/Common/CYPRES~1/tools/include/CY8C29~1/m8c.inc\
-   C:\Users\addis\Desktop\ECE381\SPI_SRAM\SPI_SRAM\memory.inc
+   C:\Users\Jacob\Desktop\ECE381\SPI_SRAM\SPI_SRAM\memory.inc
 ./lib/obj/psocconfig.o :  ./lib/GLOBAL~1.INC\
    C:/PROGRA~2/Cypress/PSOCDE~1/5.4/Common/CYPRES~1/tools/include/CY8C29~1/m8c.inc\
-   C:\Users\addis\Desktop\ECE381\SPI_SRAM\SPI_SRAM\memory.inc
+   C:\Users\Jacob\Desktop\ECE381\SPI_SRAM\SPI_SRAM\memory.inc
 ./lib/obj/psocconfigtbl.o : \
    C:/PROGRA~2/Cypress/PSOCDE~1/5.4/Common/CYPRES~1/tools/include/CY8C29~1/m8c.inc
 ./lib/obj/sleeptimer.o :  ./lib/SLEEPT~1.INC\
    C:/PROGRA~2/Cypress/PSOCDE~1/5.4/Common/CYPRES~1/tools/include/CY8C29~1/m8c.inc\
-   C:\Users\addis\Desktop\ECE381\SPI_SRAM\SPI_SRAM\memory.inc
+   C:\Users\Jacob\Desktop\ECE381\SPI_SRAM\SPI_SRAM\memory.inc
 ./lib/obj/sleeptimerint.o :  ./lib/SLEEPT~1.INC\
    C:/PROGRA~2/Cypress/PSOCDE~1/5.4/Common/CYPRES~1/tools/include/CY8C29~1/m8c.inc\
-   C:\Users\addis\Desktop\ECE381\SPI_SRAM\SPI_SRAM\memory.inc
+   C:\Users\Jacob\Desktop\ECE381\SPI_SRAM\SPI_SRAM\memory.inc
 ./lib/obj/spim.o :  ./lib/SPIM.inc\
    C:/PROGRA~2/Cypress/PSOCDE~1/5.4/Common/CYPRES~1/tools/include/CY8C29~1/m8c.inc\
-   C:\Users\addis\Desktop\ECE381\SPI_SRAM\SPI_SRAM\memory.inc
+   C:\Users\Jacob\Desktop\ECE381\SPI_SRAM\SPI_SRAM\memory.inc
 ./lib/obj/spimint.o :  ./lib/SPIM.inc\
    C:/PROGRA~2/Cypress/PSOCDE~1/5.4/Common/CYPRES~1/tools/include/CY8C29~1/m8c.inc\
-   C:\Users\addis\Desktop\ECE381\SPI_SRAM\SPI_SRAM\memory.inc
+   C:\Users\Jacob\Desktop\ECE381\SPI_SRAM\SPI_SRAM\memory.inc
 ./lib/obj/uart.o :  ./lib/UART.inc\
    C:/PROGRA~2/Cypress/PSOCDE~1/5.4/Common/CYPRES~1/tools/include/CY8C29~1/m8c.inc\
-   C:\Users\addis\Desktop\ECE381\SPI_SRAM\SPI_SRAM\memory.inc
+   C:\Users\Jacob\Desktop\ECE381\SPI_SRAM\SPI_SRAM\memory.inc
 ./lib/obj/uartint.o :  ./lib/UART.inc\
    C:/PROGRA~2/Cypress/PSOCDE~1/5.4/Common/CYPRES~1/tools/include/CY8C29~1/m8c.inc\
-   C:\Users\addis\Desktop\ECE381\SPI_SRAM\SPI_SRAM\memory.inc
+   C:\Users\Jacob\Desktop\ECE381\SPI_SRAM\SPI_SRAM\memory.inc
 ./lib/obj/uartplus.o : 

@@ -2,7 +2,7 @@
                         .module spi_sram.c
                         .area text(rom, con, rel)
  0000                   .dbfile ./spi_sram.c
- 0000                   .dbfile C:\Users\addis\Desktop\ECE381\SPI_SRAM\SPI_SRAM\spi_sram.c
+ 0000                   .dbfile C:\Users\Jacob\Desktop\ECE381\SPI_SRAM\SPI_SRAM\spi_sram.c
  0000                   .dbfunc e SPIRAM_WriteStatusRegister _SPIRAM_WriteStatusRegister fc
  0000           ;              b -> X+0
  0000           ;          value -> X-4

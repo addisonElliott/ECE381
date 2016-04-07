@@ -1,0 +1,52 @@
+Starting MAKE...
+creating project.mk 
+
+lib/amux4.asm
+
+lib/dac8a.asm
+
+lib/dac8b.asm
+
+lib/dacupdate.asm
+
+lib/dacupdateint.asm
+
+lib/delsig.asm
+
+lib/delsigclock.asm
+
+lib/delsigclockint.asm
+
+lib/delsigint.asm
+
+lib/pga.asm
+
+lib/psocconfig.asm
+
+lib/psocconfigtbl.asm
+
+lib/spim.asm
+
+lib/spimint.asm
+
+lib/uart.asm
+
+lib/uartint.asm
+
+lib/uartplus.asm
+
+!W C:\Users\Jacob\Desktop\ECE381\DATAAC~1\DATAAC~1\main.c(154): unknown preprocessor directive "#H"
+
+!W C:\Users\Jacob\Desktop\ECE381\DATAAC~1\DATAAC~1\main.c(150):[warning] unrecognized character escape sequence `\ '
+
+!E C:\Users\Jacob\Desktop\ECE381\DATAAC~1\DATAAC~1\main.c(150): missing "
+
+!E C:\Users\Jacob\Desktop\ECE381\DATAAC~1\DATAAC~1\main.c(184): syntax error; found `}' expecting `)'
+
+!E C:\Users\Jacob\Desktop\ECE381\DATAAC~1\DATAAC~1\main.c(184): syntax error; found `}' expecting `;'
+
+make: *** [obj/main.o] Error 1
+
+ 
+DataAcquisionSystem - 4 error(s) 2 warning(s) 20:51:22
+
