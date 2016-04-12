@@ -26,6 +26,7 @@
 #define SPIRAM_DUMMY_BYTE		0x00
 
 // Function Prototypes
+// Function Prototypes
 BYTE SPIRAM_WriteStatusRegister(BYTE value);
 BYTE SPIRAM_ReadStatusRegister(void);
 void SPIRAM_WriteByte(WORD addr, BYTE out);

@@ -1,0 +1,2419 @@
+ 0000                   cpu LMM
+                        .module main.c
+                        .area text(rom, con, rel)
+ 0000                   .dbfile ./main.c
+                        .area data(ram, con, rel)
+ 0000                   .dbfile ./main.c
+ 0000           _DACUpdateDone::
+ 0000 00                .byte 0
+ 0001                   .dbfile C:\Users\Jacob\Desktop\ECE381\DATAAC~1\DATAAC~1\main.c
+ 0001                   .dbsym e DACUpdateDone _DACUpdateDone c
+                        .area data(ram, con, rel)
+ 0000                   .dbfile C:\Users\Jacob\Desktop\ECE381\DATAAC~1\DATAAC~1\main.c
+                        .area data(ram, con, rel)
+ 0000                   .dbfile C:\Users\Jacob\Desktop\ECE381\DATAAC~1\DATAAC~1\main.c
+ 0000           _chAMemBlk::
+ 0000 FF                .byte 255
+ 0001                   .dbsym e chAMemBlk _chAMemBlk c
+                        .area data(ram, con, rel)
+ 0000                   .dbfile C:\Users\Jacob\Desktop\ECE381\DATAAC~1\DATAAC~1\main.c
+                        .area data(ram, con, rel)
+ 0000                   .dbfile C:\Users\Jacob\Desktop\ECE381\DATAAC~1\DATAAC~1\main.c
+ 0000           _chBMemBlk::
+ 0000 FF                .byte 255
+ 0001                   .dbsym e chBMemBlk _chBMemBlk c
+                        .area data(ram, con, rel)
+ 0000                   .dbfile C:\Users\Jacob\Desktop\ECE381\DATAAC~1\DATAAC~1\main.c
+                        .area data(ram, con, rel)
+ 0000                   .dbfile C:\Users\Jacob\Desktop\ECE381\DATAAC~1\DATAAC~1\main.c
+ 0000           _triggerAddress::
+ 0000 0000              .word 0
+ 0002                   .dbsym e triggerAddress _triggerAddress I
+                        .area data(ram, con, rel)
+ 0000                   .dbfile C:\Users\Jacob\Desktop\ECE381\DATAAC~1\DATAAC~1\main.c
+                        .area data(ram, con, rel)
+ 0000                   .dbfile C:\Users\Jacob\Desktop\ECE381\DATAAC~1\DATAAC~1\main.c
+ 0000           L2:
+ 0000 0820              .byte 8,32
+ 0002 0800              .byte 8,0
+                        .area text(rom, con, rel)
+ 0000                   .dbfile C:\Users\Jacob\Desktop\ECE381\DATAAC~1\DATAAC~1\main.c
+ 0000                   .dbfunc e GetLine _GetLine fV
+ 0000                   .dbsym s rubout L2 A[4:4]c
+ 0000           ;         strPos -> X+1
+ 0000           ;              c -> X+0
+ 0000           ;      bufferLen -> X-6
+ 0000           ;         buffer -> X-5
+ 0000           _GetLine::
+ 0000                   .dbline -1
+ 0000 10                push X
+ 0001 4F                mov X,SP
+ 0002 3802              add SP,2
+ 0004                   .dbline 108
+ 0004           ; //----------------------------------------------------------------------------
+ 0004           ; // SPI SRAM Test Program
+ 0004           ; //
+ 0004           ; // PSoC Global Resources:
+ 0004           ; //   Power Setting     5.0V/24MHz
+ 0004           ; //   CPU_Clock         SysClk/1
+ 0004           ; //   32K_Select        Internal
+ 0004           ; //   PLL_Mode          Off
+ 0004           ; //   Sleep_Timer       8_Hz
+ 0004           ; //   VC1=SysClk/N     *4
+ 0004           ; //   VC2=VC1/N        *2
+ 0004           ; //                    *VC1 makes 6MHz SPIM Clock; VC2 makes 3MHz DAC Clock
+ 0004           ; //   VC3_Source        SysClk/1
+ 0004           ; //   VC3 Divider      *52
+ 0004           ; //                    *Used to set UART baud rate to 57600
+ 0004           ; //   SysClk Source     Internal
+ 0004           ; //   SysClk*2 Disable  { Any }
+ 0004           ; //   Analog Power      { Any }
+ 0004           ; //   Ref Mux           { Any }
+ 0004           ; //   AGndBypass        { Any }
+ 0004           ; //   Op-Amp Bias       { Any }
+ 0004           ; //   A_Buff_Power      { Any }
+ 0004           ; //   SwitchModePump    OFF
+ 0004           ; //   Trip Voltage      { Any }
+ 0004           ; //   LVD ThrottleBack *Disable
+ 0004           ; //                    *When enabled, an LVD event forces the CPU Clock to SysClk/8.
+ 0004           ; //   Watchdog Enable  *{ Any }
+ 0004           ; //                    *Incautious use of the Watchdog may adversely affect timing
+ 0004           ; //
+ 0004           ; // SPIM Parameters
+ 0004           ; //   Name              SPIM
+ 0004           ; //   Clock            *VC1
+ 0004           ; //                    *6MHz = 3Mbps SPI bit rate.
+ 0004           ; //   MISO              Row_2_Input_1
+ 0004           ; //   MOSI              Row_2_Output_0
+ 0004           ; //   SClk              Row_2_Output_3
+ 0004           ; //   Interrupt Mode    TXRegEmpty
+ 0004           ; //   ClockSync         Sync to SysClk
+ 0004           ; //   InvertMISO        Normal
+ 0004           ; //
+ 0004           ; // SPIM Module Notes
+ 0004           ; //  -The 23K256 SPI SRAM has a maximum clock speed of 20MHz
+ 0004           ; //   SPIM Clock must be set to two times the desired bit rate.
+ 0004           ; //  -This uses VC1 = SysClk/4 = 6MHz, yielding a bit rate of 3Mbps.
+ 0004           ; //  -Per SPIM Module datasheet, for SPI clocks greater than 1MHz,
+ 0004           ; //   the Row Input synchronization for the MISO signal should be
+ 0004           ; //   set to Async.
+ 0004           ; //  -PSoC 5V to 23K256 3.3V translation is accomplished by setting
+ 0004           ; //   all PSoC SPIM outputs to Open Drain Low drive mode and then
+ 0004           ; //   using 470ohm pull-up resistors. For 3MHz signals, a smaller
+ 0004           ; //   value resistor must be used to allow sufficient rise-time.
+ 0004           ; //  -Pinout:
+ 0004           ; //   CS   = P12 (StdCPU:    Open Drain Low)
+ 0004           ; //   SCLK = P13 (GlobalOut: Open Drain Low)
+ 0004           ; //   MOSI = P14 (GlobalOut: Open Drain Low)
+ 0004           ; //   MISO = P15 (GlobalIn:  High Z)
+ 0004           ; //
+ 0004           ; // DAC Module Notes
+ 0004           ; //  -To maximize the output sample rate, this example operates the
+ 0004           ; //   DACs at their maximum practical speed of 3MHz which is provided
+ 0004           ; //   by VC2. The Analog Column Clock MUXs for both DAC must have
+ 0004           ; //   VC2 selected manually in the [Chip] view.
+ 0004           ; //  -DAC8_WriteStall() should be used and not DAC8_WriteBlind in
+ 0004           ; //   order to prevent output glitches during the DAC update.
+ 0004           ; //
+ 0004           ; // bnoble@siue.edu 20140320
+ 0004           ; //----------------------------------------------------------------------------
+ 0004           ; 
+ 0004           ; #include <m8c.h>        // part specific constants and macros
+ 0004           ; #include "PSoCAPI.h"    // PSoC API definitions for all User Modules
+ 0004           ; #include "stdlib.h"
+ 0004           ; #include "spi_sram.h"
+ 0004           ; #include "math.h"
+ 0004           ; #include "string.h"           // used for any of the string fcns supported by API
+ 0004           ; #include "stdio.h"            // this is used for fcns....
+ 0004           ; #include "ctype.h"            // this is used for fcns.. csspanf() and cstork()
+ 0004           ; // GPIO Defines
+ 0004           ; #define TRIGGER_HIGH  {TRIGGER_Data_ADDR |=  TRIGGER_MASK;}
+ 0004           ; #define TRIGGER_LOW           {TRIGGER_Data_ADDR &= ~TRIGGER_MASK;}
+ 0004           ; 
+ 0004           ; // Define Sampling Rates
+ 0004           ; #define SAMPLING_RATE_1250 149 // (150-1)
+ 0004           ; #define SAMPLING_RATE_1500 124 // (125-1)
+ 0004           ; #define SAMPLING_RATE_1875  99 // (100-1)
+ 0004           ; #define SAMPLING_RATE_2500  74 //  (75-1)
+ 0004           ; #define SAMPLING_RATE_3125  59 //  (60-1)
+ 0004           ; #define SAMPLING_RATE_3750  49 //  (50-1)
+ 0004           ; #define SAMPLING_RATE_6250  29 //  (30-1)
+ 0004           ; #define SAMPLING_RATE_7500  24 //  (25-1)
+ 0004           ; #define SAMPLING_RATE_9375  19 //  (20-1)
+ 0004           ; 
+ 0004           ; // DACUpdate Period = 4*DelSig_DecimationRate = 128 for DS232
+ 0004           ; #define DACUPDATE_PERIOD   127 // (128 - 1)
+ 0004           ; 
+ 0004           ; // Globals
+ 0004           ; BYTE DACUpdateDone = 0;
+ 0004           ; char buf [80];
+ 0004           ; char chAMemBlk = -1;
+ 0004           ; char chBMemBlk = -1;
+ 0004           ; int triggerAddress = 0;
+ 0004           ; 
+ 0004           ; // add your globals here
+ 0004           ; // This function reads characters from the serial until a character is entered that is within the min & max ASCII characters.
+ 0004           ; // That character is returned
+ 0004           ; // This function gets a line of text. It writes data into buffer with a maximum size of bufferLen. The function returns number of bytes written
+ 0004           ; // when enter is pressed
+ 0004           ; void GetLine(char *buffer, char bufferLen)
+ 0004           ; {
+ 0004                   .dbline 112
+ 0004           ;       static char rubout[4] = { 0x08, 0x20, 0x08, 0x00 }; // Rubout Sequence consists of Backspace Space Backspace. This is the null-terminated string
+ 0004           ;       
+ 0004           ;       char c;
+ 0004           ;       char strPos = 0; // Current position in the string
+ 0004 560100            mov [X+1],0
+ 0007                   .dbline 114
+ 0007           ;       
+ 0007           ;       UART_PutChar('>'); // Print line pointer
+ 0007 10                push X
+ 0008 503E              mov A,62
+ 000A 7C0000            xcall _UART_PutChar
+ 000D 20                pop X
+ 000E 808F              xjmp L4
+ 0010           L3:
+ 0010                   .dbline 117
+ 0010           ;       
+ 0010           ;       while (1)
+ 0010           ;       {
+ 0010                   .dbline 118
+ 0010           ;               c = UART_cReadChar(); // Use UART module to read the character user enters
+ 0010 10                push X
+ 0011 7C0000            xcall _UART_cReadChar
+ 0014 20                pop X
+ 0015 62D000            mov REG[0xd0],>__r0
+ 0018 5400              mov [X+0],A
+ 001A                   .dbline 120
+ 001A           ;               
+ 001A           ;               if (c == 0x08 || c == 0x7F) // Delete or backspace pressed
+ 001A 3D0008            cmp [X+0],8
+ 001D A006              jz L8
+ 001F 3D007F            cmp [X+0],127
+ 0022 B017              jnz L6
+ 0024           L8:
+ 0024                   .dbline 122
+ 0024           ;               {
+ 0024           ;                       if (strPos > 0) // Only delete if there are characters to delete
+ 0024                   .dbline 122
+ 0024 5000              mov A,0
+ 0026 3B01              cmp A,[X+1]
+ 0028 D075              jnc L7
+ 002A           X1:
+ 002A                   .dbline 124
+ 002A           ;                       {
+ 002A           ;                               strPos--; // Set the position back one
+ 002A                   .dbline 124
+ 002A 7B01              dec [X+1]
+ 002C                   .dbline 125
+ 002C           ;                               UART_PutString(rubout); // Sends the rubout sequence to the serial.
+ 002C 10                push X
+ 002D 5000              mov A,>L2
+ 002F 08                push A
+ 0030 5000              mov A,<L2
+ 0032 5C                mov X,A
+ 0033 18                pop A
+ 0034 7C0000            xcall _UART_PutString
+ 0037 20                pop X
+ 0038                   .dbline 126
+ 0038           ;                       }
+ 0038                   .dbline 127
+ 0038           ;               }
+ 0038 8065              xjmp L7
+ 003A           L6:
+ 003A                   .dbline 128
+ 003A           ;               else if (c == 0x0D) // Newline enter is pressed
+ 003A 3D000D            cmp [X+0],13
+ 003D B022              jnz L11
+ 003F                   .dbline 130
+ 003F           ;               {
+ 003F           ;                       buffer[strPos] = 0x00; // put the null character at the current strPos
+ 003F                   .dbline 130
+ 003F 62D000            mov REG[0xd0],>__r0
+ 0042 5201              mov A,[X+1]
+ 0044 5300              mov [__r1],A
+ 0046 550000            mov [__r0],0
+ 0049 52FC              mov A,[X-4]
+ 004B 0400              add [__r1],A
+ 004D 52FB              mov A,[X-5]
+ 004F 0C00              adc [__r0],A
+ 0051 5100              mov A,[__r0]
+ 0053 60D5              mov REG[0xd5],A
+ 0055 5000              mov A,0
+ 0057 3F00              mvi [__r1],A
+ 0059                   .dbline 131
+ 0059           ;                       UART_PutCRLF(); // Go to another line
+ 0059 10                push X
+ 005A 7C0000            xcall _UART_PutCRLF
+ 005D 20                pop X
+ 005E                   .dbline 132
+ 005E           ;                       break;
+ 005E 8041              xjmp L1
+ 0060           L11:
+ 0060                   .dbline 134
+ 0060           ;               }
+ 0060           ;               else if (c >= 0x20 && c < 0x7F) // only valid characters to the string. These are any alphabet, numeric, or symbols
+ 0060 3D0020            cmp [X+0],32
+ 0063 C03A              jc L13
+ 0065           X2:
+ 0065 3D007F            cmp [X+0],127
+ 0068 D035              jnc L13
+ 006A           X3:
+ 006A                   .dbline 136
+ 006A           ;               {
+ 006A           ;                       if (strPos < bufferLen) // If there is space in the buffer
+ 006A                   .dbline 136
+ 006A 5201              mov A,[X+1]
+ 006C 3BFA              cmp A,[X-6]
+ 006E D028              jnc L15
+ 0070           X4:
+ 0070                   .dbline 138
+ 0070           ;                       {
+ 0070           ;                               buffer[strPos++] = c; // Set the current character in buffer to c and then increment strPos
+ 0070                   .dbline 138
+ 0070 62D000            mov REG[0xd0],>__r0
+ 0073 5201              mov A,[X+1]
+ 0075 5300              mov [__r1],A
+ 0077 550000            mov [__r0],0
+ 007A 0101              add A,1
+ 007C 5401              mov [X+1],A
+ 007E 52FC              mov A,[X-4]
+ 0080 0400              add [__r1],A
+ 0082 52FB              mov A,[X-5]
+ 0084 0C00              adc [__r0],A
+ 0086 5100              mov A,[__r0]
+ 0088 60D5              mov REG[0xd5],A
+ 008A 5200              mov A,[X+0]
+ 008C 3F00              mvi [__r1],A
+ 008E                   .dbline 139
+ 008E           ;                               UART_PutChar(c); // Send the character to the computer
+ 008E 10                push X
+ 008F 5200              mov A,[X+0]
+ 0091 7C0000            xcall _UART_PutChar
+ 0094 20                pop X
+ 0095                   .dbline 140
+ 0095           ;                       }
+ 0095 8008              xjmp L16
+ 0097           L15:
+ 0097                   .dbline 142
+ 0097           ;                       else
+ 0097           ;                               UART_PutChar(0x07); // Send BEL key because there is no more space left to add to the string
+ 0097 10                push X
+ 0098 5007              mov A,7
+ 009A 7C0000            xcall _UART_PutChar
+ 009D 20                pop X
+ 009E           L16:
+ 009E                   .dbline 143
+ 009E           ;               }
+ 009E           L13:
+ 009E           L7:
+ 009E                   .dbline 144
+ 009E           ;       }
+ 009E           L4:
+ 009E                   .dbline 116
+ 009E 8F71              xjmp L3
+ 00A0           X0:
+ 00A0                   .dbline -2
+ 00A0           L1:
+ 00A0 38FE              add SP,-2
+ 00A2 20                pop X
+ 00A3                   .dbline 0 ; func end
+ 00A3 7F                ret
+ 00A4                   .dbsym l strPos 1 c
+ 00A4                   .dbsym l c 0 c
+ 00A4                   .dbsym l bufferLen -6 c
+ 00A4                   .dbsym l buffer -5 pc
+ 00A4                   .dbend
+ 00A4                   .dbfunc e Lowercase _Lowercase fpc
+ 00A4           ;              i -> X+0
+ 00A4           ;            str -> X-5
+ 00A4           _Lowercase::
+ 00A4                   .dbline -1
+ 00A4 10                push X
+ 00A5 4F                mov X,SP
+ 00A6 3804              add SP,4
+ 00A8                   .dbline 151
+ 00A8           ;       
+ 00A8           ;       return;
+ 00A8           ; }
+ 00A8           ; 
+ 00A8           ; // Takes input argument str and converts each character into a lowercase character. Returns that str. Note: This function alters str
+ 00A8           ; char *Lowercase(char *str)
+ 00A8           ; {
+ 00A8                   .dbline 153
+ 00A8           ;       int i;
+ 00A8           ;       for (i = 0; str[i] != '\0'; ++i) // Loop through each character in str and call tolower on it
+ 00A8 560100            mov [X+1],0
+ 00AB 560000            mov [X+0],0
+ 00AE 8043              xjmp L21
+ 00B0           L18:
+ 00B0                   .dbline 154
+ 00B0           ;               str[i] = tolower(str[i]); // Set the character to be the lowercase of the character
+ 00B0 62D000            mov REG[0xd0],>__r0
+ 00B3 5201              mov A,[X+1]
+ 00B5 03FC              add A,[X-4]
+ 00B7 5300              mov [__r1],A
+ 00B9 5200              mov A,[X+0]
+ 00BB 0BFB              adc A,[X-5]
+ 00BD 5300              mov [__r0],A
+ 00BF 5100              mov A,[__r1]
+ 00C1 5403              mov [X+3],A
+ 00C3 5100              mov A,[__r0]
+ 00C5 5402              mov [X+2],A
+ 00C7 60D4              mov REG[0xd4],A
+ 00C9 3E00              mvi A,[__r1]
+ 00CB 7A00              dec [__r1]
+ 00CD 5300              mov [__r3],A
+ 00CF 5000              mov A,0
+ 00D1 08                push A
+ 00D2 5100              mov A,[__r3]
+ 00D4 08                push A
+ 00D5 7C0000            xcall _tolower
+ 00D8 38FE              add SP,-2
+ 00DA 62D000            mov REG[0xd0],>__r0
+ 00DD 5100              mov A,[__r1]
+ 00DF 5300              mov [__r0],A
+ 00E1 5203              mov A,[X+3]
+ 00E3 5300              mov [__r3],A
+ 00E5 5202              mov A,[X+2]
+ 00E7 60D5              mov REG[0xd5],A
+ 00E9 5100              mov A,[__r0]
+ 00EB 3F00              mvi [__r3],A
+ 00ED           L19:
+ 00ED                   .dbline 153
+ 00ED 7701              inc [X+1]
+ 00EF 0F0000            adc [X+0],0
+ 00F2           L21:
+ 00F2                   .dbline 153
+ 00F2 62D000            mov REG[0xd0],>__r0
+ 00F5 5201              mov A,[X+1]
+ 00F7 03FC              add A,[X-4]
+ 00F9 5300              mov [__r1],A
+ 00FB 5200              mov A,[X+0]
+ 00FD 0BFB              adc A,[X-5]
+ 00FF 60D4              mov REG[0xd4],A
+ 0101 3E00              mvi A,[__r1]
+ 0103 3900              cmp A,0
+ 0105 BFAA              jnz L18
+ 0107                   .dbline 156
+ 0107           ;       
+ 0107           ;       return str; // Return the string
+ 0107 52FC              mov A,[X-4]
+ 0109 5300              mov [__r1],A
+ 010B 52FB              mov A,[X-5]
+ 010D 5300              mov [__r0],A
+ 010F                   .dbline -2
+ 010F           L17:
+ 010F 38FC              add SP,-4
+ 0111 20                pop X
+ 0112                   .dbline 0 ; func end
+ 0112 7F                ret
+ 0113                   .dbsym l i 0 I
+ 0113                   .dbsym l str -5 pc
+ 0113                   .dbend
+ 0113                   .dbfunc e GetNumber _GetNumber fc
+ 0113           ;              c -> X+0
+ 0113           ;            max -> X-5
+ 0113           ;            min -> X-4
+ 0113           _GetNumber::
+ 0113                   .dbline -1
+ 0113 10                push X
+ 0114 4F                mov X,SP
+ 0115 3801              add SP,1
+ 0117                   .dbline 160
+ 0117           ; }
+ 0117           ; 
+ 0117           ; char GetNumber(char min, char max)
+ 0117           ; {
+ 0117 8037              xjmp L24
+ 0119           L23:
+ 0119                   .dbline 164
+ 0119           ;       char c;
+ 0119           ;       
+ 0119           ;       while (1)
+ 0119           ;       {
+ 0119                   .dbline 165
+ 0119           ;               c = UART_cReadChar(); // Read the character
+ 0119 10                push X
+ 011A 7C0000            xcall _UART_cReadChar
+ 011D 20                pop X
+ 011E 62D000            mov REG[0xd0],>__r0
+ 0121 5400              mov [X+0],A
+ 0123                   .dbline 166
+ 0123           ;               if (c < ('0' + min) || c > ('0' + max)) // If the character is not within min to max range, continue the loop
+ 0123 52FC              mov A,[X-4]
+ 0125 0130              add A,48
+ 0127 5300              mov [__r0],A
+ 0129 5200              mov A,[X+0]
+ 012B 3A00              cmp A,[__r0]
+ 012D C00C              jc L28
+ 012F           X6:
+ 012F 62D000            mov REG[0xd0],>__r0
+ 0132 52FB              mov A,[X-5]
+ 0134 0130              add A,48
+ 0136 3B00              cmp A,[X+0]
+ 0138 D003              jnc L26
+ 013A           X7:
+ 013A           L28:
+ 013A                   .dbline 167
+ 013A           ;                       continue;
+ 013A 8014              xjmp L24
+ 013C           L26:
+ 013C                   .dbline 169
+ 013C           ;               
+ 013C           ;               UART_PutChar(c); // Put the character on the serial
+ 013C 10                push X
+ 013D 5200              mov A,[X+0]
+ 013F 7C0000            xcall _UART_PutChar
+ 0142                   .dbline 170
+ 0142           ;               UART_PutCRLF();
+ 0142 7C0000            xcall _UART_PutCRLF
+ 0145 20                pop X
+ 0146                   .dbline 171
+ 0146           ;               return (c - '0'); // This returns the integer number entered instead of the ASCII value
+ 0146 62D000            mov REG[0xd0],>__r0
+ 0149 5200              mov A,[X+0]
+ 014B 1130              sub A,48
+ 014D 8003              xjmp L22
+ 014F           L24:
+ 014F                   .dbline 163
+ 014F 8FC9              xjmp L23
+ 0151           X5:
+ 0151                   .dbline -2
+ 0151           L22:
+ 0151 38FF              add SP,-1
+ 0153 20                pop X
+ 0154                   .dbline 0 ; func end
+ 0154 7F                ret
+ 0155                   .dbsym l c 0 c
+ 0155                   .dbsym l max -5 c
+ 0155                   .dbsym l min -4 c
+ 0155                   .dbend
+ 0155                   .dbfunc e PlaySamples _PlaySamples fV
+ 0155           ;       endAddrB -> X+10
+ 0155           ;       endAddrA -> X+8
+ 0155           ;     startAddrB -> X+6
+ 0155           ;     startAddrA -> X+4
+ 0155           ;          addrB -> X+2
+ 0155           ;          addrA -> X+0
+ 0155           _PlaySamples::
+ 0155                   .dbline -1
+ 0155 10                push X
+ 0156 4F                mov X,SP
+ 0157 380C              add SP,12
+ 0159                   .dbline 179
+ 0159           ;       }
+ 0159           ;       
+ 0159           ;       return 0;
+ 0159           ; }
+ 0159           ; 
+ 0159           ; // This function plays a block of data where opt is the data block 0-3.
+ 0159           ; void PlaySamples(void)
+ 0159           ; {     
+ 0159                   .dbline 180
+ 0159           ;       WORD startAddrA = chAMemBlk * 0x2000; // Where the address starts for block
+ 0159 62D000            mov REG[0xd0],>_chAMemBlk
+ 015C 5100              mov A,[_chAMemBlk]
+ 015E 62D000            mov REG[0xd0],>__r0
+ 0161 5300              mov [__r0],A
+ 0163 550000            mov [__r1],0
+ 0166 6500              asl [__r0]
+ 0168 6500              asl [__r1]
+ 016A 6B00              rlc [__r0]
+ 016C 6500              asl [__r1]
+ 016E 6B00              rlc [__r0]
+ 0170 6500              asl [__r1]
+ 0172 6B00              rlc [__r0]
+ 0174 6500              asl [__r1]
+ 0176 6B00              rlc [__r0]
+ 0178 5100              mov A,[__r1]
+ 017A 5405              mov [X+5],A
+ 017C 5100              mov A,[__r0]
+ 017E 5404              mov [X+4],A
+ 0180                   .dbline 181
+ 0180           ;       WORD endAddrA = startAddrA + 0x2000; // Where the address ends for block
+ 0180 5205              mov A,[X+5]
+ 0182 0100              add A,0
+ 0184 5409              mov [X+9],A
+ 0186 5204              mov A,[X+4]
+ 0188 0920              adc A,32
+ 018A 5408              mov [X+8],A
+ 018C                   .dbline 182
+ 018C           ;       WORD addrA = startAddrA;
+ 018C 5205              mov A,[X+5]
+ 018E 5401              mov [X+1],A
+ 0190 5204              mov A,[X+4]
+ 0192 5400              mov [X+0],A
+ 0194                   .dbline 184
+ 0194           ;       
+ 0194           ;       WORD startAddrB = chBMemBlk * 0x2000; // Where the address starts for block
+ 0194 62D000            mov REG[0xd0],>_chBMemBlk
+ 0197 5100              mov A,[_chBMemBlk]
+ 0199 62D000            mov REG[0xd0],>__r0
+ 019C 5300              mov [__r0],A
+ 019E 550000            mov [__r1],0
+ 01A1 6500              asl [__r0]
+ 01A3 6500              asl [__r1]
+ 01A5 6B00              rlc [__r0]
+ 01A7 6500              asl [__r1]
+ 01A9 6B00              rlc [__r0]
+ 01AB 6500              asl [__r1]
+ 01AD 6B00              rlc [__r0]
+ 01AF 6500              asl [__r1]
+ 01B1 6B00              rlc [__r0]
+ 01B3 5100              mov A,[__r1]
+ 01B5 5407              mov [X+7],A
+ 01B7 5100              mov A,[__r0]
+ 01B9 5406              mov [X+6],A
+ 01BB                   .dbline 185
+ 01BB           ;       WORD endAddrB = startAddrB + 0x2000; // Where the address ends for block
+ 01BB 5207              mov A,[X+7]
+ 01BD 0100              add A,0
+ 01BF 540B              mov [X+11],A
+ 01C1 5206              mov A,[X+6]
+ 01C3 0920              adc A,32
+ 01C5 540A              mov [X+10],A
+ 01C7                   .dbline 186
+ 01C7           ;       WORD addrB = startAddrB;
+ 01C7 5207              mov A,[X+7]
+ 01C9 5403              mov [X+3],A
+ 01CB 5206              mov A,[X+6]
+ 01CD 5402              mov [X+2],A
+ 01CF                   .dbline 188
+ 01CF           ;       
+ 01CF           ;       SPIRAM_WriteStatusRegister(SPIRAM_BYTE_MODE | SPIRAM_DISABLE_HOLD);
+ 01CF 5001              mov A,1
+ 01D1 08                push A
+ 01D2 7C0000            xcall _SPIRAM_WriteStatusRegister
+ 01D5 38FF              add SP,-1
+ 01D7 62D000            mov REG[0xd0],>__r0
+ 01DA                   .dbline 189
+ 01DA           ;       UART_CPutString("Press any key to abort\r\n");
+ 01DA 10                push X
+ 01DB 504A              mov A,>L30
+ 01DD 08                push A
+ 01DE 504A              mov A,<L30
+ 01E0 5C                mov X,A
+ 01E1 18                pop A
+ 01E2 7C0000            xcall _UART_CPutString
+ 01E5                   .dbline 190
+ 01E5           ;       DACUpdate_Start();
+ 01E5 7C0000            xcall _DACUpdate_Start
+ 01E8 20                pop X
+ 01E9 8097              xjmp L32
+ 01EB           L31:
+ 01EB                   .dbline 192
+ 01EB           ;       while (!UART_cReadChar())
+ 01EB           ;       {
+ 01EB                   .dbline 196
+ 01EB           ;               //TRIGGER_Data_ADDR |= TRIGGER_MASK;    // take trigger high then low
+ 01EB           ;               //TRIGGER_Data_ADDR &=  ~TRIGGER_MASK;
+ 01EB           ;               
+ 01EB           ;               if (DACUpdateDone)
+ 01EB 62D000            mov REG[0xd0],>_DACUpdateDone
+ 01EE 3C0000            cmp [_DACUpdateDone],0
+ 01F1 A08F              jz L34
+ 01F3                   .dbline 198
+ 01F3           ;               {
+ 01F3           ;                       if (chAMemBlk != -1)
+ 01F3                   .dbline 198
+ 01F3 62D000            mov REG[0xd0],>_chAMemBlk
+ 01F6 3C00FF            cmp [_chAMemBlk],-1
+ 01F9 A03D              jz L36
+ 01FB                   .dbline 200
+ 01FB           ;                       {
+ 01FB           ;                               DAC8A_WriteStall(SPIRAM_ReadByte(addrA));
+ 01FB                   .dbline 200
+ 01FB 5200              mov A,[X+0]
+ 01FD 08                push A
+ 01FE 5201              mov A,[X+1]
+ 0200 08                push A
+ 0201 7C0000            xcall _SPIRAM_ReadByte
+ 0204 38FE              add SP,-2
+ 0206 62D000            mov REG[0xd0],>__r0
+ 0209 10                push X
+ 020A 7C0000            xcall _DAC8A_WriteStall
+ 020D 20                pop X
+ 020E                   .dbline 201
+ 020E           ;                               if (++addrA > endAddrA) addrA = startAddrA;
+ 020E 62D000            mov REG[0xd0],>__r0
+ 0211 5201              mov A,[X+1]
+ 0213 0101              add A,1
+ 0215 5300              mov [__r1],A
+ 0217 5200              mov A,[X+0]
+ 0219 0900              adc A,0
+ 021B 5300              mov [__r0],A
+ 021D 5100              mov A,[__r1]
+ 021F 5401              mov [X+1],A
+ 0221 5100              mov A,[__r0]
+ 0223 5400              mov [X+0],A
+ 0225 5209              mov A,[X+9]
+ 0227 1200              sub A,[__r1]
+ 0229 5208              mov A,[X+8]
+ 022B 1A00              sbb A,[__r0]
+ 022D D009              jnc L38
+ 022F           X8:
+ 022F                   .dbline 201
+ 022F 5205              mov A,[X+5]
+ 0231 5401              mov [X+1],A
+ 0233 5204              mov A,[X+4]
+ 0235 5400              mov [X+0],A
+ 0237           L38:
+ 0237                   .dbline 202
+ 0237           ;                       }
+ 0237           L36:
+ 0237                   .dbline 204
+ 0237           ;                       
+ 0237           ;                       if (chBMemBlk != -1)
+ 0237 62D000            mov REG[0xd0],>_chBMemBlk
+ 023A 3C00FF            cmp [_chBMemBlk],-1
+ 023D A03D              jz L40
+ 023F                   .dbline 206
+ 023F           ;                       {
+ 023F           ;                               DAC8B_WriteStall(SPIRAM_ReadByte(addrB));
+ 023F                   .dbline 206
+ 023F 5202              mov A,[X+2]
+ 0241 08                push A
+ 0242 5203              mov A,[X+3]
+ 0244 08                push A
+ 0245 7C0000            xcall _SPIRAM_ReadByte
+ 0248 38FE              add SP,-2
+ 024A 62D000            mov REG[0xd0],>__r0
+ 024D 10                push X
+ 024E 7C0000            xcall _DAC8B_WriteStall
+ 0251 20                pop X
+ 0252                   .dbline 207
+ 0252           ;                               if (++addrB > endAddrB) addrB = startAddrB;
+ 0252 62D000            mov REG[0xd0],>__r0
+ 0255 5203              mov A,[X+3]
+ 0257 0101              add A,1
+ 0259 5300              mov [__r1],A
+ 025B 5202              mov A,[X+2]
+ 025D 0900              adc A,0
+ 025F 5300              mov [__r0],A
+ 0261 5100              mov A,[__r1]
+ 0263 5403              mov [X+3],A
+ 0265 5100              mov A,[__r0]
+ 0267 5402              mov [X+2],A
+ 0269 520B              mov A,[X+11]
+ 026B 1200              sub A,[__r1]
+ 026D 520A              mov A,[X+10]
+ 026F 1A00              sbb A,[__r0]
+ 0271 D009              jnc L42
+ 0273           X9:
+ 0273                   .dbline 207
+ 0273 5207              mov A,[X+7]
+ 0275 5403              mov [X+3],A
+ 0277 5206              mov A,[X+6]
+ 0279 5402              mov [X+2],A
+ 027B           L42:
+ 027B                   .dbline 208
+ 027B           ;                       }
+ 027B           L40:
+ 027B                   .dbline 210
+ 027B           ;                       
+ 027B           ;                       DACUpdateDone = 0;
+ 027B 62D000            mov REG[0xd0],>_DACUpdateDone
+ 027E 550000            mov [_DACUpdateDone],0
+ 0281                   .dbline 211
+ 0281           ;               }
+ 0281           L34:
+ 0281                   .dbline 212
+ 0281           ;       }
+ 0281           L32:
+ 0281                   .dbline 191
+ 0281 10                push X
+ 0282 7C0000            xcall _UART_cReadChar
+ 0285 20                pop X
+ 0286 62D000            mov REG[0xd0],>__r0
+ 0289 3900              cmp A,0
+ 028B AF5F              jz L31
+ 028D                   .dbline -2
+ 028D           L29:
+ 028D 38F4              add SP,-12
+ 028F 20                pop X
+ 0290                   .dbline 0 ; func end
+ 0290 7F                ret
+ 0291                   .dbsym l endAddrB 10 i
+ 0291                   .dbsym l endAddrA 8 i
+ 0291                   .dbsym l startAddrB 6 i
+ 0291                   .dbsym l startAddrA 4 i
+ 0291                   .dbsym l addrB 2 i
+ 0291                   .dbsym l addrA 0 i
+ 0291                   .dbend
+ 0291                   .dbfunc e SampleAnalog _SampleAnalog fV
+ 0291           ;      startAddr -> X+133
+ 0291           ;        endAddr -> X+131
+ 0291           ;           addr -> X+129
+ 0291           ;           temp -> X+1
+ 0291           ;              i -> X+0
+ 0291           ;       memBlock -> X-5
+ 0291           ;        channel -> X-4
+ 0291           _SampleAnalog::
+ 0291                   .dbline -1
+ 0291 10                push X
+ 0292 4F                mov X,SP
+ 0293 3889              add SP,-119
+ 0295                   .dbline 217
+ 0295           ;               
+ 0295           ; }
+ 0295           ; 
+ 0295           ; void SampleAnalog(char channel, char memBlock)
+ 0295           ; {     
+ 0295                   .dbline 218
+ 0295           ;       WORD startAddr = 0x2000 * memBlock; // Where the address starts for block
+ 0295 62D000            mov REG[0xd0],>__r0
+ 0298 52FB              mov A,[X-5]
+ 029A 5300              mov [__r0],A
+ 029C 550000            mov [__r1],0
+ 029F 6500              asl [__r0]
+ 02A1 6500              asl [__r1]
+ 02A3 6B00              rlc [__r0]
+ 02A5 6500              asl [__r1]
+ 02A7 6B00              rlc [__r0]
+ 02A9 6500              asl [__r1]
+ 02AB 6B00              rlc [__r0]
+ 02AD 6500              asl [__r1]
+ 02AF 6B00              rlc [__r0]
+ 02B1 5100              mov A,[__r1]
+ 02B3 5486              mov [X-122],A
+ 02B5 5100              mov A,[__r0]
+ 02B7 5485              mov [X-123],A
+ 02B9                   .dbline 219
+ 02B9           ;       WORD endAddr = startAddr + 0x2000; // Where the address ends for block
+ 02B9 5286              mov A,[X-122]
+ 02BB 0100              add A,0
+ 02BD 5484              mov [X-124],A
+ 02BF 5285              mov A,[X-123]
+ 02C1 0920              adc A,32
+ 02C3 5483              mov [X-125],A
+ 02C5                   .dbline 224
+ 02C5           ;       WORD addr;
+ 02C5           ;       BYTE i;
+ 02C5           ;       char temp[128];
+ 02C5           ;       
+ 02C5           ;       AMUX4_InputSelect(channel == 0 ? AMUX4_PORT0_1: AMUX4_PORT0_7); // change sample analog source channel
+ 02C5 3DFC00            cmp [X-4],0
+ 02C8 B009              jnz L46
+ 02CA 568800            mov [X-120],0
+ 02CD 568700            mov [X-121],0
+ 02D0 8007              xjmp L47
+ 02D2           L46:
+ 02D2 568803            mov [X-120],3
+ 02D5 568700            mov [X-121],0
+ 02D8           L47:
+ 02D8 62D000            mov REG[0xd0],>__r0
+ 02DB 5288              mov A,[X-120]
+ 02DD 10                push X
+ 02DE 7C0000            xcall _AMUX4_InputSelect
+ 02E1 20                pop X
+ 02E2                   .dbline 225
+ 02E2           ;       SPIRAM_WriteStatusRegister(SPIRAM_SEQUENTIAL_MODE | SPIRAM_DISABLE_HOLD);
+ 02E2 5041              mov A,65
+ 02E4 08                push A
+ 02E5 7C0000            xcall _SPIRAM_WriteStatusRegister
+ 02E8 38FF              add SP,-1
+ 02EA 62D000            mov REG[0xd0],>__r0
+ 02ED                   .dbline 226
+ 02ED           ;       DelSig_StartAD();
+ 02ED 10                push X
+ 02EE 7C0000            xcall _DelSig_StartAD
+ 02F1 20                pop X
+ 02F2                   .dbline 227
+ 02F2           ;       for (addr = startAddr; addr < endAddr; addr += 128)
+ 02F2 5286              mov A,[X-122]
+ 02F4 5482              mov [X-126],A
+ 02F6 5285              mov A,[X-123]
+ 02F8 5481              mov [X-127],A
+ 02FA 8077              xjmp L51
+ 02FC           L48:
+ 02FC                   .dbline 228
+ 02FC           ;       {
+ 02FC                   .dbline 229
+ 02FC           ;               UART_CPutString("Write to ");
+ 02FC 10                push X
+ 02FD 5040              mov A,>L52
+ 02FF 08                push A
+ 0300 5040              mov A,<L52
+ 0302 5C                mov X,A
+ 0303 18                pop A
+ 0304 7C0000            xcall _UART_CPutString
+ 0307 20                pop X
+ 0308                   .dbline 230
+ 0308           ;               UART_PutSHexInt(addr);
+ 0308 10                push X
+ 0309 5281              mov A,[X-127]
+ 030B 08                push A
+ 030C 5282              mov A,[X-126]
+ 030E 20                pop X
+ 030F 7C0000            xcall _UART_PutSHexInt
+ 0312                   .dbline 231
+ 0312           ;               UART_PutCRLF();
+ 0312 7C0000            xcall _UART_PutCRLF
+ 0315 20                pop X
+ 0316                   .dbline 233
+ 0316           ;               
+ 0316           ;               for (i = 0; i < 128; i++)
+ 0316 560000            mov [X+0],0
+ 0319 8031              xjmp L56
+ 031B           L57:
+ 031B                   .dbline 235
+ 031B           ;               {
+ 031B           ;                       while (!DelSig_fIsDataAvailable());
+ 031B           L58:
+ 031B                   .dbline 235
+ 031B 10                push X
+ 031C 7C0000            xcall _DelSig_fIsDataAvailable
+ 031F 20                pop X
+ 0320 62D000            mov REG[0xd0],>__r0
+ 0323 3900              cmp A,0
+ 0325 AFF5              jz L57
+ 0327                   .dbline 236
+ 0327           ;                       temp[i] = DelSig_cGetDataClearFlag();
+ 0327 10                push X
+ 0328 7C0000            xcall _DelSig_cGetDataClearFlag
+ 032B 20                pop X
+ 032C 62D000            mov REG[0xd0],>__r0
+ 032F 5300              mov [__r0],A
+ 0331 550007            mov [__r2],7
+ 0334 5A00              mov [__r3],X
+ 0336 060001            add [__r3],1
+ 0339 5200              mov A,[X+0]
+ 033B 0200              add A,[__r3]
+ 033D 5300              mov [__r3],A
+ 033F 5000              mov A,0
+ 0341 0A00              adc A,[__r2]
+ 0343 60D5              mov REG[0xd5],A
+ 0345 5100              mov A,[__r0]
+ 0347 3F00              mvi [__r3],A
+ 0349                   .dbline 237
+ 0349           ;               }
+ 0349           L54:
+ 0349                   .dbline 233
+ 0349 7700              inc [X+0]
+ 034B           L56:
+ 034B                   .dbline 233
+ 034B 3D0080            cmp [X+0],-128
+ 034E CFCC              jc L58
+ 0350           X10:
+ 0350                   .dbline 238
+ 0350           ;               SPIRAM_WriteArray(addr, temp, 128);
+ 0350 5080              mov A,-128
+ 0352 08                push A
+ 0353 62D000            mov REG[0xd0],>__r0
+ 0356 5A00              mov [__r1],X
+ 0358 060001            add [__r1],1
+ 035B 5007              mov A,7
+ 035D 08                push A
+ 035E 5100              mov A,[__r1]
+ 0360 08                push A
+ 0361 5281              mov A,[X-127]
+ 0363 08                push A
+ 0364 5282              mov A,[X-126]
+ 0366 08                push A
+ 0367 7C0000            xcall _SPIRAM_WriteArray
+ 036A 38FB              add SP,-5
+ 036C                   .dbline 239
+ 036C           ;       }       
+ 036C           L49:
+ 036C                   .dbline 227
+ 036C 078280            add [X-126],-128
+ 036F 0F8100            adc [X-127],0
+ 0372           L51:
+ 0372                   .dbline 227
+ 0372 5282              mov A,[X-126]
+ 0374 1384              sub A,[X-124]
+ 0376 5281              mov A,[X-127]
+ 0378 1B83              sbb A,[X-125]
+ 037A CF81              jc L48
+ 037C           X11:
+ 037C                   .dbline 240
+ 037C           ;       DelSig_StopAD();
+ 037C 10                push X
+ 037D 7C0000            xcall _DelSig_StopAD
+ 0380 20                pop X
+ 0381                   .dbline -2
+ 0381           L44:
+ 0381 3877              add SP,-137
+ 0383 20                pop X
+ 0384                   .dbline 0 ; func end
+ 0384 7F                ret
+ 0385                   .dbsym l startAddr 133 i
+ 0385                   .dbsym l endAddr 131 i
+ 0385                   .dbsym l addr 129 i
+ 0385                   .dbsym l temp 1 A[128:128]c
+ 0385                   .dbsym l i 0 c
+ 0385                   .dbsym l memBlock -5 c
+ 0385                   .dbsym l channel -4 c
+ 0385                   .dbend
+ 0385                   .dbfunc e main _main fV
+ 0385           ;        address -> X+4
+ 0385           ;           ksps -> X+6
+ 0385           ;   samplingRate -> X+4
+ 0385           ;       memBlock -> X+5
+ 0385           ;        channel -> X+4
+ 0385           ;       memBlock -> X+5
+ 0385           ;        channel -> X+4
+ 0385           ;            cmd -> X+2
+ 0385           ;         params -> X+0
+ 0385           _main::
+ 0385                   .dbline -1
+ 0385 10                push X
+ 0386 4F                mov X,SP
+ 0387 3809              add SP,9
+ 0389                   .dbline 244
+ 0389           ; }
+ 0389           ; 
+ 0389           ; void main(void)
+ 0389           ; {
+ 0389                   .dbline 246
+ 0389           ;       // Make sure nCS is high before doing anything
+ 0389           ;       nCS_HIGH;
+ 0389                   .dbline 246
+ 0389 430404            or REG[0x4],4
+ 038C                   .dbline 246
+ 038C                   .dbline 246
+ 038C                   .dbline 253
+ 038C           ; 
+ 038C           ;       // Make the oscilloscope external trigger signal low. Trigger must be quickly
+ 038C           ;       // brough high-then-low when you want the oscilloscope to draw the signals
+ 038C           ;       // on DACA and DACB. Trigger (P1[1]) must be connected to the EXT TRIG input
+ 038C           ;       // on the back of the oscilloscope and the Trigger Source must be set to
+ 038C           ;       // External. The oscilloscope should also be set for Normal Mode Triggering.
+ 038C           ;       TRIGGER_LOW;
+ 038C                   .dbline 253
+ 038C 4104FD            and REG[0x4],-3
+ 038F                   .dbline 253
+ 038F                   .dbline 253
+ 038F                   .dbline 256
+ 038F           ; 
+ 038F           ;       // Enable global interrutps
+ 038F           ;       M8C_EnableGInt;
+ 038F 7101                      or  F, 01h
+ 0391           
+ 0391                   .dbline 259
+ 0391           ; 
+ 0391           ;       // Start the UART
+ 0391           ;       UART_Start(UART_PARITY_NONE);
+ 0391 10                push X
+ 0392 5000              mov A,0
+ 0394 7C0000            xcall _UART_Start
+ 0397                   .dbline 260
+ 0397           ;       UART_PutCRLF();
+ 0397 7C0000            xcall _UART_PutCRLF
+ 039A                   .dbline 263
+ 039A           ; 
+ 039A           ;       // Start the SPIM Module
+ 039A           ;       SPIM_Start(SPIM_SPIM_MODE_0 | SPIM_SPIM_MSB_FIRST);
+ 039A 5000              mov A,0
+ 039C 7C0000            xcall _SPIM_Start
+ 039F                   .dbline 266
+ 039F           ; 
+ 039F           ;       // Start the DelSig custom clock source at the default sampling rate
+ 039F           ;       DelSigClock_WritePeriod(SAMPLING_RATE_1250);
+ 039F 5095              mov A,-107
+ 03A1 7C0000            xcall _DelSigClock_WritePeriod
+ 03A4                   .dbline 267
+ 03A4           ;       DelSigClock_WriteCompareValue(SAMPLING_RATE_1250>>1);
+ 03A4 504A              mov A,74
+ 03A6 7C0000            xcall _DelSigClock_WriteCompareValue
+ 03A9                   .dbline 268
+ 03A9           ;       DelSigClock_Start();
+ 03A9 7C0000            xcall _DelSigClock_Start
+ 03AC                   .dbline 271
+ 03AC           ; 
+ 03AC           ;       // Start the analog mux and select P0[1] (Channel A) as default
+ 03AC           ;       AMUX4_Start();
+ 03AC 7C0000            xcall _AMUX4_Start
+ 03AF                   .dbline 272
+ 03AF           ;       AMUX4_InputSelect(AMUX4_PORT0_1);
+ 03AF 5000              mov A,0
+ 03B1 7C0000            xcall _AMUX4_InputSelect
+ 03B4                   .dbline 275
+ 03B4           ; 
+ 03B4           ;       // Start the PGA
+ 03B4           ;       PGA_Start(PGA_HIGHPOWER);
+ 03B4 5003              mov A,3
+ 03B6 7C0000            xcall _PGA_Start
+ 03B9                   .dbline 280
+ 03B9           ; 
+ 03B9           ;       // Start the DelSig but do not start taking samples yet.
+ 03B9           ;       // Note: The DelSig PWM block output can be monitored on P1[0]. This
+ 03B9           ;       // can be used to verify the sampling rate.
+ 03B9           ;       DelSig_Start(DelSig_HIGHPOWER);
+ 03B9 5003              mov A,3
+ 03BB 7C0000            xcall _DelSig_Start
+ 03BE                   .dbline 288
+ 03BE           ; 
+ 03BE           ;       // Enable interrupts on the counter that sets the DAC output rate.
+ 03BE           ;       // Start the module only when actually outputting samples and
+ 03BE           ;       // stop it when done. Don't forget to write the period after stoping
+ 03BE           ;       // to reset the count register.
+ 03BE           ;       // NOTE: You can watch this counter on P1[7] to compare desired
+ 03BE           ;       // output rate with your actual output rate.
+ 03BE           ;       DACUpdate_WritePeriod(DACUPDATE_PERIOD);
+ 03BE 507F              mov A,127
+ 03C0 7C0000            xcall _DACUpdate_WritePeriod
+ 03C3                   .dbline 289
+ 03C3           ;       DACUpdate_EnableInt();
+ 03C3 7C0000            xcall _DACUpdate_EnableInt
+ 03C6                   .dbline 292
+ 03C6           ; 
+ 03C6           ;       // Start the DACs
+ 03C6           ;       DAC8A_Start(DAC8A_HIGHPOWER);
+ 03C6 5003              mov A,3
+ 03C8 7C0000            xcall _DAC8A_Start
+ 03CB                   .dbline 293
+ 03CB           ;       DAC8B_Start(DAC8B_HIGHPOWER);
+ 03CB 5003              mov A,3
+ 03CD 7C0000            xcall _DAC8B_Start
+ 03D0                   .dbline 295
+ 03D0           ;               // This is the command usage string
+ 03D0           ;       UART_CPutString("########################## Lab 11 Data Acquisition System ########################\r\n\
+ 03D0 5033              mov A,>L61
+ 03D2 08                push A
+ 03D3 5033              mov A,<L61
+ 03D5 5C                mov X,A
+ 03D6 18                pop A
+ 03D7 7C0000            xcall _UART_CPutString
+ 03DA 20                pop X
+ 03DB 8642              xjmp L63
+ 03DD           L62:
+ 03DD                   .dbline 329
+ 03DD           ; # input X A \r\n\
+ 03DD           ; #\r\n\
+ 03DD           ; #     Samples input channel to memory block\r\n\
+ 03DD           ; #             X - Either A/B to signify channel being altered\r\n\
+ 03DD           ; #             A - Memory block(0-3) being routed\r\n\
+ 03DD           ; #\r\n\
+ 03DD           ; # output X A\r\n\
+ 03DD           ; #     Routes output channel to read from memory block \r\n\
+ 03DD           ; #             X - Either A/B to signify channel being altered\r\n\
+ 03DD           ; #             A - Memory block(0-3 or -1 for none) being routed\r\n\
+ 03DD           ; #\r\n\
+ 03DD           ; # rate X\r\n\
+ 03DD           ; #     Selects a rate to sample the channels when reading and writing\r\n\
+ 03DD           ; #             X - One of the values below\r\n\
+ 03DD           ; #                     1. 1.25  ksps \r\n\
+ 03DD           ; #                     2. 1.5   ksps\r\n\
+ 03DD           ; #                     3. 1.87  ksps\r\n\
+ 03DD           ; #                     4. 2.5   ksps\r\n\
+ 03DD           ; #                     5. 3.125 ksps\r\n\
+ 03DD           ; #                     6. 3.75  ksps\r\n\
+ 03DD           ; #                     7. 6.25  ksps\r\n\
+ 03DD           ; #                     8. 7.5   ksps\r\n\
+ 03DD           ; #                     9. 9.37  ksps\r\n\
+ 03DD           ; #\r\n\
+ 03DD           ; # trigger XXX H\r\n\
+ 03DD           ; #     Sets the relative address to trigger\r\n\
+ 03DD           ; #             XXX - Either hex/dec for the address\r\n\
+ 03DD           ; #             H - values in hexadecimal or decimal.  Range is 0-8192 for dec or 0-2000 for hex\r\n\
+ 03DD           ; #\r\n\
+ 03DD           ; # start\r\n\
+ 03DD           ; #     Starts the output channels. They will continue to play until looped over\r\n\
+ 03DD           ; #####################################################################\r\n");
+ 03DD           ;       while (1)
+ 03DD           ;       {
+ 03DD                   .dbline 333
+ 03DD           ;               char *cmd;
+ 03DD           ;               char *params;
+ 03DD           ;               
+ 03DD           ;               GetLine(buf, 79); // Retrieves a line with a maximum length of 79 characters and put it in buf.
+ 03DD 504F              mov A,79
+ 03DF 08                push A
+ 03E0 5000              mov A,>_buf
+ 03E2 08                push A
+ 03E3 5000              mov A,<_buf
+ 03E5 08                push A
+ 03E6 9C18              xcall _GetLine
+ 03E8                   .dbline 335
+ 03E8           ;               
+ 03E8           ;               cmd = Lowercase(cstrtok(buf, " ")); // Get the first word from the entered string and lowercase it.
+ 03E8 5031              mov A,>L65
+ 03EA 08                push A
+ 03EB 5031              mov A,<L65
+ 03ED 08                push A
+ 03EE 5000              mov A,>_buf
+ 03F0 08                push A
+ 03F1 5000              mov A,<_buf
+ 03F3 08                push A
+ 03F4 7C0000            xcall _cstrtok
+ 03F7 38F9              add SP,-7
+ 03F9 62D000            mov REG[0xd0],>__r0
+ 03FC 5100              mov A,[__r0]
+ 03FE 08                push A
+ 03FF 5100              mov A,[__r1]
+ 0401 08                push A
+ 0402 9CA0              xcall _Lowercase
+ 0404 62D000            mov REG[0xd0],>__r0
+ 0407 5100              mov A,[__r1]
+ 0409 5403              mov [X+3],A
+ 040B 5100              mov A,[__r0]
+ 040D 5402              mov [X+2],A
+ 040F                   .dbline 336
+ 040F           ;               if (!cstrcmp("input", cmd)) // If the command input was entered
+ 040F 5202              mov A,[X+2]
+ 0411 08                push A
+ 0412 5203              mov A,[X+3]
+ 0414 08                push A
+ 0415 502B              mov A,>L68
+ 0417 08                push A
+ 0418 502B              mov A,<L68
+ 041A 08                push A
+ 041B 7C0000            xcall _cstrcmpLMM
+ 041E 38FA              add SP,-6
+ 0420 62D000            mov REG[0xd0],>__r0
+ 0423 3C0000            cmp [__r0],0
+ 0426 B149              jnz L66
+ 0428 3C0000            cmp [__r1],0
+ 042B B144              jnz L66
+ 042D           X13:
+ 042D                   .dbline 338
+ 042D           ;               {
+ 042D           ;                       char channel;
+ 042D                   .dbline 341
+ 042D           ;                       int memBlock;
+ 042D           ; 
+ 042D           ;                       params = cstrtok(0x00, " "); // 0x00 indicates it will continue from last cstrtok command and get next word. This gets the next parameter
+ 042D 5031              mov A,>L65
+ 042F 08                push A
+ 0430 5031              mov A,<L65
+ 0432 08                push A
+ 0433 5000              mov A,0
+ 0435 08                push A
+ 0436 08                push A
+ 0437 7C0000            xcall _cstrtok
+ 043A 62D000            mov REG[0xd0],>__r0
+ 043D 5100              mov A,[__r1]
+ 043F 5401              mov [X+1],A
+ 0441 5100              mov A,[__r0]
+ 0443 5400              mov [X+0],A
+ 0445                   .dbline 347
+ 0445           ; 
+ 0445           ;                       // csscanf if used to parse the string into values such as hexadecimal or integers
+ 0445           ;                       // It returns the number of parameters it parsed which should be one
+ 0445           ;                       // If the length of the params is not right or it does not parse the right amount, it returns an error
+ 0445           ;                       // %c gets a character, the channel
+ 0445           ;                       if (strlen(params) != 1 || csscanf(params, "%c", &channel) != 1) goto error;
+ 0445 5200              mov A,[X+0]
+ 0447 08                push A
+ 0448 5201              mov A,[X+1]
+ 044A 08                push A
+ 044B 7C0000            xcall _strlenLMM
+ 044E 38FA              add SP,-6
+ 0450 62D000            mov REG[0xd0],>__r0
+ 0453 3C0000            cmp [__r0],0
+ 0456 B032              jnz L72
+ 0458 3C0001            cmp [__r1],1
+ 045B B02D              jnz L72
+ 045D           X14:
+ 045D 62D000            mov REG[0xd0],>__r0
+ 0460 5A00              mov [__r1],X
+ 0462 060004            add [__r1],4
+ 0465 5007              mov A,7
+ 0467 08                push A
+ 0468 5100              mov A,[__r1]
+ 046A 08                push A
+ 046B 5028              mov A,>L71
+ 046D 08                push A
+ 046E 5028              mov A,<L71
+ 0470 08                push A
+ 0471 5200              mov A,[X+0]
+ 0473 08                push A
+ 0474 5201              mov A,[X+1]
+ 0476 08                push A
+ 0477 7C0000            xcall _csscanf
+ 047A 38FA              add SP,-6
+ 047C 62D000            mov REG[0xd0],>__r0
+ 047F 3C0000            cmp [__r0],0
+ 0482 B006              jnz X15
+ 0484 3C0001            cmp [__r1],1
+ 0487 A003              jz L69
+ 0489           X15:
+ 0489           L72:
+ 0489                   .dbline 347
+ 0489 8588              xjmp L73
+ 048B           L69:
+ 048B                   .dbline 350
+ 048B           ;                       
+ 048B           ;                       // %d gets an integer, this is the memory block at which to write
+ 048B           ;                       params = cstrtok(0x00, " ");
+ 048B 5031              mov A,>L65
+ 048D 08                push A
+ 048E 5031              mov A,<L65
+ 0490 08                push A
+ 0491 5000              mov A,0
+ 0493 08                push A
+ 0494 08                push A
+ 0495 7C0000            xcall _cstrtok
+ 0498 62D000            mov REG[0xd0],>__r0
+ 049B 5100              mov A,[__r1]
+ 049D 5401              mov [X+1],A
+ 049F 5100              mov A,[__r0]
+ 04A1 5400              mov [X+0],A
+ 04A3                   .dbline 351
+ 04A3           ;                       if (strlen(params) != 1 || csscanf(params, "%d", &memBlock) != 1) goto error;                   
+ 04A3 5200              mov A,[X+0]
+ 04A5 08                push A
+ 04A6 5201              mov A,[X+1]
+ 04A8 08                push A
+ 04A9 7C0000            xcall _strlenLMM
+ 04AC 38FA              add SP,-6
+ 04AE 62D000            mov REG[0xd0],>__r0
+ 04B1 3C0000            cmp [__r0],0
+ 04B4 B032              jnz L77
+ 04B6 3C0001            cmp [__r1],1
+ 04B9 B02D              jnz L77
+ 04BB           X16:
+ 04BB 62D000            mov REG[0xd0],>__r0
+ 04BE 5A00              mov [__r1],X
+ 04C0 060005            add [__r1],5
+ 04C3 5007              mov A,7
+ 04C5 08                push A
+ 04C6 5100              mov A,[__r1]
+ 04C8 08                push A
+ 04C9 5025              mov A,>L76
+ 04CB 08                push A
+ 04CC 5025              mov A,<L76
+ 04CE 08                push A
+ 04CF 5200              mov A,[X+0]
+ 04D1 08                push A
+ 04D2 5201              mov A,[X+1]
+ 04D4 08                push A
+ 04D5 7C0000            xcall _csscanf
+ 04D8 38FA              add SP,-6
+ 04DA 62D000            mov REG[0xd0],>__r0
+ 04DD 3C0000            cmp [__r0],0
+ 04E0 B006              jnz X17
+ 04E2 3C0001            cmp [__r1],1
+ 04E5 A003              jz L74
+ 04E7           X17:
+ 04E7           L77:
+ 04E7                   .dbline 351
+ 04E7 852A              xjmp L73
+ 04E9           L74:
+ 04E9                   .dbline 354
+ 04E9           ;                       
+ 04E9           ;                       // If there is any data after the last arg, then the format is invalid and it should return an error
+ 04E9           ;                       if (cstrtok(0x00, " ") != 0x00) goto error;
+ 04E9 5031              mov A,>L65
+ 04EB 08                push A
+ 04EC 5031              mov A,<L65
+ 04EE 08                push A
+ 04EF 5000              mov A,0
+ 04F1 08                push A
+ 04F2 08                push A
+ 04F3 7C0000            xcall _cstrtok
+ 04F6 38FC              add SP,-4
+ 04F8 62D000            mov REG[0xd0],>__r0
+ 04FB 3C0000            cmp [__r0],0
+ 04FE B006              jnz X18
+ 0500 3C0000            cmp [__r1],0
+ 0503 A003              jz L78
+ 0505           X18:
+ 0505                   .dbline 354
+ 0505 850C              xjmp L73
+ 0507           L78:
+ 0507                   .dbline 356
+ 0507           ;                       
+ 0507           ;                       channel = tolower(channel);
+ 0507 62D000            mov REG[0xd0],>__r0
+ 050A 5204              mov A,[X+4]
+ 050C 5300              mov [__r1],A
+ 050E 5000              mov A,0
+ 0510 08                push A
+ 0511 5100              mov A,[__r1]
+ 0513 08                push A
+ 0514 7C0000            xcall _tolower
+ 0517 38FE              add SP,-2
+ 0519 62D000            mov REG[0xd0],>__r0
+ 051C 5100              mov A,[__r1]
+ 051E 5404              mov [X+4],A
+ 0520                   .dbline 357
+ 0520           ;                       if ((channel != 'a' && channel != 'b') || memBlock < 0 || memBlock > 3)
+ 0520 3D0461            cmp [X+4],97
+ 0523 A006              jz L83
+ 0525 3D0462            cmp [X+4],98
+ 0528 B020              jnz L84
+ 052A           L83:
+ 052A 5206              mov A,[X+6]
+ 052C 1100              sub A,0
+ 052E 5205              mov A,[X+5]
+ 0530 3180              xor A,-128
+ 0532 1980              sbb A,(0 ^ 0x80)
+ 0534 C014              jc L84
+ 0536           X19:
+ 0536 5003              mov A,3
+ 0538 1306              sub A,[X+6]
+ 053A 5205              mov A,[X+5]
+ 053C 3180              xor A,-128
+ 053E 62D000            mov REG[0xd0],>__r0
+ 0541 5300              mov [__rX],A
+ 0543 5080              mov A,(0 ^ 0x80)
+ 0545 1A00              sbb A,[__rX]
+ 0547 D003              jnc L80
+ 0549           X20:
+ 0549           L84:
+ 0549                   .dbline 358
+ 0549           ;                               goto error; // Memory block was out of range or the channel was not A or B
+ 0549 84C8              xjmp L73
+ 054B           L80:
+ 054B                   .dbline 360
+ 054B           ;                       
+ 054B           ;                       SampleAnalog((channel == 'b'), (char)memBlock);
+ 054B 62D000            mov REG[0xd0],>__r0
+ 054E 5206              mov A,[X+6]
+ 0550 08                push A
+ 0551 3D0462            cmp [X+4],98
+ 0554 B009              jnz L86
+ 0556 560801            mov [X+8],1
+ 0559 560700            mov [X+7],0
+ 055C 8007              xjmp L87
+ 055E           L86:
+ 055E 560800            mov [X+8],0
+ 0561 560700            mov [X+7],0
+ 0564           L87:
+ 0564 62D000            mov REG[0xd0],>__r0
+ 0567 5208              mov A,[X+8]
+ 0569 08                push A
+ 056A 9D25              xcall _SampleAnalog
+ 056C 38FE              add SP,-2
+ 056E                   .dbline 361
+ 056E           ;               }
+ 056E 84AF              xjmp L63
+ 0570           L66:
+ 0570                   .dbline 362
+ 0570           ;               else if (!cstrcmp("output", cmd)) // If the command output was entered
+ 0570 5202              mov A,[X+2]
+ 0572 08                push A
+ 0573 5203              mov A,[X+3]
+ 0575 08                push A
+ 0576 501E              mov A,>L90
+ 0578 08                push A
+ 0579 501E              mov A,<L90
+ 057B 08                push A
+ 057C 7C0000            xcall _cstrcmpLMM
+ 057F 38FC              add SP,-4
+ 0581 62D000            mov REG[0xd0],>__r0
+ 0584 3C0000            cmp [__r0],0
+ 0587 B13B              jnz L88
+ 0589 3C0000            cmp [__r1],0
+ 058C B136              jnz L88
+ 058E           X21:
+ 058E                   .dbline 364
+ 058E           ;               {
+ 058E           ;                       char channel;
+ 058E                   .dbline 367
+ 058E           ;                       int memBlock;
+ 058E           ; 
+ 058E           ;                       params = cstrtok(0x00, " "); // 0x00 indicates it will continue from last cstrtok command and get next word. This gets the next parameter
+ 058E 5031              mov A,>L65
+ 0590 08                push A
+ 0591 5031              mov A,<L65
+ 0593 08                push A
+ 0594 5000              mov A,0
+ 0596 08                push A
+ 0597 08                push A
+ 0598 7C0000            xcall _cstrtok
+ 059B 62D000            mov REG[0xd0],>__r0
+ 059E 5100              mov A,[__r1]
+ 05A0 5401              mov [X+1],A
+ 05A2 5100              mov A,[__r0]
+ 05A4 5400              mov [X+0],A
+ 05A6                   .dbline 373
+ 05A6           ; 
+ 05A6           ;                       // csscanf if used to parse the string into values such as hexadecimal or integers
+ 05A6           ;                       // It returns the number of parameters it parsed which should be one
+ 05A6           ;                       // If the length of the params is not right or it does not parse the right amount, it returns an error
+ 05A6           ;                       // %c gets a character, the channel
+ 05A6           ;                       if (strlen(params) != 1 || csscanf(params, "%c", &channel) != 1) goto error;
+ 05A6 5200              mov A,[X+0]
+ 05A8 08                push A
+ 05A9 5201              mov A,[X+1]
+ 05AB 08                push A
+ 05AC 7C0000            xcall _strlenLMM
+ 05AF 38FA              add SP,-6
+ 05B1 62D000            mov REG[0xd0],>__r0
+ 05B4 3C0000            cmp [__r0],0
+ 05B7 B032              jnz L93
+ 05B9 3C0001            cmp [__r1],1
+ 05BC B02D              jnz L93
+ 05BE           X22:
+ 05BE 62D000            mov REG[0xd0],>__r0
+ 05C1 5A00              mov [__r1],X
+ 05C3 060004            add [__r1],4
+ 05C6 5007              mov A,7
+ 05C8 08                push A
+ 05C9 5100              mov A,[__r1]
+ 05CB 08                push A
+ 05CC 5028              mov A,>L71
+ 05CE 08                push A
+ 05CF 5028              mov A,<L71
+ 05D1 08                push A
+ 05D2 5200              mov A,[X+0]
+ 05D4 08                push A
+ 05D5 5201              mov A,[X+1]
+ 05D7 08                push A
+ 05D8 7C0000            xcall _csscanf
+ 05DB 38FA              add SP,-6
+ 05DD 62D000            mov REG[0xd0],>__r0
+ 05E0 3C0000            cmp [__r0],0
+ 05E3 B006              jnz X23
+ 05E5 3C0001            cmp [__r1],1
+ 05E8 A003              jz L91
+ 05EA           X23:
+ 05EA           L93:
+ 05EA                   .dbline 373
+ 05EA 8427              xjmp L73
+ 05EC           L91:
+ 05EC                   .dbline 376
+ 05EC           ; 
+ 05EC           ;                       // %d gets an integer, this is the memory block
+ 05EC           ;                       params = cstrtok(0x00, " ");
+ 05EC 5031              mov A,>L65
+ 05EE 08                push A
+ 05EF 5031              mov A,<L65
+ 05F1 08                push A
+ 05F2 5000              mov A,0
+ 05F4 08                push A
+ 05F5 08                push A
+ 05F6 7C0000            xcall _cstrtok
+ 05F9 62D000            mov REG[0xd0],>__r0
+ 05FC 5100              mov A,[__r1]
+ 05FE 5401              mov [X+1],A
+ 0600 5100              mov A,[__r0]
+ 0602 5400              mov [X+0],A
+ 0604                   .dbline 377
+ 0604           ;                       if (strlen(params) != 1 || csscanf(params, "%d", &memBlock) != 1) goto error;
+ 0604 5200              mov A,[X+0]
+ 0606 08                push A
+ 0607 5201              mov A,[X+1]
+ 0609 08                push A
+ 060A 7C0000            xcall _strlenLMM
+ 060D 38FA              add SP,-6
+ 060F 62D000            mov REG[0xd0],>__r0
+ 0612 3C0000            cmp [__r0],0
+ 0615 B032              jnz L96
+ 0617 3C0001            cmp [__r1],1
+ 061A B02D              jnz L96
+ 061C           X24:
+ 061C 62D000            mov REG[0xd0],>__r0
+ 061F 5A00              mov [__r1],X
+ 0621 060005            add [__r1],5
+ 0624 5007              mov A,7
+ 0626 08                push A
+ 0627 5100              mov A,[__r1]
+ 0629 08                push A
+ 062A 5025              mov A,>L76
+ 062C 08                push A
+ 062D 5025              mov A,<L76
+ 062F 08                push A
+ 0630 5200              mov A,[X+0]
+ 0632 08                push A
+ 0633 5201              mov A,[X+1]
+ 0635 08                push A
+ 0636 7C0000            xcall _csscanf
+ 0639 38FA              add SP,-6
+ 063B 62D000            mov REG[0xd0],>__r0
+ 063E 3C0000            cmp [__r0],0
+ 0641 B006              jnz X25
+ 0643 3C0001            cmp [__r1],1
+ 0646 A003              jz L94
+ 0648           X25:
+ 0648           L96:
+ 0648                   .dbline 377
+ 0648 83C9              xjmp L73
+ 064A           L94:
+ 064A                   .dbline 380
+ 064A           ;                       
+ 064A           ;                       // If there is any data after the last arg, then the format is invalid and it should return an error
+ 064A           ;                       if (cstrtok(0x00, " ") != 0x00) goto error;     
+ 064A 5031              mov A,>L65
+ 064C 08                push A
+ 064D 5031              mov A,<L65
+ 064F 08                push A
+ 0650 5000              mov A,0
+ 0652 08                push A
+ 0653 08                push A
+ 0654 7C0000            xcall _cstrtok
+ 0657 38FC              add SP,-4
+ 0659 62D000            mov REG[0xd0],>__r0
+ 065C 3C0000            cmp [__r0],0
+ 065F B006              jnz X26
+ 0661 3C0000            cmp [__r1],0
+ 0664 A003              jz L97
+ 0666           X26:
+ 0666                   .dbline 380
+ 0666 83AB              xjmp L73
+ 0668           L97:
+ 0668                   .dbline 382
+ 0668           ;                       
+ 0668           ;                       channel = tolower(channel);
+ 0668 62D000            mov REG[0xd0],>__r0
+ 066B 5204              mov A,[X+4]
+ 066D 5300              mov [__r1],A
+ 066F 5000              mov A,0
+ 0671 08                push A
+ 0672 5100              mov A,[__r1]
+ 0674 08                push A
+ 0675 7C0000            xcall _tolower
+ 0678 38FE              add SP,-2
+ 067A 62D000            mov REG[0xd0],>__r0
+ 067D 5100              mov A,[__r1]
+ 067F 5404              mov [X+4],A
+ 0681                   .dbline 383
+ 0681           ;                       if ((channel != 'a' && channel != 'b') || memBlock < -1 || memBlock > 3)
+ 0681 3D0461            cmp [X+4],97
+ 0684 A006              jz L102
+ 0686 3D0462            cmp [X+4],98
+ 0689 B020              jnz L103
+ 068B           L102:
+ 068B 5206              mov A,[X+6]
+ 068D 11FF              sub A,-1
+ 068F 5205              mov A,[X+5]
+ 0691 3180              xor A,-128
+ 0693 197F              sbb A,(-1 ^ 0x80)
+ 0695 C014              jc L103
+ 0697           X27:
+ 0697 5003              mov A,3
+ 0699 1306              sub A,[X+6]
+ 069B 5205              mov A,[X+5]
+ 069D 3180              xor A,-128
+ 069F 62D000            mov REG[0xd0],>__r0
+ 06A2 5300              mov [__rX],A
+ 06A4 5080              mov A,(0 ^ 0x80)
+ 06A6 1A00              sbb A,[__rX]
+ 06A8 D003              jnc L99
+ 06AA           X28:
+ 06AA           L103:
+ 06AA                   .dbline 384
+ 06AA           ;                               goto error; // Memory block was out of range or the channel was not A or B
+ 06AA 8367              xjmp L73
+ 06AC           L99:
+ 06AC                   .dbline 386
+ 06AC           ;                       
+ 06AC           ;                       if (channel == 'a') chAMemBlk = memBlock;
+ 06AC 3D0461            cmp [X+4],97
+ 06AF B00A              jnz L104
+ 06B1                   .dbline 386
+ 06B1 5206              mov A,[X+6]
+ 06B3 62D000            mov REG[0xd0],>_chAMemBlk
+ 06B6 5300              mov [_chAMemBlk],A
+ 06B8 8365              xjmp L63
+ 06BA           L104:
+ 06BA                   .dbline 387
+ 06BA           ;                       else chBMemBlk = memBlock;
+ 06BA 5206              mov A,[X+6]
+ 06BC 62D000            mov REG[0xd0],>_chBMemBlk
+ 06BF 5300              mov [_chBMemBlk],A
+ 06C1                   .dbline 388
+ 06C1           ;               }
+ 06C1 835C              xjmp L63
+ 06C3           L88:
+ 06C3                   .dbline 389
+ 06C3           ;               else if (!cstrcmp("rate", cmd)) // If the command rate was entered
+ 06C3 5202              mov A,[X+2]
+ 06C5 08                push A
+ 06C6 5203              mov A,[X+3]
+ 06C8 08                push A
+ 06C9 5019              mov A,>L108
+ 06CB 08                push A
+ 06CC 5019              mov A,<L108
+ 06CE 08                push A
+ 06CF 7C0000            xcall _cstrcmpLMM
+ 06D2 38FC              add SP,-4
+ 06D4 62D000            mov REG[0xd0],>__r0
+ 06D7 3C0000            cmp [__r0],0
+ 06DA B16F              jnz L106
+ 06DC 3C0000            cmp [__r1],0
+ 06DF B16A              jnz L106
+ 06E1           X29:
+ 06E1                   .dbline 391
+ 06E1           ;               {
+ 06E1           ;                       int samplingRate;
+ 06E1                   .dbline 393
+ 06E1           ;                       int ksps;
+ 06E1           ;                       params = cstrtok(0x00, " "); // 0x00 indicates it will continue from last cstrtok command and get next word. This gets the next parameter
+ 06E1 5031              mov A,>L65
+ 06E3 08                push A
+ 06E4 5031              mov A,<L65
+ 06E6 08                push A
+ 06E7 5000              mov A,0
+ 06E9 08                push A
+ 06EA 08                push A
+ 06EB 7C0000            xcall _cstrtok
+ 06EE 62D000            mov REG[0xd0],>__r0
+ 06F1 5100              mov A,[__r1]
+ 06F3 5401              mov [X+1],A
+ 06F5 5100              mov A,[__r0]
+ 06F7 5400              mov [X+0],A
+ 06F9                   .dbline 399
+ 06F9           ; 
+ 06F9           ;                       // csscanf if used to parse the string into values such as hexadecimal or integers
+ 06F9           ;                       // It returns the number of parameters it parsed which should be one
+ 06F9           ;                       // If the length of the params is not right or it does not parse the right amount, it returns an error
+ 06F9           ;                       // %d gets an integer, this is the memory block
+ 06F9           ;                       if (strlen(params) != 1 || csscanf(params, "%d", &samplingRate) != 1) goto error;
+ 06F9 5200              mov A,[X+0]
+ 06FB 08                push A
+ 06FC 5201              mov A,[X+1]
+ 06FE 08                push A
+ 06FF 7C0000            xcall _strlenLMM
+ 0702 38FA              add SP,-6
+ 0704 62D000            mov REG[0xd0],>__r0
+ 0707 3C0000            cmp [__r0],0
+ 070A B032              jnz L111
+ 070C 3C0001            cmp [__r1],1
+ 070F B02D              jnz L111
+ 0711           X30:
+ 0711 62D000            mov REG[0xd0],>__r0
+ 0714 5A00              mov [__r1],X
+ 0716 060004            add [__r1],4
+ 0719 5007              mov A,7
+ 071B 08                push A
+ 071C 5100              mov A,[__r1]
+ 071E 08                push A
+ 071F 5025              mov A,>L76
+ 0721 08                push A
+ 0722 5025              mov A,<L76
+ 0724 08                push A
+ 0725 5200              mov A,[X+0]
+ 0727 08                push A
+ 0728 5201              mov A,[X+1]
+ 072A 08                push A
+ 072B 7C0000            xcall _csscanf
+ 072E 38FA              add SP,-6
+ 0730 62D000            mov REG[0xd0],>__r0
+ 0733 3C0000            cmp [__r0],0
+ 0736 B006              jnz X31
+ 0738 3C0001            cmp [__r1],1
+ 073B A003              jz L109
+ 073D           X31:
+ 073D           L111:
+ 073D                   .dbline 399
+ 073D 82D4              xjmp L73
+ 073F           L109:
+ 073F                   .dbline 402
+ 073F           ;                       
+ 073F           ;                       // If there is any data after the last arg, then the format is invalid and it should return an error
+ 073F           ;                       if (cstrtok(0x00, " ") != 0x00) goto error;     
+ 073F 5031              mov A,>L65
+ 0741 08                push A
+ 0742 5031              mov A,<L65
+ 0744 08                push A
+ 0745 5000              mov A,0
+ 0747 08                push A
+ 0748 08                push A
+ 0749 7C0000            xcall _cstrtok
+ 074C 38FC              add SP,-4
+ 074E 62D000            mov REG[0xd0],>__r0
+ 0751 3C0000            cmp [__r0],0
+ 0754 B006              jnz X32
+ 0756 3C0000            cmp [__r1],0
+ 0759 A003              jz L112
+ 075B           X32:
+ 075B                   .dbline 402
+ 075B 82B6              xjmp L73
+ 075D           L112:
+ 075D                   .dbline 404
+ 075D           ;                       
+ 075D           ;                       if (samplingRate < 0 || samplingRate > 9)
+ 075D 5205              mov A,[X+5]
+ 075F 1100              sub A,0
+ 0761 5204              mov A,[X+4]
+ 0763 3180              xor A,-128
+ 0765 1980              sbb A,(0 ^ 0x80)
+ 0767 C014              jc L116
+ 0769           X33:
+ 0769 5009              mov A,9
+ 076B 1305              sub A,[X+5]
+ 076D 5204              mov A,[X+4]
+ 076F 3180              xor A,-128
+ 0771 62D000            mov REG[0xd0],>__r0
+ 0774 5300              mov [__rX],A
+ 0776 5080              mov A,(0 ^ 0x80)
+ 0778 1A00              sbb A,[__rX]
+ 077A D003              jnc L114
+ 077C           X34:
+ 077C           L116:
+ 077C                   .dbline 405
+ 077C           ;                               goto error; // Invalid sampling rate was selected
+ 077C 8295              xjmp L73
+ 077E           L114:
+ 077E                   .dbline 406
+ 077E           ;                       DelSigClock_Stop();
+ 077E 10                push X
+ 077F 7C0000            xcall _DelSigClock_Stop
+ 0782 20                pop X
+ 0783                   .dbline 407
+ 0783           ;                       switch (samplingRate)
+ 0783 3D0400            cmp [X+4],0
+ 0786 B006              jnz X35
+ 0788 3D0501            cmp [X+5],1
+ 078B A053              jz L119
+ 078D           X35:
+ 078D 3D0400            cmp [X+4],0
+ 0790 B006              jnz X36
+ 0792 3D0502            cmp [X+5],2
+ 0795 A051              jz L120
+ 0797           X36:
+ 0797 3D0400            cmp [X+4],0
+ 079A B006              jnz X37
+ 079C 3D0503            cmp [X+5],3
+ 079F A04F              jz L121
+ 07A1           X37:
+ 07A1 3D0400            cmp [X+4],0
+ 07A4 B006              jnz X38
+ 07A6 3D0504            cmp [X+5],4
+ 07A9 A04D              jz L122
+ 07AB           X38:
+ 07AB 3D0400            cmp [X+4],0
+ 07AE B006              jnz X39
+ 07B0 3D0505            cmp [X+5],5
+ 07B3 A04B              jz L123
+ 07B5           X39:
+ 07B5 3D0400            cmp [X+4],0
+ 07B8 B006              jnz X40
+ 07BA 3D0506            cmp [X+5],6
+ 07BD A049              jz L124
+ 07BF           X40:
+ 07BF 3D0400            cmp [X+4],0
+ 07C2 B006              jnz X41
+ 07C4 3D0507            cmp [X+5],7
+ 07C7 A047              jz L125
+ 07C9           X41:
+ 07C9 3D0400            cmp [X+4],0
+ 07CC B006              jnz X42
+ 07CE 3D0508            cmp [X+5],8
+ 07D1 A045              jz L126
+ 07D3           X42:
+ 07D3 3D0400            cmp [X+4],0
+ 07D6 B006              jnz X43
+ 07D8 3D0509            cmp [X+5],9
+ 07DB A043              jz L127
+ 07DD           X43:
+ 07DD 8047              xjmp L118
+ 07DF           L119:
+ 07DF                   .dbline 409
+ 07DF           ;                       {
+ 07DF           ;                               case 1: ksps = SAMPLING_RATE_1250; break;
+ 07DF 560795            mov [X+7],-107
+ 07E2 560600            mov [X+6],0
+ 07E5                   .dbline 409
+ 07E5 803F              xjmp L118
+ 07E7           L120:
+ 07E7                   .dbline 410
+ 07E7           ;                               case 2: ksps = SAMPLING_RATE_1500; break;
+ 07E7 56077C            mov [X+7],124
+ 07EA 560600            mov [X+6],0
+ 07ED                   .dbline 410
+ 07ED 8037              xjmp L118
+ 07EF           L121:
+ 07EF                   .dbline 411
+ 07EF           ;                               case 3: ksps = SAMPLING_RATE_1875; break;
+ 07EF 560763            mov [X+7],99
+ 07F2 560600            mov [X+6],0
+ 07F5                   .dbline 411
+ 07F5 802F              xjmp L118
+ 07F7           L122:
+ 07F7                   .dbline 412
+ 07F7           ;                               case 4: ksps = SAMPLING_RATE_2500; break;
+ 07F7 56074A            mov [X+7],74
+ 07FA 560600            mov [X+6],0
+ 07FD                   .dbline 412
+ 07FD 8027              xjmp L118
+ 07FF           L123:
+ 07FF                   .dbline 413
+ 07FF           ;                               case 5: ksps = SAMPLING_RATE_3125; break;
+ 07FF 56073B            mov [X+7],59
+ 0802 560600            mov [X+6],0
+ 0805                   .dbline 413
+ 0805 801F              xjmp L118
+ 0807           L124:
+ 0807                   .dbline 414
+ 0807           ;                               case 6: ksps = SAMPLING_RATE_3750; break;
+ 0807 560731            mov [X+7],49
+ 080A 560600            mov [X+6],0
+ 080D                   .dbline 414
+ 080D 8017              xjmp L118
+ 080F           L125:
+ 080F                   .dbline 415
+ 080F           ;                               case 7: ksps = SAMPLING_RATE_6250; break;
+ 080F 56071D            mov [X+7],29
+ 0812 560600            mov [X+6],0
+ 0815                   .dbline 415
+ 0815 800F              xjmp L118
+ 0817           L126:
+ 0817                   .dbline 416
+ 0817           ;                               case 8: ksps = SAMPLING_RATE_7500; break;
+ 0817 560718            mov [X+7],24
+ 081A 560600            mov [X+6],0
+ 081D                   .dbline 416
+ 081D 8007              xjmp L118
+ 081F           L127:
+ 081F                   .dbline 417
+ 081F           ;                               case 9: ksps = SAMPLING_RATE_9375; break;
+ 081F 560713            mov [X+7],19
+ 0822 560600            mov [X+6],0
+ 0825                   .dbline 417
+ 0825                   .dbline 418
+ 0825           ;                               default: break;
+ 0825           L118:
+ 0825                   .dbline 420
+ 0825           ;                       }
+ 0825           ;                       DelSigClock_WritePeriod(ksps);
+ 0825 62D000            mov REG[0xd0],>__r0
+ 0828 5207              mov A,[X+7]
+ 082A 10                push X
+ 082B 7C0000            xcall _DelSigClock_WritePeriod
+ 082E 20                pop X
+ 082F                   .dbline 421
+ 082F           ;                       DelSigClock_WriteCompareValue(ksps>>1);
+ 082F 62D000            mov REG[0xd0],>__r0
+ 0832 5207              mov A,[X+7]
+ 0834 5300              mov [__r1],A
+ 0836 5206              mov A,[X+6]
+ 0838 5300              mov [__r0],A
+ 083A 6800              asr [__r0]
+ 083C 6E00              rrc [__r1]
+ 083E 5100              mov A,[__r1]
+ 0840 10                push X
+ 0841 7C0000            xcall _DelSigClock_WriteCompareValue
+ 0844                   .dbline 422
+ 0844           ;                       DelSigClock_Start();
+ 0844 7C0000            xcall _DelSigClock_Start
+ 0847 20                pop X
+ 0848                   .dbline 423
+ 0848           ;               }
+ 0848 81D5              xjmp L63
+ 084A           L106:
+ 084A                   .dbline 424
+ 084A           ;               else if (!cstrcmp("trigger", cmd)) // If the command trigger was entered
+ 084A 5202              mov A,[X+2]
+ 084C 08                push A
+ 084D 5203              mov A,[X+3]
+ 084F 08                push A
+ 0850 5011              mov A,>L130
+ 0852 08                push A
+ 0853 5011              mov A,<L130
+ 0855 08                push A
+ 0856 7C0000            xcall _cstrcmpLMM
+ 0859 38FC              add SP,-4
+ 085B 62D000            mov REG[0xd0],>__r0
+ 085E 3C0000            cmp [__r0],0
+ 0861 B16F              jnz L128
+ 0863 3C0000            cmp [__r1],0
+ 0866 B16A              jnz L128
+ 0868           X44:
+ 0868                   .dbline 426
+ 0868           ;               {
+ 0868           ;                       int address;
+ 0868                   .dbline 432
+ 0868           ; 
+ 0868           ;                       // csscanf if used to parse the string into values such as hexadecimal or integers
+ 0868           ;                       // It returns the number of parameters it parsed which should be one
+ 0868           ;                       // If the length of the params is not right or it does not parse the right amount, it returns an error
+ 0868           ;                       // %d gets an integer, this is the memory block
+ 0868           ;                       params = Lowercase(cstrtok(0x00, " "));
+ 0868 5031              mov A,>L65
+ 086A 08                push A
+ 086B 5031              mov A,<L65
+ 086D 08                push A
+ 086E 5000              mov A,0
+ 0870 08                push A
+ 0871 08                push A
+ 0872 7C0000            xcall _cstrtok
+ 0875 38FC              add SP,-4
+ 0877 62D000            mov REG[0xd0],>__r0
+ 087A 5100              mov A,[__r0]
+ 087C 08                push A
+ 087D 5100              mov A,[__r1]
+ 087F 08                push A
+ 0880 9822              xcall _Lowercase
+ 0882 62D000            mov REG[0xd0],>__r0
+ 0885 5100              mov A,[__r1]
+ 0887 5401              mov [X+1],A
+ 0889 5100              mov A,[__r0]
+ 088B 5400              mov [X+0],A
+ 088D                   .dbline 433
+ 088D           ;                       if (!cstrcmp("hex", params))
+ 088D 5200              mov A,[X+0]
+ 088F 08                push A
+ 0890 5201              mov A,[X+1]
+ 0892 08                push A
+ 0893 500D              mov A,>L133
+ 0895 08                push A
+ 0896 500D              mov A,<L133
+ 0898 08                push A
+ 0899 7C0000            xcall _cstrcmpLMM
+ 089C 38FA              add SP,-6
+ 089E 62D000            mov REG[0xd0],>__r0
+ 08A1 3C0000            cmp [__r0],0
+ 08A4 B064              jnz L131
+ 08A6 3C0000            cmp [__r1],0
+ 08A9 B05F              jnz L131
+ 08AB           X45:
+ 08AB                   .dbline 436
+ 08AB           ;                       {
+ 08AB           ;                               // %x gets a hexadecimal value, this can read capital or lowercase letters, this is the address
+ 08AB           ;                               params = cstrtok(0x00, " ");
+ 08AB                   .dbline 436
+ 08AB 5031              mov A,>L65
+ 08AD 08                push A
+ 08AE 5031              mov A,<L65
+ 08B0 08                push A
+ 08B1 5000              mov A,0
+ 08B3 08                push A
+ 08B4 08                push A
+ 08B5 7C0000            xcall _cstrtok
+ 08B8 62D000            mov REG[0xd0],>__r0
+ 08BB 5100              mov A,[__r1]
+ 08BD 5401              mov [X+1],A
+ 08BF 5100              mov A,[__r0]
+ 08C1 5400              mov [X+0],A
+ 08C3                   .dbline 437
+ 08C3           ;                               if (strlen(params) > 4 || csscanf(params, "%x", &address) != 1) goto error;
+ 08C3 5200              mov A,[X+0]
+ 08C5 08                push A
+ 08C6 5201              mov A,[X+1]
+ 08C8 08                push A
+ 08C9 7C0000            xcall _strlenLMM
+ 08CC 38FA              add SP,-6
+ 08CE 62D000            mov REG[0xd0],>__r0
+ 08D1 5004              mov A,4
+ 08D3 1200              sub A,[__r1]
+ 08D5 5000              mov A,0
+ 08D7 1A00              sbb A,[__r0]
+ 08D9 C02D              jc L137
+ 08DB           X46:
+ 08DB 62D000            mov REG[0xd0],>__r0
+ 08DE 5A00              mov [__r1],X
+ 08E0 060004            add [__r1],4
+ 08E3 5007              mov A,7
+ 08E5 08                push A
+ 08E6 5100              mov A,[__r1]
+ 08E8 08                push A
+ 08E9 500A              mov A,>L136
+ 08EB 08                push A
+ 08EC 500A              mov A,<L136
+ 08EE 08                push A
+ 08EF 5200              mov A,[X+0]
+ 08F1 08                push A
+ 08F2 5201              mov A,[X+1]
+ 08F4 08                push A
+ 08F5 7C0000            xcall _csscanf
+ 08F8 38FA              add SP,-6
+ 08FA 62D000            mov REG[0xd0],>__r0
+ 08FD 3C0000            cmp [__r0],0
+ 0900 B006              jnz X47
+ 0902 3C0001            cmp [__r1],1
+ 0905 A07F              jz L132
+ 0907           X47:
+ 0907           L137:
+ 0907                   .dbline 437
+ 0907 810A              xjmp L73
+ 0909           L131:
+ 0909                   .dbline 439
+ 0909           ;                       }
+ 0909           ;                       else if (!cstrcmp("dec", params))
+ 0909 5200              mov A,[X+0]
+ 090B 08                push A
+ 090C 5201              mov A,[X+1]
+ 090E 08                push A
+ 090F 5006              mov A,>L140
+ 0911 08                push A
+ 0912 5006              mov A,<L140
+ 0914 08                push A
+ 0915 7C0000            xcall _cstrcmpLMM
+ 0918 38FC              add SP,-4
+ 091A 62D000            mov REG[0xd0],>__r0
+ 091D 3C0000            cmp [__r0],0
+ 0920 B0F1              jnz L73
+ 0922 3C0000            cmp [__r1],0
+ 0925 B0EC              jnz L73
+ 0927           X48:
+ 0927                   .dbline 441
+ 0927           ;                       {
+ 0927           ;                               params = cstrtok(0x00, " ");
+ 0927                   .dbline 441
+ 0927 5031              mov A,>L65
+ 0929 08                push A
+ 092A 5031              mov A,<L65
+ 092C 08                push A
+ 092D 5000              mov A,0
+ 092F 08                push A
+ 0930 08                push A
+ 0931 7C0000            xcall _cstrtok
+ 0934 62D000            mov REG[0xd0],>__r0
+ 0937 5100              mov A,[__r1]
+ 0939 5401              mov [X+1],A
+ 093B 5100              mov A,[__r0]
+ 093D 5400              mov [X+0],A
+ 093F                   .dbline 443
+ 093F           ;                               // %d gets an integer, this is the address
+ 093F           ;                               if (strlen(params) > 4 || csscanf(params, "%d", &address) != 1) goto error;
+ 093F 5200              mov A,[X+0]
+ 0941 08                push A
+ 0942 5201              mov A,[X+1]
+ 0944 08                push A
+ 0945 7C0000            xcall _strlenLMM
+ 0948 38FA              add SP,-6
+ 094A 62D000            mov REG[0xd0],>__r0
+ 094D 5004              mov A,4
+ 094F 1200              sub A,[__r1]
+ 0951 5000              mov A,0
+ 0953 1A00              sbb A,[__r0]
+ 0955 C02D              jc L143
+ 0957           X49:
+ 0957 62D000            mov REG[0xd0],>__r0
+ 095A 5A00              mov [__r1],X
+ 095C 060004            add [__r1],4
+ 095F 5007              mov A,7
+ 0961 08                push A
+ 0962 5100              mov A,[__r1]
+ 0964 08                push A
+ 0965 5025              mov A,>L76
+ 0967 08                push A
+ 0968 5025              mov A,<L76
+ 096A 08                push A
+ 096B 5200              mov A,[X+0]
+ 096D 08                push A
+ 096E 5201              mov A,[X+1]
+ 0970 08                push A
+ 0971 7C0000            xcall _csscanf
+ 0974 38FA              add SP,-6
+ 0976 62D000            mov REG[0xd0],>__r0
+ 0979 3C0000            cmp [__r0],0
+ 097C B006              jnz X50
+ 097E 3C0001            cmp [__r1],1
+ 0981 A003              jz L139
+ 0983           X50:
+ 0983           L143:
+ 0983                   .dbline 443
+ 0983 808E              xjmp L73
+ 0985           L139:
+ 0985           L132:
+ 0985                   .dbline 448
+ 0985           ;                       }
+ 0985           ;                       else 
+ 0985           ;                               goto error; // Invalid data type entered
+ 0985           ;                       
+ 0985           ;                       if (address < 0 || address > 8192)
+ 0985 5205              mov A,[X+5]
+ 0987 1100              sub A,0
+ 0989 5204              mov A,[X+4]
+ 098B 3180              xor A,-128
+ 098D 1980              sbb A,(0 ^ 0x80)
+ 098F C014              jc L146
+ 0991           X51:
+ 0991 5000              mov A,0
+ 0993 1305              sub A,[X+5]
+ 0995 5204              mov A,[X+4]
+ 0997 3180              xor A,-128
+ 0999 62D000            mov REG[0xd0],>__r0
+ 099C 5300              mov [__rX],A
+ 099E 50A0              mov A,(32 ^ 0x80)
+ 09A0 1A00              sbb A,[__rX]
+ 09A2 D003              jnc L144
+ 09A4           X52:
+ 09A4           L146:
+ 09A4                   .dbline 449
+ 09A4           ;                               goto error; // Invalid address range specified
+ 09A4 806D              xjmp L73
+ 09A6           L144:
+ 09A6                   .dbline 452
+ 09A6           ; 
+ 09A6           ;                       // If there is any data after the last arg, then the format is invalid and it should return an error
+ 09A6           ;                       if (cstrtok(0x00, " ") != 0x00) goto error;
+ 09A6 5031              mov A,>L65
+ 09A8 08                push A
+ 09A9 5031              mov A,<L65
+ 09AB 08                push A
+ 09AC 5000              mov A,0
+ 09AE 08                push A
+ 09AF 08                push A
+ 09B0 7C0000            xcall _cstrtok
+ 09B3 38FC              add SP,-4
+ 09B5 62D000            mov REG[0xd0],>__r0
+ 09B8 3C0000            cmp [__r0],0
+ 09BB B006              jnz X53
+ 09BD 3C0000            cmp [__r1],0
+ 09C0 A003              jz L147
+ 09C2           X53:
+ 09C2                   .dbline 452
+ 09C2 804F              xjmp L73
+ 09C4           L147:
+ 09C4                   .dbline 454
+ 09C4           ;               
+ 09C4           ;                       triggerAddress = address;
+ 09C4 62D000            mov REG[0xd0],>_triggerAddress
+ 09C7 5205              mov A,[X+5]
+ 09C9 5301              mov [_triggerAddress+1],A
+ 09CB 5204              mov A,[X+4]
+ 09CD 5300              mov [_triggerAddress],A
+ 09CF                   .dbline 456
+ 09CF           ;                       
+ 09CF           ;               }
+ 09CF 804E              xjmp L63
+ 09D1           L128:
+ 09D1                   .dbline 457
+ 09D1           ;               else if (!cstrcmp("start", cmd)) // If the command start was entered
+ 09D1 5202              mov A,[X+2]
+ 09D3 08                push A
+ 09D4 5203              mov A,[X+3]
+ 09D6 08                push A
+ 09D7 5000              mov A,>L151
+ 09D9 08                push A
+ 09DA 5000              mov A,<L151
+ 09DC 08                push A
+ 09DD 7C0000            xcall _cstrcmpLMM
+ 09E0 38FC              add SP,-4
+ 09E2 62D000            mov REG[0xd0],>__r0
+ 09E5 3C0000            cmp [__r0],0
+ 09E8 B029              jnz L73
+ 09EA 3C0000            cmp [__r1],0
+ 09ED B024              jnz L73
+ 09EF           X54:
+ 09EF                   .dbline 460
+ 09EF           ;               {
+ 09EF           ;                       // If there is any data after the number of bytes, then the format is invalid and it should return an error
+ 09EF           ;                       if (cstrtok(0x00, " ") != 0x00) goto error;
+ 09EF                   .dbline 460
+ 09EF 5031              mov A,>L65
+ 09F1 08                push A
+ 09F2 5031              mov A,<L65
+ 09F4 08                push A
+ 09F5 5000              mov A,0
+ 09F7 08                push A
+ 09F8 08                push A
+ 09F9 7C0000            xcall _cstrtok
+ 09FC 38FC              add SP,-4
+ 09FE 62D000            mov REG[0xd0],>__r0
+ 0A01 3C0000            cmp [__r0],0
+ 0A04 B006              jnz X55
+ 0A06 3C0000            cmp [__r1],0
+ 0A09 A003              jz L152
+ 0A0B           X55:
+ 0A0B                   .dbline 460
+ 0A0B 8006              xjmp L73
+ 0A0D           L152:
+ 0A0D                   .dbline 462
+ 0A0D           ;                       
+ 0A0D           ;                       PlaySamples();
+ 0A0D 7C0155            xcall _PlaySamples
+ 0A10                   .dbline 463
+ 0A10           ;               }
+ 0A10                   .dbline 465
+ 0A10           ;               else 
+ 0A10           ;                       goto error;
+ 0A10                   .dbline 467
+ 0A10           ;               
+ 0A10           ;               continue; // This is so that the error is skipped when everything goes right
+ 0A10 800D              xjmp L63
+ 0A12           L73:
+ 0A12                   .dbline 469
+ 0A12           ;               error: // This outputs an invalid format message and continues on to read another line
+ 0A12           ;                       UART_CPutString("########################## Lab 11 Data Acquisition System ########################\r\n\
+ 0A12 10                push X
+ 0A13 5033              mov A,>L61
+ 0A15 08                push A
+ 0A16 5033              mov A,<L61
+ 0A18 5C                mov X,A
+ 0A19 18                pop A
+ 0A1A 7C0000            xcall _UART_CPutString
+ 0A1D 20                pop X
+ 0A1E                   .dbline 502
+ 0A1E           ; # input X A \r\n\
+ 0A1E           ; #\r\n\
+ 0A1E           ; #     Samples input channel to memory block\r\n\
+ 0A1E           ; #             X - Either A/B to signify channel being altered\r\n\
+ 0A1E           ; #             A - Memory block(0-3) being routed\r\n\
+ 0A1E           ; #\r\n\
+ 0A1E           ; # output X A\r\n\
+ 0A1E           ; #     Routes output channel to read from memory block \r\n\
+ 0A1E           ; #             X - Either A/B to signify channel being altered\r\n\
+ 0A1E           ; #             A - Memory block(0-3 or -1 for none) being routed\r\n\
+ 0A1E           ; #\r\n\
+ 0A1E           ; # rate X\r\n\
+ 0A1E           ; #     Selects a rate to sample the channels when reading and writing\r\n\
+ 0A1E           ; #             X - One of the values below\r\n\
+ 0A1E           ; #                     1. 1.25  ksps \r\n\
+ 0A1E           ; #                     2. 1.5   ksps\r\n\
+ 0A1E           ; #                     3. 1.87  ksps\r\n\
+ 0A1E           ; #                     4. 2.5   ksps\r\n\
+ 0A1E           ; #                     5. 3.125 ksps\r\n\
+ 0A1E           ; #                     6. 3.75  ksps\r\n\
+ 0A1E           ; #                     7. 6.25  ksps\r\n\
+ 0A1E           ; #                     8. 7.5   ksps\r\n\
+ 0A1E           ; #                     9. 9.37  ksps\r\n\
+ 0A1E           ; #\r\n\
+ 0A1E           ; # trigger XXX H\r\n\
+ 0A1E           ; #     Sets the relative address to trigger\r\n\
+ 0A1E           ; #             XXX - Either hex/dec for the address\r\n\
+ 0A1E           ; #             H - values in hexadecimal or decimal.  Range is 0-8192 for dec or 0-2000 for hex\r\n\
+ 0A1E           ; #\r\n\
+ 0A1E           ; # start\r\n\
+ 0A1E           ; #     Starts the output channels. They will continue to play until looped over\r\n\
+ 0A1E           ; #####################################################################\r\n");
+ 0A1E           ;       }
+ 0A1E           L63:
+ 0A1E                   .dbline 328
+ 0A1E 89BE              xjmp L62
+ 0A20           X12:
+ 0A20                   .dbline -2
+ 0A20           L60:
+ 0A20 38F7              add SP,-9
+ 0A22 20                pop X
+ 0A23                   .dbline 0 ; func end
+ 0A23 8FFF              jmp .
+ 0A25                   .dbsym l address 4 I
+ 0A25                   .dbsym l ksps 6 I
+ 0A25                   .dbsym l samplingRate 4 I
+ 0A25                   .dbsym l memBlock 5 I
+ 0A25                   .dbsym l channel 4 c
+ 0A25                   .dbsym l memBlock 5 I
+ 0A25                   .dbsym l channel 4 c
+ 0A25                   .dbsym l cmd 2 pc
+ 0A25                   .dbsym l params 0 pc
+ 0A25                   .dbend
+ 0A25                   .dbfunc e DACUpdate_ISR _DACUpdate_ISR fV
+ 0A25           _DACUpdate_ISR::
+ 0A25                   .dbline -1
+ 0A25 71C0              or F,-64
+ 0A27 08                push A
+ 0A28 5DD0              mov A,REG[0xd0]
+ 0A2A 08                push A
+ 0A2B                   .dbline 518
+ 0A2B           ; 
+ 0A2B           ; }
+ 0A2B           ; 
+ 0A2B           ; /*****************************************************************************/
+ 0A2B           ; /********************* Interrupt Service Routines Below **********************/
+ 0A2B           ; /*****************************************************************************/
+ 0A2B           ; #pragma interrupt_handler DACUpdate_ISR
+ 0A2B           ; 
+ 0A2B           ; // DACUpdate_ISR is called at the terminal count of the DACUpdate user module.
+ 0A2B           ; // Since it's clock source is the same as DelSig, setting its period to
+ 0A2B           ; // match the DelSig PWM (4*DecimationRate) will cause it to interrupt at the
+ 0A2B           ; // same rate as the DelSig's sampling rate. If the samples are only sent to
+ 0A2B           ; // the DACs when the variable DACUpdateDone is one, the output sampling rate
+ 0A2B           ; // can be controlled.
+ 0A2B           ; void DACUpdate_ISR(void)
+ 0A2B           ; {
+ 0A2B                   .dbline 523
+ 0A2B           ;       // Updating the DACs inside the ISR takes more clock cycles
+ 0A2B           ;       // than simply setting a flag and exiting. This is because
+ 0A2B           ;       // the C-compiler does a full preserve and restore of the
+ 0A2B           ;       // CPU context which takes 190+185 CPU cycles.
+ 0A2B           ;       DACUpdateDone = 1;
+ 0A2B 62D000            mov REG[0xd0],>_DACUpdateDone
+ 0A2E 550001            mov [_DACUpdateDone],1
+ 0A31                   .dbline -2
+ 0A31           L154:
+ 0A31 18                pop A
+ 0A32 60D0              mov REG[208],A
+ 0A34 18                pop A
+ 0A35                   .dbline 0 ; func end
+ 0A35 7E                reti
+ 0A36                   .dbend
+                        .area data(ram, con, rel)
+ 0000                   .dbfile C:\Users\Jacob\Desktop\ECE381\DATAAC~1\DATAAC~1\main.c
+ 0000           _buf::
+ 0000 000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000  .word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+ 003C 00000000000000000000      .word 0,0,0,0,0
+ 0046 00000000000000000000      .byte 0,0,0,0,0,0,0,0,0,0
+ 0050                   .dbsym e buf _buf A[80:80]c
+                        .area lit(rom, con, rel, lit)
+ 0000           L151:
+ 0000 737461727400      .byte 's,'t,'a,'r,'t,0
+ 0006           L140:
+ 0006 64656300          .byte 'd,'e,'c,0
+ 000A           L136:
+ 000A 257800            .byte 37,'x,0
+ 000D           L133:
+ 000D 68657800          .byte 'h,'e,'x,0
+ 0011           L130:
+ 0011 7472696767657200  .byte 't,'r,'i,'g,'g,'e,'r,0
+ 0019           L108:
+ 0019 7261746500        .byte 'r,'a,'t,'e,0
+ 001E           L90:
+ 001E 6F757470757400    .byte 'o,'u,'t,'p,'u,'t,0
+ 0025           L76:
+ 0025 256400            .byte 37,'d,0
+ 0028           L71:
+ 0028 256300            .byte 37,'c,0
+ 002B           L68:
+ 002B 696E70757400      .byte 'i,'n,'p,'u,'t,0
+ 0031           L65:
+ 0031 2000              .byte 32,0
+ 0033           L61:
+ 0033 23232323232323232323232323232323  .byte 35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35
+ 0043 23232323232323232323204C61622031  .byte 35,35,35,35,35,35,35,35,35,35,32,'L,'a,'b,32,49
+ 0053 31204461746120416371756973697469  .byte 49,32,'D,'a,'t,'a,32,'A,'c,'q,'u,'i,'s,'i,'t,'i
+ 0063 6F6E2053797374656D20232323232323  .byte 'o,'n,32,'S,'y,'s,'t,'e,'m,32,35,35,35,35,35,35
+ 0073 23232323232323232323232323232323  .byte 35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35
+ 0083 23230D0A2320696E7075742058204120  .byte 35,35,13,10,35,32,'i,'n,'p,'u,'t,32,'X,32,'A,32
+ 0093 0D0A230D0A230953616D706C65732069  .byte 13,10,35,13,10,35,9,'S,'a,'m,'p,'l,'e,'s,32,'i
+ 00A3 6E707574206368616E6E656C20746F20  .byte 'n,'p,'u,'t,32,'c,'h,'a,'n,'n,'e,'l,32,'t,'o,32
+ 00B3 6D656D6F727920626C6F636B0D0A2309  .byte 'm,'e,'m,'o,'r,'y,32,'b,'l,'o,'c,'k,13,10,35,9
+ 00C3 0958202D2045697468657220412F4220  .byte 9,'X,32,45,32,'E,'i,'t,'h,'e,'r,32,'A,47,'B,32
+ 00D3 746F207369676E696679206368616E6E  .byte 't,'o,32,'s,'i,'g,'n,'i,'f,'y,32,'c,'h,'a,'n,'n
+ 00E3 656C206265696E6720616C7465726564  .byte 'e,'l,32,'b,'e,'i,'n,'g,32,'a,'l,'t,'e,'r,'e,'d
+ 00F3 0D0A23090941202D204D656D6F727920  .byte 13,10,35,9,9,'A,32,45,32,'M,'e,'m,'o,'r,'y,32
+ 0103 626C6F636B28302D3329206265696E67  .byte 'b,'l,'o,'c,'k,40,48,45,51,41,32,'b,'e,'i,'n,'g
+ 0113 20726F757465640D0A230D0A23206F75  .byte 32,'r,'o,'u,'t,'e,'d,13,10,35,13,10,35,32,'o,'u
+ 0123 74707574205820410D0A2309526F7574  .byte 't,'p,'u,'t,32,'X,32,'A,13,10,35,9,'R,'o,'u,'t
+ 0133 6573206F7574707574206368616E6E65  .byte 'e,'s,32,'o,'u,'t,'p,'u,'t,32,'c,'h,'a,'n,'n,'e
+ 0143 6C20746F20726561642066726F6D206D  .byte 'l,32,'t,'o,32,'r,'e,'a,'d,32,'f,'r,'o,'m,32,'m
+ 0153 656D6F727920626C6F636B200D0A2309  .byte 'e,'m,'o,'r,'y,32,'b,'l,'o,'c,'k,32,13,10,35,9
+ 0163 0958202D2045697468657220412F4220  .byte 9,'X,32,45,32,'E,'i,'t,'h,'e,'r,32,'A,47,'B,32
+ 0173 746F207369676E696679206368616E6E  .byte 't,'o,32,'s,'i,'g,'n,'i,'f,'y,32,'c,'h,'a,'n,'n
+ 0183 656C206265696E6720616C7465726564  .byte 'e,'l,32,'b,'e,'i,'n,'g,32,'a,'l,'t,'e,'r,'e,'d
+ 0193 0D0A23090941202D204D656D6F727920  .byte 13,10,35,9,9,'A,32,45,32,'M,'e,'m,'o,'r,'y,32
+ 01A3 626C6F636B28302D33206F72202D3120  .byte 'b,'l,'o,'c,'k,40,48,45,51,32,'o,'r,32,45,49,32
+ 01B3 666F72206E6F6E6529206265696E6720  .byte 'f,'o,'r,32,'n,'o,'n,'e,41,32,'b,'e,'i,'n,'g,32
+ 01C3 726F757465640D0A230D0A2320726174  .byte 'r,'o,'u,'t,'e,'d,13,10,35,13,10,35,32,'r,'a,'t
+ 01D3 6520580D0A230953656C656374732061  .byte 'e,32,'X,13,10,35,9,'S,'e,'l,'e,'c,'t,'s,32,'a
+ 01E3 207261746520746F2073616D706C6520  .byte 32,'r,'a,'t,'e,32,'t,'o,32,'s,'a,'m,'p,'l,'e,32
+ 01F3 746865206368616E6E656C7320776865  .byte 't,'h,'e,32,'c,'h,'a,'n,'n,'e,'l,'s,32,'w,'h,'e
+ 0203 6E2072656164696E6720616E64207772  .byte 'n,32,'r,'e,'a,'d,'i,'n,'g,32,'a,'n,'d,32,'w,'r
+ 0213 6974696E670D0A23090958202D204F6E  .byte 'i,'t,'i,'n,'g,13,10,35,9,9,'X,32,45,32,'O,'n
+ 0223 65206F66207468652076616C75657320  .byte 'e,32,'o,'f,32,'t,'h,'e,32,'v,'a,'l,'u,'e,'s,32
+ 0233 62656C6F770D0A23090909312E20312E  .byte 'b,'e,'l,'o,'w,13,10,35,9,9,9,49,46,32,49,46
+ 0243 323520206B737073200D0A2309090932  .byte 50,53,32,32,'k,'s,'p,'s,32,13,10,35,9,9,9,50
+ 0253 2E20312E352020206B7370730D0A2309  .byte 46,32,49,46,53,32,32,32,'k,'s,'p,'s,13,10,35,9
+ 0263 0909332E20312E383720206B7370730D  .byte 9,9,51,46,32,49,46,56,55,32,32,'k,'s,'p,'s,13
+ 0273 0A23090909342E20322E352020206B73  .byte 10,35,9,9,9,52,46,32,50,46,53,32,32,32,'k,'s
+ 0283 70730D0A23090909352E20332E313235  .byte 'p,'s,13,10,35,9,9,9,53,46,32,51,46,49,50,53
+ 0293 206B7370730D0A23090909362E20332E  .byte 32,'k,'s,'p,'s,13,10,35,9,9,9,54,46,32,51,46
+ 02A3 373520206B7370730D0A23090909372E  .byte 55,53,32,32,'k,'s,'p,'s,13,10,35,9,9,9,55,46
+ 02B3 20362E323520206B7370730D0A230909  .byte 32,54,46,50,53,32,32,'k,'s,'p,'s,13,10,35,9,9
+ 02C3 09382E20372E352020206B7370730D0A  .byte 9,56,46,32,55,46,53,32,32,32,'k,'s,'p,'s,13,10
+ 02D3 23090909392E20392E333720206B7370  .byte 35,9,9,9,57,46,32,57,46,51,55,32,32,'k,'s,'p
+ 02E3 730D0A230D0A23207472696767657220  .byte 's,13,10,35,13,10,35,32,'t,'r,'i,'g,'g,'e,'r,32
+ 02F3 58585820480D0A230953657473207468  .byte 'X,'X,'X,32,'H,13,10,35,9,'S,'e,'t,'s,32,'t,'h
+ 0303 652072656C6174697665206164647265  .byte 'e,32,'r,'e,'l,'a,'t,'i,'v,'e,32,'a,'d,'d,'r,'e
+ 0313 737320746F20747269676765720D0A23  .byte 's,'s,32,'t,'o,32,'t,'r,'i,'g,'g,'e,'r,13,10,35
+ 0323 0909585858202D204569746865722068  .byte 9,9,'X,'X,'X,32,45,32,'E,'i,'t,'h,'e,'r,32,'h
+ 0333 65782F64656320666F72207468652061  .byte 'e,'x,47,'d,'e,'c,32,'f,'o,'r,32,'t,'h,'e,32,'a
+ 0343 6464726573730D0A23090948202D2076  .byte 'd,'d,'r,'e,'s,'s,13,10,35,9,9,'H,32,45,32,'v
+ 0353 616C75657320696E2068657861646563  .byte 'a,'l,'u,'e,'s,32,'i,'n,32,'h,'e,'x,'a,'d,'e,'c
+ 0363 696D616C206F7220646563696D616C2E  .byte 'i,'m,'a,'l,32,'o,'r,32,'d,'e,'c,'i,'m,'a,'l,46
+ 0373 202052616E676520697320302D383139  .byte 32,32,'R,'a,'n,'g,'e,32,'i,'s,32,48,45,56,49,57
+ 0383 3220666F7220646563206F7220302D32  .byte 50,32,'f,'o,'r,32,'d,'e,'c,32,'o,'r,32,48,45,50
+ 0393 30303020666F72206865780D0A230D0A  .byte 48,48,48,32,'f,'o,'r,32,'h,'e,'x,13,10,35,13,10
+ 03A3 232073746172740D0A23095374617274  .byte 35,32,'s,'t,'a,'r,'t,13,10,35,9,'S,'t,'a,'r,'t
+ 03B3 7320746865206F757470757420636861  .byte 's,32,'t,'h,'e,32,'o,'u,'t,'p,'u,'t,32,'c,'h,'a
+ 03C3 6E6E656C732E20546865792077696C6C  .byte 'n,'n,'e,'l,'s,46,32,'T,'h,'e,'y,32,'w,'i,'l,'l
+ 03D3 20636F6E74696E756520746F20706C61  .byte 32,'c,'o,'n,'t,'i,'n,'u,'e,32,'t,'o,32,'p,'l,'a
+ 03E3 7920756E74696C206C6F6F706564206F  .byte 'y,32,'u,'n,'t,'i,'l,32,'l,'o,'o,'p,'e,'d,32,'o
+ 03F3 7665720D0A2323232323232323232323  .byte 'v,'e,'r,13,10,35,35,35,35,35,35,35,35,35,35,35
+ 0403 23232323232323232323232323232323  .byte 35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35
+ 0413 23232323232323232323232323232323  .byte 35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35
+ 0423 23232323232323232323232323232323  .byte 35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35
+ 0433 232323232323232323230D0A00        .byte 35,35,35,35,35,35,35,35,35,35,13,10,0
+ 0440           L52:
+ 0440 577269746520746F2000      .byte 'W,'r,'i,'t,'e,32,'t,'o,32,0
+ 044A           L30:
+ 044A 507265737320616E79206B657920746F  .byte 'P,'r,'e,'s,'s,32,'a,'n,'y,32,'k,'e,'y,32,'t,'o
+ 045A 2061626F72740D0A00        .byte 32,'a,'b,'o,'r,'t,13,10,0

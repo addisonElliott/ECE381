@@ -35,18 +35,52 @@ lib/uartint.asm
 
 lib/uartplus.asm
 
-!W C:\Users\Jacob\Desktop\ECE381\DATAAC~1\DATAAC~1\main.c(154): unknown preprocessor directive "#H"
+!W C:\Users\Jacob\Desktop\ECE381\DATAAC~1\DATAAC~1\main.c(98):[warning] overflow in converting constant expression from `int' to `unsigned int'
 
-!W C:\Users\Jacob\Desktop\ECE381\DATAAC~1\DATAAC~1\main.c(150):[warning] unrecognized character escape sequence `\ '
+!W C:\Users\Jacob\Desktop\ECE381\DATAAC~1\DATAAC~1\main.c(98):[warning] overflow in converting constant expression from `unsigned int' to `char'
 
-!E C:\Users\Jacob\Desktop\ECE381\DATAAC~1\DATAAC~1\main.c(150): missing "
+!W C:\Users\Jacob\Desktop\ECE381\DATAAC~1\DATAAC~1\main.c(99):[warning] overflow in converting constant expression from `int' to `unsigned int'
 
-!E C:\Users\Jacob\Desktop\ECE381\DATAAC~1\DATAAC~1\main.c(184): syntax error; found `}' expecting `)'
+!W C:\Users\Jacob\Desktop\ECE381\DATAAC~1\DATAAC~1\main.c(99):[warning] overflow in converting constant expression from `unsigned int' to `char'
 
-!E C:\Users\Jacob\Desktop\ECE381\DATAAC~1\DATAAC~1\main.c(184): syntax error; found `}' expecting `;'
+./boot.asm
 
-make: *** [obj/main.o] Error 1
+Linking..
+
+LMM info: area 'InterruptRAM' uses 2 bytes in SRAM bank 0
+
+LMM info: area 'data' item of 80 bytes allocated in SRAM page 0
+
+LMM info: area 'virtual_registers' uses 11 bytes in SRAM page 0
+
+LMM info: area 'data' item of 4 bytes allocated in SRAM page 0
+
+LMM info: area 'data' item of 2 bytes allocated in SRAM page 0
+
+LMM info: area 'data' item of 2 bytes allocated in SRAM page 0
+
+LMM info: area 'data' item of 2 bytes allocated in SRAM page 0
+
+LMM info: area 'data' item of 2 bytes allocated in SRAM page 0
+
+LMM info: area 'data' item of 2 bytes allocated in SRAM page 0
+
+LMM info: area 'data' item of 1 bytes allocated in SRAM page 0
+
+LMM info: area 'data' item of 1 bytes allocated in SRAM page 0
+
+LMM info: area 'data' item of 1 bytes allocated in SRAM page 0
+
+LMM info: area 'data' item of 1 bytes allocated in SRAM page 0
+
+idata dump at output/DataAcquisionSystem.idata
+
+  ROM 35% full. 11402 out of 32768 bytes used (does not include absolute areas).
+
+  RAM 7% full. 111 bytes used (does not include stack usage).
+
+Built with ICCM8C STD V7.05.00
 
  
-DataAcquisionSystem - 4 error(s) 2 warning(s) 20:51:22
+DataAcquisionSystem - 0 error(s) 4 warning(s) 21:27:05
 

@@ -35,12 +35,12 @@ LMM info: area 'virtual_registers' uses 15 bytes in SRAM page 0
 
 idata dump at output/SPI_SRAM.idata
 
-  ROM 34% full. 11082 out of 32768 bytes used (does not include absolute areas).
+  ROM 34% full. 11034 out of 32768 bytes used (does not include absolute areas).
 
   RAM 9% full. 147 bytes used (does not include stack usage).
 
 Built with ICCM8C STD V7.05.00
 
  
-SPI_SRAM - 0 error(s) 0 warning(s) 18:49:29
+SPI_SRAM - 0 error(s) 0 warning(s) 15:08:52
 

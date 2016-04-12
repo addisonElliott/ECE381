@@ -166,9 +166,9 @@
  002F           ;       BYTE b;
  002F           ; 
  002F           ;       UART_CPutString("Status Register W/R Test: 0x  ");
- 002F 50FC              mov A,>L3
+ 002F 50ED              mov A,>L3
  0031 08                push A
- 0032 50FC              mov A,<L3
+ 0032 50ED              mov A,<L3
  0034 5C                mov X,A
  0035 18                pop A
  0036 7C0000            xcall _UART_CPutString
@@ -228,9 +228,9 @@
  008F           ;                       UART_CPutString("\r\nWrite of invalid Status Register value. System halted.\r\n");
  008F                   .dbline 129
  008F 10                push X
- 0090 50C1              mov A,>L10
+ 0090 50B2              mov A,>L10
  0092 08                push A
- 0093 50C1              mov A,<L10
+ 0093 50B2              mov A,<L10
  0095 5C                mov X,A
  0096 18                pop A
  0097 7C0000            xcall _UART_CPutString
@@ -266,9 +266,9 @@
  00C4           ;                       UART_CPutString(" FAIL\r\n");
  00C4                   .dbline 134
  00C4 10                push X
- 00C5 50B9              mov A,>L13
+ 00C5 50AA              mov A,>L13
  00C7 08                push A
- 00C8 50B9              mov A,<L13
+ 00C8 50AA              mov A,<L13
  00CA 5C                mov X,A
  00CB 18                pop A
  00CC 7C0000            xcall _UART_CPutString
@@ -293,9 +293,9 @@
  00DE                   .dbline 138
  00DE           ;       UART_CPutString("\b\b\b\b\b PASS\r\n");
  00DE 10                push X
- 00DF 50AC              mov A,>L14
+ 00DF 509D              mov A,>L14
  00E1 08                push A
- 00E2 50AC              mov A,<L14
+ 00E2 509D              mov A,<L14
  00E4 5C                mov X,A
  00E5 18                pop A
  00E6 7C0000            xcall _UART_CPutString
@@ -352,9 +352,9 @@
  010A                   .dbline 153
  010A           ;       UART_CPutString("      Byte Mode W/R Test: Addr 0x    ");
  010A 10                push X
- 010B 5086              mov A,>L16
+ 010B 5077              mov A,>L16
  010D 08                push A
- 010E 5086              mov A,<L16
+ 010E 5077              mov A,<L16
  0110 5C                mov X,A
  0111 18                pop A
  0112 7C0000            xcall _UART_CPutString
@@ -386,9 +386,9 @@
  013A           ;                       UART_CPutString("\b\b\b\b");
  013A                   .dbline 157
  013A 10                push X
- 013B 5081              mov A,>L23
+ 013B 5072              mov A,>L23
  013D 08                push A
- 013E 5081              mov A,<L23
+ 013E 5072              mov A,<L23
  0140 5C                mov X,A
  0141 18                pop A
  0142 7C0000            xcall _UART_CPutString
@@ -439,9 +439,9 @@
  0176           ;                               UART_CPutString("\b\b\b\b");
  0176                   .dbline 165
  0176 10                push X
- 0177 5081              mov A,>L23
+ 0177 5072              mov A,>L23
  0179 08                push A
- 017A 5081              mov A,<L23
+ 017A 5072              mov A,<L23
  017C 5C                mov X,A
  017D 18                pop A
  017E 7C0000            xcall _UART_CPutString
@@ -456,9 +456,9 @@
  0189 7C0000            xcall _UART_PutSHexInt
  018C                   .dbline 167
  018C           ;                               UART_CPutString(" FAIL\r\n");
- 018C 50B9              mov A,>L13
+ 018C 50AA              mov A,>L13
  018E 08                push A
- 018F 50B9              mov A,<L13
+ 018F 50AA              mov A,<L13
  0191 5C                mov X,A
  0192 18                pop A
  0193 7C0000            xcall _UART_CPutString
@@ -503,9 +503,9 @@
  01BF           ;                       UART_CPutString("\b\b\b\b\b\b\b\b\b\b\b\b ABORTED    \r\n");
  01BF                   .dbline 176
  01BF 10                push X
- 01C0 5066              mov A,>L33
+ 01C0 5057              mov A,>L33
  01C2 08                push A
- 01C3 5066              mov A,<L33
+ 01C3 5057              mov A,<L33
  01C5 5C                mov X,A
  01C6 18                pop A
  01C7 7C0000            xcall _UART_CPutString
@@ -535,9 +535,9 @@
  01E5                   .dbline 180
  01E5           ;       UART_CPutString("\b\b\b\b\b\b\b\b\b\b\b\b PASS       \r\n");
  01E5 10                push X
- 01E6 504B              mov A,>L34
+ 01E6 503C              mov A,>L34
  01E8 08                push A
- 01E9 504B              mov A,<L34
+ 01E9 503C              mov A,<L34
  01EB 5C                mov X,A
  01EC 18                pop A
  01ED 7C0000            xcall _UART_CPutString
@@ -591,9 +591,9 @@
  020D                   .dbline 194
  020D           ;       UART_CPutString("Sequential Mode W/R Test: Addr 0x    ");
  020D 10                push X
- 020E 5025              mov A,>L36
+ 020E 5016              mov A,>L36
  0210 08                push A
- 0211 5025              mov A,<L36
+ 0211 5016              mov A,<L36
  0213 5C                mov X,A
  0214 18                pop A
  0215 7C0000            xcall _UART_CPutString
@@ -609,9 +609,9 @@
  0221                   .dbline 197
  0221           ;               UART_CPutString("\b\b\b\b");
  0221 10                push X
- 0222 5081              mov A,>L23
+ 0222 5072              mov A,>L23
  0224 08                push A
- 0225 5081              mov A,<L23
+ 0225 5072              mov A,<L23
  0227 5C                mov X,A
  0228 18                pop A
  0229 7C0000            xcall _UART_CPutString
@@ -709,9 +709,9 @@
  02A4           ;                                       UART_CPutString("\b\b\b\b");
  02A4                   .dbline 208
  02A4 10                push X
- 02A5 5081              mov A,>L23
+ 02A5 5072              mov A,>L23
  02A7 08                push A
- 02A8 5081              mov A,<L23
+ 02A8 5072              mov A,<L23
  02AA 5C                mov X,A
  02AB 18                pop A
  02AC 7C0000            xcall _UART_CPutString
@@ -734,9 +734,9 @@
  02C9 7C0000            xcall _UART_PutSHexInt
  02CC                   .dbline 210
  02CC           ;                                       UART_CPutString(" FAIL\r\n");
- 02CC 50B9              mov A,>L13
+ 02CC 50AA              mov A,>L13
  02CE 08                push A
- 02CF 50B9              mov A,<L13
+ 02CF 50AA              mov A,<L13
  02D1 5C                mov X,A
  02D2 18                pop A
  02D3 7C0000            xcall _UART_CPutString
@@ -791,9 +791,9 @@
  0306           ;                       UART_CPutString("\b\b\b\b\b\b\b\b\b\b\b\b ABORTED    \r\n");
  0306                   .dbline 220
  0306 10                push X
- 0307 5066              mov A,>L33
+ 0307 5057              mov A,>L33
  0309 08                push A
- 030A 5066              mov A,<L33
+ 030A 5057              mov A,<L33
  030C 5C                mov X,A
  030D 18                pop A
  030E 7C0000            xcall _UART_CPutString
@@ -823,9 +823,9 @@
  032D                   .dbline 224
  032D           ;       UART_CPutString("\b\b\b\b\b\b\b\b\b\b\b\b PASS       \r\n");
  032D 10                push X
- 032E 504B              mov A,>L34
+ 032E 503C              mov A,>L34
  0330 08                push A
- 0331 504B              mov A,<L34
+ 0331 503C              mov A,<L34
  0333 5C                mov X,A
  0334 18                pop A
  0335 7C0000            xcall _UART_CPutString
@@ -990,9 +990,9 @@
  03CF                   .dbline 256
  03CF           ;       UART_CPutString("Press any key to abort\r\n");
  03CF 10                push X
- 03D0 500C              mov A,>L66
+ 03D0 50FD              mov A,>L66
  03D2 08                push A
- 03D3 500C              mov A,<L66
+ 03D3 50FD              mov A,<L66
  03D5 5C                mov X,A
  03D6 18                pop A
  03D7 7C0000            xcall _UART_CPutString
@@ -1074,11 +1074,12 @@
  0429 10                push X
  042A 4F                mov X,SP
  042B 3894              add SP,-108
- 042D                   .dbline 264
+ 042D                   .dbline 265
  042D           ; }
+ 042D           ; 
  042D           ; void WriteBlock(char id)
  042D           ; {     
- 042D                   .dbline 266
+ 042D                   .dbline 267
  042D           ; 
  042D           ;       WORD startAddr = 0x2000 *id; // Where the address starts for block
  042D 62D000            mov REG[0xd0],>__r0
@@ -1098,7 +1099,7 @@
  044B 5404              mov [X+4],A
  044D 5100              mov A,[__r0]
  044F 5403              mov [X+3],A
- 0451                   .dbline 267
+ 0451                   .dbline 268
  0451           ;       WORD endAddr = startAddr + 0x2000; // Where the address ends for block
  0451 5204              mov A,[X+4]
  0453 0100              add A,0
@@ -1106,7 +1107,7 @@
  0457 5203              mov A,[X+3]
  0459 0920              adc A,32
  045B 5489              mov [X-119],A
- 045D                   .dbline 270
+ 045D                   .dbline 271
  045D           ;       WORD addr;
  045D           ;       BYTE i, ii;
  045D           ;       float pi = 3.1415;
@@ -1114,7 +1115,7 @@
  0460 560649            mov [X+6],73
  0463 56070E            mov [X+7],14
  0466 560856            mov [X+8],86
- 0469                   .dbline 273
+ 0469                   .dbline 274
  0469           ;       char temp[128];
  0469           ;       
  0469           ;       SPIRAM_WriteStatusRegister(SPIRAM_SEQUENTIAL_MODE | SPIRAM_DISABLE_HOLD);
@@ -1123,7 +1124,7 @@
  046C 7C0000            xcall _SPIRAM_WriteStatusRegister
  046F 38FF              add SP,-1
  0471 62D000            mov REG[0xd0],>__r0
- 0474                   .dbline 274
+ 0474                   .dbline 275
  0474           ;       switch (id)
  0474 52FC              mov A,[X-4]
  0476 548D              mov [X-115],A
@@ -1136,25 +1137,25 @@
  0485 3D8C00            cmp [X-116],0
  0488 B006              jnz X12
  048A 3D8D01            cmp [X-115],1
- 048D A4A2              jz L90
+ 048D A481              jz L88
  048F           X12:
  048F 3D8C00            cmp [X-116],0
  0492 B009              jnz X13
  0494 3D8D02            cmp [X-115],2
  0497 B004              jnz X55
- 0499 7D0D96            ljmp L102
+ 0499 7D0D75            ljmp L100
  049C           X55:
  049C           X13:
  049C 3D8C00            cmp [X-116],0
  049F B009              jnz X14
  04A1 3D8D03            cmp [X-115],3
  04A4 B004              jnz X56
- 04A6 7D11FC            ljmp L114
+ 04A6 7D11DB            ljmp L112
  04A9           X56:
  04A9           X14:
- 04A9 7D14AD            xjmp L73
+ 04A9 7D148C            xjmp L73
  04AC           L76:
- 04AC                   .dbline 277
+ 04AC                   .dbline 278
  04AC           ;       {
  04AC           ;               case 0: 
  04AC           ;                       for (addr = startAddr; addr < endAddr; addr += 128)
@@ -1162,18 +1163,18 @@
  04AE 5402              mov [X+2],A
  04B0 5203              mov A,[X+3]
  04B2 5401              mov [X+1],A
- 04B4 846E              xjmp L80
+ 04B4 844D              xjmp L80
  04B6           L77:
- 04B6                   .dbline 278
- 04B6           ;                       {
  04B6                   .dbline 279
+ 04B6           ;                       {
+ 04B6                   .dbline 280
  04B6           ;                               for(i = 0; i < 128; i++)
  04B6 560000            mov [X+0],0
  04B9 8421              xjmp L84
  04BB           L81:
- 04BB                   .dbline 280
- 04BB           ;                               {
  04BB                   .dbline 281
+ 04BB           ;                               {
+ 04BB                   .dbline 282
  04BB           ;                                       temp[i] = (char)(0.5 + 0.5*sin(800*pi*((addr - startAddr) + i)) + 0.5*sin(800*pi*((addr - startAddr) + i))*(128/2.5));  
  04BB 62D000            mov REG[0xd0],>__r0
  04BE 5200              mov A,[X+0]
@@ -1796,17 +1797,17 @@
  08D3 60D5              mov REG[0xd5],A
  08D5 5100              mov A,[__r2]
  08D7 3F00              mvi [__r1],A
- 08D9                   .dbline 282
+ 08D9                   .dbline 283
  08D9           ;                               }       
  08D9           L82:
- 08D9                   .dbline 279
+ 08D9                   .dbline 280
  08D9 7700              inc [X+0]
  08DB           L84:
- 08DB                   .dbline 279
+ 08DB                   .dbline 280
  08DB 3D0080            cmp [X+0],-128
  08DE CBDC              jc L81
  08E0           X24:
- 08E0                   .dbline 283
+ 08E0                   .dbline 284
  08E0           ;                               SPIRAM_WriteArray(addr, temp, 128);
  08E0 5080              mov A,-128
  08E2 08                push A
@@ -1823,474 +1824,469 @@
  08F6 08                push A
  08F7 7C0000            xcall _SPIRAM_WriteArray
  08FA 38FB              add SP,-5
- 08FC                   .dbline 284
- 08FC           ;                               UART_CPutString("Writing to ");
- 08FC 10                push X
- 08FD 5000              mov A,>L88
- 08FF 08                push A
- 0900 5000              mov A,<L88
- 0902 5C                mov X,A
- 0903 18                pop A
- 0904 7C0000            xcall _UART_CPutString
- 0907 20                pop X
- 0908                   .dbline 285
- 0908           ;                               UART_PutSHexInt(addr);
- 0908 10                push X
- 0909 5201              mov A,[X+1]
- 090B 08                push A
- 090C 5202              mov A,[X+2]
- 090E 20                pop X
- 090F 7C0000            xcall _UART_PutSHexInt
- 0912                   .dbline 286
- 0912           ;                               UART_CPutString("\r\n");
- 0912 50FD              mov A,>L89
- 0914 08                push A
- 0915 50FD              mov A,<L89
- 0917 5C                mov X,A
- 0918 18                pop A
- 0919 7C0000            xcall _UART_CPutString
- 091C 20                pop X
- 091D                   .dbline 287
- 091D           ;                       }
- 091D           L78:
- 091D                   .dbline 277
- 091D 070280            add [X+2],-128
- 0920 0F0100            adc [X+1],0
- 0923           L80:
- 0923                   .dbline 277
- 0923 5202              mov A,[X+2]
- 0925 138A              sub A,[X-118]
- 0927 5201              mov A,[X+1]
- 0929 1B89              sbb A,[X-119]
- 092B CB8A              jc L77
- 092D           X25:
- 092D                   .dbline 288
- 092D           ;                       break;
- 092D 7D14AD            xjmp L74
- 0930           L90:
- 0930                   .dbline 291
- 0930           ;               
- 0930           ;               case 1: 
- 0930           ;                       for (addr = startAddr; addr < endAddr; addr += 128)
- 0930 5204              mov A,[X+4]
- 0932 5402              mov [X+2],A
- 0934 5203              mov A,[X+3]
- 0936 5401              mov [X+1],A
- 0938 8451              xjmp L94
- 093A           L91:
- 093A                   .dbline 292
- 093A           ;                       {
- 093A                   .dbline 293
- 093A           ;                               for(i = 0; i < 128; i++)
- 093A 560000            mov [X+0],0
- 093D 8425              xjmp L98
- 093F           L95:
- 093F                   .dbline 294
- 093F           ;                               {
- 093F                   .dbline 295
- 093F           ;                                       temp[i] = (char)(0.2 + 0.5*sin(600*pi*((addr - startAddr) + i)) + 0.5*sin(200*pi*((addr - startAddr) + i))*(128/2.5));
- 093F 62D000            mov REG[0xd0],>__r0
- 0942 5200              mov A,[X+0]
- 0944 5300              mov [__r1],A
- 0946 550000            mov [__r0],0
- 0949 5202              mov A,[X+2]
- 094B 1304              sub A,[X+4]
- 094D 5300              mov [__r3],A
- 094F 5201              mov A,[X+1]
- 0951 1B03              sbb A,[X+3]
- 0953 5300              mov [__r2],A
- 0955 5100              mov A,[__r3]
- 0957 0200              add A,[__r1]
- 0959 5300              mov [__r1],A
- 095B 5100              mov A,[__r2]
- 095D 0A00              adc A,[__r0]
- 095F 5300              mov [__r0],A
- 0961 5100              mov A,[__r1]
- 0963 2101              and A,1
- 0965 5300              mov [__r3],A
- 0967 5100              mov A,[__r0]
- 0969 2100              and A,0
- 096B 5300              mov [__r2],A
- 096D 5100              mov A,[__r3]
- 096F 5300              mov [__r7],A
- 0971 5100              mov A,[__r2]
- 0973 5300              mov [__r6],A
- 0975 470080            tst [__r6],-128
- 0978 A009              jz X26
- 097A 5500FF            mov [__r5],-1
- 097D 5500FF            mov [__r4],-1
- 0980 800A              jmp X27
- 0982           X26:
- 0982 62D000            mov REG[0xd0],>__r0
- 0985 550000            mov [__r5],0
- 0988 550000            mov [__r4],0
- 098B           X27:
- 098B 62D000            mov REG[0xd0],>__r0
- 098E 5100              mov A,[__r4]
- 0990 08                push A
- 0991 5100              mov A,[__r5]
- 0993 08                push A
- 0994 5100              mov A,[__r6]
- 0996 08                push A
- 0997 5100              mov A,[__r7]
- 0999 08                push A
- 099A 7C0000            xcall __long2fp
- 099D 18                pop A
- 099E 5300              mov [__r7],A
- 09A0 18                pop A
- 09A1 5300              mov [__r6],A
- 09A3 18                pop A
- 09A4 5300              mov [__r5],A
- 09A6 18                pop A
- 09A7 5300              mov [__r4],A
- 09A9 70FB              and F,-5
- 09AB 6E00              rrc [__r0]
- 09AD 6E00              rrc [__r1]
- 09AF 5100              mov A,[__r1]
- 09B1 5300              mov [__r3],A
- 09B3 5100              mov A,[__r0]
- 09B5 5300              mov [__r2],A
- 09B7 470080            tst [__r2],-128
- 09BA A009              jz X28
- 09BC 5500FF            mov [__r1],-1
- 09BF 5500FF            mov [__r0],-1
- 09C2 800A              jmp X29
- 09C4           X28:
- 09C4 62D000            mov REG[0xd0],>__r0
- 09C7 550000            mov [__r1],0
- 09CA 550000            mov [__r0],0
- 09CD           X29:
- 09CD 62D000            mov REG[0xd0],>__r0
- 09D0 5100              mov A,[__r0]
- 09D2 08                push A
- 09D3 5100              mov A,[__r1]
- 09D5 08                push A
- 09D6 5100              mov A,[__r2]
+ 08FC                   .dbline 285
+ 08FC           ;                       }
+ 08FC           L78:
+ 08FC                   .dbline 278
+ 08FC 070280            add [X+2],-128
+ 08FF 0F0100            adc [X+1],0
+ 0902           L80:
+ 0902                   .dbline 278
+ 0902 5202              mov A,[X+2]
+ 0904 138A              sub A,[X-118]
+ 0906 5201              mov A,[X+1]
+ 0908 1B89              sbb A,[X-119]
+ 090A CBAB              jc L77
+ 090C           X25:
+ 090C                   .dbline 286
+ 090C           ;                       break;
+ 090C 7D148C            xjmp L74
+ 090F           L88:
+ 090F                   .dbline 289
+ 090F           ;               
+ 090F           ;               case 1: 
+ 090F           ;                       for (addr = startAddr; addr < endAddr; addr += 128)
+ 090F 5204              mov A,[X+4]
+ 0911 5402              mov [X+2],A
+ 0913 5203              mov A,[X+3]
+ 0915 5401              mov [X+1],A
+ 0917 8451              xjmp L92
+ 0919           L89:
+ 0919                   .dbline 290
+ 0919           ;                       {
+ 0919                   .dbline 291
+ 0919           ;                               for(i = 0; i < 128; i++)
+ 0919 560000            mov [X+0],0
+ 091C 8425              xjmp L96
+ 091E           L93:
+ 091E                   .dbline 292
+ 091E           ;                               {
+ 091E                   .dbline 293
+ 091E           ;                                       temp[i] = (char)(0.2 + 0.5*sin(600*pi*((addr - startAddr) + i)) + 0.5*sin(200*pi*((addr - startAddr) + i))*(128/2.5));
+ 091E 62D000            mov REG[0xd0],>__r0
+ 0921 5200              mov A,[X+0]
+ 0923 5300              mov [__r1],A
+ 0925 550000            mov [__r0],0
+ 0928 5202              mov A,[X+2]
+ 092A 1304              sub A,[X+4]
+ 092C 5300              mov [__r3],A
+ 092E 5201              mov A,[X+1]
+ 0930 1B03              sbb A,[X+3]
+ 0932 5300              mov [__r2],A
+ 0934 5100              mov A,[__r3]
+ 0936 0200              add A,[__r1]
+ 0938 5300              mov [__r1],A
+ 093A 5100              mov A,[__r2]
+ 093C 0A00              adc A,[__r0]
+ 093E 5300              mov [__r0],A
+ 0940 5100              mov A,[__r1]
+ 0942 2101              and A,1
+ 0944 5300              mov [__r3],A
+ 0946 5100              mov A,[__r0]
+ 0948 2100              and A,0
+ 094A 5300              mov [__r2],A
+ 094C 5100              mov A,[__r3]
+ 094E 5300              mov [__r7],A
+ 0950 5100              mov A,[__r2]
+ 0952 5300              mov [__r6],A
+ 0954 470080            tst [__r6],-128
+ 0957 A009              jz X26
+ 0959 5500FF            mov [__r5],-1
+ 095C 5500FF            mov [__r4],-1
+ 095F 800A              jmp X27
+ 0961           X26:
+ 0961 62D000            mov REG[0xd0],>__r0
+ 0964 550000            mov [__r5],0
+ 0967 550000            mov [__r4],0
+ 096A           X27:
+ 096A 62D000            mov REG[0xd0],>__r0
+ 096D 5100              mov A,[__r4]
+ 096F 08                push A
+ 0970 5100              mov A,[__r5]
+ 0972 08                push A
+ 0973 5100              mov A,[__r6]
+ 0975 08                push A
+ 0976 5100              mov A,[__r7]
+ 0978 08                push A
+ 0979 7C0000            xcall __long2fp
+ 097C 18                pop A
+ 097D 5300              mov [__r7],A
+ 097F 18                pop A
+ 0980 5300              mov [__r6],A
+ 0982 18                pop A
+ 0983 5300              mov [__r5],A
+ 0985 18                pop A
+ 0986 5300              mov [__r4],A
+ 0988 70FB              and F,-5
+ 098A 6E00              rrc [__r0]
+ 098C 6E00              rrc [__r1]
+ 098E 5100              mov A,[__r1]
+ 0990 5300              mov [__r3],A
+ 0992 5100              mov A,[__r0]
+ 0994 5300              mov [__r2],A
+ 0996 470080            tst [__r2],-128
+ 0999 A009              jz X28
+ 099B 5500FF            mov [__r1],-1
+ 099E 5500FF            mov [__r0],-1
+ 09A1 800A              jmp X29
+ 09A3           X28:
+ 09A3 62D000            mov REG[0xd0],>__r0
+ 09A6 550000            mov [__r1],0
+ 09A9 550000            mov [__r0],0
+ 09AC           X29:
+ 09AC 62D000            mov REG[0xd0],>__r0
+ 09AF 5100              mov A,[__r0]
+ 09B1 08                push A
+ 09B2 5100              mov A,[__r1]
+ 09B4 08                push A
+ 09B5 5100              mov A,[__r2]
+ 09B7 08                push A
+ 09B8 5100              mov A,[__r3]
+ 09BA 08                push A
+ 09BB 7C0000            xcall __long2fp
+ 09BE 18                pop A
+ 09BF 5300              mov [__r3],A
+ 09C1 18                pop A
+ 09C2 5300              mov [__r2],A
+ 09C4 18                pop A
+ 09C5 5300              mov [__r1],A
+ 09C7 18                pop A
+ 09C8 08                push A
+ 09C9 5100              mov A,[__r1]
+ 09CB 08                push A
+ 09CC 5100              mov A,[__r2]
+ 09CE 08                push A
+ 09CF 5100              mov A,[__r3]
+ 09D1 08                push A
+ 09D2 5040              mov A,64
+ 09D4 08                push A
+ 09D5 5000              mov A,0
+ 09D7 08                push A
  09D8 08                push A
- 09D9 5100              mov A,[__r3]
- 09DB 08                push A
- 09DC 7C0000            xcall __long2fp
- 09DF 18                pop A
- 09E0 5300              mov [__r3],A
- 09E2 18                pop A
- 09E3 5300              mov [__r2],A
- 09E5 18                pop A
- 09E6 5300              mov [__r1],A
- 09E8 18                pop A
- 09E9 08                push A
- 09EA 5100              mov A,[__r1]
- 09EC 08                push A
- 09ED 5100              mov A,[__r2]
- 09EF 08                push A
- 09F0 5100              mov A,[__r3]
- 09F2 08                push A
- 09F3 5040              mov A,64
- 09F5 08                push A
- 09F6 5000              mov A,0
- 09F8 08                push A
+ 09D9 08                push A
+ 09DA 7C0000            xcall __fpmul
+ 09DD 18                pop A
+ 09DE 5300              mov [__r3],A
+ 09E0 18                pop A
+ 09E1 5300              mov [__r2],A
+ 09E3 18                pop A
+ 09E4 5300              mov [__r1],A
+ 09E6 18                pop A
+ 09E7 5300              mov [__r0],A
+ 09E9 38FC              add SP,-4
+ 09EB 5100              mov A,[__r4]
+ 09ED 08                push A
+ 09EE 5100              mov A,[__r5]
+ 09F0 08                push A
+ 09F1 5100              mov A,[__r6]
+ 09F3 08                push A
+ 09F4 5100              mov A,[__r7]
+ 09F6 08                push A
+ 09F7 5100              mov A,[__r0]
  09F9 08                push A
- 09FA 08                push A
- 09FB 7C0000            xcall __fpmul
- 09FE 18                pop A
- 09FF 5300              mov [__r3],A
- 0A01 18                pop A
- 0A02 5300              mov [__r2],A
- 0A04 18                pop A
- 0A05 5300              mov [__r1],A
- 0A07 18                pop A
- 0A08 5300              mov [__r0],A
- 0A0A 38FC              add SP,-4
- 0A0C 5100              mov A,[__r4]
- 0A0E 08                push A
- 0A0F 5100              mov A,[__r5]
- 0A11 08                push A
- 0A12 5100              mov A,[__r6]
- 0A14 08                push A
- 0A15 5100              mov A,[__r7]
- 0A17 08                push A
- 0A18 5100              mov A,[__r0]
- 0A1A 08                push A
- 0A1B 5100              mov A,[__r1]
- 0A1D 08                push A
- 0A1E 5100              mov A,[__r2]
- 0A20 08                push A
- 0A21 5100              mov A,[__r3]
- 0A23 08                push A
- 0A24 7C0000            xcall __fpadd
- 0A27 18                pop A
- 0A28 5300              mov [__r3],A
- 0A2A 18                pop A
- 0A2B 5300              mov [__r2],A
+ 09FA 5100              mov A,[__r1]
+ 09FC 08                push A
+ 09FD 5100              mov A,[__r2]
+ 09FF 08                push A
+ 0A00 5100              mov A,[__r3]
+ 0A02 08                push A
+ 0A03 7C0000            xcall __fpadd
+ 0A06 18                pop A
+ 0A07 5300              mov [__r3],A
+ 0A09 18                pop A
+ 0A0A 5300              mov [__r2],A
+ 0A0C 18                pop A
+ 0A0D 5300              mov [__r1],A
+ 0A0F 18                pop A
+ 0A10 5300              mov [__r0],A
+ 0A12 38FC              add SP,-4
+ 0A14 5205              mov A,[X+5]
+ 0A16 08                push A
+ 0A17 5206              mov A,[X+6]
+ 0A19 08                push A
+ 0A1A 5207              mov A,[X+7]
+ 0A1C 08                push A
+ 0A1D 5208              mov A,[X+8]
+ 0A1F 08                push A
+ 0A20 5044              mov A,68
+ 0A22 08                push A
+ 0A23 5016              mov A,22
+ 0A25 08                push A
+ 0A26 5000              mov A,0
+ 0A28 08                push A
+ 0A29 08                push A
+ 0A2A 7C0000            xcall __fpmul
  0A2D 18                pop A
- 0A2E 5300              mov [__r1],A
+ 0A2E 5300              mov [__r7],A
  0A30 18                pop A
- 0A31 5300              mov [__r0],A
- 0A33 38FC              add SP,-4
- 0A35 5205              mov A,[X+5]
- 0A37 08                push A
- 0A38 5206              mov A,[X+6]
- 0A3A 08                push A
- 0A3B 5207              mov A,[X+7]
+ 0A31 5300              mov [__r6],A
+ 0A33 18                pop A
+ 0A34 5300              mov [__r5],A
+ 0A36 18                pop A
+ 0A37 5300              mov [__r4],A
+ 0A39 38FC              add SP,-4
+ 0A3B 5100              mov A,[__r0]
  0A3D 08                push A
- 0A3E 5208              mov A,[X+8]
+ 0A3E 5100              mov A,[__r1]
  0A40 08                push A
- 0A41 5044              mov A,68
+ 0A41 5100              mov A,[__r2]
  0A43 08                push A
- 0A44 5016              mov A,22
+ 0A44 5100              mov A,[__r3]
  0A46 08                push A
- 0A47 5000              mov A,0
+ 0A47 5100              mov A,[__r4]
  0A49 08                push A
- 0A4A 08                push A
- 0A4B 7C0000            xcall __fpmul
- 0A4E 18                pop A
- 0A4F 5300              mov [__r7],A
- 0A51 18                pop A
- 0A52 5300              mov [__r6],A
- 0A54 18                pop A
- 0A55 5300              mov [__r5],A
- 0A57 18                pop A
- 0A58 5300              mov [__r4],A
- 0A5A 38FC              add SP,-4
- 0A5C 5100              mov A,[__r0]
- 0A5E 08                push A
- 0A5F 5100              mov A,[__r1]
- 0A61 08                push A
- 0A62 5100              mov A,[__r2]
- 0A64 08                push A
- 0A65 5100              mov A,[__r3]
- 0A67 08                push A
- 0A68 5100              mov A,[__r4]
- 0A6A 08                push A
- 0A6B 5100              mov A,[__r5]
- 0A6D 08                push A
- 0A6E 5100              mov A,[__r6]
- 0A70 08                push A
- 0A71 5100              mov A,[__r7]
- 0A73 08                push A
- 0A74 7C0000            xcall __fpmul
- 0A77 18                pop A
- 0A78 5300              mov [__r3],A
- 0A7A 18                pop A
- 0A7B 5300              mov [__r2],A
- 0A7D 18                pop A
- 0A7E 5300              mov [__r1],A
- 0A80 18                pop A
- 0A81 38FC              add SP,-4
- 0A83 08                push A
- 0A84 5100              mov A,[__r1]
- 0A86 08                push A
- 0A87 5100              mov A,[__r2]
- 0A89 08                push A
- 0A8A 5100              mov A,[__r3]
- 0A8C 08                push A
- 0A8D 7C0000            xcall _sinf
- 0A90 38FC              add SP,-4
- 0A92 62D000            mov REG[0xd0],>__r0
- 0A95 5100              mov A,[__r0]
- 0A97 5490              mov [X-112],A
- 0A99 5100              mov A,[__r1]
- 0A9B 5491              mov [X-111],A
- 0A9D 5100              mov A,[__r2]
- 0A9F 5492              mov [X-110],A
- 0AA1 5100              mov A,[__r3]
- 0AA3 5493              mov [X-109],A
- 0AA5 5200              mov A,[X+0]
- 0AA7 5300              mov [__r5],A
- 0AA9 550000            mov [__r4],0
- 0AAC 5202              mov A,[X+2]
- 0AAE 1304              sub A,[X+4]
- 0AB0 5300              mov [__r7],A
- 0AB2 5201              mov A,[X+1]
- 0AB4 1B03              sbb A,[X+3]
- 0AB6 5300              mov [__r6],A
- 0AB8 5100              mov A,[__r7]
- 0ABA 0200              add A,[__r5]
- 0ABC 5300              mov [__r5],A
- 0ABE 5100              mov A,[__r6]
- 0AC0 0A00              adc A,[__r4]
- 0AC2 5300              mov [__r4],A
- 0AC4 5100              mov A,[__r5]
- 0AC6 2101              and A,1
- 0AC8 5300              mov [__r7],A
- 0ACA 5100              mov A,[__r4]
- 0ACC 2100              and A,0
- 0ACE 5300              mov [__r6],A
- 0AD0 5100              mov A,[__r7]
- 0AD2 5300              mov [__r11],A
- 0AD4 5100              mov A,[__r6]
- 0AD6 5300              mov [__r10],A
- 0AD8 470080            tst [__r10],-128
- 0ADB A009              jz X30
- 0ADD 5500FF            mov [__r9],-1
- 0AE0 5500FF            mov [__r8],-1
- 0AE3 800A              jmp X31
- 0AE5           X30:
- 0AE5 62D000            mov REG[0xd0],>__r0
- 0AE8 550000            mov [__r9],0
- 0AEB 550000            mov [__r8],0
- 0AEE           X31:
- 0AEE 62D000            mov REG[0xd0],>__r0
- 0AF1 5100              mov A,[__r8]
- 0AF3 08                push A
- 0AF4 5100              mov A,[__r9]
- 0AF6 08                push A
- 0AF7 5100              mov A,[__r10]
- 0AF9 08                push A
- 0AFA 5100              mov A,[__r11]
- 0AFC 08                push A
- 0AFD 7C0000            xcall __long2fp
- 0B00 18                pop A
- 0B01 5300              mov [__r11],A
- 0B03 18                pop A
- 0B04 5300              mov [__r10],A
- 0B06 18                pop A
- 0B07 5300              mov [__r9],A
- 0B09 18                pop A
- 0B0A 5300              mov [__r8],A
- 0B0C 70FB              and F,-5
- 0B0E 6E00              rrc [__r4]
- 0B10 6E00              rrc [__r5]
- 0B12 5100              mov A,[__r5]
- 0B14 5300              mov [__r7],A
- 0B16 5100              mov A,[__r4]
- 0B18 5300              mov [__r6],A
- 0B1A 470080            tst [__r6],-128
- 0B1D A009              jz X32
- 0B1F 5500FF            mov [__r5],-1
- 0B22 5500FF            mov [__r4],-1
- 0B25 800A              jmp X33
- 0B27           X32:
- 0B27 62D000            mov REG[0xd0],>__r0
- 0B2A 550000            mov [__r5],0
- 0B2D 550000            mov [__r4],0
- 0B30           X33:
- 0B30 62D000            mov REG[0xd0],>__r0
- 0B33 5100              mov A,[__r4]
- 0B35 08                push A
- 0B36 5100              mov A,[__r5]
- 0B38 08                push A
- 0B39 5100              mov A,[__r6]
+ 0A4A 5100              mov A,[__r5]
+ 0A4C 08                push A
+ 0A4D 5100              mov A,[__r6]
+ 0A4F 08                push A
+ 0A50 5100              mov A,[__r7]
+ 0A52 08                push A
+ 0A53 7C0000            xcall __fpmul
+ 0A56 18                pop A
+ 0A57 5300              mov [__r3],A
+ 0A59 18                pop A
+ 0A5A 5300              mov [__r2],A
+ 0A5C 18                pop A
+ 0A5D 5300              mov [__r1],A
+ 0A5F 18                pop A
+ 0A60 38FC              add SP,-4
+ 0A62 08                push A
+ 0A63 5100              mov A,[__r1]
+ 0A65 08                push A
+ 0A66 5100              mov A,[__r2]
+ 0A68 08                push A
+ 0A69 5100              mov A,[__r3]
+ 0A6B 08                push A
+ 0A6C 7C0000            xcall _sinf
+ 0A6F 38FC              add SP,-4
+ 0A71 62D000            mov REG[0xd0],>__r0
+ 0A74 5100              mov A,[__r0]
+ 0A76 5490              mov [X-112],A
+ 0A78 5100              mov A,[__r1]
+ 0A7A 5491              mov [X-111],A
+ 0A7C 5100              mov A,[__r2]
+ 0A7E 5492              mov [X-110],A
+ 0A80 5100              mov A,[__r3]
+ 0A82 5493              mov [X-109],A
+ 0A84 5200              mov A,[X+0]
+ 0A86 5300              mov [__r5],A
+ 0A88 550000            mov [__r4],0
+ 0A8B 5202              mov A,[X+2]
+ 0A8D 1304              sub A,[X+4]
+ 0A8F 5300              mov [__r7],A
+ 0A91 5201              mov A,[X+1]
+ 0A93 1B03              sbb A,[X+3]
+ 0A95 5300              mov [__r6],A
+ 0A97 5100              mov A,[__r7]
+ 0A99 0200              add A,[__r5]
+ 0A9B 5300              mov [__r5],A
+ 0A9D 5100              mov A,[__r6]
+ 0A9F 0A00              adc A,[__r4]
+ 0AA1 5300              mov [__r4],A
+ 0AA3 5100              mov A,[__r5]
+ 0AA5 2101              and A,1
+ 0AA7 5300              mov [__r7],A
+ 0AA9 5100              mov A,[__r4]
+ 0AAB 2100              and A,0
+ 0AAD 5300              mov [__r6],A
+ 0AAF 5100              mov A,[__r7]
+ 0AB1 5300              mov [__r11],A
+ 0AB3 5100              mov A,[__r6]
+ 0AB5 5300              mov [__r10],A
+ 0AB7 470080            tst [__r10],-128
+ 0ABA A009              jz X30
+ 0ABC 5500FF            mov [__r9],-1
+ 0ABF 5500FF            mov [__r8],-1
+ 0AC2 800A              jmp X31
+ 0AC4           X30:
+ 0AC4 62D000            mov REG[0xd0],>__r0
+ 0AC7 550000            mov [__r9],0
+ 0ACA 550000            mov [__r8],0
+ 0ACD           X31:
+ 0ACD 62D000            mov REG[0xd0],>__r0
+ 0AD0 5100              mov A,[__r8]
+ 0AD2 08                push A
+ 0AD3 5100              mov A,[__r9]
+ 0AD5 08                push A
+ 0AD6 5100              mov A,[__r10]
+ 0AD8 08                push A
+ 0AD9 5100              mov A,[__r11]
+ 0ADB 08                push A
+ 0ADC 7C0000            xcall __long2fp
+ 0ADF 18                pop A
+ 0AE0 5300              mov [__r11],A
+ 0AE2 18                pop A
+ 0AE3 5300              mov [__r10],A
+ 0AE5 18                pop A
+ 0AE6 5300              mov [__r9],A
+ 0AE8 18                pop A
+ 0AE9 5300              mov [__r8],A
+ 0AEB 70FB              and F,-5
+ 0AED 6E00              rrc [__r4]
+ 0AEF 6E00              rrc [__r5]
+ 0AF1 5100              mov A,[__r5]
+ 0AF3 5300              mov [__r7],A
+ 0AF5 5100              mov A,[__r4]
+ 0AF7 5300              mov [__r6],A
+ 0AF9 470080            tst [__r6],-128
+ 0AFC A009              jz X32
+ 0AFE 5500FF            mov [__r5],-1
+ 0B01 5500FF            mov [__r4],-1
+ 0B04 800A              jmp X33
+ 0B06           X32:
+ 0B06 62D000            mov REG[0xd0],>__r0
+ 0B09 550000            mov [__r5],0
+ 0B0C 550000            mov [__r4],0
+ 0B0F           X33:
+ 0B0F 62D000            mov REG[0xd0],>__r0
+ 0B12 5100              mov A,[__r4]
+ 0B14 08                push A
+ 0B15 5100              mov A,[__r5]
+ 0B17 08                push A
+ 0B18 5100              mov A,[__r6]
+ 0B1A 08                push A
+ 0B1B 5100              mov A,[__r7]
+ 0B1D 08                push A
+ 0B1E 7C0000            xcall __long2fp
+ 0B21 18                pop A
+ 0B22 5300              mov [__r7],A
+ 0B24 18                pop A
+ 0B25 5300              mov [__r6],A
+ 0B27 18                pop A
+ 0B28 5300              mov [__r5],A
+ 0B2A 18                pop A
+ 0B2B 08                push A
+ 0B2C 5100              mov A,[__r5]
+ 0B2E 08                push A
+ 0B2F 5100              mov A,[__r6]
+ 0B31 08                push A
+ 0B32 5100              mov A,[__r7]
+ 0B34 08                push A
+ 0B35 5040              mov A,64
+ 0B37 08                push A
+ 0B38 5000              mov A,0
+ 0B3A 08                push A
  0B3B 08                push A
- 0B3C 5100              mov A,[__r7]
- 0B3E 08                push A
- 0B3F 7C0000            xcall __long2fp
- 0B42 18                pop A
- 0B43 5300              mov [__r7],A
- 0B45 18                pop A
- 0B46 5300              mov [__r6],A
- 0B48 18                pop A
- 0B49 5300              mov [__r5],A
- 0B4B 18                pop A
- 0B4C 08                push A
- 0B4D 5100              mov A,[__r5]
- 0B4F 08                push A
- 0B50 5100              mov A,[__r6]
- 0B52 08                push A
- 0B53 5100              mov A,[__r7]
- 0B55 08                push A
- 0B56 5040              mov A,64
- 0B58 08                push A
- 0B59 5000              mov A,0
- 0B5B 08                push A
+ 0B3C 08                push A
+ 0B3D 7C0000            xcall __fpmul
+ 0B40 18                pop A
+ 0B41 5300              mov [__r7],A
+ 0B43 18                pop A
+ 0B44 5300              mov [__r6],A
+ 0B46 18                pop A
+ 0B47 5300              mov [__r5],A
+ 0B49 18                pop A
+ 0B4A 5300              mov [__r4],A
+ 0B4C 38FC              add SP,-4
+ 0B4E 5100              mov A,[__r8]
+ 0B50 08                push A
+ 0B51 5100              mov A,[__r9]
+ 0B53 08                push A
+ 0B54 5100              mov A,[__r10]
+ 0B56 08                push A
+ 0B57 5100              mov A,[__r11]
+ 0B59 08                push A
+ 0B5A 5100              mov A,[__r4]
  0B5C 08                push A
- 0B5D 08                push A
- 0B5E 7C0000            xcall __fpmul
- 0B61 18                pop A
- 0B62 5300              mov [__r7],A
- 0B64 18                pop A
- 0B65 5300              mov [__r6],A
- 0B67 18                pop A
- 0B68 5300              mov [__r5],A
- 0B6A 18                pop A
- 0B6B 5300              mov [__r4],A
- 0B6D 38FC              add SP,-4
- 0B6F 5100              mov A,[__r8]
- 0B71 08                push A
- 0B72 5100              mov A,[__r9]
- 0B74 08                push A
- 0B75 5100              mov A,[__r10]
- 0B77 08                push A
- 0B78 5100              mov A,[__r11]
- 0B7A 08                push A
- 0B7B 5100              mov A,[__r4]
- 0B7D 08                push A
- 0B7E 5100              mov A,[__r5]
- 0B80 08                push A
- 0B81 5100              mov A,[__r6]
- 0B83 08                push A
- 0B84 5100              mov A,[__r7]
- 0B86 08                push A
- 0B87 7C0000            xcall __fpadd
- 0B8A 18                pop A
- 0B8B 5300              mov [__r7],A
- 0B8D 18                pop A
- 0B8E 5300              mov [__r6],A
+ 0B5D 5100              mov A,[__r5]
+ 0B5F 08                push A
+ 0B60 5100              mov A,[__r6]
+ 0B62 08                push A
+ 0B63 5100              mov A,[__r7]
+ 0B65 08                push A
+ 0B66 7C0000            xcall __fpadd
+ 0B69 18                pop A
+ 0B6A 5300              mov [__r7],A
+ 0B6C 18                pop A
+ 0B6D 5300              mov [__r6],A
+ 0B6F 18                pop A
+ 0B70 5300              mov [__r5],A
+ 0B72 18                pop A
+ 0B73 5300              mov [__r4],A
+ 0B75 38FC              add SP,-4
+ 0B77 5205              mov A,[X+5]
+ 0B79 08                push A
+ 0B7A 5206              mov A,[X+6]
+ 0B7C 08                push A
+ 0B7D 5207              mov A,[X+7]
+ 0B7F 08                push A
+ 0B80 5208              mov A,[X+8]
+ 0B82 08                push A
+ 0B83 5043              mov A,67
+ 0B85 08                push A
+ 0B86 5048              mov A,72
+ 0B88 08                push A
+ 0B89 5000              mov A,0
+ 0B8B 08                push A
+ 0B8C 08                push A
+ 0B8D 7C0000            xcall __fpmul
  0B90 18                pop A
- 0B91 5300              mov [__r5],A
+ 0B91 5300              mov [__r11],A
  0B93 18                pop A
- 0B94 5300              mov [__r4],A
- 0B96 38FC              add SP,-4
- 0B98 5205              mov A,[X+5]
- 0B9A 08                push A
- 0B9B 5206              mov A,[X+6]
- 0B9D 08                push A
- 0B9E 5207              mov A,[X+7]
+ 0B94 5300              mov [__r10],A
+ 0B96 18                pop A
+ 0B97 5300              mov [__r9],A
+ 0B99 18                pop A
+ 0B9A 5300              mov [__r8],A
+ 0B9C 38FC              add SP,-4
+ 0B9E 5100              mov A,[__r4]
  0BA0 08                push A
- 0BA1 5208              mov A,[X+8]
+ 0BA1 5100              mov A,[__r5]
  0BA3 08                push A
- 0BA4 5043              mov A,67
+ 0BA4 5100              mov A,[__r6]
  0BA6 08                push A
- 0BA7 5048              mov A,72
+ 0BA7 5100              mov A,[__r7]
  0BA9 08                push A
- 0BAA 5000              mov A,0
+ 0BAA 5100              mov A,[__r8]
  0BAC 08                push A
- 0BAD 08                push A
- 0BAE 7C0000            xcall __fpmul
- 0BB1 18                pop A
- 0BB2 5300              mov [__r11],A
- 0BB4 18                pop A
- 0BB5 5300              mov [__r10],A
- 0BB7 18                pop A
- 0BB8 5300              mov [__r9],A
- 0BBA 18                pop A
- 0BBB 5300              mov [__r8],A
- 0BBD 38FC              add SP,-4
- 0BBF 5100              mov A,[__r4]
- 0BC1 08                push A
- 0BC2 5100              mov A,[__r5]
- 0BC4 08                push A
- 0BC5 5100              mov A,[__r6]
- 0BC7 08                push A
- 0BC8 5100              mov A,[__r7]
- 0BCA 08                push A
- 0BCB 5100              mov A,[__r8]
- 0BCD 08                push A
- 0BCE 5100              mov A,[__r9]
- 0BD0 08                push A
- 0BD1 5100              mov A,[__r10]
- 0BD3 08                push A
- 0BD4 5100              mov A,[__r11]
- 0BD6 08                push A
- 0BD7 7C0000            xcall __fpmul
- 0BDA 18                pop A
- 0BDB 5300              mov [__r7],A
- 0BDD 18                pop A
- 0BDE 5300              mov [__r6],A
- 0BE0 18                pop A
- 0BE1 5300              mov [__r5],A
- 0BE3 18                pop A
- 0BE4 38FC              add SP,-4
- 0BE6 08                push A
- 0BE7 5100              mov A,[__r5]
+ 0BAD 5100              mov A,[__r9]
+ 0BAF 08                push A
+ 0BB0 5100              mov A,[__r10]
+ 0BB2 08                push A
+ 0BB3 5100              mov A,[__r11]
+ 0BB5 08                push A
+ 0BB6 7C0000            xcall __fpmul
+ 0BB9 18                pop A
+ 0BBA 5300              mov [__r7],A
+ 0BBC 18                pop A
+ 0BBD 5300              mov [__r6],A
+ 0BBF 18                pop A
+ 0BC0 5300              mov [__r5],A
+ 0BC2 18                pop A
+ 0BC3 38FC              add SP,-4
+ 0BC5 08                push A
+ 0BC6 5100              mov A,[__r5]
+ 0BC8 08                push A
+ 0BC9 5100              mov A,[__r6]
+ 0BCB 08                push A
+ 0BCC 5100              mov A,[__r7]
+ 0BCE 08                push A
+ 0BCF 7C0000            xcall _sinf
+ 0BD2 38FC              add SP,-4
+ 0BD4 62D000            mov REG[0xd0],>__r0
+ 0BD7 5100              mov A,[__r0]
+ 0BD9 08                push A
+ 0BDA 5100              mov A,[__r1]
+ 0BDC 08                push A
+ 0BDD 5100              mov A,[__r2]
+ 0BDF 08                push A
+ 0BE0 5100              mov A,[__r3]
+ 0BE2 08                push A
+ 0BE3 503F              mov A,63
+ 0BE5 08                push A
+ 0BE6 5000              mov A,0
+ 0BE8 08                push A
  0BE9 08                push A
- 0BEA 5100              mov A,[__r6]
- 0BEC 08                push A
- 0BED 5100              mov A,[__r7]
- 0BEF 08                push A
- 0BF0 7C0000            xcall _sinf
- 0BF3 38FC              add SP,-4
- 0BF5 62D000            mov REG[0xd0],>__r0
- 0BF8 5100              mov A,[__r0]
+ 0BEA 08                push A
+ 0BEB 7C0000            xcall __fpmul
+ 0BEE 18                pop A
+ 0BEF 5300              mov [__r3],A
+ 0BF1 18                pop A
+ 0BF2 5300              mov [__r2],A
+ 0BF4 18                pop A
+ 0BF5 5300              mov [__r1],A
+ 0BF7 18                pop A
+ 0BF8 38FC              add SP,-4
  0BFA 08                push A
  0BFB 5100              mov A,[__r1]
  0BFD 08                push A
@@ -2298,689 +2294,689 @@
  0C00 08                push A
  0C01 5100              mov A,[__r3]
  0C03 08                push A
- 0C04 503F              mov A,63
+ 0C04 5042              mov A,66
  0C06 08                push A
- 0C07 5000              mov A,0
+ 0C07 504C              mov A,76
  0C09 08                push A
- 0C0A 08                push A
- 0C0B 08                push A
- 0C0C 7C0000            xcall __fpmul
- 0C0F 18                pop A
- 0C10 5300              mov [__r3],A
- 0C12 18                pop A
- 0C13 5300              mov [__r2],A
- 0C15 18                pop A
- 0C16 5300              mov [__r1],A
- 0C18 18                pop A
- 0C19 38FC              add SP,-4
- 0C1B 08                push A
- 0C1C 5100              mov A,[__r1]
- 0C1E 08                push A
- 0C1F 5100              mov A,[__r2]
- 0C21 08                push A
- 0C22 5100              mov A,[__r3]
- 0C24 08                push A
- 0C25 5042              mov A,66
- 0C27 08                push A
- 0C28 504C              mov A,76
- 0C2A 08                push A
- 0C2B 50CC              mov A,-52
- 0C2D 08                push A
- 0C2E 50CD              mov A,-51
- 0C30 08                push A
- 0C31 7C0000            xcall __fpmul
- 0C34 18                pop A
- 0C35 5300              mov [__r3],A
- 0C37 18                pop A
- 0C38 5300              mov [__r2],A
- 0C3A 18                pop A
- 0C3B 5300              mov [__r1],A
- 0C3D 18                pop A
- 0C3E 5300              mov [__r0],A
- 0C40 38FC              add SP,-4
- 0C42 5290              mov A,[X-112]
- 0C44 08                push A
- 0C45 5291              mov A,[X-111]
- 0C47 08                push A
- 0C48 5292              mov A,[X-110]
- 0C4A 08                push A
- 0C4B 5293              mov A,[X-109]
- 0C4D 08                push A
- 0C4E 503F              mov A,63
- 0C50 08                push A
- 0C51 5000              mov A,0
- 0C53 08                push A
+ 0C0A 50CC              mov A,-52
+ 0C0C 08                push A
+ 0C0D 50CD              mov A,-51
+ 0C0F 08                push A
+ 0C10 7C0000            xcall __fpmul
+ 0C13 18                pop A
+ 0C14 5300              mov [__r3],A
+ 0C16 18                pop A
+ 0C17 5300              mov [__r2],A
+ 0C19 18                pop A
+ 0C1A 5300              mov [__r1],A
+ 0C1C 18                pop A
+ 0C1D 5300              mov [__r0],A
+ 0C1F 38FC              add SP,-4
+ 0C21 5290              mov A,[X-112]
+ 0C23 08                push A
+ 0C24 5291              mov A,[X-111]
+ 0C26 08                push A
+ 0C27 5292              mov A,[X-110]
+ 0C29 08                push A
+ 0C2A 5293              mov A,[X-109]
+ 0C2C 08                push A
+ 0C2D 503F              mov A,63
+ 0C2F 08                push A
+ 0C30 5000              mov A,0
+ 0C32 08                push A
+ 0C33 08                push A
+ 0C34 08                push A
+ 0C35 7C0000            xcall __fpmul
+ 0C38 18                pop A
+ 0C39 5300              mov [__r7],A
+ 0C3B 18                pop A
+ 0C3C 5300              mov [__r6],A
+ 0C3E 18                pop A
+ 0C3F 5300              mov [__r5],A
+ 0C41 18                pop A
+ 0C42 5300              mov [__r4],A
+ 0C44 38FC              add SP,-4
+ 0C46 503E              mov A,62
+ 0C48 08                push A
+ 0C49 504C              mov A,76
+ 0C4B 08                push A
+ 0C4C 50CC              mov A,-52
+ 0C4E 08                push A
+ 0C4F 50CD              mov A,-51
+ 0C51 08                push A
+ 0C52 5100              mov A,[__r4]
  0C54 08                push A
- 0C55 08                push A
- 0C56 7C0000            xcall __fpmul
- 0C59 18                pop A
- 0C5A 5300              mov [__r7],A
- 0C5C 18                pop A
- 0C5D 5300              mov [__r6],A
- 0C5F 18                pop A
- 0C60 5300              mov [__r5],A
- 0C62 18                pop A
- 0C63 5300              mov [__r4],A
- 0C65 38FC              add SP,-4
- 0C67 503E              mov A,62
- 0C69 08                push A
- 0C6A 504C              mov A,76
- 0C6C 08                push A
- 0C6D 50CC              mov A,-52
- 0C6F 08                push A
- 0C70 50CD              mov A,-51
- 0C72 08                push A
- 0C73 5100              mov A,[__r4]
- 0C75 08                push A
- 0C76 5100              mov A,[__r5]
- 0C78 08                push A
- 0C79 5100              mov A,[__r6]
- 0C7B 08                push A
- 0C7C 5100              mov A,[__r7]
- 0C7E 08                push A
- 0C7F 7C0000            xcall __fpadd
- 0C82 18                pop A
- 0C83 5300              mov [__r7],A
- 0C85 18                pop A
- 0C86 5300              mov [__r6],A
- 0C88 18                pop A
- 0C89 5300              mov [__r5],A
- 0C8B 18                pop A
- 0C8C 5300              mov [__r4],A
- 0C8E 38FC              add SP,-4
- 0C90 5100              mov A,[__r0]
- 0C92 08                push A
- 0C93 5100              mov A,[__r1]
- 0C95 08                push A
- 0C96 5100              mov A,[__r2]
- 0C98 08                push A
- 0C99 5100              mov A,[__r3]
- 0C9B 08                push A
- 0C9C 5100              mov A,[__r4]
+ 0C55 5100              mov A,[__r5]
+ 0C57 08                push A
+ 0C58 5100              mov A,[__r6]
+ 0C5A 08                push A
+ 0C5B 5100              mov A,[__r7]
+ 0C5D 08                push A
+ 0C5E 7C0000            xcall __fpadd
+ 0C61 18                pop A
+ 0C62 5300              mov [__r7],A
+ 0C64 18                pop A
+ 0C65 5300              mov [__r6],A
+ 0C67 18                pop A
+ 0C68 5300              mov [__r5],A
+ 0C6A 18                pop A
+ 0C6B 5300              mov [__r4],A
+ 0C6D 38FC              add SP,-4
+ 0C6F 5100              mov A,[__r0]
+ 0C71 08                push A
+ 0C72 5100              mov A,[__r1]
+ 0C74 08                push A
+ 0C75 5100              mov A,[__r2]
+ 0C77 08                push A
+ 0C78 5100              mov A,[__r3]
+ 0C7A 08                push A
+ 0C7B 5100              mov A,[__r4]
+ 0C7D 08                push A
+ 0C7E 5100              mov A,[__r5]
+ 0C80 08                push A
+ 0C81 5100              mov A,[__r6]
+ 0C83 08                push A
+ 0C84 5100              mov A,[__r7]
+ 0C86 08                push A
+ 0C87 7C0000            xcall __fpadd
+ 0C8A 18                pop A
+ 0C8B 5300              mov [__r3],A
+ 0C8D 18                pop A
+ 0C8E 5300              mov [__r2],A
+ 0C90 18                pop A
+ 0C91 5300              mov [__r1],A
+ 0C93 18                pop A
+ 0C94 5300              mov [__r0],A
+ 0C96 38FC              add SP,-4
+ 0C98 5047              mov A,71
+ 0C9A 08                push A
+ 0C9B 5000              mov A,0
+ 0C9D 08                push A
  0C9E 08                push A
- 0C9F 5100              mov A,[__r5]
- 0CA1 08                push A
- 0CA2 5100              mov A,[__r6]
- 0CA4 08                push A
- 0CA5 5100              mov A,[__r7]
- 0CA7 08                push A
- 0CA8 7C0000            xcall __fpadd
- 0CAB 18                pop A
- 0CAC 5300              mov [__r3],A
- 0CAE 18                pop A
- 0CAF 5300              mov [__r2],A
- 0CB1 18                pop A
- 0CB2 5300              mov [__r1],A
- 0CB4 18                pop A
- 0CB5 5300              mov [__r0],A
- 0CB7 38FC              add SP,-4
- 0CB9 5047              mov A,71
+ 0C9F 08                push A
+ 0CA0 5100              mov A,[__r0]
+ 0CA2 08                push A
+ 0CA3 5100              mov A,[__r1]
+ 0CA5 08                push A
+ 0CA6 5100              mov A,[__r2]
+ 0CA8 08                push A
+ 0CA9 5100              mov A,[__r3]
+ 0CAB 08                push A
+ 0CAC 7C0000            xcall __fpcmp
+ 0CAF 38F8              add SP,-8
+ 0CB1 39FF              cmp A,-1
+ 0CB3 A047              jz L98
+ 0CB5 5047              mov A,71
+ 0CB7 08                push A
+ 0CB8 5000              mov A,0
+ 0CBA 08                push A
  0CBB 08                push A
- 0CBC 5000              mov A,0
- 0CBE 08                push A
+ 0CBC 08                push A
+ 0CBD 5100              mov A,[__r0]
  0CBF 08                push A
- 0CC0 08                push A
- 0CC1 5100              mov A,[__r0]
- 0CC3 08                push A
- 0CC4 5100              mov A,[__r1]
- 0CC6 08                push A
- 0CC7 5100              mov A,[__r2]
- 0CC9 08                push A
- 0CCA 5100              mov A,[__r3]
- 0CCC 08                push A
- 0CCD 7C0000            xcall __fpcmp
- 0CD0 38F8              add SP,-8
- 0CD2 39FF              cmp A,-1
- 0CD4 A047              jz L100
- 0CD6 5047              mov A,71
+ 0CC0 5100              mov A,[__r1]
+ 0CC2 08                push A
+ 0CC3 5100              mov A,[__r2]
+ 0CC5 08                push A
+ 0CC6 5100              mov A,[__r3]
+ 0CC8 08                push A
+ 0CC9 7C0000            xcall __fpsub
+ 0CCC 18                pop A
+ 0CCD 5300              mov [__r7],A
+ 0CCF 18                pop A
+ 0CD0 5300              mov [__r6],A
+ 0CD2 18                pop A
+ 0CD3 5300              mov [__r5],A
+ 0CD5 18                pop A
+ 0CD6 38FC              add SP,-4
  0CD8 08                push A
- 0CD9 5000              mov A,0
+ 0CD9 5100              mov A,[__r5]
  0CDB 08                push A
- 0CDC 08                push A
- 0CDD 08                push A
- 0CDE 5100              mov A,[__r0]
- 0CE0 08                push A
- 0CE1 5100              mov A,[__r1]
- 0CE3 08                push A
- 0CE4 5100              mov A,[__r2]
- 0CE6 08                push A
- 0CE7 5100              mov A,[__r3]
- 0CE9 08                push A
- 0CEA 7C0000            xcall __fpsub
- 0CED 18                pop A
- 0CEE 5300              mov [__r7],A
- 0CF0 18                pop A
- 0CF1 5300              mov [__r6],A
- 0CF3 18                pop A
- 0CF4 5300              mov [__r5],A
- 0CF6 18                pop A
- 0CF7 38FC              add SP,-4
- 0CF9 08                push A
- 0CFA 5100              mov A,[__r5]
- 0CFC 08                push A
- 0CFD 5100              mov A,[__r6]
- 0CFF 08                push A
- 0D00 5100              mov A,[__r7]
- 0D02 08                push A
- 0D03 7C0000            xcall __fp2long
- 0D06 18                pop A
- 0D07 5300              mov [__r5],A
- 0D09 18                pop A
- 0D0A 5300              mov [__r4],A
- 0D0C 38FE              add SP,-2
- 0D0E 5100              mov A,[__r5]
- 0D10 0100              add A,0
- 0D12 548F              mov [X-113],A
- 0D14 5100              mov A,[__r4]
- 0D16 0980              adc A,-128
- 0D18 548E              mov [X-114],A
- 0D1A 8023              xjmp L101
- 0D1C           L100:
- 0D1C 62D000            mov REG[0xd0],>__r0
- 0D1F 5100              mov A,[__r0]
- 0D21 08                push A
- 0D22 5100              mov A,[__r1]
- 0D24 08                push A
- 0D25 5100              mov A,[__r2]
- 0D27 08                push A
- 0D28 5100              mov A,[__r3]
- 0D2A 08                push A
- 0D2B 7C0000            xcall __fp2long
- 0D2E 18                pop A
- 0D2F 5300              mov [__r1],A
- 0D31 18                pop A
+ 0CDC 5100              mov A,[__r6]
+ 0CDE 08                push A
+ 0CDF 5100              mov A,[__r7]
+ 0CE1 08                push A
+ 0CE2 7C0000            xcall __fp2long
+ 0CE5 18                pop A
+ 0CE6 5300              mov [__r5],A
+ 0CE8 18                pop A
+ 0CE9 5300              mov [__r4],A
+ 0CEB 38FE              add SP,-2
+ 0CED 5100              mov A,[__r5]
+ 0CEF 0100              add A,0
+ 0CF1 548F              mov [X-113],A
+ 0CF3 5100              mov A,[__r4]
+ 0CF5 0980              adc A,-128
+ 0CF7 548E              mov [X-114],A
+ 0CF9 8023              xjmp L99
+ 0CFB           L98:
+ 0CFB 62D000            mov REG[0xd0],>__r0
+ 0CFE 5100              mov A,[__r0]
+ 0D00 08                push A
+ 0D01 5100              mov A,[__r1]
+ 0D03 08                push A
+ 0D04 5100              mov A,[__r2]
+ 0D06 08                push A
+ 0D07 5100              mov A,[__r3]
+ 0D09 08                push A
+ 0D0A 7C0000            xcall __fp2long
+ 0D0D 18                pop A
+ 0D0E 5300              mov [__r1],A
+ 0D10 18                pop A
+ 0D11 5300              mov [__r0],A
+ 0D13 38FE              add SP,-2
+ 0D15 5100              mov A,[__r1]
+ 0D17 548F              mov [X-113],A
+ 0D19 5100              mov A,[__r0]
+ 0D1B 548E              mov [X-114],A
+ 0D1D           L99:
+ 0D1D 62D000            mov REG[0xd0],>__r0
+ 0D20 550007            mov [__r0],7
+ 0D23 5A00              mov [__r1],X
+ 0D25 060009            add [__r1],9
+ 0D28 5200              mov A,[X+0]
+ 0D2A 0200              add A,[__r1]
+ 0D2C 5300              mov [__r1],A
+ 0D2E 5000              mov A,0
+ 0D30 0A00              adc A,[__r0]
  0D32 5300              mov [__r0],A
- 0D34 38FE              add SP,-2
- 0D36 5100              mov A,[__r1]
- 0D38 548F              mov [X-113],A
- 0D3A 5100              mov A,[__r0]
- 0D3C 548E              mov [X-114],A
- 0D3E           L101:
- 0D3E 62D000            mov REG[0xd0],>__r0
- 0D41 550007            mov [__r0],7
- 0D44 5A00              mov [__r1],X
- 0D46 060009            add [__r1],9
- 0D49 5200              mov A,[X+0]
- 0D4B 0200              add A,[__r1]
- 0D4D 5300              mov [__r1],A
- 0D4F 5000              mov A,0
- 0D51 0A00              adc A,[__r0]
- 0D53 5300              mov [__r0],A
- 0D55 528F              mov A,[X-113]
- 0D57 5300              mov [__r2],A
- 0D59 5100              mov A,[__r0]
- 0D5B 60D5              mov REG[0xd5],A
- 0D5D 5100              mov A,[__r2]
- 0D5F 3F00              mvi [__r1],A
- 0D61                   .dbline 296
- 0D61           ;                               }       
- 0D61           L96:
- 0D61                   .dbline 293
- 0D61 7700              inc [X+0]
- 0D63           L98:
- 0D63                   .dbline 293
- 0D63 3D0080            cmp [X+0],-128
- 0D66 CBD8              jc L95
- 0D68           X35:
- 0D68                   .dbline 297
- 0D68           ;                               SPIRAM_WriteArray(addr, temp, 128);
- 0D68 5080              mov A,-128
- 0D6A 08                push A
- 0D6B 62D000            mov REG[0xd0],>__r0
- 0D6E 5A00              mov [__r1],X
- 0D70 060009            add [__r1],9
- 0D73 5007              mov A,7
- 0D75 08                push A
- 0D76 5100              mov A,[__r1]
- 0D78 08                push A
- 0D79 5201              mov A,[X+1]
- 0D7B 08                push A
- 0D7C 5202              mov A,[X+2]
- 0D7E 08                push A
- 0D7F 7C0000            xcall _SPIRAM_WriteArray
- 0D82 38FB              add SP,-5
- 0D84                   .dbline 298
- 0D84           ;                       }
- 0D84           L92:
- 0D84                   .dbline 291
- 0D84 070280            add [X+2],-128
- 0D87 0F0100            adc [X+1],0
- 0D8A           L94:
- 0D8A                   .dbline 291
- 0D8A 5202              mov A,[X+2]
- 0D8C 138A              sub A,[X-118]
- 0D8E 5201              mov A,[X+1]
- 0D90 1B89              sbb A,[X-119]
- 0D92 CBA7              jc L91
- 0D94           X36:
- 0D94                   .dbline 299
- 0D94           ;                       break;
- 0D94 8718              xjmp L74
- 0D96           L102:
- 0D96                   .dbline 302
- 0D96           ;               
- 0D96           ;               case 2: 
- 0D96           ;                       for (addr = startAddr; addr < endAddr; addr += 128)
- 0D96 5204              mov A,[X+4]
- 0D98 5402              mov [X+2],A
- 0D9A 5203              mov A,[X+3]
- 0D9C 5401              mov [X+1],A
- 0D9E 8451              xjmp L106
- 0DA0           L103:
- 0DA0                   .dbline 303
- 0DA0           ;                       {
- 0DA0                   .dbline 304
- 0DA0           ;                               for(i = 0; i < 128; i++)
- 0DA0 560000            mov [X+0],0
- 0DA3 8425              xjmp L110
- 0DA5           L107:
- 0DA5                   .dbline 305
- 0DA5           ;                               {
- 0DA5                   .dbline 306
- 0DA5           ;                                       temp[i] = (char)(0.1 + 0.5*sin(1500*pi*((addr - startAddr) + i)) + 0.5*sin(700*pi*((addr - startAddr) + i))*(128/2.5)); 
- 0DA5 62D000            mov REG[0xd0],>__r0
- 0DA8 5200              mov A,[X+0]
- 0DAA 5300              mov [__r1],A
- 0DAC 550000            mov [__r0],0
- 0DAF 5202              mov A,[X+2]
- 0DB1 1304              sub A,[X+4]
- 0DB3 5300              mov [__r3],A
- 0DB5 5201              mov A,[X+1]
- 0DB7 1B03              sbb A,[X+3]
- 0DB9 5300              mov [__r2],A
- 0DBB 5100              mov A,[__r3]
- 0DBD 0200              add A,[__r1]
- 0DBF 5300              mov [__r1],A
- 0DC1 5100              mov A,[__r2]
- 0DC3 0A00              adc A,[__r0]
- 0DC5 5300              mov [__r0],A
- 0DC7 5100              mov A,[__r1]
- 0DC9 2101              and A,1
- 0DCB 5300              mov [__r3],A
- 0DCD 5100              mov A,[__r0]
- 0DCF 2100              and A,0
- 0DD1 5300              mov [__r2],A
- 0DD3 5100              mov A,[__r3]
- 0DD5 5300              mov [__r7],A
- 0DD7 5100              mov A,[__r2]
- 0DD9 5300              mov [__r6],A
- 0DDB 470080            tst [__r6],-128
- 0DDE A009              jz X37
- 0DE0 5500FF            mov [__r5],-1
- 0DE3 5500FF            mov [__r4],-1
- 0DE6 800A              jmp X38
- 0DE8           X37:
- 0DE8 62D000            mov REG[0xd0],>__r0
- 0DEB 550000            mov [__r5],0
- 0DEE 550000            mov [__r4],0
- 0DF1           X38:
- 0DF1 62D000            mov REG[0xd0],>__r0
- 0DF4 5100              mov A,[__r4]
- 0DF6 08                push A
- 0DF7 5100              mov A,[__r5]
- 0DF9 08                push A
- 0DFA 5100              mov A,[__r6]
- 0DFC 08                push A
- 0DFD 5100              mov A,[__r7]
- 0DFF 08                push A
- 0E00 7C0000            xcall __long2fp
- 0E03 18                pop A
- 0E04 5300              mov [__r7],A
- 0E06 18                pop A
- 0E07 5300              mov [__r6],A
- 0E09 18                pop A
- 0E0A 5300              mov [__r5],A
- 0E0C 18                pop A
- 0E0D 5300              mov [__r4],A
- 0E0F 70FB              and F,-5
- 0E11 6E00              rrc [__r0]
- 0E13 6E00              rrc [__r1]
- 0E15 5100              mov A,[__r1]
- 0E17 5300              mov [__r3],A
- 0E19 5100              mov A,[__r0]
- 0E1B 5300              mov [__r2],A
- 0E1D 470080            tst [__r2],-128
- 0E20 A009              jz X39
- 0E22 5500FF            mov [__r1],-1
- 0E25 5500FF            mov [__r0],-1
- 0E28 800A              jmp X40
- 0E2A           X39:
- 0E2A 62D000            mov REG[0xd0],>__r0
- 0E2D 550000            mov [__r1],0
- 0E30 550000            mov [__r0],0
- 0E33           X40:
- 0E33 62D000            mov REG[0xd0],>__r0
- 0E36 5100              mov A,[__r0]
- 0E38 08                push A
- 0E39 5100              mov A,[__r1]
- 0E3B 08                push A
- 0E3C 5100              mov A,[__r2]
+ 0D34 528F              mov A,[X-113]
+ 0D36 5300              mov [__r2],A
+ 0D38 5100              mov A,[__r0]
+ 0D3A 60D5              mov REG[0xd5],A
+ 0D3C 5100              mov A,[__r2]
+ 0D3E 3F00              mvi [__r1],A
+ 0D40                   .dbline 294
+ 0D40           ;                               }       
+ 0D40           L94:
+ 0D40                   .dbline 291
+ 0D40 7700              inc [X+0]
+ 0D42           L96:
+ 0D42                   .dbline 291
+ 0D42 3D0080            cmp [X+0],-128
+ 0D45 CBD8              jc L93
+ 0D47           X35:
+ 0D47                   .dbline 295
+ 0D47           ;                               SPIRAM_WriteArray(addr, temp, 128);
+ 0D47 5080              mov A,-128
+ 0D49 08                push A
+ 0D4A 62D000            mov REG[0xd0],>__r0
+ 0D4D 5A00              mov [__r1],X
+ 0D4F 060009            add [__r1],9
+ 0D52 5007              mov A,7
+ 0D54 08                push A
+ 0D55 5100              mov A,[__r1]
+ 0D57 08                push A
+ 0D58 5201              mov A,[X+1]
+ 0D5A 08                push A
+ 0D5B 5202              mov A,[X+2]
+ 0D5D 08                push A
+ 0D5E 7C0000            xcall _SPIRAM_WriteArray
+ 0D61 38FB              add SP,-5
+ 0D63                   .dbline 296
+ 0D63           ;                       }
+ 0D63           L90:
+ 0D63                   .dbline 289
+ 0D63 070280            add [X+2],-128
+ 0D66 0F0100            adc [X+1],0
+ 0D69           L92:
+ 0D69                   .dbline 289
+ 0D69 5202              mov A,[X+2]
+ 0D6B 138A              sub A,[X-118]
+ 0D6D 5201              mov A,[X+1]
+ 0D6F 1B89              sbb A,[X-119]
+ 0D71 CBA7              jc L89
+ 0D73           X36:
+ 0D73                   .dbline 297
+ 0D73           ;                       break;
+ 0D73 8718              xjmp L74
+ 0D75           L100:
+ 0D75                   .dbline 300
+ 0D75           ;               
+ 0D75           ;               case 2: 
+ 0D75           ;                       for (addr = startAddr; addr < endAddr; addr += 128)
+ 0D75 5204              mov A,[X+4]
+ 0D77 5402              mov [X+2],A
+ 0D79 5203              mov A,[X+3]
+ 0D7B 5401              mov [X+1],A
+ 0D7D 8451              xjmp L104
+ 0D7F           L101:
+ 0D7F                   .dbline 301
+ 0D7F           ;                       {
+ 0D7F                   .dbline 302
+ 0D7F           ;                               for(i = 0; i < 128; i++)
+ 0D7F 560000            mov [X+0],0
+ 0D82 8425              xjmp L108
+ 0D84           L105:
+ 0D84                   .dbline 303
+ 0D84           ;                               {
+ 0D84                   .dbline 304
+ 0D84           ;                                       temp[i] = (char)(0.1 + 0.5*sin(1500*pi*((addr - startAddr) + i)) + 0.5*sin(700*pi*((addr - startAddr) + i))*(128/2.5)); 
+ 0D84 62D000            mov REG[0xd0],>__r0
+ 0D87 5200              mov A,[X+0]
+ 0D89 5300              mov [__r1],A
+ 0D8B 550000            mov [__r0],0
+ 0D8E 5202              mov A,[X+2]
+ 0D90 1304              sub A,[X+4]
+ 0D92 5300              mov [__r3],A
+ 0D94 5201              mov A,[X+1]
+ 0D96 1B03              sbb A,[X+3]
+ 0D98 5300              mov [__r2],A
+ 0D9A 5100              mov A,[__r3]
+ 0D9C 0200              add A,[__r1]
+ 0D9E 5300              mov [__r1],A
+ 0DA0 5100              mov A,[__r2]
+ 0DA2 0A00              adc A,[__r0]
+ 0DA4 5300              mov [__r0],A
+ 0DA6 5100              mov A,[__r1]
+ 0DA8 2101              and A,1
+ 0DAA 5300              mov [__r3],A
+ 0DAC 5100              mov A,[__r0]
+ 0DAE 2100              and A,0
+ 0DB0 5300              mov [__r2],A
+ 0DB2 5100              mov A,[__r3]
+ 0DB4 5300              mov [__r7],A
+ 0DB6 5100              mov A,[__r2]
+ 0DB8 5300              mov [__r6],A
+ 0DBA 470080            tst [__r6],-128
+ 0DBD A009              jz X37
+ 0DBF 5500FF            mov [__r5],-1
+ 0DC2 5500FF            mov [__r4],-1
+ 0DC5 800A              jmp X38
+ 0DC7           X37:
+ 0DC7 62D000            mov REG[0xd0],>__r0
+ 0DCA 550000            mov [__r5],0
+ 0DCD 550000            mov [__r4],0
+ 0DD0           X38:
+ 0DD0 62D000            mov REG[0xd0],>__r0
+ 0DD3 5100              mov A,[__r4]
+ 0DD5 08                push A
+ 0DD6 5100              mov A,[__r5]
+ 0DD8 08                push A
+ 0DD9 5100              mov A,[__r6]
+ 0DDB 08                push A
+ 0DDC 5100              mov A,[__r7]
+ 0DDE 08                push A
+ 0DDF 7C0000            xcall __long2fp
+ 0DE2 18                pop A
+ 0DE3 5300              mov [__r7],A
+ 0DE5 18                pop A
+ 0DE6 5300              mov [__r6],A
+ 0DE8 18                pop A
+ 0DE9 5300              mov [__r5],A
+ 0DEB 18                pop A
+ 0DEC 5300              mov [__r4],A
+ 0DEE 70FB              and F,-5
+ 0DF0 6E00              rrc [__r0]
+ 0DF2 6E00              rrc [__r1]
+ 0DF4 5100              mov A,[__r1]
+ 0DF6 5300              mov [__r3],A
+ 0DF8 5100              mov A,[__r0]
+ 0DFA 5300              mov [__r2],A
+ 0DFC 470080            tst [__r2],-128
+ 0DFF A009              jz X39
+ 0E01 5500FF            mov [__r1],-1
+ 0E04 5500FF            mov [__r0],-1
+ 0E07 800A              jmp X40
+ 0E09           X39:
+ 0E09 62D000            mov REG[0xd0],>__r0
+ 0E0C 550000            mov [__r1],0
+ 0E0F 550000            mov [__r0],0
+ 0E12           X40:
+ 0E12 62D000            mov REG[0xd0],>__r0
+ 0E15 5100              mov A,[__r0]
+ 0E17 08                push A
+ 0E18 5100              mov A,[__r1]
+ 0E1A 08                push A
+ 0E1B 5100              mov A,[__r2]
+ 0E1D 08                push A
+ 0E1E 5100              mov A,[__r3]
+ 0E20 08                push A
+ 0E21 7C0000            xcall __long2fp
+ 0E24 18                pop A
+ 0E25 5300              mov [__r3],A
+ 0E27 18                pop A
+ 0E28 5300              mov [__r2],A
+ 0E2A 18                pop A
+ 0E2B 5300              mov [__r1],A
+ 0E2D 18                pop A
+ 0E2E 08                push A
+ 0E2F 5100              mov A,[__r1]
+ 0E31 08                push A
+ 0E32 5100              mov A,[__r2]
+ 0E34 08                push A
+ 0E35 5100              mov A,[__r3]
+ 0E37 08                push A
+ 0E38 5040              mov A,64
+ 0E3A 08                push A
+ 0E3B 5000              mov A,0
+ 0E3D 08                push A
  0E3E 08                push A
- 0E3F 5100              mov A,[__r3]
- 0E41 08                push A
- 0E42 7C0000            xcall __long2fp
- 0E45 18                pop A
- 0E46 5300              mov [__r3],A
- 0E48 18                pop A
- 0E49 5300              mov [__r2],A
- 0E4B 18                pop A
- 0E4C 5300              mov [__r1],A
- 0E4E 18                pop A
- 0E4F 08                push A
- 0E50 5100              mov A,[__r1]
- 0E52 08                push A
- 0E53 5100              mov A,[__r2]
- 0E55 08                push A
- 0E56 5100              mov A,[__r3]
- 0E58 08                push A
- 0E59 5040              mov A,64
- 0E5B 08                push A
- 0E5C 5000              mov A,0
- 0E5E 08                push A
+ 0E3F 08                push A
+ 0E40 7C0000            xcall __fpmul
+ 0E43 18                pop A
+ 0E44 5300              mov [__r3],A
+ 0E46 18                pop A
+ 0E47 5300              mov [__r2],A
+ 0E49 18                pop A
+ 0E4A 5300              mov [__r1],A
+ 0E4C 18                pop A
+ 0E4D 5300              mov [__r0],A
+ 0E4F 38FC              add SP,-4
+ 0E51 5100              mov A,[__r4]
+ 0E53 08                push A
+ 0E54 5100              mov A,[__r5]
+ 0E56 08                push A
+ 0E57 5100              mov A,[__r6]
+ 0E59 08                push A
+ 0E5A 5100              mov A,[__r7]
+ 0E5C 08                push A
+ 0E5D 5100              mov A,[__r0]
  0E5F 08                push A
- 0E60 08                push A
- 0E61 7C0000            xcall __fpmul
- 0E64 18                pop A
- 0E65 5300              mov [__r3],A
- 0E67 18                pop A
- 0E68 5300              mov [__r2],A
- 0E6A 18                pop A
- 0E6B 5300              mov [__r1],A
- 0E6D 18                pop A
- 0E6E 5300              mov [__r0],A
- 0E70 38FC              add SP,-4
- 0E72 5100              mov A,[__r4]
- 0E74 08                push A
- 0E75 5100              mov A,[__r5]
- 0E77 08                push A
- 0E78 5100              mov A,[__r6]
- 0E7A 08                push A
- 0E7B 5100              mov A,[__r7]
- 0E7D 08                push A
- 0E7E 5100              mov A,[__r0]
- 0E80 08                push A
- 0E81 5100              mov A,[__r1]
- 0E83 08                push A
- 0E84 5100              mov A,[__r2]
- 0E86 08                push A
- 0E87 5100              mov A,[__r3]
- 0E89 08                push A
- 0E8A 7C0000            xcall __fpadd
- 0E8D 18                pop A
- 0E8E 5300              mov [__r3],A
- 0E90 18                pop A
- 0E91 5300              mov [__r2],A
- 0E93 18                pop A
- 0E94 5300              mov [__r1],A
- 0E96 18                pop A
- 0E97 5300              mov [__r0],A
- 0E99 38FC              add SP,-4
- 0E9B 5205              mov A,[X+5]
- 0E9D 08                push A
- 0E9E 5206              mov A,[X+6]
- 0EA0 08                push A
- 0EA1 5207              mov A,[X+7]
- 0EA3 08                push A
- 0EA4 5208              mov A,[X+8]
- 0EA6 08                push A
- 0EA7 5044              mov A,68
- 0EA9 08                push A
- 0EAA 50BB              mov A,-69
- 0EAC 08                push A
- 0EAD 5080              mov A,-128
- 0EAF 08                push A
- 0EB0 5000              mov A,0
- 0EB2 08                push A
- 0EB3 7C0000            xcall __fpmul
- 0EB6 18                pop A
- 0EB7 5300              mov [__r7],A
- 0EB9 18                pop A
- 0EBA 5300              mov [__r6],A
- 0EBC 18                pop A
- 0EBD 5300              mov [__r5],A
- 0EBF 18                pop A
- 0EC0 5300              mov [__r4],A
- 0EC2 38FC              add SP,-4
- 0EC4 5100              mov A,[__r0]
- 0EC6 08                push A
- 0EC7 5100              mov A,[__r1]
- 0EC9 08                push A
- 0ECA 5100              mov A,[__r2]
- 0ECC 08                push A
- 0ECD 5100              mov A,[__r3]
- 0ECF 08                push A
- 0ED0 5100              mov A,[__r4]
- 0ED2 08                push A
- 0ED3 5100              mov A,[__r5]
- 0ED5 08                push A
- 0ED6 5100              mov A,[__r6]
- 0ED8 08                push A
- 0ED9 5100              mov A,[__r7]
- 0EDB 08                push A
- 0EDC 7C0000            xcall __fpmul
- 0EDF 18                pop A
- 0EE0 5300              mov [__r3],A
- 0EE2 18                pop A
- 0EE3 5300              mov [__r2],A
- 0EE5 18                pop A
- 0EE6 5300              mov [__r1],A
- 0EE8 18                pop A
- 0EE9 38FC              add SP,-4
- 0EEB 08                push A
- 0EEC 5100              mov A,[__r1]
- 0EEE 08                push A
- 0EEF 5100              mov A,[__r2]
- 0EF1 08                push A
- 0EF2 5100              mov A,[__r3]
- 0EF4 08                push A
- 0EF5 7C0000            xcall _sinf
- 0EF8 38FC              add SP,-4
- 0EFA 62D000            mov REG[0xd0],>__r0
- 0EFD 5100              mov A,[__r0]
- 0EFF 5490              mov [X-112],A
- 0F01 5100              mov A,[__r1]
- 0F03 5491              mov [X-111],A
- 0F05 5100              mov A,[__r2]
- 0F07 5492              mov [X-110],A
- 0F09 5100              mov A,[__r3]
- 0F0B 5493              mov [X-109],A
- 0F0D 5200              mov A,[X+0]
- 0F0F 5300              mov [__r5],A
- 0F11 550000            mov [__r4],0
- 0F14 5202              mov A,[X+2]
- 0F16 1304              sub A,[X+4]
- 0F18 5300              mov [__r7],A
- 0F1A 5201              mov A,[X+1]
- 0F1C 1B03              sbb A,[X+3]
- 0F1E 5300              mov [__r6],A
- 0F20 5100              mov A,[__r7]
- 0F22 0200              add A,[__r5]
- 0F24 5300              mov [__r5],A
- 0F26 5100              mov A,[__r6]
- 0F28 0A00              adc A,[__r4]
- 0F2A 5300              mov [__r4],A
- 0F2C 5100              mov A,[__r5]
- 0F2E 2101              and A,1
- 0F30 5300              mov [__r7],A
- 0F32 5100              mov A,[__r4]
- 0F34 2100              and A,0
- 0F36 5300              mov [__r6],A
- 0F38 5100              mov A,[__r7]
- 0F3A 5300              mov [__r11],A
- 0F3C 5100              mov A,[__r6]
- 0F3E 5300              mov [__r10],A
- 0F40 470080            tst [__r10],-128
- 0F43 A009              jz X41
- 0F45 5500FF            mov [__r9],-1
- 0F48 5500FF            mov [__r8],-1
- 0F4B 800A              jmp X42
- 0F4D           X41:
- 0F4D 62D000            mov REG[0xd0],>__r0
- 0F50 550000            mov [__r9],0
- 0F53 550000            mov [__r8],0
- 0F56           X42:
- 0F56 62D000            mov REG[0xd0],>__r0
- 0F59 5100              mov A,[__r8]
- 0F5B 08                push A
- 0F5C 5100              mov A,[__r9]
- 0F5E 08                push A
- 0F5F 5100              mov A,[__r10]
- 0F61 08                push A
- 0F62 5100              mov A,[__r11]
- 0F64 08                push A
- 0F65 7C0000            xcall __long2fp
- 0F68 18                pop A
- 0F69 5300              mov [__r11],A
- 0F6B 18                pop A
- 0F6C 5300              mov [__r10],A
- 0F6E 18                pop A
- 0F6F 5300              mov [__r9],A
- 0F71 18                pop A
- 0F72 5300              mov [__r8],A
- 0F74 70FB              and F,-5
- 0F76 6E00              rrc [__r4]
- 0F78 6E00              rrc [__r5]
- 0F7A 5100              mov A,[__r5]
- 0F7C 5300              mov [__r7],A
- 0F7E 5100              mov A,[__r4]
- 0F80 5300              mov [__r6],A
- 0F82 470080            tst [__r6],-128
- 0F85 A009              jz X43
- 0F87 5500FF            mov [__r5],-1
- 0F8A 5500FF            mov [__r4],-1
- 0F8D 800A              jmp X44
- 0F8F           X43:
- 0F8F 62D000            mov REG[0xd0],>__r0
- 0F92 550000            mov [__r5],0
- 0F95 550000            mov [__r4],0
- 0F98           X44:
- 0F98 62D000            mov REG[0xd0],>__r0
- 0F9B 5100              mov A,[__r4]
- 0F9D 08                push A
- 0F9E 5100              mov A,[__r5]
- 0FA0 08                push A
- 0FA1 5100              mov A,[__r6]
+ 0E60 5100              mov A,[__r1]
+ 0E62 08                push A
+ 0E63 5100              mov A,[__r2]
+ 0E65 08                push A
+ 0E66 5100              mov A,[__r3]
+ 0E68 08                push A
+ 0E69 7C0000            xcall __fpadd
+ 0E6C 18                pop A
+ 0E6D 5300              mov [__r3],A
+ 0E6F 18                pop A
+ 0E70 5300              mov [__r2],A
+ 0E72 18                pop A
+ 0E73 5300              mov [__r1],A
+ 0E75 18                pop A
+ 0E76 5300              mov [__r0],A
+ 0E78 38FC              add SP,-4
+ 0E7A 5205              mov A,[X+5]
+ 0E7C 08                push A
+ 0E7D 5206              mov A,[X+6]
+ 0E7F 08                push A
+ 0E80 5207              mov A,[X+7]
+ 0E82 08                push A
+ 0E83 5208              mov A,[X+8]
+ 0E85 08                push A
+ 0E86 5044              mov A,68
+ 0E88 08                push A
+ 0E89 50BB              mov A,-69
+ 0E8B 08                push A
+ 0E8C 5080              mov A,-128
+ 0E8E 08                push A
+ 0E8F 5000              mov A,0
+ 0E91 08                push A
+ 0E92 7C0000            xcall __fpmul
+ 0E95 18                pop A
+ 0E96 5300              mov [__r7],A
+ 0E98 18                pop A
+ 0E99 5300              mov [__r6],A
+ 0E9B 18                pop A
+ 0E9C 5300              mov [__r5],A
+ 0E9E 18                pop A
+ 0E9F 5300              mov [__r4],A
+ 0EA1 38FC              add SP,-4
+ 0EA3 5100              mov A,[__r0]
+ 0EA5 08                push A
+ 0EA6 5100              mov A,[__r1]
+ 0EA8 08                push A
+ 0EA9 5100              mov A,[__r2]
+ 0EAB 08                push A
+ 0EAC 5100              mov A,[__r3]
+ 0EAE 08                push A
+ 0EAF 5100              mov A,[__r4]
+ 0EB1 08                push A
+ 0EB2 5100              mov A,[__r5]
+ 0EB4 08                push A
+ 0EB5 5100              mov A,[__r6]
+ 0EB7 08                push A
+ 0EB8 5100              mov A,[__r7]
+ 0EBA 08                push A
+ 0EBB 7C0000            xcall __fpmul
+ 0EBE 18                pop A
+ 0EBF 5300              mov [__r3],A
+ 0EC1 18                pop A
+ 0EC2 5300              mov [__r2],A
+ 0EC4 18                pop A
+ 0EC5 5300              mov [__r1],A
+ 0EC7 18                pop A
+ 0EC8 38FC              add SP,-4
+ 0ECA 08                push A
+ 0ECB 5100              mov A,[__r1]
+ 0ECD 08                push A
+ 0ECE 5100              mov A,[__r2]
+ 0ED0 08                push A
+ 0ED1 5100              mov A,[__r3]
+ 0ED3 08                push A
+ 0ED4 7C0000            xcall _sinf
+ 0ED7 38FC              add SP,-4
+ 0ED9 62D000            mov REG[0xd0],>__r0
+ 0EDC 5100              mov A,[__r0]
+ 0EDE 5490              mov [X-112],A
+ 0EE0 5100              mov A,[__r1]
+ 0EE2 5491              mov [X-111],A
+ 0EE4 5100              mov A,[__r2]
+ 0EE6 5492              mov [X-110],A
+ 0EE8 5100              mov A,[__r3]
+ 0EEA 5493              mov [X-109],A
+ 0EEC 5200              mov A,[X+0]
+ 0EEE 5300              mov [__r5],A
+ 0EF0 550000            mov [__r4],0
+ 0EF3 5202              mov A,[X+2]
+ 0EF5 1304              sub A,[X+4]
+ 0EF7 5300              mov [__r7],A
+ 0EF9 5201              mov A,[X+1]
+ 0EFB 1B03              sbb A,[X+3]
+ 0EFD 5300              mov [__r6],A
+ 0EFF 5100              mov A,[__r7]
+ 0F01 0200              add A,[__r5]
+ 0F03 5300              mov [__r5],A
+ 0F05 5100              mov A,[__r6]
+ 0F07 0A00              adc A,[__r4]
+ 0F09 5300              mov [__r4],A
+ 0F0B 5100              mov A,[__r5]
+ 0F0D 2101              and A,1
+ 0F0F 5300              mov [__r7],A
+ 0F11 5100              mov A,[__r4]
+ 0F13 2100              and A,0
+ 0F15 5300              mov [__r6],A
+ 0F17 5100              mov A,[__r7]
+ 0F19 5300              mov [__r11],A
+ 0F1B 5100              mov A,[__r6]
+ 0F1D 5300              mov [__r10],A
+ 0F1F 470080            tst [__r10],-128
+ 0F22 A009              jz X41
+ 0F24 5500FF            mov [__r9],-1
+ 0F27 5500FF            mov [__r8],-1
+ 0F2A 800A              jmp X42
+ 0F2C           X41:
+ 0F2C 62D000            mov REG[0xd0],>__r0
+ 0F2F 550000            mov [__r9],0
+ 0F32 550000            mov [__r8],0
+ 0F35           X42:
+ 0F35 62D000            mov REG[0xd0],>__r0
+ 0F38 5100              mov A,[__r8]
+ 0F3A 08                push A
+ 0F3B 5100              mov A,[__r9]
+ 0F3D 08                push A
+ 0F3E 5100              mov A,[__r10]
+ 0F40 08                push A
+ 0F41 5100              mov A,[__r11]
+ 0F43 08                push A
+ 0F44 7C0000            xcall __long2fp
+ 0F47 18                pop A
+ 0F48 5300              mov [__r11],A
+ 0F4A 18                pop A
+ 0F4B 5300              mov [__r10],A
+ 0F4D 18                pop A
+ 0F4E 5300              mov [__r9],A
+ 0F50 18                pop A
+ 0F51 5300              mov [__r8],A
+ 0F53 70FB              and F,-5
+ 0F55 6E00              rrc [__r4]
+ 0F57 6E00              rrc [__r5]
+ 0F59 5100              mov A,[__r5]
+ 0F5B 5300              mov [__r7],A
+ 0F5D 5100              mov A,[__r4]
+ 0F5F 5300              mov [__r6],A
+ 0F61 470080            tst [__r6],-128
+ 0F64 A009              jz X43
+ 0F66 5500FF            mov [__r5],-1
+ 0F69 5500FF            mov [__r4],-1
+ 0F6C 800A              jmp X44
+ 0F6E           X43:
+ 0F6E 62D000            mov REG[0xd0],>__r0
+ 0F71 550000            mov [__r5],0
+ 0F74 550000            mov [__r4],0
+ 0F77           X44:
+ 0F77 62D000            mov REG[0xd0],>__r0
+ 0F7A 5100              mov A,[__r4]
+ 0F7C 08                push A
+ 0F7D 5100              mov A,[__r5]
+ 0F7F 08                push A
+ 0F80 5100              mov A,[__r6]
+ 0F82 08                push A
+ 0F83 5100              mov A,[__r7]
+ 0F85 08                push A
+ 0F86 7C0000            xcall __long2fp
+ 0F89 18                pop A
+ 0F8A 5300              mov [__r7],A
+ 0F8C 18                pop A
+ 0F8D 5300              mov [__r6],A
+ 0F8F 18                pop A
+ 0F90 5300              mov [__r5],A
+ 0F92 18                pop A
+ 0F93 08                push A
+ 0F94 5100              mov A,[__r5]
+ 0F96 08                push A
+ 0F97 5100              mov A,[__r6]
+ 0F99 08                push A
+ 0F9A 5100              mov A,[__r7]
+ 0F9C 08                push A
+ 0F9D 5040              mov A,64
+ 0F9F 08                push A
+ 0FA0 5000              mov A,0
+ 0FA2 08                push A
  0FA3 08                push A
- 0FA4 5100              mov A,[__r7]
- 0FA6 08                push A
- 0FA7 7C0000            xcall __long2fp
- 0FAA 18                pop A
- 0FAB 5300              mov [__r7],A
- 0FAD 18                pop A
- 0FAE 5300              mov [__r6],A
- 0FB0 18                pop A
- 0FB1 5300              mov [__r5],A
- 0FB3 18                pop A
- 0FB4 08                push A
- 0FB5 5100              mov A,[__r5]
- 0FB7 08                push A
- 0FB8 5100              mov A,[__r6]
- 0FBA 08                push A
- 0FBB 5100              mov A,[__r7]
- 0FBD 08                push A
- 0FBE 5040              mov A,64
- 0FC0 08                push A
- 0FC1 5000              mov A,0
- 0FC3 08                push A
+ 0FA4 08                push A
+ 0FA5 7C0000            xcall __fpmul
+ 0FA8 18                pop A
+ 0FA9 5300              mov [__r7],A
+ 0FAB 18                pop A
+ 0FAC 5300              mov [__r6],A
+ 0FAE 18                pop A
+ 0FAF 5300              mov [__r5],A
+ 0FB1 18                pop A
+ 0FB2 5300              mov [__r4],A
+ 0FB4 38FC              add SP,-4
+ 0FB6 5100              mov A,[__r8]
+ 0FB8 08                push A
+ 0FB9 5100              mov A,[__r9]
+ 0FBB 08                push A
+ 0FBC 5100              mov A,[__r10]
+ 0FBE 08                push A
+ 0FBF 5100              mov A,[__r11]
+ 0FC1 08                push A
+ 0FC2 5100              mov A,[__r4]
  0FC4 08                push A
- 0FC5 08                push A
- 0FC6 7C0000            xcall __fpmul
- 0FC9 18                pop A
- 0FCA 5300              mov [__r7],A
- 0FCC 18                pop A
- 0FCD 5300              mov [__r6],A
- 0FCF 18                pop A
- 0FD0 5300              mov [__r5],A
- 0FD2 18                pop A
- 0FD3 5300              mov [__r4],A
- 0FD5 38FC              add SP,-4
- 0FD7 5100              mov A,[__r8]
- 0FD9 08                push A
- 0FDA 5100              mov A,[__r9]
- 0FDC 08                push A
- 0FDD 5100              mov A,[__r10]
- 0FDF 08                push A
- 0FE0 5100              mov A,[__r11]
- 0FE2 08                push A
- 0FE3 5100              mov A,[__r4]
- 0FE5 08                push A
- 0FE6 5100              mov A,[__r5]
- 0FE8 08                push A
- 0FE9 5100              mov A,[__r6]
- 0FEB 08                push A
- 0FEC 5100              mov A,[__r7]
- 0FEE 08                push A
- 0FEF 7C0000            xcall __fpadd
- 0FF2 18                pop A
- 0FF3 5300              mov [__r7],A
- 0FF5 18                pop A
- 0FF6 5300              mov [__r6],A
+ 0FC5 5100              mov A,[__r5]
+ 0FC7 08                push A
+ 0FC8 5100              mov A,[__r6]
+ 0FCA 08                push A
+ 0FCB 5100              mov A,[__r7]
+ 0FCD 08                push A
+ 0FCE 7C0000            xcall __fpadd
+ 0FD1 18                pop A
+ 0FD2 5300              mov [__r7],A
+ 0FD4 18                pop A
+ 0FD5 5300              mov [__r6],A
+ 0FD7 18                pop A
+ 0FD8 5300              mov [__r5],A
+ 0FDA 18                pop A
+ 0FDB 5300              mov [__r4],A
+ 0FDD 38FC              add SP,-4
+ 0FDF 5205              mov A,[X+5]
+ 0FE1 08                push A
+ 0FE2 5206              mov A,[X+6]
+ 0FE4 08                push A
+ 0FE5 5207              mov A,[X+7]
+ 0FE7 08                push A
+ 0FE8 5208              mov A,[X+8]
+ 0FEA 08                push A
+ 0FEB 5044              mov A,68
+ 0FED 08                push A
+ 0FEE 502F              mov A,47
+ 0FF0 08                push A
+ 0FF1 5000              mov A,0
+ 0FF3 08                push A
+ 0FF4 08                push A
+ 0FF5 7C0000            xcall __fpmul
  0FF8 18                pop A
- 0FF9 5300              mov [__r5],A
+ 0FF9 5300              mov [__r11],A
  0FFB 18                pop A
- 0FFC 5300              mov [__r4],A
- 0FFE 38FC              add SP,-4
- 1000 5205              mov A,[X+5]
- 1002 08                push A
- 1003 5206              mov A,[X+6]
- 1005 08                push A
- 1006 5207              mov A,[X+7]
+ 0FFC 5300              mov [__r10],A
+ 0FFE 18                pop A
+ 0FFF 5300              mov [__r9],A
+ 1001 18                pop A
+ 1002 5300              mov [__r8],A
+ 1004 38FC              add SP,-4
+ 1006 5100              mov A,[__r4]
  1008 08                push A
- 1009 5208              mov A,[X+8]
+ 1009 5100              mov A,[__r5]
  100B 08                push A
- 100C 5044              mov A,68
+ 100C 5100              mov A,[__r6]
  100E 08                push A
- 100F 502F              mov A,47
+ 100F 5100              mov A,[__r7]
  1011 08                push A
- 1012 5000              mov A,0
+ 1012 5100              mov A,[__r8]
  1014 08                push A
- 1015 08                push A
- 1016 7C0000            xcall __fpmul
- 1019 18                pop A
- 101A 5300              mov [__r11],A
- 101C 18                pop A
- 101D 5300              mov [__r10],A
- 101F 18                pop A
- 1020 5300              mov [__r9],A
- 1022 18                pop A
- 1023 5300              mov [__r8],A
- 1025 38FC              add SP,-4
- 1027 5100              mov A,[__r4]
- 1029 08                push A
- 102A 5100              mov A,[__r5]
- 102C 08                push A
- 102D 5100              mov A,[__r6]
- 102F 08                push A
- 1030 5100              mov A,[__r7]
- 1032 08                push A
- 1033 5100              mov A,[__r8]
- 1035 08                push A
- 1036 5100              mov A,[__r9]
- 1038 08                push A
- 1039 5100              mov A,[__r10]
- 103B 08                push A
- 103C 5100              mov A,[__r11]
- 103E 08                push A
- 103F 7C0000            xcall __fpmul
- 1042 18                pop A
- 1043 5300              mov [__r7],A
- 1045 18                pop A
- 1046 5300              mov [__r6],A
- 1048 18                pop A
- 1049 5300              mov [__r5],A
- 104B 18                pop A
- 104C 38FC              add SP,-4
- 104E 08                push A
- 104F 5100              mov A,[__r5]
+ 1015 5100              mov A,[__r9]
+ 1017 08                push A
+ 1018 5100              mov A,[__r10]
+ 101A 08                push A
+ 101B 5100              mov A,[__r11]
+ 101D 08                push A
+ 101E 7C0000            xcall __fpmul
+ 1021 18                pop A
+ 1022 5300              mov [__r7],A
+ 1024 18                pop A
+ 1025 5300              mov [__r6],A
+ 1027 18                pop A
+ 1028 5300              mov [__r5],A
+ 102A 18                pop A
+ 102B 38FC              add SP,-4
+ 102D 08                push A
+ 102E 5100              mov A,[__r5]
+ 1030 08                push A
+ 1031 5100              mov A,[__r6]
+ 1033 08                push A
+ 1034 5100              mov A,[__r7]
+ 1036 08                push A
+ 1037 7C0000            xcall _sinf
+ 103A 38FC              add SP,-4
+ 103C 62D000            mov REG[0xd0],>__r0
+ 103F 5100              mov A,[__r0]
+ 1041 08                push A
+ 1042 5100              mov A,[__r1]
+ 1044 08                push A
+ 1045 5100              mov A,[__r2]
+ 1047 08                push A
+ 1048 5100              mov A,[__r3]
+ 104A 08                push A
+ 104B 503F              mov A,63
+ 104D 08                push A
+ 104E 5000              mov A,0
+ 1050 08                push A
  1051 08                push A
- 1052 5100              mov A,[__r6]
- 1054 08                push A
- 1055 5100              mov A,[__r7]
- 1057 08                push A
- 1058 7C0000            xcall _sinf
- 105B 38FC              add SP,-4
- 105D 62D000            mov REG[0xd0],>__r0
- 1060 5100              mov A,[__r0]
+ 1052 08                push A
+ 1053 7C0000            xcall __fpmul
+ 1056 18                pop A
+ 1057 5300              mov [__r3],A
+ 1059 18                pop A
+ 105A 5300              mov [__r2],A
+ 105C 18                pop A
+ 105D 5300              mov [__r1],A
+ 105F 18                pop A
+ 1060 38FC              add SP,-4
  1062 08                push A
  1063 5100              mov A,[__r1]
  1065 08                push A
@@ -2988,483 +2984,483 @@
  1068 08                push A
  1069 5100              mov A,[__r3]
  106B 08                push A
- 106C 503F              mov A,63
+ 106C 5042              mov A,66
  106E 08                push A
- 106F 5000              mov A,0
+ 106F 504C              mov A,76
  1071 08                push A
- 1072 08                push A
- 1073 08                push A
- 1074 7C0000            xcall __fpmul
- 1077 18                pop A
- 1078 5300              mov [__r3],A
- 107A 18                pop A
- 107B 5300              mov [__r2],A
- 107D 18                pop A
- 107E 5300              mov [__r1],A
- 1080 18                pop A
- 1081 38FC              add SP,-4
- 1083 08                push A
- 1084 5100              mov A,[__r1]
- 1086 08                push A
- 1087 5100              mov A,[__r2]
- 1089 08                push A
- 108A 5100              mov A,[__r3]
- 108C 08                push A
- 108D 5042              mov A,66
- 108F 08                push A
- 1090 504C              mov A,76
- 1092 08                push A
- 1093 50CC              mov A,-52
- 1095 08                push A
- 1096 50CD              mov A,-51
- 1098 08                push A
- 1099 7C0000            xcall __fpmul
- 109C 18                pop A
- 109D 5300              mov [__r3],A
- 109F 18                pop A
- 10A0 5300              mov [__r2],A
- 10A2 18                pop A
- 10A3 5300              mov [__r1],A
- 10A5 18                pop A
- 10A6 5300              mov [__r0],A
- 10A8 38FC              add SP,-4
- 10AA 5290              mov A,[X-112]
- 10AC 08                push A
- 10AD 5291              mov A,[X-111]
- 10AF 08                push A
- 10B0 5292              mov A,[X-110]
- 10B2 08                push A
- 10B3 5293              mov A,[X-109]
- 10B5 08                push A
- 10B6 503F              mov A,63
- 10B8 08                push A
- 10B9 5000              mov A,0
- 10BB 08                push A
- 10BC 08                push A
+ 1072 50CC              mov A,-52
+ 1074 08                push A
+ 1075 50CD              mov A,-51
+ 1077 08                push A
+ 1078 7C0000            xcall __fpmul
+ 107B 18                pop A
+ 107C 5300              mov [__r3],A
+ 107E 18                pop A
+ 107F 5300              mov [__r2],A
+ 1081 18                pop A
+ 1082 5300              mov [__r1],A
+ 1084 18                pop A
+ 1085 5300              mov [__r0],A
+ 1087 38FC              add SP,-4
+ 1089 5290              mov A,[X-112]
+ 108B 08                push A
+ 108C 5291              mov A,[X-111]
+ 108E 08                push A
+ 108F 5292              mov A,[X-110]
+ 1091 08                push A
+ 1092 5293              mov A,[X-109]
+ 1094 08                push A
+ 1095 503F              mov A,63
+ 1097 08                push A
+ 1098 5000              mov A,0
+ 109A 08                push A
+ 109B 08                push A
+ 109C 08                push A
+ 109D 7C0000            xcall __fpmul
+ 10A0 18                pop A
+ 10A1 5300              mov [__r7],A
+ 10A3 18                pop A
+ 10A4 5300              mov [__r6],A
+ 10A6 18                pop A
+ 10A7 5300              mov [__r5],A
+ 10A9 18                pop A
+ 10AA 5300              mov [__r4],A
+ 10AC 38FC              add SP,-4
+ 10AE 503D              mov A,61
+ 10B0 08                push A
+ 10B1 50CC              mov A,-52
+ 10B3 08                push A
+ 10B4 08                push A
+ 10B5 50CD              mov A,-51
+ 10B7 08                push A
+ 10B8 5100              mov A,[__r4]
+ 10BA 08                push A
+ 10BB 5100              mov A,[__r5]
  10BD 08                push A
- 10BE 7C0000            xcall __fpmul
- 10C1 18                pop A
- 10C2 5300              mov [__r7],A
- 10C4 18                pop A
- 10C5 5300              mov [__r6],A
+ 10BE 5100              mov A,[__r6]
+ 10C0 08                push A
+ 10C1 5100              mov A,[__r7]
+ 10C3 08                push A
+ 10C4 7C0000            xcall __fpadd
  10C7 18                pop A
- 10C8 5300              mov [__r5],A
+ 10C8 5300              mov [__r7],A
  10CA 18                pop A
- 10CB 5300              mov [__r4],A
- 10CD 38FC              add SP,-4
- 10CF 503D              mov A,61
- 10D1 08                push A
- 10D2 50CC              mov A,-52
- 10D4 08                push A
- 10D5 08                push A
- 10D6 50CD              mov A,-51
- 10D8 08                push A
- 10D9 5100              mov A,[__r4]
- 10DB 08                push A
- 10DC 5100              mov A,[__r5]
- 10DE 08                push A
- 10DF 5100              mov A,[__r6]
- 10E1 08                push A
- 10E2 5100              mov A,[__r7]
- 10E4 08                push A
- 10E5 7C0000            xcall __fpadd
- 10E8 18                pop A
- 10E9 5300              mov [__r7],A
- 10EB 18                pop A
- 10EC 5300              mov [__r6],A
- 10EE 18                pop A
- 10EF 5300              mov [__r5],A
- 10F1 18                pop A
- 10F2 5300              mov [__r4],A
- 10F4 38FC              add SP,-4
- 10F6 5100              mov A,[__r0]
- 10F8 08                push A
- 10F9 5100              mov A,[__r1]
- 10FB 08                push A
- 10FC 5100              mov A,[__r2]
- 10FE 08                push A
- 10FF 5100              mov A,[__r3]
- 1101 08                push A
- 1102 5100              mov A,[__r4]
+ 10CB 5300              mov [__r6],A
+ 10CD 18                pop A
+ 10CE 5300              mov [__r5],A
+ 10D0 18                pop A
+ 10D1 5300              mov [__r4],A
+ 10D3 38FC              add SP,-4
+ 10D5 5100              mov A,[__r0]
+ 10D7 08                push A
+ 10D8 5100              mov A,[__r1]
+ 10DA 08                push A
+ 10DB 5100              mov A,[__r2]
+ 10DD 08                push A
+ 10DE 5100              mov A,[__r3]
+ 10E0 08                push A
+ 10E1 5100              mov A,[__r4]
+ 10E3 08                push A
+ 10E4 5100              mov A,[__r5]
+ 10E6 08                push A
+ 10E7 5100              mov A,[__r6]
+ 10E9 08                push A
+ 10EA 5100              mov A,[__r7]
+ 10EC 08                push A
+ 10ED 7C0000            xcall __fpadd
+ 10F0 18                pop A
+ 10F1 5300              mov [__r3],A
+ 10F3 18                pop A
+ 10F4 5300              mov [__r2],A
+ 10F6 18                pop A
+ 10F7 5300              mov [__r1],A
+ 10F9 18                pop A
+ 10FA 5300              mov [__r0],A
+ 10FC 38FC              add SP,-4
+ 10FE 5047              mov A,71
+ 1100 08                push A
+ 1101 5000              mov A,0
+ 1103 08                push A
  1104 08                push A
- 1105 5100              mov A,[__r5]
- 1107 08                push A
- 1108 5100              mov A,[__r6]
- 110A 08                push A
- 110B 5100              mov A,[__r7]
- 110D 08                push A
- 110E 7C0000            xcall __fpadd
- 1111 18                pop A
- 1112 5300              mov [__r3],A
- 1114 18                pop A
- 1115 5300              mov [__r2],A
- 1117 18                pop A
- 1118 5300              mov [__r1],A
- 111A 18                pop A
- 111B 5300              mov [__r0],A
- 111D 38FC              add SP,-4
- 111F 5047              mov A,71
+ 1105 08                push A
+ 1106 5100              mov A,[__r0]
+ 1108 08                push A
+ 1109 5100              mov A,[__r1]
+ 110B 08                push A
+ 110C 5100              mov A,[__r2]
+ 110E 08                push A
+ 110F 5100              mov A,[__r3]
+ 1111 08                push A
+ 1112 7C0000            xcall __fpcmp
+ 1115 38F8              add SP,-8
+ 1117 39FF              cmp A,-1
+ 1119 A047              jz L110
+ 111B 5047              mov A,71
+ 111D 08                push A
+ 111E 5000              mov A,0
+ 1120 08                push A
  1121 08                push A
- 1122 5000              mov A,0
- 1124 08                push A
+ 1122 08                push A
+ 1123 5100              mov A,[__r0]
  1125 08                push A
- 1126 08                push A
- 1127 5100              mov A,[__r0]
- 1129 08                push A
- 112A 5100              mov A,[__r1]
- 112C 08                push A
- 112D 5100              mov A,[__r2]
- 112F 08                push A
- 1130 5100              mov A,[__r3]
- 1132 08                push A
- 1133 7C0000            xcall __fpcmp
- 1136 38F8              add SP,-8
- 1138 39FF              cmp A,-1
- 113A A047              jz L112
- 113C 5047              mov A,71
+ 1126 5100              mov A,[__r1]
+ 1128 08                push A
+ 1129 5100              mov A,[__r2]
+ 112B 08                push A
+ 112C 5100              mov A,[__r3]
+ 112E 08                push A
+ 112F 7C0000            xcall __fpsub
+ 1132 18                pop A
+ 1133 5300              mov [__r7],A
+ 1135 18                pop A
+ 1136 5300              mov [__r6],A
+ 1138 18                pop A
+ 1139 5300              mov [__r5],A
+ 113B 18                pop A
+ 113C 38FC              add SP,-4
  113E 08                push A
- 113F 5000              mov A,0
+ 113F 5100              mov A,[__r5]
  1141 08                push A
- 1142 08                push A
- 1143 08                push A
- 1144 5100              mov A,[__r0]
- 1146 08                push A
- 1147 5100              mov A,[__r1]
- 1149 08                push A
- 114A 5100              mov A,[__r2]
- 114C 08                push A
- 114D 5100              mov A,[__r3]
- 114F 08                push A
- 1150 7C0000            xcall __fpsub
- 1153 18                pop A
- 1154 5300              mov [__r7],A
- 1156 18                pop A
- 1157 5300              mov [__r6],A
- 1159 18                pop A
- 115A 5300              mov [__r5],A
- 115C 18                pop A
- 115D 38FC              add SP,-4
- 115F 08                push A
- 1160 5100              mov A,[__r5]
- 1162 08                push A
- 1163 5100              mov A,[__r6]
- 1165 08                push A
- 1166 5100              mov A,[__r7]
- 1168 08                push A
- 1169 7C0000            xcall __fp2long
- 116C 18                pop A
- 116D 5300              mov [__r5],A
- 116F 18                pop A
- 1170 5300              mov [__r4],A
- 1172 38FE              add SP,-2
- 1174 5100              mov A,[__r5]
- 1176 0100              add A,0
- 1178 548F              mov [X-113],A
- 117A 5100              mov A,[__r4]
- 117C 0980              adc A,-128
- 117E 548E              mov [X-114],A
- 1180 8023              xjmp L113
- 1182           L112:
- 1182 62D000            mov REG[0xd0],>__r0
- 1185 5100              mov A,[__r0]
- 1187 08                push A
- 1188 5100              mov A,[__r1]
- 118A 08                push A
- 118B 5100              mov A,[__r2]
- 118D 08                push A
- 118E 5100              mov A,[__r3]
- 1190 08                push A
- 1191 7C0000            xcall __fp2long
- 1194 18                pop A
- 1195 5300              mov [__r1],A
- 1197 18                pop A
+ 1142 5100              mov A,[__r6]
+ 1144 08                push A
+ 1145 5100              mov A,[__r7]
+ 1147 08                push A
+ 1148 7C0000            xcall __fp2long
+ 114B 18                pop A
+ 114C 5300              mov [__r5],A
+ 114E 18                pop A
+ 114F 5300              mov [__r4],A
+ 1151 38FE              add SP,-2
+ 1153 5100              mov A,[__r5]
+ 1155 0100              add A,0
+ 1157 548F              mov [X-113],A
+ 1159 5100              mov A,[__r4]
+ 115B 0980              adc A,-128
+ 115D 548E              mov [X-114],A
+ 115F 8023              xjmp L111
+ 1161           L110:
+ 1161 62D000            mov REG[0xd0],>__r0
+ 1164 5100              mov A,[__r0]
+ 1166 08                push A
+ 1167 5100              mov A,[__r1]
+ 1169 08                push A
+ 116A 5100              mov A,[__r2]
+ 116C 08                push A
+ 116D 5100              mov A,[__r3]
+ 116F 08                push A
+ 1170 7C0000            xcall __fp2long
+ 1173 18                pop A
+ 1174 5300              mov [__r1],A
+ 1176 18                pop A
+ 1177 5300              mov [__r0],A
+ 1179 38FE              add SP,-2
+ 117B 5100              mov A,[__r1]
+ 117D 548F              mov [X-113],A
+ 117F 5100              mov A,[__r0]
+ 1181 548E              mov [X-114],A
+ 1183           L111:
+ 1183 62D000            mov REG[0xd0],>__r0
+ 1186 550007            mov [__r0],7
+ 1189 5A00              mov [__r1],X
+ 118B 060009            add [__r1],9
+ 118E 5200              mov A,[X+0]
+ 1190 0200              add A,[__r1]
+ 1192 5300              mov [__r1],A
+ 1194 5000              mov A,0
+ 1196 0A00              adc A,[__r0]
  1198 5300              mov [__r0],A
- 119A 38FE              add SP,-2
- 119C 5100              mov A,[__r1]
- 119E 548F              mov [X-113],A
- 11A0 5100              mov A,[__r0]
- 11A2 548E              mov [X-114],A
- 11A4           L113:
- 11A4 62D000            mov REG[0xd0],>__r0
- 11A7 550007            mov [__r0],7
- 11AA 5A00              mov [__r1],X
- 11AC 060009            add [__r1],9
- 11AF 5200              mov A,[X+0]
- 11B1 0200              add A,[__r1]
- 11B3 5300              mov [__r1],A
- 11B5 5000              mov A,0
- 11B7 0A00              adc A,[__r0]
- 11B9 5300              mov [__r0],A
- 11BB 528F              mov A,[X-113]
- 11BD 5300              mov [__r2],A
- 11BF 5100              mov A,[__r0]
- 11C1 60D5              mov REG[0xd5],A
- 11C3 5100              mov A,[__r2]
- 11C5 3F00              mvi [__r1],A
- 11C7                   .dbline 307
- 11C7           ;                               }       
- 11C7           L108:
- 11C7                   .dbline 304
- 11C7 7700              inc [X+0]
- 11C9           L110:
- 11C9                   .dbline 304
- 11C9 3D0080            cmp [X+0],-128
- 11CC CBD8              jc L107
- 11CE           X46:
- 11CE                   .dbline 308
- 11CE           ;                               SPIRAM_WriteArray(addr, temp, 128);
- 11CE 5080              mov A,-128
- 11D0 08                push A
- 11D1 62D000            mov REG[0xd0],>__r0
- 11D4 5A00              mov [__r1],X
- 11D6 060009            add [__r1],9
- 11D9 5007              mov A,7
- 11DB 08                push A
- 11DC 5100              mov A,[__r1]
- 11DE 08                push A
- 11DF 5201              mov A,[X+1]
- 11E1 08                push A
- 11E2 5202              mov A,[X+2]
- 11E4 08                push A
- 11E5 7C0000            xcall _SPIRAM_WriteArray
- 11E8 38FB              add SP,-5
- 11EA                   .dbline 309
- 11EA           ;                       }
- 11EA           L104:
- 11EA                   .dbline 302
- 11EA 070280            add [X+2],-128
- 11ED 0F0100            adc [X+1],0
- 11F0           L106:
- 11F0                   .dbline 302
- 11F0 5202              mov A,[X+2]
- 11F2 138A              sub A,[X-118]
- 11F4 5201              mov A,[X+1]
- 11F6 1B89              sbb A,[X-119]
- 11F8 CBA7              jc L103
- 11FA           X47:
- 11FA                   .dbline 310
- 11FA           ;                       break;
- 11FA 82B2              xjmp L74
- 11FC           L114:
- 11FC                   .dbline 313
- 11FC           ;               
- 11FC           ;               case 3:
- 11FC           ;                       for (addr = startAddr; addr < endAddr; addr += 128)
- 11FC 5204              mov A,[X+4]
- 11FE 5402              mov [X+2],A
- 1200 5203              mov A,[X+3]
- 1202 5401              mov [X+1],A
- 1204 829E              xjmp L118
- 1206           L115:
- 1206                   .dbline 314
- 1206           ;                       {
- 1206                   .dbline 315
- 1206           ;                               for(i = 0; i < 128; i++)
- 1206 560000            mov [X+0],0
- 1209 8272              xjmp L122
- 120B           L119:
- 120B                   .dbline 316
- 120B           ;                               {
- 120B                   .dbline 317
- 120B           ;                                       temp[i] = (char)(0.4 + 0.5*sin(100*pi*((addr - startAddr) + i))*(128/2.5));
- 120B 62D000            mov REG[0xd0],>__r0
- 120E 5200              mov A,[X+0]
- 1210 5300              mov [__r1],A
- 1212 550000            mov [__r0],0
- 1215 5202              mov A,[X+2]
- 1217 1304              sub A,[X+4]
- 1219 5300              mov [__r3],A
- 121B 5201              mov A,[X+1]
- 121D 1B03              sbb A,[X+3]
- 121F 5300              mov [__r2],A
- 1221 5100              mov A,[__r3]
- 1223 0200              add A,[__r1]
- 1225 5300              mov [__r1],A
- 1227 5100              mov A,[__r2]
- 1229 0A00              adc A,[__r0]
- 122B 5300              mov [__r0],A
- 122D 5100              mov A,[__r1]
- 122F 2101              and A,1
- 1231 5300              mov [__r3],A
- 1233 5100              mov A,[__r0]
- 1235 2100              and A,0
- 1237 5300              mov [__r2],A
- 1239 5100              mov A,[__r3]
- 123B 5300              mov [__r7],A
- 123D 5100              mov A,[__r2]
- 123F 5300              mov [__r6],A
- 1241 470080            tst [__r6],-128
- 1244 A009              jz X48
- 1246 5500FF            mov [__r5],-1
- 1249 5500FF            mov [__r4],-1
- 124C 800A              jmp X49
- 124E           X48:
- 124E 62D000            mov REG[0xd0],>__r0
- 1251 550000            mov [__r5],0
- 1254 550000            mov [__r4],0
- 1257           X49:
- 1257 62D000            mov REG[0xd0],>__r0
- 125A 5100              mov A,[__r4]
- 125C 08                push A
- 125D 5100              mov A,[__r5]
- 125F 08                push A
- 1260 5100              mov A,[__r6]
- 1262 08                push A
- 1263 5100              mov A,[__r7]
- 1265 08                push A
- 1266 7C0000            xcall __long2fp
- 1269 18                pop A
- 126A 5300              mov [__r7],A
- 126C 18                pop A
- 126D 5300              mov [__r6],A
- 126F 18                pop A
- 1270 5300              mov [__r5],A
- 1272 18                pop A
- 1273 5300              mov [__r4],A
- 1275 70FB              and F,-5
- 1277 6E00              rrc [__r0]
- 1279 6E00              rrc [__r1]
- 127B 5100              mov A,[__r1]
- 127D 5300              mov [__r3],A
- 127F 5100              mov A,[__r0]
- 1281 5300              mov [__r2],A
- 1283 470080            tst [__r2],-128
- 1286 A009              jz X50
- 1288 5500FF            mov [__r1],-1
- 128B 5500FF            mov [__r0],-1
- 128E 800A              jmp X51
- 1290           X50:
- 1290 62D000            mov REG[0xd0],>__r0
- 1293 550000            mov [__r1],0
- 1296 550000            mov [__r0],0
- 1299           X51:
- 1299 62D000            mov REG[0xd0],>__r0
- 129C 5100              mov A,[__r0]
- 129E 08                push A
- 129F 5100              mov A,[__r1]
- 12A1 08                push A
- 12A2 5100              mov A,[__r2]
+ 119A 528F              mov A,[X-113]
+ 119C 5300              mov [__r2],A
+ 119E 5100              mov A,[__r0]
+ 11A0 60D5              mov REG[0xd5],A
+ 11A2 5100              mov A,[__r2]
+ 11A4 3F00              mvi [__r1],A
+ 11A6                   .dbline 305
+ 11A6           ;                               }       
+ 11A6           L106:
+ 11A6                   .dbline 302
+ 11A6 7700              inc [X+0]
+ 11A8           L108:
+ 11A8                   .dbline 302
+ 11A8 3D0080            cmp [X+0],-128
+ 11AB CBD8              jc L105
+ 11AD           X46:
+ 11AD                   .dbline 306
+ 11AD           ;                               SPIRAM_WriteArray(addr, temp, 128);
+ 11AD 5080              mov A,-128
+ 11AF 08                push A
+ 11B0 62D000            mov REG[0xd0],>__r0
+ 11B3 5A00              mov [__r1],X
+ 11B5 060009            add [__r1],9
+ 11B8 5007              mov A,7
+ 11BA 08                push A
+ 11BB 5100              mov A,[__r1]
+ 11BD 08                push A
+ 11BE 5201              mov A,[X+1]
+ 11C0 08                push A
+ 11C1 5202              mov A,[X+2]
+ 11C3 08                push A
+ 11C4 7C0000            xcall _SPIRAM_WriteArray
+ 11C7 38FB              add SP,-5
+ 11C9                   .dbline 307
+ 11C9           ;                       }
+ 11C9           L102:
+ 11C9                   .dbline 300
+ 11C9 070280            add [X+2],-128
+ 11CC 0F0100            adc [X+1],0
+ 11CF           L104:
+ 11CF                   .dbline 300
+ 11CF 5202              mov A,[X+2]
+ 11D1 138A              sub A,[X-118]
+ 11D3 5201              mov A,[X+1]
+ 11D5 1B89              sbb A,[X-119]
+ 11D7 CBA7              jc L101
+ 11D9           X47:
+ 11D9                   .dbline 308
+ 11D9           ;                       break;
+ 11D9 82B2              xjmp L74
+ 11DB           L112:
+ 11DB                   .dbline 311
+ 11DB           ;               
+ 11DB           ;               case 3:
+ 11DB           ;                       for (addr = startAddr; addr < endAddr; addr += 128)
+ 11DB 5204              mov A,[X+4]
+ 11DD 5402              mov [X+2],A
+ 11DF 5203              mov A,[X+3]
+ 11E1 5401              mov [X+1],A
+ 11E3 829E              xjmp L116
+ 11E5           L113:
+ 11E5                   .dbline 312
+ 11E5           ;                       {
+ 11E5                   .dbline 313
+ 11E5           ;                               for(i = 0; i < 128; i++)
+ 11E5 560000            mov [X+0],0
+ 11E8 8272              xjmp L120
+ 11EA           L117:
+ 11EA                   .dbline 314
+ 11EA           ;                               {
+ 11EA                   .dbline 315
+ 11EA           ;                                       temp[i] = (char)(0.4 + 0.5*sin(100*pi*((addr - startAddr) + i))*(128/2.5));
+ 11EA 62D000            mov REG[0xd0],>__r0
+ 11ED 5200              mov A,[X+0]
+ 11EF 5300              mov [__r1],A
+ 11F1 550000            mov [__r0],0
+ 11F4 5202              mov A,[X+2]
+ 11F6 1304              sub A,[X+4]
+ 11F8 5300              mov [__r3],A
+ 11FA 5201              mov A,[X+1]
+ 11FC 1B03              sbb A,[X+3]
+ 11FE 5300              mov [__r2],A
+ 1200 5100              mov A,[__r3]
+ 1202 0200              add A,[__r1]
+ 1204 5300              mov [__r1],A
+ 1206 5100              mov A,[__r2]
+ 1208 0A00              adc A,[__r0]
+ 120A 5300              mov [__r0],A
+ 120C 5100              mov A,[__r1]
+ 120E 2101              and A,1
+ 1210 5300              mov [__r3],A
+ 1212 5100              mov A,[__r0]
+ 1214 2100              and A,0
+ 1216 5300              mov [__r2],A
+ 1218 5100              mov A,[__r3]
+ 121A 5300              mov [__r7],A
+ 121C 5100              mov A,[__r2]
+ 121E 5300              mov [__r6],A
+ 1220 470080            tst [__r6],-128
+ 1223 A009              jz X48
+ 1225 5500FF            mov [__r5],-1
+ 1228 5500FF            mov [__r4],-1
+ 122B 800A              jmp X49
+ 122D           X48:
+ 122D 62D000            mov REG[0xd0],>__r0
+ 1230 550000            mov [__r5],0
+ 1233 550000            mov [__r4],0
+ 1236           X49:
+ 1236 62D000            mov REG[0xd0],>__r0
+ 1239 5100              mov A,[__r4]
+ 123B 08                push A
+ 123C 5100              mov A,[__r5]
+ 123E 08                push A
+ 123F 5100              mov A,[__r6]
+ 1241 08                push A
+ 1242 5100              mov A,[__r7]
+ 1244 08                push A
+ 1245 7C0000            xcall __long2fp
+ 1248 18                pop A
+ 1249 5300              mov [__r7],A
+ 124B 18                pop A
+ 124C 5300              mov [__r6],A
+ 124E 18                pop A
+ 124F 5300              mov [__r5],A
+ 1251 18                pop A
+ 1252 5300              mov [__r4],A
+ 1254 70FB              and F,-5
+ 1256 6E00              rrc [__r0]
+ 1258 6E00              rrc [__r1]
+ 125A 5100              mov A,[__r1]
+ 125C 5300              mov [__r3],A
+ 125E 5100              mov A,[__r0]
+ 1260 5300              mov [__r2],A
+ 1262 470080            tst [__r2],-128
+ 1265 A009              jz X50
+ 1267 5500FF            mov [__r1],-1
+ 126A 5500FF            mov [__r0],-1
+ 126D 800A              jmp X51
+ 126F           X50:
+ 126F 62D000            mov REG[0xd0],>__r0
+ 1272 550000            mov [__r1],0
+ 1275 550000            mov [__r0],0
+ 1278           X51:
+ 1278 62D000            mov REG[0xd0],>__r0
+ 127B 5100              mov A,[__r0]
+ 127D 08                push A
+ 127E 5100              mov A,[__r1]
+ 1280 08                push A
+ 1281 5100              mov A,[__r2]
+ 1283 08                push A
+ 1284 5100              mov A,[__r3]
+ 1286 08                push A
+ 1287 7C0000            xcall __long2fp
+ 128A 18                pop A
+ 128B 5300              mov [__r3],A
+ 128D 18                pop A
+ 128E 5300              mov [__r2],A
+ 1290 18                pop A
+ 1291 5300              mov [__r1],A
+ 1293 18                pop A
+ 1294 08                push A
+ 1295 5100              mov A,[__r1]
+ 1297 08                push A
+ 1298 5100              mov A,[__r2]
+ 129A 08                push A
+ 129B 5100              mov A,[__r3]
+ 129D 08                push A
+ 129E 5040              mov A,64
+ 12A0 08                push A
+ 12A1 5000              mov A,0
+ 12A3 08                push A
  12A4 08                push A
- 12A5 5100              mov A,[__r3]
- 12A7 08                push A
- 12A8 7C0000            xcall __long2fp
- 12AB 18                pop A
- 12AC 5300              mov [__r3],A
- 12AE 18                pop A
- 12AF 5300              mov [__r2],A
- 12B1 18                pop A
- 12B2 5300              mov [__r1],A
- 12B4 18                pop A
- 12B5 08                push A
- 12B6 5100              mov A,[__r1]
- 12B8 08                push A
- 12B9 5100              mov A,[__r2]
- 12BB 08                push A
- 12BC 5100              mov A,[__r3]
- 12BE 08                push A
- 12BF 5040              mov A,64
- 12C1 08                push A
- 12C2 5000              mov A,0
- 12C4 08                push A
+ 12A5 08                push A
+ 12A6 7C0000            xcall __fpmul
+ 12A9 18                pop A
+ 12AA 5300              mov [__r3],A
+ 12AC 18                pop A
+ 12AD 5300              mov [__r2],A
+ 12AF 18                pop A
+ 12B0 5300              mov [__r1],A
+ 12B2 18                pop A
+ 12B3 5300              mov [__r0],A
+ 12B5 38FC              add SP,-4
+ 12B7 5100              mov A,[__r4]
+ 12B9 08                push A
+ 12BA 5100              mov A,[__r5]
+ 12BC 08                push A
+ 12BD 5100              mov A,[__r6]
+ 12BF 08                push A
+ 12C0 5100              mov A,[__r7]
+ 12C2 08                push A
+ 12C3 5100              mov A,[__r0]
  12C5 08                push A
- 12C6 08                push A
- 12C7 7C0000            xcall __fpmul
- 12CA 18                pop A
- 12CB 5300              mov [__r3],A
- 12CD 18                pop A
- 12CE 5300              mov [__r2],A
- 12D0 18                pop A
- 12D1 5300              mov [__r1],A
- 12D3 18                pop A
- 12D4 5300              mov [__r0],A
- 12D6 38FC              add SP,-4
- 12D8 5100              mov A,[__r4]
- 12DA 08                push A
- 12DB 5100              mov A,[__r5]
- 12DD 08                push A
- 12DE 5100              mov A,[__r6]
- 12E0 08                push A
- 12E1 5100              mov A,[__r7]
- 12E3 08                push A
- 12E4 5100              mov A,[__r0]
- 12E6 08                push A
- 12E7 5100              mov A,[__r1]
- 12E9 08                push A
- 12EA 5100              mov A,[__r2]
- 12EC 08                push A
- 12ED 5100              mov A,[__r3]
- 12EF 08                push A
- 12F0 7C0000            xcall __fpadd
- 12F3 18                pop A
- 12F4 5300              mov [__r3],A
- 12F6 18                pop A
- 12F7 5300              mov [__r2],A
+ 12C6 5100              mov A,[__r1]
+ 12C8 08                push A
+ 12C9 5100              mov A,[__r2]
+ 12CB 08                push A
+ 12CC 5100              mov A,[__r3]
+ 12CE 08                push A
+ 12CF 7C0000            xcall __fpadd
+ 12D2 18                pop A
+ 12D3 5300              mov [__r3],A
+ 12D5 18                pop A
+ 12D6 5300              mov [__r2],A
+ 12D8 18                pop A
+ 12D9 5300              mov [__r1],A
+ 12DB 18                pop A
+ 12DC 5300              mov [__r0],A
+ 12DE 38FC              add SP,-4
+ 12E0 5205              mov A,[X+5]
+ 12E2 08                push A
+ 12E3 5206              mov A,[X+6]
+ 12E5 08                push A
+ 12E6 5207              mov A,[X+7]
+ 12E8 08                push A
+ 12E9 5208              mov A,[X+8]
+ 12EB 08                push A
+ 12EC 5042              mov A,66
+ 12EE 08                push A
+ 12EF 50C8              mov A,-56
+ 12F1 08                push A
+ 12F2 5000              mov A,0
+ 12F4 08                push A
+ 12F5 08                push A
+ 12F6 7C0000            xcall __fpmul
  12F9 18                pop A
- 12FA 5300              mov [__r1],A
+ 12FA 5300              mov [__r7],A
  12FC 18                pop A
- 12FD 5300              mov [__r0],A
- 12FF 38FC              add SP,-4
- 1301 5205              mov A,[X+5]
- 1303 08                push A
- 1304 5206              mov A,[X+6]
- 1306 08                push A
- 1307 5207              mov A,[X+7]
+ 12FD 5300              mov [__r6],A
+ 12FF 18                pop A
+ 1300 5300              mov [__r5],A
+ 1302 18                pop A
+ 1303 5300              mov [__r4],A
+ 1305 38FC              add SP,-4
+ 1307 5100              mov A,[__r0]
  1309 08                push A
- 130A 5208              mov A,[X+8]
+ 130A 5100              mov A,[__r1]
  130C 08                push A
- 130D 5042              mov A,66
+ 130D 5100              mov A,[__r2]
  130F 08                push A
- 1310 50C8              mov A,-56
+ 1310 5100              mov A,[__r3]
  1312 08                push A
- 1313 5000              mov A,0
+ 1313 5100              mov A,[__r4]
  1315 08                push A
- 1316 08                push A
- 1317 7C0000            xcall __fpmul
- 131A 18                pop A
- 131B 5300              mov [__r7],A
- 131D 18                pop A
- 131E 5300              mov [__r6],A
- 1320 18                pop A
- 1321 5300              mov [__r5],A
- 1323 18                pop A
- 1324 5300              mov [__r4],A
- 1326 38FC              add SP,-4
- 1328 5100              mov A,[__r0]
- 132A 08                push A
- 132B 5100              mov A,[__r1]
- 132D 08                push A
- 132E 5100              mov A,[__r2]
- 1330 08                push A
- 1331 5100              mov A,[__r3]
- 1333 08                push A
- 1334 5100              mov A,[__r4]
- 1336 08                push A
- 1337 5100              mov A,[__r5]
- 1339 08                push A
- 133A 5100              mov A,[__r6]
- 133C 08                push A
- 133D 5100              mov A,[__r7]
- 133F 08                push A
- 1340 7C0000            xcall __fpmul
- 1343 18                pop A
- 1344 5300              mov [__r3],A
- 1346 18                pop A
- 1347 5300              mov [__r2],A
- 1349 18                pop A
- 134A 5300              mov [__r1],A
- 134C 18                pop A
- 134D 38FC              add SP,-4
- 134F 08                push A
- 1350 5100              mov A,[__r1]
+ 1316 5100              mov A,[__r5]
+ 1318 08                push A
+ 1319 5100              mov A,[__r6]
+ 131B 08                push A
+ 131C 5100              mov A,[__r7]
+ 131E 08                push A
+ 131F 7C0000            xcall __fpmul
+ 1322 18                pop A
+ 1323 5300              mov [__r3],A
+ 1325 18                pop A
+ 1326 5300              mov [__r2],A
+ 1328 18                pop A
+ 1329 5300              mov [__r1],A
+ 132B 18                pop A
+ 132C 38FC              add SP,-4
+ 132E 08                push A
+ 132F 5100              mov A,[__r1]
+ 1331 08                push A
+ 1332 5100              mov A,[__r2]
+ 1334 08                push A
+ 1335 5100              mov A,[__r3]
+ 1337 08                push A
+ 1338 7C0000            xcall _sinf
+ 133B 38FC              add SP,-4
+ 133D 62D000            mov REG[0xd0],>__r0
+ 1340 5100              mov A,[__r0]
+ 1342 08                push A
+ 1343 5100              mov A,[__r1]
+ 1345 08                push A
+ 1346 5100              mov A,[__r2]
+ 1348 08                push A
+ 1349 5100              mov A,[__r3]
+ 134B 08                push A
+ 134C 503F              mov A,63
+ 134E 08                push A
+ 134F 5000              mov A,0
+ 1351 08                push A
  1352 08                push A
- 1353 5100              mov A,[__r2]
- 1355 08                push A
- 1356 5100              mov A,[__r3]
- 1358 08                push A
- 1359 7C0000            xcall _sinf
- 135C 38FC              add SP,-4
- 135E 62D000            mov REG[0xd0],>__r0
- 1361 5100              mov A,[__r0]
+ 1353 08                push A
+ 1354 7C0000            xcall __fpmul
+ 1357 18                pop A
+ 1358 5300              mov [__r3],A
+ 135A 18                pop A
+ 135B 5300              mov [__r2],A
+ 135D 18                pop A
+ 135E 5300              mov [__r1],A
+ 1360 18                pop A
+ 1361 38FC              add SP,-4
  1363 08                push A
  1364 5100              mov A,[__r1]
  1366 08                push A
@@ -3472,457 +3468,435 @@
  1369 08                push A
  136A 5100              mov A,[__r3]
  136C 08                push A
- 136D 503F              mov A,63
+ 136D 5042              mov A,66
  136F 08                push A
- 1370 5000              mov A,0
+ 1370 504C              mov A,76
  1372 08                push A
- 1373 08                push A
- 1374 08                push A
- 1375 7C0000            xcall __fpmul
- 1378 18                pop A
- 1379 5300              mov [__r3],A
- 137B 18                pop A
- 137C 5300              mov [__r2],A
- 137E 18                pop A
- 137F 5300              mov [__r1],A
- 1381 18                pop A
- 1382 38FC              add SP,-4
- 1384 08                push A
- 1385 5100              mov A,[__r1]
- 1387 08                push A
- 1388 5100              mov A,[__r2]
- 138A 08                push A
- 138B 5100              mov A,[__r3]
- 138D 08                push A
- 138E 5042              mov A,66
+ 1373 50CC              mov A,-52
+ 1375 08                push A
+ 1376 50CD              mov A,-51
+ 1378 08                push A
+ 1379 7C0000            xcall __fpmul
+ 137C 18                pop A
+ 137D 5300              mov [__r3],A
+ 137F 18                pop A
+ 1380 5300              mov [__r2],A
+ 1382 18                pop A
+ 1383 5300              mov [__r1],A
+ 1385 18                pop A
+ 1386 5300              mov [__r0],A
+ 1388 38FC              add SP,-4
+ 138A 503E              mov A,62
+ 138C 08                push A
+ 138D 50CC              mov A,-52
+ 138F 08                push A
  1390 08                push A
- 1391 504C              mov A,76
+ 1391 50CD              mov A,-51
  1393 08                push A
- 1394 50CC              mov A,-52
+ 1394 5100              mov A,[__r0]
  1396 08                push A
- 1397 50CD              mov A,-51
+ 1397 5100              mov A,[__r1]
  1399 08                push A
- 139A 7C0000            xcall __fpmul
- 139D 18                pop A
- 139E 5300              mov [__r3],A
- 13A0 18                pop A
- 13A1 5300              mov [__r2],A
+ 139A 5100              mov A,[__r2]
+ 139C 08                push A
+ 139D 5100              mov A,[__r3]
+ 139F 08                push A
+ 13A0 7C0000            xcall __fpadd
  13A3 18                pop A
- 13A4 5300              mov [__r1],A
+ 13A4 5300              mov [__r3],A
  13A6 18                pop A
- 13A7 5300              mov [__r0],A
- 13A9 38FC              add SP,-4
- 13AB 503E              mov A,62
- 13AD 08                push A
- 13AE 50CC              mov A,-52
- 13B0 08                push A
- 13B1 08                push A
- 13B2 50CD              mov A,-51
- 13B4 08                push A
- 13B5 5100              mov A,[__r0]
+ 13A7 5300              mov [__r2],A
+ 13A9 18                pop A
+ 13AA 5300              mov [__r1],A
+ 13AC 18                pop A
+ 13AD 5300              mov [__r0],A
+ 13AF 38FC              add SP,-4
+ 13B1 5047              mov A,71
+ 13B3 08                push A
+ 13B4 5000              mov A,0
+ 13B6 08                push A
  13B7 08                push A
- 13B8 5100              mov A,[__r1]
- 13BA 08                push A
- 13BB 5100              mov A,[__r2]
- 13BD 08                push A
- 13BE 5100              mov A,[__r3]
- 13C0 08                push A
- 13C1 7C0000            xcall __fpadd
- 13C4 18                pop A
- 13C5 5300              mov [__r3],A
- 13C7 18                pop A
- 13C8 5300              mov [__r2],A
- 13CA 18                pop A
- 13CB 5300              mov [__r1],A
- 13CD 18                pop A
- 13CE 5300              mov [__r0],A
- 13D0 38FC              add SP,-4
- 13D2 5047              mov A,71
+ 13B8 08                push A
+ 13B9 5100              mov A,[__r0]
+ 13BB 08                push A
+ 13BC 5100              mov A,[__r1]
+ 13BE 08                push A
+ 13BF 5100              mov A,[__r2]
+ 13C1 08                push A
+ 13C2 5100              mov A,[__r3]
+ 13C4 08                push A
+ 13C5 7C0000            xcall __fpcmp
+ 13C8 38F8              add SP,-8
+ 13CA 39FF              cmp A,-1
+ 13CC A047              jz L122
+ 13CE 5047              mov A,71
+ 13D0 08                push A
+ 13D1 5000              mov A,0
+ 13D3 08                push A
  13D4 08                push A
- 13D5 5000              mov A,0
- 13D7 08                push A
+ 13D5 08                push A
+ 13D6 5100              mov A,[__r0]
  13D8 08                push A
- 13D9 08                push A
- 13DA 5100              mov A,[__r0]
- 13DC 08                push A
- 13DD 5100              mov A,[__r1]
- 13DF 08                push A
- 13E0 5100              mov A,[__r2]
- 13E2 08                push A
- 13E3 5100              mov A,[__r3]
- 13E5 08                push A
- 13E6 7C0000            xcall __fpcmp
- 13E9 38F8              add SP,-8
- 13EB 39FF              cmp A,-1
- 13ED A047              jz L124
- 13EF 5047              mov A,71
+ 13D9 5100              mov A,[__r1]
+ 13DB 08                push A
+ 13DC 5100              mov A,[__r2]
+ 13DE 08                push A
+ 13DF 5100              mov A,[__r3]
+ 13E1 08                push A
+ 13E2 7C0000            xcall __fpsub
+ 13E5 18                pop A
+ 13E6 5300              mov [__r7],A
+ 13E8 18                pop A
+ 13E9 5300              mov [__r6],A
+ 13EB 18                pop A
+ 13EC 5300              mov [__r5],A
+ 13EE 18                pop A
+ 13EF 38FC              add SP,-4
  13F1 08                push A
- 13F2 5000              mov A,0
+ 13F2 5100              mov A,[__r5]
  13F4 08                push A
- 13F5 08                push A
- 13F6 08                push A
- 13F7 5100              mov A,[__r0]
- 13F9 08                push A
- 13FA 5100              mov A,[__r1]
- 13FC 08                push A
- 13FD 5100              mov A,[__r2]
- 13FF 08                push A
- 1400 5100              mov A,[__r3]
- 1402 08                push A
- 1403 7C0000            xcall __fpsub
- 1406 18                pop A
- 1407 5300              mov [__r7],A
- 1409 18                pop A
- 140A 5300              mov [__r6],A
- 140C 18                pop A
- 140D 5300              mov [__r5],A
- 140F 18                pop A
- 1410 38FC              add SP,-4
- 1412 08                push A
- 1413 5100              mov A,[__r5]
- 1415 08                push A
- 1416 5100              mov A,[__r6]
- 1418 08                push A
- 1419 5100              mov A,[__r7]
- 141B 08                push A
- 141C 7C0000            xcall __fp2long
- 141F 18                pop A
- 1420 5300              mov [__r5],A
- 1422 18                pop A
- 1423 5300              mov [__r4],A
- 1425 38FE              add SP,-2
- 1427 5100              mov A,[__r5]
- 1429 0100              add A,0
- 142B 548F              mov [X-113],A
- 142D 5100              mov A,[__r4]
- 142F 0980              adc A,-128
- 1431 548E              mov [X-114],A
- 1433 8023              xjmp L125
- 1435           L124:
- 1435 62D000            mov REG[0xd0],>__r0
- 1438 5100              mov A,[__r0]
- 143A 08                push A
- 143B 5100              mov A,[__r1]
- 143D 08                push A
- 143E 5100              mov A,[__r2]
- 1440 08                push A
- 1441 5100              mov A,[__r3]
- 1443 08                push A
- 1444 7C0000            xcall __fp2long
- 1447 18                pop A
- 1448 5300              mov [__r1],A
- 144A 18                pop A
+ 13F5 5100              mov A,[__r6]
+ 13F7 08                push A
+ 13F8 5100              mov A,[__r7]
+ 13FA 08                push A
+ 13FB 7C0000            xcall __fp2long
+ 13FE 18                pop A
+ 13FF 5300              mov [__r5],A
+ 1401 18                pop A
+ 1402 5300              mov [__r4],A
+ 1404 38FE              add SP,-2
+ 1406 5100              mov A,[__r5]
+ 1408 0100              add A,0
+ 140A 548F              mov [X-113],A
+ 140C 5100              mov A,[__r4]
+ 140E 0980              adc A,-128
+ 1410 548E              mov [X-114],A
+ 1412 8023              xjmp L123
+ 1414           L122:
+ 1414 62D000            mov REG[0xd0],>__r0
+ 1417 5100              mov A,[__r0]
+ 1419 08                push A
+ 141A 5100              mov A,[__r1]
+ 141C 08                push A
+ 141D 5100              mov A,[__r2]
+ 141F 08                push A
+ 1420 5100              mov A,[__r3]
+ 1422 08                push A
+ 1423 7C0000            xcall __fp2long
+ 1426 18                pop A
+ 1427 5300              mov [__r1],A
+ 1429 18                pop A
+ 142A 5300              mov [__r0],A
+ 142C 38FE              add SP,-2
+ 142E 5100              mov A,[__r1]
+ 1430 548F              mov [X-113],A
+ 1432 5100              mov A,[__r0]
+ 1434 548E              mov [X-114],A
+ 1436           L123:
+ 1436 62D000            mov REG[0xd0],>__r0
+ 1439 550007            mov [__r0],7
+ 143C 5A00              mov [__r1],X
+ 143E 060009            add [__r1],9
+ 1441 5200              mov A,[X+0]
+ 1443 0200              add A,[__r1]
+ 1445 5300              mov [__r1],A
+ 1447 5000              mov A,0
+ 1449 0A00              adc A,[__r0]
  144B 5300              mov [__r0],A
- 144D 38FE              add SP,-2
- 144F 5100              mov A,[__r1]
- 1451 548F              mov [X-113],A
- 1453 5100              mov A,[__r0]
- 1455 548E              mov [X-114],A
- 1457           L125:
- 1457 62D000            mov REG[0xd0],>__r0
- 145A 550007            mov [__r0],7
- 145D 5A00              mov [__r1],X
- 145F 060009            add [__r1],9
- 1462 5200              mov A,[X+0]
- 1464 0200              add A,[__r1]
- 1466 5300              mov [__r1],A
- 1468 5000              mov A,0
- 146A 0A00              adc A,[__r0]
- 146C 5300              mov [__r0],A
- 146E 528F              mov A,[X-113]
- 1470 5300              mov [__r2],A
- 1472 5100              mov A,[__r0]
- 1474 60D5              mov REG[0xd5],A
- 1476 5100              mov A,[__r2]
- 1478 3F00              mvi [__r1],A
- 147A                   .dbline 318
- 147A           ;                               }       
- 147A           L120:
- 147A                   .dbline 315
- 147A 7700              inc [X+0]
- 147C           L122:
- 147C                   .dbline 315
- 147C 3D0080            cmp [X+0],-128
- 147F CD8B              jc L119
- 1481           X53:
- 1481                   .dbline 319
- 1481           ;                               SPIRAM_WriteArray(addr, temp, 128);
- 1481 5080              mov A,-128
- 1483 08                push A
- 1484 62D000            mov REG[0xd0],>__r0
- 1487 5A00              mov [__r1],X
- 1489 060009            add [__r1],9
- 148C 5007              mov A,7
- 148E 08                push A
- 148F 5100              mov A,[__r1]
- 1491 08                push A
- 1492 5201              mov A,[X+1]
- 1494 08                push A
- 1495 5202              mov A,[X+2]
- 1497 08                push A
- 1498 7C0000            xcall _SPIRAM_WriteArray
- 149B 38FB              add SP,-5
- 149D                   .dbline 320
- 149D           ;                       }
- 149D           L116:
- 149D                   .dbline 313
- 149D 070280            add [X+2],-128
- 14A0 0F0100            adc [X+1],0
- 14A3           L118:
- 14A3                   .dbline 313
- 14A3 5202              mov A,[X+2]
- 14A5 138A              sub A,[X-118]
- 14A7 5201              mov A,[X+1]
- 14A9 1B89              sbb A,[X-119]
- 14AB CD5A              jc L115
- 14AD           X54:
- 14AD                   .dbline 321
- 14AD           ;                       break;
- 14AD           L73:
- 14AD           L74:
- 14AD                   .dbline -2
- 14AD           L72:
- 14AD 386C              add SP,-148
- 14AF 20                pop X
- 14B0                   .dbline 0 ; func end
- 14B0 7F                ret
- 14B1                   .dbsym l ii 139 c
- 14B1                   .dbsym l endAddr 137 i
- 14B1                   .dbsym l temp 9 A[128:128]c
- 14B1                   .dbsym l pi 5 D
- 14B1                   .dbsym l startAddr 3 i
- 14B1                   .dbsym l addr 1 i
- 14B1                   .dbsym l i 0 c
- 14B1                   .dbsym l id -4 c
- 14B1                   .dbend
- 14B1                   .dbfunc e main _main fV
- 14B1           ;            opt -> X+0
- 14B1           _main::
- 14B1                   .dbline -1
- 14B1 10                push X
- 14B2 4F                mov X,SP
- 14B3 3803              add SP,3
- 14B5                   .dbline 327
- 14B5           ;       }
- 14B5           ;       
- 14B5           ; }
- 14B5           ; 
- 14B5           ; void main(void)
- 14B5           ; {
- 14B5                   .dbline 331
- 14B5           ;       char opt;
- 14B5           ;       
- 14B5           ;       // Make sure nCS is high before doing anything
- 14B5           ;       nCS_HIGH;
- 14B5                   .dbline 331
- 14B5 430404            or REG[0x4],4
- 14B8                   .dbline 331
- 14B8                   .dbline 331
- 14B8                   .dbline 334
- 14B8           ;       
- 14B8           ;       // Enable user module interrupts
- 14B8           ;       SleepTimer_EnableInt();
- 14B8 10                push X
- 14B9 7C0000            xcall _SleepTimer_EnableInt
- 14BC 20                pop X
- 14BD                   .dbline 337
- 14BD           ; 
- 14BD           ;       // Enable global interrutps
- 14BD           ;       M8C_EnableGInt;
- 14BD 7101                      or  F, 01h
- 14BF           
- 14BF                   .dbline 340
- 14BF           ; 
- 14BF           ;       // Start the user modules
- 14BF           ;       UART_Start(UART_PARITY_NONE);
- 14BF 10                push X
- 14C0 5000              mov A,0
- 14C2 7C0000            xcall _UART_Start
- 14C5                   .dbline 341
- 14C5           ;       UART_PutCRLF();
- 14C5 7C0000            xcall _UART_PutCRLF
- 14C8                   .dbline 342
- 14C8           ;       SPIM_Start(SPIM_SPIM_MODE_0 | SPIM_SPIM_MSB_FIRST);
- 14C8 5000              mov A,0
- 14CA 7C0000            xcall _SPIM_Start
- 14CD                   .dbline 343
- 14CD           ;       SleepTimer_Start();
- 14CD 7C0000            xcall _SleepTimer_Start
- 14D0                   .dbline 344
- 14D0           ;       DAC8_Start(DAC8_FULLPOWER);
- 14D0 5003              mov A,3
- 14D2 7C0000            xcall _DAC8_Start
- 14D5                   .dbline 345
- 14D5           ;       UART_CPutString("Synthesiszing waveforms\r\n");
- 14D5 50E3              mov A,>L127
- 14D7 08                push A
- 14D8 50E3              mov A,<L127
- 14DA 5C                mov X,A
- 14DB 18                pop A
- 14DC 7C0000            xcall _UART_CPutString
- 14DF 20                pop X
- 14E0                   .dbline 346
- 14E0           ;       WriteBlock(0);
- 14E0 5000              mov A,0
- 14E2 08                push A
- 14E3 7C0429            xcall _WriteBlock
- 14E6                   .dbline 347
- 14E6           ;       WriteBlock(1);
- 14E6 5001              mov A,1
- 14E8 08                push A
- 14E9 7C0429            xcall _WriteBlock
- 14EC 38FE              add SP,-2
- 14EE                   .dbline 348
- 14EE           ;       WriteBlock(2);
- 14EE 5002              mov A,2
- 14F0 08                push A
- 14F1 7C0429            xcall _WriteBlock
- 14F4                   .dbline 349
- 14F4           ;       WriteBlock(3);
- 14F4 5003              mov A,3
- 14F6 08                push A
- 14F7 7C0429            xcall _WriteBlock
- 14FA 38FE              add SP,-2
- 14FC 8097              xjmp L129
- 14FE           L128:
- 14FE                   .dbline 351
- 14FE           ;       while(1) 
- 14FE           ;       {
- 14FE                   .dbline 352
- 14FE           ;               UART_CPutString("Synthetic wave output is on Port0[4]\r\nCowabunga Dude! Time to catch some waves.\r\n\r\n0. Play block 0\r\n1. Play block 1\r\n2. Play block 2\r\n3. Play block 3\r\n4. Test status register\r\n5. Test byte mode\r\n6. Test sequential mode\r\n");
- 14FE 10                push X
- 14FF 5006              mov A,>L131
- 1501 08                push A
- 1502 5006              mov A,<L131
- 1504 5C                mov X,A
- 1505 18                pop A
- 1506 7C0000            xcall _UART_CPutString
- 1509 20                pop X
- 150A                   .dbline 354
- 150A           ;               
- 150A           ;               opt = GetNumber(0, 6);
- 150A 5006              mov A,6
- 150C 08                push A
- 150D 5000              mov A,0
- 150F 08                push A
- 1510 7C0346            xcall _GetNumber
- 1513 38FE              add SP,-2
- 1515 62D000            mov REG[0xd0],>__r0
- 1518 5400              mov [X+0],A
- 151A                   .dbline 355
- 151A           ;               switch (opt)
- 151A 5200              mov A,[X+0]
- 151C 5402              mov [X+2],A
- 151E 560100            mov [X+1],0
- 1521 3D0100            cmp [X+1],0
- 1524 B006              jnz X58
- 1526 3D0204            cmp [X+2],4
- 1529 A020              jz L137
- 152B           X58:
- 152B 3D0100            cmp [X+1],0
- 152E B006              jnz X59
- 1530 3D0205            cmp [X+2],5
- 1533 A02B              jz L141
- 1535           X59:
- 1535 3D0100            cmp [X+1],0
- 1538 B006              jnz X60
- 153A 3D0206            cmp [X+2],6
- 153D A03C              jz L145
- 153F           X60:
- 153F 804C              xjmp L132
- 1541           L136:
- 1541                   .dbline 359
- 1541           ;               {
- 1541           ;                       case 4:
- 1541           ;                               while(SPIRAM_StatusRegisterTest()) 
- 1541           ;                                       SleepTimer_SyncWait(4, SleepTimer_WAIT_RELOAD);
- 1541 10                push X
- 1542 5700              mov X,0
- 1544 5004              mov A,4
- 1546 7C0000            xcall _SleepTimer_SyncWait
- 1549 20                pop X
- 154A           L137:
- 154A                   .dbline 358
- 154A 7C0000            xcall _SPIRAM_StatusRegisterTest
- 154D 62D000            mov REG[0xd0],>__r0
- 1550 3900              cmp A,0
- 1552 BFEE              jnz L136
- 1554                   .dbline 360
- 1554           ;                               break;
- 1554 803F              xjmp L133
- 1556           L140:
- 1556                   .dbline 364
- 1556           ;                       
- 1556           ;                       case 5:
- 1556           ;                               while(SPIRAM_ByteModeTest()) 
- 1556           ;                                       SleepTimer_SyncWait(4, SleepTimer_WAIT_RELOAD); 
- 1556 10                push X
- 1557 5700              mov X,0
- 1559 5004              mov A,4
- 155B 7C0000            xcall _SleepTimer_SyncWait
- 155E 20                pop X
- 155F           L141:
- 155F                   .dbline 363
- 155F 7C00FB            xcall _SPIRAM_ByteModeTest
- 1562 62D000            mov REG[0xd0],>__r0
- 1565 3C0000            cmp [__r0],0
- 1568 BFED              jnz L140
- 156A 3C0000            cmp [__r1],0
- 156D BFE8              jnz L140
- 156F           X61:
- 156F                   .dbline 365
- 156F           ;                               break;
- 156F 8024              xjmp L133
- 1571           L144:
- 1571                   .dbline 369
- 1571           ;                       
- 1571           ;                       case 6:
- 1571           ;                               while(SPIRAM_SequentialModeTest()) 
- 1571           ;                                       SleepTimer_SyncWait(4, SleepTimer_WAIT_RELOAD);
- 1571 10                push X
- 1572 5700              mov X,0
- 1574 5004              mov A,4
- 1576 7C0000            xcall _SleepTimer_SyncWait
- 1579 20                pop X
- 157A           L145:
- 157A                   .dbline 368
- 157A 7C01FE            xcall _SPIRAM_SequentialModeTest
- 157D 62D000            mov REG[0xd0],>__r0
- 1580 3C0000            cmp [__r0],0
- 1583 BFED              jnz L144
- 1585 3C0000            cmp [__r1],0
- 1588 BFE8              jnz L144
- 158A           X62:
- 158A                   .dbline 370
- 158A           ;                               break;
- 158A 8009              xjmp L133
- 158C           L132:
- 158C                   .dbline 373
- 158C           ;                       
- 158C           ;                       default:
- 158C           ;                               PlayBlock(opt);
- 158C 5200              mov A,[X+0]
- 158E 08                push A
- 158F 7C0388            xcall _PlayBlock
- 1592 38FF              add SP,-1
- 1594                   .dbline 374
- 1594           ;                               break;  
- 1594           L133:
- 1594                   .dbline 376
- 1594           ;               }
- 1594           ;       }
- 1594           L129:
- 1594                   .dbline 350
- 1594 8F69              xjmp L128
- 1596           X57:
- 1596                   .dbline -2
- 1596           L126:
- 1596 38FD              add SP,-3
- 1598 20                pop X
- 1599                   .dbline 0 ; func end
- 1599 8FFF              jmp .
- 159B                   .dbsym l opt 0 c
- 159B                   .dbend
+ 144D 528F              mov A,[X-113]
+ 144F 5300              mov [__r2],A
+ 1451 5100              mov A,[__r0]
+ 1453 60D5              mov REG[0xd5],A
+ 1455 5100              mov A,[__r2]
+ 1457 3F00              mvi [__r1],A
+ 1459                   .dbline 316
+ 1459           ;                               }       
+ 1459           L118:
+ 1459                   .dbline 313
+ 1459 7700              inc [X+0]
+ 145B           L120:
+ 145B                   .dbline 313
+ 145B 3D0080            cmp [X+0],-128
+ 145E CD8B              jc L117
+ 1460           X53:
+ 1460                   .dbline 317
+ 1460           ;                               SPIRAM_WriteArray(addr, temp, 128);
+ 1460 5080              mov A,-128
+ 1462 08                push A
+ 1463 62D000            mov REG[0xd0],>__r0
+ 1466 5A00              mov [__r1],X
+ 1468 060009            add [__r1],9
+ 146B 5007              mov A,7
+ 146D 08                push A
+ 146E 5100              mov A,[__r1]
+ 1470 08                push A
+ 1471 5201              mov A,[X+1]
+ 1473 08                push A
+ 1474 5202              mov A,[X+2]
+ 1476 08                push A
+ 1477 7C0000            xcall _SPIRAM_WriteArray
+ 147A 38FB              add SP,-5
+ 147C                   .dbline 318
+ 147C           ;                       }
+ 147C           L114:
+ 147C                   .dbline 311
+ 147C 070280            add [X+2],-128
+ 147F 0F0100            adc [X+1],0
+ 1482           L116:
+ 1482                   .dbline 311
+ 1482 5202              mov A,[X+2]
+ 1484 138A              sub A,[X-118]
+ 1486 5201              mov A,[X+1]
+ 1488 1B89              sbb A,[X-119]
+ 148A CD5A              jc L113
+ 148C           X54:
+ 148C                   .dbline 319
+ 148C           ;                       break;
+ 148C           L73:
+ 148C           L74:
+ 148C                   .dbline -2
+ 148C           L72:
+ 148C 386C              add SP,-148
+ 148E 20                pop X
+ 148F                   .dbline 0 ; func end
+ 148F 7F                ret
+ 1490                   .dbsym l ii 139 c
+ 1490                   .dbsym l endAddr 137 i
+ 1490                   .dbsym l temp 9 A[128:128]c
+ 1490                   .dbsym l pi 5 D
+ 1490                   .dbsym l startAddr 3 i
+ 1490                   .dbsym l addr 1 i
+ 1490                   .dbsym l i 0 c
+ 1490                   .dbsym l id -4 c
+ 1490                   .dbend
+ 1490                   .dbfunc e main _main fV
+ 1490           ;            opt -> X+0
+ 1490           _main::
+ 1490                   .dbline -1
+ 1490 10                push X
+ 1491 4F                mov X,SP
+ 1492 3803              add SP,3
+ 1494                   .dbline 325
+ 1494           ;       }
+ 1494           ;       
+ 1494           ; }
+ 1494           ; 
+ 1494           ; void main(void)
+ 1494           ; {
+ 1494                   .dbline 329
+ 1494           ;       char opt;
+ 1494           ;       
+ 1494           ;       // Make sure nCS is high before doing anything
+ 1494           ;       nCS_HIGH;
+ 1494                   .dbline 329
+ 1494 430404            or REG[0x4],4
+ 1497                   .dbline 329
+ 1497                   .dbline 329
+ 1497                   .dbline 332
+ 1497           ;       
+ 1497           ;       // Enable user module interrupts
+ 1497           ;       SleepTimer_EnableInt();
+ 1497 10                push X
+ 1498 7C0000            xcall _SleepTimer_EnableInt
+ 149B 20                pop X
+ 149C                   .dbline 335
+ 149C           ; 
+ 149C           ;       // Enable global interrutps
+ 149C           ;       M8C_EnableGInt;
+ 149C 7101                      or  F, 01h
+ 149E           
+ 149E                   .dbline 338
+ 149E           ; 
+ 149E           ;       // Start the user modules
+ 149E           ;       UART_Start(UART_PARITY_NONE);
+ 149E 10                push X
+ 149F 5000              mov A,0
+ 14A1 7C0000            xcall _UART_Start
+ 14A4                   .dbline 339
+ 14A4           ;       UART_PutCRLF();
+ 14A4 7C0000            xcall _UART_PutCRLF
+ 14A7                   .dbline 340
+ 14A7           ;       SPIM_Start(SPIM_SPIM_MODE_0 | SPIM_SPIM_MSB_FIRST);
+ 14A7 5000              mov A,0
+ 14A9 7C0000            xcall _SPIM_Start
+ 14AC                   .dbline 341
+ 14AC           ;       SleepTimer_Start();
+ 14AC 7C0000            xcall _SleepTimer_Start
+ 14AF                   .dbline 342
+ 14AF           ;       DAC8_Start(DAC8_FULLPOWER);
+ 14AF 5003              mov A,3
+ 14B1 7C0000            xcall _DAC8_Start
+ 14B4                   .dbline 343
+ 14B4           ;       UART_CPutString("Synthesiszing waveforms\r\n");
+ 14B4 50E3              mov A,>L125
+ 14B6 08                push A
+ 14B7 50E3              mov A,<L125
+ 14B9 5C                mov X,A
+ 14BA 18                pop A
+ 14BB 7C0000            xcall _UART_CPutString
+ 14BE 20                pop X
+ 14BF                   .dbline 344
+ 14BF           ;       WriteBlock(0);
+ 14BF 5000              mov A,0
+ 14C1 08                push A
+ 14C2 7C0429            xcall _WriteBlock
+ 14C5                   .dbline 345
+ 14C5           ;       WriteBlock(1);
+ 14C5 5001              mov A,1
+ 14C7 08                push A
+ 14C8 7C0429            xcall _WriteBlock
+ 14CB 38FE              add SP,-2
+ 14CD                   .dbline 346
+ 14CD           ;       WriteBlock(2);
+ 14CD 5002              mov A,2
+ 14CF 08                push A
+ 14D0 7C0429            xcall _WriteBlock
+ 14D3                   .dbline 347
+ 14D3           ;       WriteBlock(3);
+ 14D3 5003              mov A,3
+ 14D5 08                push A
+ 14D6 7C0429            xcall _WriteBlock
+ 14D9 38FE              add SP,-2
+ 14DB 8097              xjmp L127
+ 14DD           L126:
+ 14DD                   .dbline 349
+ 14DD           ;       while(1) 
+ 14DD           ;       {
+ 14DD                   .dbline 350
+ 14DD           ;               UART_CPutString("Synthetic wave output is on Port0[4]\r\nCowabunga Dude! Time to catch some waves.\r\n\r\n0. Play block 0\r\n1. Play block 1\r\n2. Play block 2\r\n3. Play block 3\r\n4. Test status register\r\n5. Test byte mode\r\n6. Test sequential mode\r\n");
+ 14DD 10                push X
+ 14DE 5006              mov A,>L129
+ 14E0 08                push A
+ 14E1 5006              mov A,<L129
+ 14E3 5C                mov X,A
+ 14E4 18                pop A
+ 14E5 7C0000            xcall _UART_CPutString
+ 14E8 20                pop X
+ 14E9                   .dbline 352
+ 14E9           ;               
+ 14E9           ;               opt = GetNumber(0, 6);
+ 14E9 5006              mov A,6
+ 14EB 08                push A
+ 14EC 5000              mov A,0
+ 14EE 08                push A
+ 14EF 7C0346            xcall _GetNumber
+ 14F2 38FE              add SP,-2
+ 14F4 62D000            mov REG[0xd0],>__r0
+ 14F7 5400              mov [X+0],A
+ 14F9                   .dbline 353
+ 14F9           ;               switch (opt)
+ 14F9 5200              mov A,[X+0]
+ 14FB 5402              mov [X+2],A
+ 14FD 560100            mov [X+1],0
+ 1500 3D0100            cmp [X+1],0
+ 1503 B006              jnz X58
+ 1505 3D0204            cmp [X+2],4
+ 1508 A020              jz L135
+ 150A           X58:
+ 150A 3D0100            cmp [X+1],0
+ 150D B006              jnz X59
+ 150F 3D0205            cmp [X+2],5
+ 1512 A02B              jz L139
+ 1514           X59:
+ 1514 3D0100            cmp [X+1],0
+ 1517 B006              jnz X60
+ 1519 3D0206            cmp [X+2],6
+ 151C A03C              jz L143
+ 151E           X60:
+ 151E 804C              xjmp L130
+ 1520           L134:
+ 1520                   .dbline 357
+ 1520           ;               {
+ 1520           ;                       case 4:
+ 1520           ;                               while(SPIRAM_StatusRegisterTest()) 
+ 1520           ;                                       SleepTimer_SyncWait(4, SleepTimer_WAIT_RELOAD);
+ 1520 10                push X
+ 1521 5700              mov X,0
+ 1523 5004              mov A,4
+ 1525 7C0000            xcall _SleepTimer_SyncWait
+ 1528 20                pop X
+ 1529           L135:
+ 1529                   .dbline 356
+ 1529 7C0000            xcall _SPIRAM_StatusRegisterTest
+ 152C 62D000            mov REG[0xd0],>__r0
+ 152F 3900              cmp A,0
+ 1531 BFEE              jnz L134
+ 1533                   .dbline 358
+ 1533           ;                               break;
+ 1533 803F              xjmp L131
+ 1535           L138:
+ 1535                   .dbline 362
+ 1535           ;                       
+ 1535           ;                       case 5:
+ 1535           ;                               while(SPIRAM_ByteModeTest()) 
+ 1535           ;                                       SleepTimer_SyncWait(4, SleepTimer_WAIT_RELOAD); 
+ 1535 10                push X
+ 1536 5700              mov X,0
+ 1538 5004              mov A,4
+ 153A 7C0000            xcall _SleepTimer_SyncWait
+ 153D 20                pop X
+ 153E           L139:
+ 153E                   .dbline 361
+ 153E 7C00FB            xcall _SPIRAM_ByteModeTest
+ 1541 62D000            mov REG[0xd0],>__r0
+ 1544 3C0000            cmp [__r0],0
+ 1547 BFED              jnz L138
+ 1549 3C0000            cmp [__r1],0
+ 154C BFE8              jnz L138
+ 154E           X61:
+ 154E                   .dbline 363
+ 154E           ;                               break;
+ 154E 8024              xjmp L131
+ 1550           L142:
+ 1550                   .dbline 367
+ 1550           ;                       
+ 1550           ;                       case 6:
+ 1550           ;                               while(SPIRAM_SequentialModeTest()) 
+ 1550           ;                                       SleepTimer_SyncWait(4, SleepTimer_WAIT_RELOAD);
+ 1550 10                push X
+ 1551 5700              mov X,0
+ 1553 5004              mov A,4
+ 1555 7C0000            xcall _SleepTimer_SyncWait
+ 1558 20                pop X
+ 1559           L143:
+ 1559                   .dbline 366
+ 1559 7C01FE            xcall _SPIRAM_SequentialModeTest
+ 155C 62D000            mov REG[0xd0],>__r0
+ 155F 3C0000            cmp [__r0],0
+ 1562 BFED              jnz L142
+ 1564 3C0000            cmp [__r1],0
+ 1567 BFE8              jnz L142
+ 1569           X62:
+ 1569                   .dbline 368
+ 1569           ;                               break;
+ 1569 8009              xjmp L131
+ 156B           L130:
+ 156B                   .dbline 371
+ 156B           ;                       
+ 156B           ;                       default:
+ 156B           ;                               PlayBlock(opt);
+ 156B 5200              mov A,[X+0]
+ 156D 08                push A
+ 156E 7C0388            xcall _PlayBlock
+ 1571 38FF              add SP,-1
+ 1573                   .dbline 372
+ 1573           ;                               break;  
+ 1573           L131:
+ 1573                   .dbline 374
+ 1573           ;               }
+ 1573           ;       }
+ 1573           L127:
+ 1573                   .dbline 348
+ 1573 8F69              xjmp L126
+ 1575           X57:
+ 1575                   .dbline -2
+ 1575           L124:
+ 1575 38FD              add SP,-3
+ 1577 20                pop X
+ 1578                   .dbline 0 ; func end
+ 1578 8FFF              jmp .
+ 157A                   .dbsym l opt 0 c
+ 157A                   .dbend
                         .area data(ram, con, rel)
  0000                   .dbfile C:\Users\Jacob\Desktop\ECE381\SPI_SRAM\SPI_SRAM\main.c
  0000           _DataOut::
@@ -3936,7 +3910,7 @@
  003C 00000000          .byte 0,0,0,0
  0040                   .dbsym e DataIn _DataIn A[64:64]c
                         .area lit(rom, con, rel, lit)
- 0006           L131:
+ 0006           L129:
  0006 53796E7468657469632077617665206F  .byte 'S,'y,'n,'t,'h,'e,'t,'i,'c,32,'w,'a,'v,'e,32,'o
  0016 7574707574206973206F6E20506F7274  .byte 'u,'t,'p,'u,'t,32,'i,'s,32,'o,'n,32,'P,'o,'r,'t
  0026 305B345D0D0A436F776162756E676120  .byte 48,91,52,93,13,10,'C,'o,'w,'a,'b,'u,'n,'g,'a,32
@@ -3951,41 +3925,37 @@
  00B6 352E20546573742062797465206D6F64  .byte 53,46,32,'T,'e,'s,'t,32,'b,'y,'t,'e,32,'m,'o,'d
  00C6 650D0A362E2054657374207365717565  .byte 'e,13,10,54,46,32,'T,'e,'s,'t,32,'s,'e,'q,'u,'e
  00D6 6E7469616C206D6F64650D0A00        .byte 'n,'t,'i,'a,'l,32,'m,'o,'d,'e,13,10,0
- 00E3           L127:
+ 00E3           L125:
  00E3 53796E7468657369737A696E67207761  .byte 'S,'y,'n,'t,'h,'e,'s,'i,'s,'z,'i,'n,'g,32,'w,'a
  00F3 7665666F726D730D0A00      .byte 'v,'e,'f,'o,'r,'m,'s,13,10,0
- 00FD           L89:
- 00FD 0D0A00            .byte 13,10,0
- 0100           L88:
- 0100 57726974696E6720746F2000  .byte 'W,'r,'i,'t,'i,'n,'g,32,'t,'o,32,0
- 010C           L66:
- 010C 507265737320616E79206B657920746F  .byte 'P,'r,'e,'s,'s,32,'a,'n,'y,32,'k,'e,'y,32,'t,'o
- 011C 2061626F72740D0A00        .byte 32,'a,'b,'o,'r,'t,13,10,0
- 0125           L36:
- 0125 53657175656E7469616C204D6F646520  .byte 'S,'e,'q,'u,'e,'n,'t,'i,'a,'l,32,'M,'o,'d,'e,32
- 0135 572F5220546573743A20416464722030  .byte 'W,47,'R,32,'T,'e,'s,'t,58,32,'A,'d,'d,'r,32,48
- 0145 782020202000      .byte 'x,32,32,32,32,0
- 014B           L34:
- 014B 08080808080808080808080820504153  .byte 8,8,8,8,8,8,8,8,8,8,8,8,32,'P,'A,'S
- 015B 53202020202020200D0A00    .byte 'S,32,32,32,32,32,32,32,13,10,0
- 0166           L33:
- 0166 0808080808080808080808082041424F  .byte 8,8,8,8,8,8,8,8,8,8,8,8,32,'A,'B,'O
- 0176 52544544202020200D0A00    .byte 'R,'T,'E,'D,32,32,32,32,13,10,0
- 0181           L23:
- 0181 0808080800        .byte 8,8,8,8,0
- 0186           L16:
- 0186 20202020202042797465204D6F646520  .byte 32,32,32,32,32,32,'B,'y,'t,'e,32,'M,'o,'d,'e,32
- 0196 572F5220546573743A20416464722030  .byte 'W,47,'R,32,'T,'e,'s,'t,58,32,'A,'d,'d,'r,32,48
- 01A6 782020202000      .byte 'x,32,32,32,32,0
- 01AC           L14:
- 01AC 080808080820504153530D0A00        .byte 8,8,8,8,8,32,'P,'A,'S,'S,13,10,0
- 01B9           L13:
- 01B9 204641494C0D0A00  .byte 32,'F,'A,'I,'L,13,10,0
- 01C1           L10:
- 01C1 0D0A5772697465206F6620696E76616C  .byte 13,10,'W,'r,'i,'t,'e,32,'o,'f,32,'i,'n,'v,'a,'l
- 01D1 69642053746174757320526567697374  .byte 'i,'d,32,'S,'t,'a,'t,'u,'s,32,'R,'e,'g,'i,'s,'t
- 01E1 65722076616C75652E2053797374656D  .byte 'e,'r,32,'v,'a,'l,'u,'e,46,32,'S,'y,'s,'t,'e,'m
- 01F1 2068616C7465642E0D0A00    .byte 32,'h,'a,'l,'t,'e,'d,46,13,10,0
- 01FC           L3:
- 01FC 53746174757320526567697374657220  .byte 'S,'t,'a,'t,'u,'s,32,'R,'e,'g,'i,'s,'t,'e,'r,32
- 020C 572F5220546573743A203078202000    .byte 'W,47,'R,32,'T,'e,'s,'t,58,32,48,'x,32,32,0
+ 00FD           L66:
+ 00FD 507265737320616E79206B657920746F  .byte 'P,'r,'e,'s,'s,32,'a,'n,'y,32,'k,'e,'y,32,'t,'o
+ 010D 2061626F72740D0A00        .byte 32,'a,'b,'o,'r,'t,13,10,0
+ 0116           L36:
+ 0116 53657175656E7469616C204D6F646520  .byte 'S,'e,'q,'u,'e,'n,'t,'i,'a,'l,32,'M,'o,'d,'e,32
+ 0126 572F5220546573743A20416464722030  .byte 'W,47,'R,32,'T,'e,'s,'t,58,32,'A,'d,'d,'r,32,48
+ 0136 782020202000      .byte 'x,32,32,32,32,0
+ 013C           L34:
+ 013C 08080808080808080808080820504153  .byte 8,8,8,8,8,8,8,8,8,8,8,8,32,'P,'A,'S
+ 014C 53202020202020200D0A00    .byte 'S,32,32,32,32,32,32,32,13,10,0
+ 0157           L33:
+ 0157 0808080808080808080808082041424F  .byte 8,8,8,8,8,8,8,8,8,8,8,8,32,'A,'B,'O
+ 0167 52544544202020200D0A00    .byte 'R,'T,'E,'D,32,32,32,32,13,10,0
+ 0172           L23:
+ 0172 0808080800        .byte 8,8,8,8,0
+ 0177           L16:
+ 0177 20202020202042797465204D6F646520  .byte 32,32,32,32,32,32,'B,'y,'t,'e,32,'M,'o,'d,'e,32
+ 0187 572F5220546573743A20416464722030  .byte 'W,47,'R,32,'T,'e,'s,'t,58,32,'A,'d,'d,'r,32,48
+ 0197 782020202000      .byte 'x,32,32,32,32,0
+ 019D           L14:
+ 019D 080808080820504153530D0A00        .byte 8,8,8,8,8,32,'P,'A,'S,'S,13,10,0
+ 01AA           L13:
+ 01AA 204641494C0D0A00  .byte 32,'F,'A,'I,'L,13,10,0
+ 01B2           L10:
+ 01B2 0D0A5772697465206F6620696E76616C  .byte 13,10,'W,'r,'i,'t,'e,32,'o,'f,32,'i,'n,'v,'a,'l
+ 01C2 69642053746174757320526567697374  .byte 'i,'d,32,'S,'t,'a,'t,'u,'s,32,'R,'e,'g,'i,'s,'t
+ 01D2 65722076616C75652E2053797374656D  .byte 'e,'r,32,'v,'a,'l,'u,'e,46,32,'S,'y,'s,'t,'e,'m
+ 01E2 2068616C7465642E0D0A00    .byte 32,'h,'a,'l,'t,'e,'d,46,13,10,0
+ 01ED           L3:
+ 01ED 53746174757320526567697374657220  .byte 'S,'t,'a,'t,'u,'s,32,'R,'e,'g,'i,'s,'t,'e,'r,32
+ 01FD 572F5220546573743A203078202000    .byte 'W,47,'R,32,'T,'e,'s,'t,58,32,48,'x,32,32,0

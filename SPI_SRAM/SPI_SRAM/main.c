@@ -260,6 +260,7 @@ void PlayBlock(char id)
 		if (++addr > endAddr) addr = startAddr;
 	}
 }
+
 void WriteBlock(char id)
 {	
 
@@ -281,9 +282,6 @@ void WriteBlock(char id)
 					temp[i] = (char)(0.5 + 0.5*sin(800*pi*((addr - startAddr) + i)) + 0.5*sin(800*pi*((addr - startAddr) + i))*(128/2.5));	
 				}	
 				SPIRAM_WriteArray(addr, temp, 128);
-				UART_CPutString("Writing to ");
-				UART_PutSHexInt(addr);
-				UART_CPutString("\r\n");
 			}
 			break;
 		

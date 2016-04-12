@@ -1,0 +1,1234 @@
+ 0000                   cpu LMM
+                        .module spi_sram.c
+                        .area text(rom, con, rel)
+ 0000                   .dbfile ./spi_sram.c
+ 0000                   .dbfile C:\Users\Jacob\Desktop\ECE381\DATAAC~1\DATAAC~1\spi_sram.c
+ 0000                   .dbfunc e SPIRAM_WriteStatusRegister _SPIRAM_WriteStatusRegister fc
+ 0000           ;              b -> X+0
+ 0000           ;          value -> X-4
+ 0000           _SPIRAM_WriteStatusRegister::
+ 0000                   .dbline -1
+ 0000 10                push X
+ 0001 4F                mov X,SP
+ 0002 3801              add SP,1
+ 0004                   .dbline 13
+ 0004           ; //*****************************************************************************
+ 0004           ; //* Read/Write/Control Functions for the Microchip 23K256 32kB SPI RAM
+ 0004           ; //*
+ 0004           ; //* bnoble@siue.edu 20140320
+ 0004           ; //*****************************************************************************
+ 0004           ; 
+ 0004           ; #include <m8c.h>        // part specific constants and macros
+ 0004           ; #include "PSoCAPI.h"    // PSoC API definitions for all User Modules
+ 0004           ; #include "spi_sram.h"
+ 0004           ; 
+ 0004           ; // Write byte "value" to SRAM Status Register
+ 0004           ; BYTE SPIRAM_WriteStatusRegister(BYTE value)
+ 0004           ; {
+ 0004                   .dbline 18
+ 0004           ;       BYTE b;
+ 0004           ; 
+ 0004           ;       // If bits 5 through 1 aren't zero, return an error as per
+ 0004           ;       // Section 2.5 in the 23K256 datasheet
+ 0004           ;       if (value & 0b00111110)
+ 0004 48FC3E            tst [X-4],62
+ 0007 A008              jz L2
+ 0009                   .dbline 19
+ 0009           ;               return(1);
+ 0009 62D000            mov REG[0xd0],>__r0
+ 000C 5001              mov A,1
+ 000E 8072              xjmp L1
+ 0010           L2:
+ 0010                   .dbline 21
+ 0010           ;       // Mode SPIRAM_SEQUENTIAL_MODE|SPIRAM_PAGE_MODE are invalid.
+ 0010           ;       if ((value & 0b11000000) == 0b11000000)
+ 0010 62D000            mov REG[0xd0],>__r0
+ 0013 52FC              mov A,[X-4]
+ 0015 21C0              and A,-64
+ 0017 39C0              cmp A,-64
+ 0019 B005              jnz L7
+ 001B                   .dbline 22
+ 001B           ;               return(1);
+ 001B 5001              mov A,1
+ 001D 8063              xjmp L1
+ 001F           L6:
+ 001F                   .dbline 24
+ 001F           ;       // Make sure the TX buffer is empty (it should be but let's be proper)
+ 001F           ;       while(!(SPIM_bReadStatus() & SPIM_SPIM_TX_BUFFER_EMPTY));
+ 001F           L7:
+ 001F                   .dbline 24
+ 001F 10                push X
+ 0020 7C0000            xcall _SPIM_bReadStatus
+ 0023 20                pop X
+ 0024 62D000            mov REG[0xd0],>__r0
+ 0027 5300              mov [__r0],A
+ 0029 470010            tst [__r0],16
+ 002C AFF2              jz L6
+ 002E                   .dbline 26
+ 002E           ;       // SPI transfers begin by bringing CS LOW
+ 002E           ;       nCS_LOW;
+ 002E                   .dbline 26
+ 002E 4104FB            and REG[0x4],-5
+ 0031                   .dbline 26
+ 0031                   .dbline 26
+ 0031                   .dbline 28
+ 0031           ;       // Send the Status Register Write command
+ 0031           ;       SPIM_SendTxData(SPIRAM_WRITE_STATUS_REG);
+ 0031 10                push X
+ 0032 5001              mov A,1
+ 0034 7C0000            xcall _SPIM_SendTxData
+ 0037 20                pop X
+ 0038           L9:
+ 0038                   .dbline 31
+ 0038           ;       // It will be almost immediately loaded into the TX shift register, freeing
+ 0038           ;       // up the TX buffer, and the SPIM module will start transmission.
+ 0038           ;       while(!(SPIM_bReadStatus() & SPIM_SPIM_TX_BUFFER_EMPTY));
+ 0038           L10:
+ 0038                   .dbline 31
+ 0038 10                push X
+ 0039 7C0000            xcall _SPIM_bReadStatus
+ 003C 20                pop X
+ 003D 62D000            mov REG[0xd0],>__r0
+ 0040 5300              mov [__r0],A
+ 0042 470010            tst [__r0],16
+ 0045 AFF2              jz L9
+ 0047                   .dbline 34
+ 0047           ;       // Prime the TX buffer for the next byte by loading it with the new status
+ 0047           ;       // register byte while the first byte is still transmitting.
+ 0047           ;       SPIM_SendTxData(value);
+ 0047 10                push X
+ 0048 52FC              mov A,[X-4]
+ 004A 7C0000            xcall _SPIM_SendTxData
+ 004D 20                pop X
+ 004E           L12:
+ 004E                   .dbline 36
+ 004E           ;       // Wait for the first TX/RX cycle to finish. We don't care what we read.
+ 004E           ;       while(!(SPIM_bReadStatus() & SPIM_SPIM_SPI_COMPLETE));
+ 004E           L13:
+ 004E                   .dbline 36
+ 004E 10                push X
+ 004F 7C0000            xcall _SPIM_bReadStatus
+ 0052 20                pop X
+ 0053 62D000            mov REG[0xd0],>__r0
+ 0056 5300              mov [__r0],A
+ 0058 470020            tst [__r0],32
+ 005B AFF2              jz L12
+ 005D                   .dbline 38
+ 005D           ;       // Reading the data clears the RX_BUFFER_FULL flag, even if we don't want it.
+ 005D           ;       SPIM_bReadRxData(); // ignore byte from SPIRAM_WRITE_STATUS_REG TX
+ 005D 10                push X
+ 005E 7C0000            xcall _SPIM_bReadRxData
+ 0061 20                pop X
+ 0062 62D000            mov REG[0xd0],>__r0
+ 0065           L15:
+ 0065                   .dbline 41
+ 0065           ;       // Wait for the second TX/RX cycle to finish so that we know that the entire
+ 0065           ;       // two byte transaction is finished.
+ 0065           ;       while(!(SPIM_bReadStatus() & SPIM_SPIM_SPI_COMPLETE));
+ 0065           L16:
+ 0065                   .dbline 41
+ 0065 10                push X
+ 0066 7C0000            xcall _SPIM_bReadStatus
+ 0069 20                pop X
+ 006A 62D000            mov REG[0xd0],>__r0
+ 006D 5300              mov [__r0],A
+ 006F 470020            tst [__r0],32
+ 0072 AFF2              jz L15
+ 0074                   .dbline 42
+ 0074           ;       SPIM_bReadRxData(); // We don't care about this read either
+ 0074 10                push X
+ 0075 7C0000            xcall _SPIM_bReadRxData
+ 0078 20                pop X
+ 0079 62D000            mov REG[0xd0],>__r0
+ 007C                   .dbline 44
+ 007C           ;       // SPI transfers end by bringing CS LOW
+ 007C           ;       nCS_HIGH;
+ 007C                   .dbline 44
+ 007C 430404            or REG[0x4],4
+ 007F                   .dbline 44
+ 007F                   .dbline 44
+ 007F                   .dbline 45
+ 007F           ;       return(0);
+ 007F 5000              mov A,0
+ 0081                   .dbline -2
+ 0081           L1:
+ 0081 38FF              add SP,-1
+ 0083 20                pop X
+ 0084                   .dbline 0 ; func end
+ 0084 7F                ret
+ 0085                   .dbsym l b 0 c
+ 0085                   .dbsym l value -4 c
+ 0085                   .dbend
+ 0085                   .dbfunc e SPIRAM_ReadStatusRegister _SPIRAM_ReadStatusRegister fc
+ 0085           ;              b -> X+1
+ 0085           ;        statReg -> X+0
+ 0085           _SPIRAM_ReadStatusRegister::
+ 0085                   .dbline -1
+ 0085 10                push X
+ 0086 4F                mov X,SP
+ 0087 3802              add SP,2
+ 0089                   .dbline 50
+ 0089           ; }
+ 0089           ; 
+ 0089           ; // Read SRAM Status Register and return the result.
+ 0089           ; BYTE SPIRAM_ReadStatusRegister(void)
+ 0089           ; {
+ 0089           L19:
+ 0089                   .dbline 55
+ 0089           ;       BYTE statReg;
+ 0089           ;       BYTE b;
+ 0089           ; 
+ 0089           ;       // Make sure the TX buffer is empty before starting
+ 0089           ;       while(!(SPIM_bReadStatus() & SPIM_SPIM_TX_BUFFER_EMPTY));
+ 0089           L20:
+ 0089                   .dbline 55
+ 0089 10                push X
+ 008A 7C0000            xcall _SPIM_bReadStatus
+ 008D 20                pop X
+ 008E 62D000            mov REG[0xd0],>__r0
+ 0091 5300              mov [__r0],A
+ 0093 470010            tst [__r0],16
+ 0096 AFF2              jz L19
+ 0098                   .dbline 56
+ 0098           ;       nCS_LOW;
+ 0098                   .dbline 56
+ 0098 4104FB            and REG[0x4],-5
+ 009B                   .dbline 56
+ 009B                   .dbline 56
+ 009B                   .dbline 58
+ 009B           ;       // Send the Read Status Register command
+ 009B           ;       SPIM_SendTxData(SPIRAM_READ_STATUS_REG);
+ 009B 10                push X
+ 009C 5005              mov A,5
+ 009E 7C0000            xcall _SPIM_SendTxData
+ 00A1 20                pop X
+ 00A2           L22:
+ 00A2                   .dbline 59
+ 00A2           ;       while(!(SPIM_bReadStatus() & SPIM_SPIM_TX_BUFFER_EMPTY));
+ 00A2           L23:
+ 00A2                   .dbline 59
+ 00A2 10                push X
+ 00A3 7C0000            xcall _SPIM_bReadStatus
+ 00A6 20                pop X
+ 00A7 62D000            mov REG[0xd0],>__r0
+ 00AA 5300              mov [__r0],A
+ 00AC 470010            tst [__r0],16
+ 00AF AFF2              jz L22
+ 00B1                   .dbline 61
+ 00B1           ;       // Send a dummy byte in order to initiate a TX/RX transfer
+ 00B1           ;       SPIM_SendTxData(SPIRAM_DUMMY_BYTE);
+ 00B1 10                push X
+ 00B2 5000              mov A,0
+ 00B4 7C0000            xcall _SPIM_SendTxData
+ 00B7 20                pop X
+ 00B8           L25:
+ 00B8                   .dbline 63
+ 00B8           ;       // Wait for the first RX byte to arrive and ignore it; it is meaningless.
+ 00B8           ;       while(!(SPIM_bReadStatus() & SPIM_SPIM_SPI_COMPLETE));
+ 00B8           L26:
+ 00B8                   .dbline 63
+ 00B8 10                push X
+ 00B9 7C0000            xcall _SPIM_bReadStatus
+ 00BC 20                pop X
+ 00BD 62D000            mov REG[0xd0],>__r0
+ 00C0 5300              mov [__r0],A
+ 00C2 470020            tst [__r0],32
+ 00C5 AFF2              jz L25
+ 00C7                   .dbline 64
+ 00C7           ;       SPIM_bReadRxData();
+ 00C7 10                push X
+ 00C8 7C0000            xcall _SPIM_bReadRxData
+ 00CB 20                pop X
+ 00CC 62D000            mov REG[0xd0],>__r0
+ 00CF           L28:
+ 00CF                   .dbline 66
+ 00CF           ;       // Wait for the second RX byte to arrive; it contains the status reg value.
+ 00CF           ;       while(!(SPIM_bReadStatus() & SPIM_SPIM_SPI_COMPLETE));
+ 00CF           L29:
+ 00CF                   .dbline 66
+ 00CF 10                push X
+ 00D0 7C0000            xcall _SPIM_bReadStatus
+ 00D3 20                pop X
+ 00D4 62D000            mov REG[0xd0],>__r0
+ 00D7 5300              mov [__r0],A
+ 00D9 470020            tst [__r0],32
+ 00DC AFF2              jz L28
+ 00DE                   .dbline 67
+ 00DE           ;       statReg = SPIM_bReadRxData();
+ 00DE 10                push X
+ 00DF 7C0000            xcall _SPIM_bReadRxData
+ 00E2 20                pop X
+ 00E3 62D000            mov REG[0xd0],>__r0
+ 00E6 5400              mov [X+0],A
+ 00E8                   .dbline 68
+ 00E8           ;       nCS_HIGH;
+ 00E8                   .dbline 68
+ 00E8 430404            or REG[0x4],4
+ 00EB                   .dbline 68
+ 00EB                   .dbline 68
+ 00EB                   .dbline 69
+ 00EB           ;       return(statReg);
+ 00EB 5200              mov A,[X+0]
+ 00ED                   .dbline -2
+ 00ED           L18:
+ 00ED 38FE              add SP,-2
+ 00EF 20                pop X
+ 00F0                   .dbline 0 ; func end
+ 00F0 7F                ret
+ 00F1                   .dbsym l b 1 c
+ 00F1                   .dbsym l statReg 0 c
+ 00F1                   .dbend
+ 00F1                   .dbfunc e SPIRAM_WriteByte _SPIRAM_WriteByte fV
+ 00F1           ;         loAddr -> X+1
+ 00F1           ;         hiAddr -> X+0
+ 00F1           ;            out -> X-6
+ 00F1           ;           addr -> X-5
+ 00F1           _SPIRAM_WriteByte::
+ 00F1                   .dbline -1
+ 00F1 10                push X
+ 00F2 4F                mov X,SP
+ 00F3 3802              add SP,2
+ 00F5                   .dbline 75
+ 00F5           ; }
+ 00F5           ; 
+ 00F5           ; // Write byte "out" to SRAM address "addr"
+ 00F5           ; // NOTE: This function assumes the SRAM has already been put in Byte Mode.
+ 00F5           ; void SPIRAM_WriteByte(WORD addr, BYTE out)
+ 00F5           ; {
+ 00F5                   .dbline 80
+ 00F5           ;       BYTE hiAddr;
+ 00F5           ;       BYTE loAddr;
+ 00F5           ;       
+ 00F5           ;       // Break the SRAM word address into two bytes
+ 00F5           ;       hiAddr = (BYTE)((addr >> 8) & 0x00ff);
+ 00F5 62D000            mov REG[0xd0],>__r0
+ 00F8 52FB              mov A,[X-5]
+ 00FA 5400              mov [X+0],A
+ 00FC                   .dbline 81
+ 00FC           ;       loAddr = (BYTE)(addr & 0x00ff);
+ 00FC 52FC              mov A,[X-4]
+ 00FE 5401              mov [X+1],A
+ 0100           L32:
+ 0100                   .dbline 84
+ 0100           ;       
+ 0100           ;       // Make sure the TX buffer is empty (it should be but let's be proper)
+ 0100           ;       while(!(SPIM_bReadStatus() & SPIM_SPIM_TX_BUFFER_EMPTY));
+ 0100           L33:
+ 0100                   .dbline 84
+ 0100 10                push X
+ 0101 7C0000            xcall _SPIM_bReadStatus
+ 0104 20                pop X
+ 0105 62D000            mov REG[0xd0],>__r0
+ 0108 5300              mov [__r0],A
+ 010A 470010            tst [__r0],16
+ 010D AFF2              jz L32
+ 010F                   .dbline 86
+ 010F           ;       // SPI transfers begin by bringing CS LOW
+ 010F           ;       nCS_LOW;
+ 010F                   .dbline 86
+ 010F 4104FB            and REG[0x4],-5
+ 0112                   .dbline 86
+ 0112                   .dbline 86
+ 0112                   .dbline 88
+ 0112           ;       // Send the Write command
+ 0112           ;       SPIM_SendTxData(SPIRAM_WRITE);
+ 0112 10                push X
+ 0113 5002              mov A,2
+ 0115 7C0000            xcall _SPIM_SendTxData
+ 0118 20                pop X
+ 0119           L35:
+ 0119                   .dbline 91
+ 0119           ;       // It will be almost immediately loaded into the TX shift register, freeing
+ 0119           ;       // up the TX buffer, and the SPIM module will start transmission.
+ 0119           ;       while(!(SPIM_bReadStatus() & SPIM_SPIM_TX_BUFFER_EMPTY));
+ 0119           L36:
+ 0119                   .dbline 91
+ 0119 10                push X
+ 011A 7C0000            xcall _SPIM_bReadStatus
+ 011D 20                pop X
+ 011E 62D000            mov REG[0xd0],>__r0
+ 0121 5300              mov [__r0],A
+ 0123 470010            tst [__r0],16
+ 0126 AFF2              jz L35
+ 0128                   .dbline 93
+ 0128           ;       // Prime the TX buffer with the MSB of the address while first byte is still transmitting.
+ 0128           ;       SPIM_SendTxData(hiAddr);
+ 0128 10                push X
+ 0129 5200              mov A,[X+0]
+ 012B 7C0000            xcall _SPIM_SendTxData
+ 012E 20                pop X
+ 012F           L38:
+ 012F                   .dbline 95
+ 012F           ;       // Wait for the first TX/RX cycle to finish. We don't care what we read.
+ 012F           ;       while(!(SPIM_bReadStatus() & SPIM_SPIM_SPI_COMPLETE));
+ 012F           L39:
+ 012F                   .dbline 95
+ 012F 10                push X
+ 0130 7C0000            xcall _SPIM_bReadStatus
+ 0133 20                pop X
+ 0134 62D000            mov REG[0xd0],>__r0
+ 0137 5300              mov [__r0],A
+ 0139 470020            tst [__r0],32
+ 013C AFF2              jz L38
+ 013E                   .dbline 97
+ 013E           ;       // Reading the data clears the RX_BUFFER_FULL flag, even if we don't want it.
+ 013E           ;       SPIM_bReadRxData();
+ 013E 10                push X
+ 013F 7C0000            xcall _SPIM_bReadRxData
+ 0142 20                pop X
+ 0143 62D000            mov REG[0xd0],>__r0
+ 0146           L41:
+ 0146                   .dbline 100
+ 0146           ;       // Wait for the second TX/RX cycle to finish so that we know that the entire
+ 0146           ;       // two byte transaction is finished.
+ 0146           ;       while(!(SPIM_bReadStatus() & SPIM_SPIM_SPI_COMPLETE));
+ 0146           L42:
+ 0146                   .dbline 100
+ 0146 10                push X
+ 0147 7C0000            xcall _SPIM_bReadStatus
+ 014A 20                pop X
+ 014B 62D000            mov REG[0xd0],>__r0
+ 014E 5300              mov [__r0],A
+ 0150 470020            tst [__r0],32
+ 0153 AFF2              jz L41
+ 0155                   .dbline 101
+ 0155           ;       SPIM_bReadRxData(); // We don't care about this read either
+ 0155 10                push X
+ 0156 7C0000            xcall _SPIM_bReadRxData
+ 0159 20                pop X
+ 015A 62D000            mov REG[0xd0],>__r0
+ 015D           L44:
+ 015D                   .dbline 103
+ 015D           ;       
+ 015D           ;       while(!(SPIM_bReadStatus() & SPIM_SPIM_TX_BUFFER_EMPTY));
+ 015D           L45:
+ 015D                   .dbline 103
+ 015D 10                push X
+ 015E 7C0000            xcall _SPIM_bReadStatus
+ 0161 20                pop X
+ 0162 62D000            mov REG[0xd0],>__r0
+ 0165 5300              mov [__r0],A
+ 0167 470010            tst [__r0],16
+ 016A AFF2              jz L44
+ 016C                   .dbline 105
+ 016C           ;       // Send the LSB of address
+ 016C           ;       SPIM_SendTxData(loAddr);
+ 016C 10                push X
+ 016D 5201              mov A,[X+1]
+ 016F 7C0000            xcall _SPIM_SendTxData
+ 0172 20                pop X
+ 0173           L47:
+ 0173                   .dbline 108
+ 0173           ;       // It will be almost immediately loaded into the TX shift register, freeing
+ 0173           ;       // up the TX buffer, and the SPIM module will start transmission.
+ 0173           ;       while(!(SPIM_bReadStatus() & SPIM_SPIM_TX_BUFFER_EMPTY));
+ 0173           L48:
+ 0173                   .dbline 108
+ 0173 10                push X
+ 0174 7C0000            xcall _SPIM_bReadStatus
+ 0177 20                pop X
+ 0178 62D000            mov REG[0xd0],>__r0
+ 017B 5300              mov [__r0],A
+ 017D 470010            tst [__r0],16
+ 0180 AFF2              jz L47
+ 0182                   .dbline 110
+ 0182           ;       // Prime the TX buffer for the next byte by loading it with the byte to be written while the first byte is still transmitting.
+ 0182           ;       SPIM_SendTxData(out);
+ 0182 10                push X
+ 0183 52FA              mov A,[X-6]
+ 0185 7C0000            xcall _SPIM_SendTxData
+ 0188 20                pop X
+ 0189           L50:
+ 0189                   .dbline 112
+ 0189           ;       // Wait for the first TX/RX cycle to finish. We don't care what we read.
+ 0189           ;       while(!(SPIM_bReadStatus() & SPIM_SPIM_SPI_COMPLETE));
+ 0189           L51:
+ 0189                   .dbline 112
+ 0189 10                push X
+ 018A 7C0000            xcall _SPIM_bReadStatus
+ 018D 20                pop X
+ 018E 62D000            mov REG[0xd0],>__r0
+ 0191 5300              mov [__r0],A
+ 0193 470020            tst [__r0],32
+ 0196 AFF2              jz L50
+ 0198                   .dbline 114
+ 0198           ;       // Reading the data clears the RX_BUFFER_FULL flag, even if we don't want it.
+ 0198           ;       SPIM_bReadRxData(); // ignore byte from SPIRAM_WRITE_STATUS_REG TX
+ 0198 10                push X
+ 0199 7C0000            xcall _SPIM_bReadRxData
+ 019C 20                pop X
+ 019D 62D000            mov REG[0xd0],>__r0
+ 01A0           L53:
+ 01A0                   .dbline 117
+ 01A0           ;       // Wait for the second TX/RX cycle to finish so that we know that the entire
+ 01A0           ;       // two byte transaction is finished.
+ 01A0           ;       while(!(SPIM_bReadStatus() & SPIM_SPIM_SPI_COMPLETE));
+ 01A0           L54:
+ 01A0                   .dbline 117
+ 01A0 10                push X
+ 01A1 7C0000            xcall _SPIM_bReadStatus
+ 01A4 20                pop X
+ 01A5 62D000            mov REG[0xd0],>__r0
+ 01A8 5300              mov [__r0],A
+ 01AA 470020            tst [__r0],32
+ 01AD AFF2              jz L53
+ 01AF                   .dbline 118
+ 01AF           ;       SPIM_bReadRxData(); // We don't care about this read either
+ 01AF 10                push X
+ 01B0 7C0000            xcall _SPIM_bReadRxData
+ 01B3 20                pop X
+ 01B4 62D000            mov REG[0xd0],>__r0
+ 01B7                   .dbline 120
+ 01B7           ;       
+ 01B7           ;       nCS_HIGH;
+ 01B7                   .dbline 120
+ 01B7 430404            or REG[0x4],4
+ 01BA                   .dbline 120
+ 01BA                   .dbline 120
+ 01BA                   .dbline -2
+ 01BA           L31:
+ 01BA 38FE              add SP,-2
+ 01BC 20                pop X
+ 01BD                   .dbline 0 ; func end
+ 01BD 7F                ret
+ 01BE                   .dbsym l loAddr 1 c
+ 01BE                   .dbsym l hiAddr 0 c
+ 01BE                   .dbsym l out -6 c
+ 01BE                   .dbsym l addr -5 i
+ 01BE                   .dbend
+ 01BE                   .dbfunc e SPIRAM_ReadByte _SPIRAM_ReadByte fc
+ 01BE           ;             in -> X+2
+ 01BE           ;         loAddr -> X+1
+ 01BE           ;         hiAddr -> X+0
+ 01BE           ;           addr -> X-5
+ 01BE           _SPIRAM_ReadByte::
+ 01BE                   .dbline -1
+ 01BE 10                push X
+ 01BF 4F                mov X,SP
+ 01C0 3803              add SP,3
+ 01C2                   .dbline 126
+ 01C2           ; }
+ 01C2           ; 
+ 01C2           ; // Read and return byte at SRAM address "addr"
+ 01C2           ; // NOTE: This function assumes the SRAM has already been put in Byte Mode.
+ 01C2           ; BYTE SPIRAM_ReadByte(WORD addr)
+ 01C2           ; {
+ 01C2                   .dbline 132
+ 01C2           ;       BYTE hiAddr;
+ 01C2           ;       BYTE loAddr;
+ 01C2           ;       BYTE in;
+ 01C2           ; 
+ 01C2           ;       // Break the SRAM word address into two bytes
+ 01C2           ;       hiAddr = (BYTE)((addr >> 8) & 0x00ff);
+ 01C2 62D000            mov REG[0xd0],>__r0
+ 01C5 52FB              mov A,[X-5]
+ 01C7 5400              mov [X+0],A
+ 01C9                   .dbline 133
+ 01C9           ;       loAddr = (BYTE)(addr & 0x00ff);
+ 01C9 52FC              mov A,[X-4]
+ 01CB 5401              mov [X+1],A
+ 01CD           L57:
+ 01CD                   .dbline 135
+ 01CD           ;       
+ 01CD           ;       while(!(SPIM_bReadStatus() & SPIM_SPIM_TX_BUFFER_EMPTY));
+ 01CD           L58:
+ 01CD                   .dbline 135
+ 01CD 10                push X
+ 01CE 7C0000            xcall _SPIM_bReadStatus
+ 01D1 20                pop X
+ 01D2 62D000            mov REG[0xd0],>__r0
+ 01D5 5300              mov [__r0],A
+ 01D7 470010            tst [__r0],16
+ 01DA AFF2              jz L57
+ 01DC                   .dbline 136
+ 01DC           ;       nCS_LOW;
+ 01DC                   .dbline 136
+ 01DC 4104FB            and REG[0x4],-5
+ 01DF                   .dbline 136
+ 01DF                   .dbline 136
+ 01DF                   .dbline 138
+ 01DF           ;       // Send the Read command
+ 01DF           ;       SPIM_SendTxData(SPIRAM_READ);
+ 01DF 10                push X
+ 01E0 5003              mov A,3
+ 01E2 7C0000            xcall _SPIM_SendTxData
+ 01E5 20                pop X
+ 01E6           L60:
+ 01E6                   .dbline 139
+ 01E6           ;       while(!(SPIM_bReadStatus() & SPIM_SPIM_TX_BUFFER_EMPTY));
+ 01E6           L61:
+ 01E6                   .dbline 139
+ 01E6 10                push X
+ 01E7 7C0000            xcall _SPIM_bReadStatus
+ 01EA 20                pop X
+ 01EB 62D000            mov REG[0xd0],>__r0
+ 01EE 5300              mov [__r0],A
+ 01F0 470010            tst [__r0],16
+ 01F3 AFF2              jz L60
+ 01F5                   .dbline 141
+ 01F5           ;       // Send MSB of address
+ 01F5           ;       SPIM_SendTxData(hiAddr);
+ 01F5 10                push X
+ 01F6 5200              mov A,[X+0]
+ 01F8 7C0000            xcall _SPIM_SendTxData
+ 01FB 20                pop X
+ 01FC           L63:
+ 01FC                   .dbline 143
+ 01FC           ;       // Wait for the first RX byte to arrive and ignore it; it is meaningless.
+ 01FC           ;       while(!(SPIM_bReadStatus() & SPIM_SPIM_SPI_COMPLETE));
+ 01FC           L64:
+ 01FC                   .dbline 143
+ 01FC 10                push X
+ 01FD 7C0000            xcall _SPIM_bReadStatus
+ 0200 20                pop X
+ 0201 62D000            mov REG[0xd0],>__r0
+ 0204 5300              mov [__r0],A
+ 0206 470020            tst [__r0],32
+ 0209 AFF2              jz L63
+ 020B                   .dbline 144
+ 020B           ;       SPIM_bReadRxData();
+ 020B 10                push X
+ 020C 7C0000            xcall _SPIM_bReadRxData
+ 020F 20                pop X
+ 0210 62D000            mov REG[0xd0],>__r0
+ 0213           L66:
+ 0213                   .dbline 146
+ 0213           ;       // Wait for the second RX byte to arrive; it contains the status reg value.
+ 0213           ;       while(!(SPIM_bReadStatus() & SPIM_SPIM_SPI_COMPLETE));
+ 0213           L67:
+ 0213                   .dbline 146
+ 0213 10                push X
+ 0214 7C0000            xcall _SPIM_bReadStatus
+ 0217 20                pop X
+ 0218 62D000            mov REG[0xd0],>__r0
+ 021B 5300              mov [__r0],A
+ 021D 470020            tst [__r0],32
+ 0220 AFF2              jz L66
+ 0222                   .dbline 147
+ 0222           ;       SPIM_bReadRxData();
+ 0222 10                push X
+ 0223 7C0000            xcall _SPIM_bReadRxData
+ 0226 20                pop X
+ 0227 62D000            mov REG[0xd0],>__r0
+ 022A           L69:
+ 022A                   .dbline 149
+ 022A           ;       
+ 022A           ;       while(!(SPIM_bReadStatus() & SPIM_SPIM_TX_BUFFER_EMPTY));
+ 022A           L70:
+ 022A                   .dbline 149
+ 022A 10                push X
+ 022B 7C0000            xcall _SPIM_bReadStatus
+ 022E 20                pop X
+ 022F 62D000            mov REG[0xd0],>__r0
+ 0232 5300              mov [__r0],A
+ 0234 470010            tst [__r0],16
+ 0237 AFF2              jz L69
+ 0239                   .dbline 151
+ 0239           ;       // Send LSB of address
+ 0239           ;       SPIM_SendTxData(loAddr);
+ 0239 10                push X
+ 023A 5201              mov A,[X+1]
+ 023C 7C0000            xcall _SPIM_SendTxData
+ 023F 20                pop X
+ 0240           L72:
+ 0240                   .dbline 154
+ 0240           ;       // It will be almost immediately loaded into the TX shift register, freeing
+ 0240           ;       // up the TX buffer, and the SPIM module will start transmission.
+ 0240           ;       while(!(SPIM_bReadStatus() & SPIM_SPIM_TX_BUFFER_EMPTY));
+ 0240           L73:
+ 0240                   .dbline 154
+ 0240 10                push X
+ 0241 7C0000            xcall _SPIM_bReadStatus
+ 0244 20                pop X
+ 0245 62D000            mov REG[0xd0],>__r0
+ 0248 5300              mov [__r0],A
+ 024A 470010            tst [__r0],16
+ 024D AFF2              jz L72
+ 024F                   .dbline 156
+ 024F           ;       // Prime the TX buffer for the next byte by loading it with a dummy byte while the first byte is still transmitting.
+ 024F           ;       SPIM_SendTxData(SPIRAM_DUMMY_BYTE);
+ 024F 10                push X
+ 0250 5000              mov A,0
+ 0252 7C0000            xcall _SPIM_SendTxData
+ 0255 20                pop X
+ 0256           L75:
+ 0256                   .dbline 158
+ 0256           ;       // Wait for the first TX/RX cycle to finish. We don't care what we read.
+ 0256           ;       while(!(SPIM_bReadStatus() & SPIM_SPIM_SPI_COMPLETE));
+ 0256           L76:
+ 0256                   .dbline 158
+ 0256 10                push X
+ 0257 7C0000            xcall _SPIM_bReadStatus
+ 025A 20                pop X
+ 025B 62D000            mov REG[0xd0],>__r0
+ 025E 5300              mov [__r0],A
+ 0260 470020            tst [__r0],32
+ 0263 AFF2              jz L75
+ 0265                   .dbline 160
+ 0265           ;       // Reading the data clears the RX_BUFFER_FULL flag, even if we don't want it.
+ 0265           ;       SPIM_bReadRxData(); // ignore byte from SPIRAM_WRITE_STATUS_REG TX
+ 0265 10                push X
+ 0266 7C0000            xcall _SPIM_bReadRxData
+ 0269 20                pop X
+ 026A 62D000            mov REG[0xd0],>__r0
+ 026D           L78:
+ 026D                   .dbline 163
+ 026D           ;       // Wait for the second TX/RX cycle to finish so that we know that the entire
+ 026D           ;       // two byte transaction is finished.
+ 026D           ;       while(!(SPIM_bReadStatus() & SPIM_SPIM_SPI_COMPLETE));
+ 026D           L79:
+ 026D                   .dbline 163
+ 026D 10                push X
+ 026E 7C0000            xcall _SPIM_bReadStatus
+ 0271 20                pop X
+ 0272 62D000            mov REG[0xd0],>__r0
+ 0275 5300              mov [__r0],A
+ 0277 470020            tst [__r0],32
+ 027A AFF2              jz L78
+ 027C                   .dbline 164
+ 027C           ;       in = SPIM_bReadRxData(); // This is the output byte
+ 027C 10                push X
+ 027D 7C0000            xcall _SPIM_bReadRxData
+ 0280 20                pop X
+ 0281 62D000            mov REG[0xd0],>__r0
+ 0284 5402              mov [X+2],A
+ 0286                   .dbline 166
+ 0286           ;       
+ 0286           ;       nCS_HIGH;
+ 0286                   .dbline 166
+ 0286 430404            or REG[0x4],4
+ 0289                   .dbline 166
+ 0289                   .dbline 166
+ 0289                   .dbline 167
+ 0289           ;       return in;
+ 0289 5202              mov A,[X+2]
+ 028B                   .dbline -2
+ 028B           L56:
+ 028B 38FD              add SP,-3
+ 028D 20                pop X
+ 028E                   .dbline 0 ; func end
+ 028E 7F                ret
+ 028F                   .dbsym l in 2 c
+ 028F                   .dbsym l loAddr 1 c
+ 028F                   .dbsym l hiAddr 0 c
+ 028F                   .dbsym l addr -5 i
+ 028F                   .dbend
+ 028F                   .dbfunc e SPIRAM_WriteArray _SPIRAM_WriteArray fV
+ 028F           ;         loAddr -> X+2
+ 028F           ;         hiAddr -> X+1
+ 028F           ;              i -> X+0
+ 028F           ;          count -> X-8
+ 028F           ;            out -> X-7
+ 028F           ;           addr -> X-5
+ 028F           _SPIRAM_WriteArray::
+ 028F                   .dbline -1
+ 028F 10                push X
+ 0290 4F                mov X,SP
+ 0291 3803              add SP,3
+ 0293                   .dbline 176
+ 0293           ; }
+ 0293           ; 
+ 0293           ; // Write "count" bytes starting at address "addr" from array "out".
+ 0293           ; // The M8C is limited to 256 byte pages. This limits the maximum
+ 0293           ; // array size to 256 bytes, which means that "count" is only useful
+ 0293           ; // as a BYTE.
+ 0293           ; // NOTE: This function assumes the SRAM has already been put in Sequential Mode
+ 0293           ; void SPIRAM_WriteArray(WORD addr, BYTE *out, BYTE count)
+ 0293           ; {
+ 0293                   .dbline 183
+ 0293           ;       BYTE hiAddr;
+ 0293           ;       BYTE loAddr;
+ 0293           ;       BYTE i;
+ 0293           ;       
+ 0293           ;       // If some clown tries to write 0 bytes, just return.
+ 0293           ;       // XXX - Always beware of clowns!
+ 0293           ;       if (!count)
+ 0293 3DF800            cmp [X-8],0
+ 0296 B003              jnz L82
+ 0298                   .dbline 184
+ 0298           ;               return;
+ 0298 80E6              xjmp L81
+ 029A           L82:
+ 029A                   .dbline 186
+ 029A           ;       // Break the SRAM word address into two bytes
+ 029A           ;       hiAddr = (BYTE)((addr >> 8) & 0x00ff);
+ 029A 62D000            mov REG[0xd0],>__r0
+ 029D 52FB              mov A,[X-5]
+ 029F 5401              mov [X+1],A
+ 02A1                   .dbline 187
+ 02A1           ;       loAddr = (BYTE)(addr & 0x00ff);
+ 02A1 52FC              mov A,[X-4]
+ 02A3 5402              mov [X+2],A
+ 02A5           L84:
+ 02A5                   .dbline 190
+ 02A5           ;       
+ 02A5           ;       // Make sure the TX buffer is empty (it should be but let's be proper)
+ 02A5           ;       while(!(SPIM_bReadStatus() & SPIM_SPIM_TX_BUFFER_EMPTY));
+ 02A5           L85:
+ 02A5                   .dbline 190
+ 02A5 10                push X
+ 02A6 7C0000            xcall _SPIM_bReadStatus
+ 02A9 20                pop X
+ 02AA 62D000            mov REG[0xd0],>__r0
+ 02AD 5300              mov [__r0],A
+ 02AF 470010            tst [__r0],16
+ 02B2 AFF2              jz L84
+ 02B4                   .dbline 192
+ 02B4           ;       // SPI transfers begin by bringing CS LOW
+ 02B4           ;       nCS_LOW;
+ 02B4                   .dbline 192
+ 02B4 4104FB            and REG[0x4],-5
+ 02B7                   .dbline 192
+ 02B7                   .dbline 192
+ 02B7                   .dbline 194
+ 02B7           ;       // Send the Write command
+ 02B7           ;       SPIM_SendTxData(SPIRAM_WRITE);
+ 02B7 10                push X
+ 02B8 5002              mov A,2
+ 02BA 7C0000            xcall _SPIM_SendTxData
+ 02BD 20                pop X
+ 02BE           L87:
+ 02BE                   .dbline 197
+ 02BE           ;       // It will be almost immediately loaded into the TX shift register, freeing
+ 02BE           ;       // up the TX buffer, and the SPIM module will start transmission.
+ 02BE           ;       while(!(SPIM_bReadStatus() & SPIM_SPIM_TX_BUFFER_EMPTY));
+ 02BE           L88:
+ 02BE                   .dbline 197
+ 02BE 10                push X
+ 02BF 7C0000            xcall _SPIM_bReadStatus
+ 02C2 20                pop X
+ 02C3 62D000            mov REG[0xd0],>__r0
+ 02C6 5300              mov [__r0],A
+ 02C8 470010            tst [__r0],16
+ 02CB AFF2              jz L87
+ 02CD                   .dbline 199
+ 02CD           ;       // Prime the TX buffer for the next byte by loading it with the MSB of address while the first byte is still transmitting.
+ 02CD           ;       SPIM_SendTxData(hiAddr);
+ 02CD 10                push X
+ 02CE 5201              mov A,[X+1]
+ 02D0 7C0000            xcall _SPIM_SendTxData
+ 02D3 20                pop X
+ 02D4           L90:
+ 02D4                   .dbline 201
+ 02D4           ;       // Wait for the first TX/RX cycle to finish. We don't care what we read.
+ 02D4           ;       while(!(SPIM_bReadStatus() & SPIM_SPIM_SPI_COMPLETE));
+ 02D4           L91:
+ 02D4                   .dbline 201
+ 02D4 10                push X
+ 02D5 7C0000            xcall _SPIM_bReadStatus
+ 02D8 20                pop X
+ 02D9 62D000            mov REG[0xd0],>__r0
+ 02DC 5300              mov [__r0],A
+ 02DE 470020            tst [__r0],32
+ 02E1 AFF2              jz L90
+ 02E3                   .dbline 203
+ 02E3           ;       // Reading the data clears the RX_BUFFER_FULL flag, even if we don't want it.
+ 02E3           ;       SPIM_bReadRxData();
+ 02E3 10                push X
+ 02E4 7C0000            xcall _SPIM_bReadRxData
+ 02E7 20                pop X
+ 02E8 62D000            mov REG[0xd0],>__r0
+ 02EB           L93:
+ 02EB                   .dbline 206
+ 02EB           ;       // Wait for the second TX/RX cycle to finish so that we know that the entire
+ 02EB           ;       // two byte transaction is finished.
+ 02EB           ;       while(!(SPIM_bReadStatus() & SPIM_SPIM_SPI_COMPLETE));
+ 02EB           L94:
+ 02EB                   .dbline 206
+ 02EB 10                push X
+ 02EC 7C0000            xcall _SPIM_bReadStatus
+ 02EF 20                pop X
+ 02F0 62D000            mov REG[0xd0],>__r0
+ 02F3 5300              mov [__r0],A
+ 02F5 470020            tst [__r0],32
+ 02F8 AFF2              jz L93
+ 02FA                   .dbline 207
+ 02FA           ;       SPIM_bReadRxData(); // We don't care about this read either
+ 02FA 10                push X
+ 02FB 7C0000            xcall _SPIM_bReadRxData
+ 02FE 20                pop X
+ 02FF 62D000            mov REG[0xd0],>__r0
+ 0302           L96:
+ 0302                   .dbline 209
+ 0302           ;       
+ 0302           ;       while(!(SPIM_bReadStatus() & SPIM_SPIM_TX_BUFFER_EMPTY));
+ 0302           L97:
+ 0302                   .dbline 209
+ 0302 10                push X
+ 0303 7C0000            xcall _SPIM_bReadStatus
+ 0306 20                pop X
+ 0307 62D000            mov REG[0xd0],>__r0
+ 030A 5300              mov [__r0],A
+ 030C 470010            tst [__r0],16
+ 030F AFF2              jz L96
+ 0311                   .dbline 211
+ 0311           ;       // Send LSB of address
+ 0311           ;       SPIM_SendTxData(loAddr);
+ 0311 10                push X
+ 0312 5202              mov A,[X+2]
+ 0314 7C0000            xcall _SPIM_SendTxData
+ 0317 20                pop X
+ 0318           L99:
+ 0318                   .dbline 214
+ 0318           ;       // It will be almost immediately loaded into the TX shift register, freeing
+ 0318           ;       // up the TX buffer, and the SPIM module will start transmission.
+ 0318           ;       while(!(SPIM_bReadStatus() & SPIM_SPIM_SPI_COMPLETE));
+ 0318           L100:
+ 0318                   .dbline 214
+ 0318 10                push X
+ 0319 7C0000            xcall _SPIM_bReadStatus
+ 031C 20                pop X
+ 031D 62D000            mov REG[0xd0],>__r0
+ 0320 5300              mov [__r0],A
+ 0322 470020            tst [__r0],32
+ 0325 AFF2              jz L99
+ 0327                   .dbline 215
+ 0327           ;       SPIM_bReadRxData(); // We don't care about this read either
+ 0327 10                push X
+ 0328 7C0000            xcall _SPIM_bReadRxData
+ 032B 20                pop X
+ 032C 62D000            mov REG[0xd0],>__r0
+ 032F                   .dbline 217
+ 032F           ;       
+ 032F           ;       for (i = 0; i < count; ++i) // Loop through the array
+ 032F 560000            mov [X+0],0
+ 0332 8043              xjmp L105
+ 0334           L106:
+ 0334                   .dbline 219
+ 0334           ;       {
+ 0334           ;               while(!(SPIM_bReadStatus() & SPIM_SPIM_TX_BUFFER_EMPTY));
+ 0334           L107:
+ 0334                   .dbline 219
+ 0334 10                push X
+ 0335 7C0000            xcall _SPIM_bReadStatus
+ 0338 20                pop X
+ 0339 62D000            mov REG[0xd0],>__r0
+ 033C 5300              mov [__r0],A
+ 033E 470010            tst [__r0],16
+ 0341 AFF2              jz L106
+ 0343                   .dbline 221
+ 0343           ;               // Send the byte at index i in string out
+ 0343           ;               SPIM_SendTxData(out[i]);
+ 0343 5200              mov A,[X+0]
+ 0345 5300              mov [__r1],A
+ 0347 550000            mov [__r0],0
+ 034A 52FA              mov A,[X-6]
+ 034C 0400              add [__r1],A
+ 034E 52F9              mov A,[X-7]
+ 0350 0C00              adc [__r0],A
+ 0352 5100              mov A,[__r0]
+ 0354 60D4              mov REG[0xd4],A
+ 0356 3E00              mvi A,[__r1]
+ 0358 10                push X
+ 0359 7C0000            xcall _SPIM_SendTxData
+ 035C 20                pop X
+ 035D           L109:
+ 035D                   .dbline 222
+ 035D           ;               while(!(SPIM_bReadStatus() & SPIM_SPIM_SPI_COMPLETE));
+ 035D           L110:
+ 035D                   .dbline 222
+ 035D 10                push X
+ 035E 7C0000            xcall _SPIM_bReadStatus
+ 0361 20                pop X
+ 0362 62D000            mov REG[0xd0],>__r0
+ 0365 5300              mov [__r0],A
+ 0367 470020            tst [__r0],32
+ 036A AFF2              jz L109
+ 036C                   .dbline 223
+ 036C           ;               SPIM_bReadRxData(); // We don't care about this read either
+ 036C 10                push X
+ 036D 7C0000            xcall _SPIM_bReadRxData
+ 0370 20                pop X
+ 0371 62D000            mov REG[0xd0],>__r0
+ 0374                   .dbline 225
+ 0374           ;                       
+ 0374           ;       }
+ 0374           L103:
+ 0374                   .dbline 217
+ 0374 7700              inc [X+0]
+ 0376           L105:
+ 0376                   .dbline 217
+ 0376 5200              mov A,[X+0]
+ 0378 3BF8              cmp A,[X-8]
+ 037A CFB9              jc L107
+ 037C           X0:
+ 037C                   .dbline 227
+ 037C           ;       
+ 037C           ;       nCS_HIGH;
+ 037C                   .dbline 227
+ 037C 430404            or REG[0x4],4
+ 037F                   .dbline 227
+ 037F                   .dbline 227
+ 037F                   .dbline -2
+ 037F           L81:
+ 037F 38FD              add SP,-3
+ 0381 20                pop X
+ 0382                   .dbline 0 ; func end
+ 0382 7F                ret
+ 0383                   .dbsym l loAddr 2 c
+ 0383                   .dbsym l hiAddr 1 c
+ 0383                   .dbsym l i 0 c
+ 0383                   .dbsym l count -8 c
+ 0383                   .dbsym l out -7 pc
+ 0383                   .dbsym l addr -5 i
+ 0383                   .dbend
+ 0383                   .dbfunc e SPIRAM_ReadArray _SPIRAM_ReadArray fV
+ 0383           ;         loAddr -> X+2
+ 0383           ;         hiAddr -> X+1
+ 0383           ;              i -> X+0
+ 0383           ;          count -> X-8
+ 0383           ;             in -> X-7
+ 0383           ;           addr -> X-5
+ 0383           _SPIRAM_ReadArray::
+ 0383                   .dbline -1
+ 0383 10                push X
+ 0384 4F                mov X,SP
+ 0385 3803              add SP,3
+ 0387                   .dbline 236
+ 0387           ; }
+ 0387           ; 
+ 0387           ; // Read "count" bytes starting at address "addr" into array "in"
+ 0387           ; // The M8C is limited to 256 byte pages. This limits the maximum
+ 0387           ; // array size to 256 bytes, which means that "count" is only useful
+ 0387           ; // as a BYTE.
+ 0387           ; // NOTE: This function assumes the SRAM has already been put in Sequential Mode
+ 0387           ; void SPIRAM_ReadArray(WORD addr, BYTE *in, BYTE count)
+ 0387           ; {
+ 0387                   .dbline 243
+ 0387           ;       BYTE hiAddr;
+ 0387           ;       BYTE loAddr;
+ 0387           ;       BYTE i;
+ 0387           ;       
+ 0387           ;       // If some clown tries to write 0 bytes, just return.
+ 0387           ;       // XXX - Always beware of clowns!
+ 0387           ;       if (!count)
+ 0387 3DF800            cmp [X-8],0
+ 038A B003              jnz L113
+ 038C                   .dbline 244
+ 038C           ;               return;
+ 038C 80EC              xjmp L112
+ 038E           L113:
+ 038E                   .dbline 246
+ 038E           ;       // Break the SRAM word address into two bytes
+ 038E           ;       hiAddr = (BYTE)((addr >> 8) & 0x00ff);
+ 038E 62D000            mov REG[0xd0],>__r0
+ 0391 52FB              mov A,[X-5]
+ 0393 5401              mov [X+1],A
+ 0395                   .dbline 247
+ 0395           ;       loAddr = (BYTE)(addr & 0x00ff);
+ 0395 52FC              mov A,[X-4]
+ 0397 5402              mov [X+2],A
+ 0399           L115:
+ 0399                   .dbline 249
+ 0399           ;       
+ 0399           ;       while(!(SPIM_bReadStatus() & SPIM_SPIM_TX_BUFFER_EMPTY));
+ 0399           L116:
+ 0399                   .dbline 249
+ 0399 10                push X
+ 039A 7C0000            xcall _SPIM_bReadStatus
+ 039D 20                pop X
+ 039E 62D000            mov REG[0xd0],>__r0
+ 03A1 5300              mov [__r0],A
+ 03A3 470010            tst [__r0],16
+ 03A6 AFF2              jz L115
+ 03A8                   .dbline 251
+ 03A8           ;       // SPI transfers begin by bringing CS LOW
+ 03A8           ;       nCS_LOW;
+ 03A8                   .dbline 251
+ 03A8 4104FB            and REG[0x4],-5
+ 03AB                   .dbline 251
+ 03AB                   .dbline 251
+ 03AB                   .dbline 253
+ 03AB           ;       // Send the Read command
+ 03AB           ;       SPIM_SendTxData(SPIRAM_READ);
+ 03AB 10                push X
+ 03AC 5003              mov A,3
+ 03AE 7C0000            xcall _SPIM_SendTxData
+ 03B1 20                pop X
+ 03B2           L118:
+ 03B2                   .dbline 256
+ 03B2           ;       // It will be almost immediately loaded into the TX shift register, freeing
+ 03B2           ;       // up the TX buffer, and the SPIM module will start transmission.
+ 03B2           ;       while(!(SPIM_bReadStatus() & SPIM_SPIM_TX_BUFFER_EMPTY));
+ 03B2           L119:
+ 03B2                   .dbline 256
+ 03B2 10                push X
+ 03B3 7C0000            xcall _SPIM_bReadStatus
+ 03B6 20                pop X
+ 03B7 62D000            mov REG[0xd0],>__r0
+ 03BA 5300              mov [__r0],A
+ 03BC 470010            tst [__r0],16
+ 03BF AFF2              jz L118
+ 03C1                   .dbline 258
+ 03C1           ;       // Prime the TX buffer for the next byte by loading it with the MSB of address while the first byte is still transmitting.
+ 03C1           ;       SPIM_SendTxData(hiAddr);
+ 03C1 10                push X
+ 03C2 5201              mov A,[X+1]
+ 03C4 7C0000            xcall _SPIM_SendTxData
+ 03C7 20                pop X
+ 03C8           L121:
+ 03C8                   .dbline 260
+ 03C8           ;       // Wait for the first TX/RX cycle to finish. We don't care what we read.
+ 03C8           ;       while(!(SPIM_bReadStatus() & SPIM_SPIM_SPI_COMPLETE));
+ 03C8           L122:
+ 03C8                   .dbline 260
+ 03C8 10                push X
+ 03C9 7C0000            xcall _SPIM_bReadStatus
+ 03CC 20                pop X
+ 03CD 62D000            mov REG[0xd0],>__r0
+ 03D0 5300              mov [__r0],A
+ 03D2 470020            tst [__r0],32
+ 03D5 AFF2              jz L121
+ 03D7                   .dbline 262
+ 03D7           ;       // Reading the data clears the RX_BUFFER_FULL flag, even if we don't want it.
+ 03D7           ;       SPIM_bReadRxData();
+ 03D7 10                push X
+ 03D8 7C0000            xcall _SPIM_bReadRxData
+ 03DB 20                pop X
+ 03DC 62D000            mov REG[0xd0],>__r0
+ 03DF           L124:
+ 03DF                   .dbline 265
+ 03DF           ;       // Wait for the second TX/RX cycle to finish so that we know that the entire
+ 03DF           ;       // two byte transaction is finished.
+ 03DF           ;       while(!(SPIM_bReadStatus() & SPIM_SPIM_SPI_COMPLETE));
+ 03DF           L125:
+ 03DF                   .dbline 265
+ 03DF 10                push X
+ 03E0 7C0000            xcall _SPIM_bReadStatus
+ 03E3 20                pop X
+ 03E4 62D000            mov REG[0xd0],>__r0
+ 03E7 5300              mov [__r0],A
+ 03E9 470020            tst [__r0],32
+ 03EC AFF2              jz L124
+ 03EE                   .dbline 266
+ 03EE           ;       SPIM_bReadRxData(); // We don't care about this read either
+ 03EE 10                push X
+ 03EF 7C0000            xcall _SPIM_bReadRxData
+ 03F2 20                pop X
+ 03F3 62D000            mov REG[0xd0],>__r0
+ 03F6           L127:
+ 03F6                   .dbline 268
+ 03F6           ;       
+ 03F6           ;       while(!(SPIM_bReadStatus() & SPIM_SPIM_TX_BUFFER_EMPTY));
+ 03F6           L128:
+ 03F6                   .dbline 268
+ 03F6 10                push X
+ 03F7 7C0000            xcall _SPIM_bReadStatus
+ 03FA 20                pop X
+ 03FB 62D000            mov REG[0xd0],>__r0
+ 03FE 5300              mov [__r0],A
+ 0400 470010            tst [__r0],16
+ 0403 AFF2              jz L127
+ 0405                   .dbline 270
+ 0405           ;       // Send LSB of address
+ 0405           ;       SPIM_SendTxData(loAddr);
+ 0405 10                push X
+ 0406 5202              mov A,[X+2]
+ 0408 7C0000            xcall _SPIM_SendTxData
+ 040B 20                pop X
+ 040C           L130:
+ 040C                   .dbline 273
+ 040C           ;       // It will be almost immediately loaded into the TX shift register, freeing
+ 040C           ;       // up the TX buffer, and the SPIM module will start transmission.
+ 040C           ;       while(!(SPIM_bReadStatus() & SPIM_SPIM_SPI_COMPLETE));
+ 040C           L131:
+ 040C                   .dbline 273
+ 040C 10                push X
+ 040D 7C0000            xcall _SPIM_bReadStatus
+ 0410 20                pop X
+ 0411 62D000            mov REG[0xd0],>__r0
+ 0414 5300              mov [__r0],A
+ 0416 470020            tst [__r0],32
+ 0419 AFF2              jz L130
+ 041B                   .dbline 274
+ 041B           ;       SPIM_bReadRxData(); // We don't care about this read either
+ 041B 10                push X
+ 041C 7C0000            xcall _SPIM_bReadRxData
+ 041F 20                pop X
+ 0420 62D000            mov REG[0xd0],>__r0
+ 0423                   .dbline 276
+ 0423           ;       
+ 0423           ;       for (i = 0; i < count; ++i) // Loop through count
+ 0423 560000            mov [X+0],0
+ 0426 8049              xjmp L136
+ 0428           L137:
+ 0428                   .dbline 278
+ 0428           ;       {
+ 0428           ;               while(!(SPIM_bReadStatus() & SPIM_SPIM_TX_BUFFER_EMPTY));
+ 0428           L138:
+ 0428                   .dbline 278
+ 0428 10                push X
+ 0429 7C0000            xcall _SPIM_bReadStatus
+ 042C 20                pop X
+ 042D 62D000            mov REG[0xd0],>__r0
+ 0430 5300              mov [__r0],A
+ 0432 470010            tst [__r0],16
+ 0435 AFF2              jz L137
+ 0437                   .dbline 280
+ 0437           ;               // Send dummy byte; we just want to read data
+ 0437           ;               SPIM_SendTxData(SPIRAM_DUMMY_BYTE);
+ 0437 10                push X
+ 0438 5000              mov A,0
+ 043A 7C0000            xcall _SPIM_SendTxData
+ 043D 20                pop X
+ 043E           L140:
+ 043E                   .dbline 281
+ 043E           ;               while(!(SPIM_bReadStatus() & SPIM_SPIM_SPI_COMPLETE));
+ 043E           L141:
+ 043E                   .dbline 281
+ 043E 10                push X
+ 043F 7C0000            xcall _SPIM_bReadStatus
+ 0442 20                pop X
+ 0443 62D000            mov REG[0xd0],>__r0
+ 0446 5300              mov [__r0],A
+ 0448 470020            tst [__r0],32
+ 044B AFF2              jz L140
+ 044D                   .dbline 282
+ 044D           ;               in[i] = SPIM_bReadRxData(); // Set character in string to be the data read
+ 044D 10                push X
+ 044E 7C0000            xcall _SPIM_bReadRxData
+ 0451 20                pop X
+ 0452 62D000            mov REG[0xd0],>__r0
+ 0455 5300              mov [__r0],A
+ 0457 5200              mov A,[X+0]
+ 0459 5300              mov [__r3],A
+ 045B 550000            mov [__r2],0
+ 045E 52FA              mov A,[X-6]
+ 0460 0400              add [__r3],A
+ 0462 52F9              mov A,[X-7]
+ 0464 0C00              adc [__r2],A
+ 0466 5100              mov A,[__r2]
+ 0468 60D5              mov REG[0xd5],A
+ 046A 5100              mov A,[__r0]
+ 046C 3F00              mvi [__r3],A
+ 046E                   .dbline 283
+ 046E           ;       }
+ 046E           L134:
+ 046E                   .dbline 276
+ 046E 7700              inc [X+0]
+ 0470           L136:
+ 0470                   .dbline 276
+ 0470 5200              mov A,[X+0]
+ 0472 3BF8              cmp A,[X-8]
+ 0474 CFB3              jc L138
+ 0476           X1:
+ 0476                   .dbline 285
+ 0476           ;       
+ 0476           ;       nCS_HIGH;
+ 0476                   .dbline 285
+ 0476 430404            or REG[0x4],4
+ 0479                   .dbline 285
+ 0479                   .dbline 285
+ 0479                   .dbline -2
+ 0479           L112:
+ 0479 38FD              add SP,-3
+ 047B 20                pop X
+ 047C                   .dbline 0 ; func end
+ 047C 7F                ret
+ 047D                   .dbsym l loAddr 2 c
+ 047D                   .dbsym l hiAddr 1 c
+ 047D                   .dbsym l i 0 c
+ 047D                   .dbsym l count -8 c
+ 047D                   .dbsym l in -7 pc
+ 047D                   .dbsym l addr -5 i
+ 047D                   .dbend

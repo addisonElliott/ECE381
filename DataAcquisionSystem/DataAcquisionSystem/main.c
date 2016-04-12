@@ -71,7 +71,9 @@
 #include "stdlib.h"
 #include "spi_sram.h"
 #include "math.h"
-
+#include "string.h"		// used for any of the string fcns supported by API
+#include "stdio.h"		// this is used for fcns....
+#include "ctype.h"		// this is used for fcns.. csspanf() and cstork()
 // GPIO Defines
 #define TRIGGER_HIGH	{TRIGGER_Data_ADDR |=  TRIGGER_MASK;}
 #define TRIGGER_LOW		{TRIGGER_Data_ADDR &= ~TRIGGER_MASK;}
@@ -92,7 +94,151 @@
 
 // Globals
 BYTE DACUpdateDone = 0;
+char buf [80];
+char chAMemBlk = -1;
+char chBMemBlk = -1;
+int triggerAddress = 0;
+
 // add your globals here
+// This function reads characters from the serial until a character is entered that is within the min & max ASCII characters.
+// That character is returned
+// This function gets a line of text. It writes data into buffer with a maximum size of bufferLen. The function returns number of bytes written
+// when enter is pressed
+void GetLine(char *buffer, char bufferLen)
+{
+	static char rubout[4] = { 0x08, 0x20, 0x08, 0x00 }; // Rubout Sequence consists of Backspace Space Backspace. This is the null-terminated string
+	
+	char c;
+	char strPos = 0; // Current position in the string
+	
+	UART_PutChar('>'); // Print line pointer
+	
+	while (1)
+	{
+		c = UART_cReadChar(); // Use UART module to read the character user enters
+		
+		if (c == 0x08 || c == 0x7F) // Delete or backspace pressed
+		{
+			if (strPos > 0) // Only delete if there are characters to delete
+			{
+				strPos--; // Set the position back one
+				UART_PutString(rubout); // Sends the rubout sequence to the serial.
+			}
+		}
+		else if (c == 0x0D) // Newline enter is pressed
+		{
+			buffer[strPos] = 0x00; // put the null character at the current strPos
+			UART_PutCRLF(); // Go to another line
+			break;
+		}
+		else if (c >= 0x20 && c < 0x7F) // only valid characters to the string. These are any alphabet, numeric, or symbols
+		{
+			if (strPos < bufferLen) // If there is space in the buffer
+			{
+				buffer[strPos++] = c; // Set the current character in buffer to c and then increment strPos
+				UART_PutChar(c); // Send the character to the computer
+			}
+			else
+				UART_PutChar(0x07); // Send BEL key because there is no more space left to add to the string
+		}
+	}
+	
+	return;
+}
+
+// Takes input argument str and converts each character into a lowercase character. Returns that str. Note: This function alters str
+char *Lowercase(char *str)
+{
+	int i;
+	for (i = 0; str[i] != '\0'; ++i) // Loop through each character in str and call tolower on it
+		str[i] = tolower(str[i]); // Set the character to be the lowercase of the character
+	
+	return str; // Return the string
+}
+
+char GetNumber(char min, char max)
+{
+	char c;
+	
+	while (1)
+	{
+		c = UART_cReadChar(); // Read the character
+		if (c < ('0' + min) || c > ('0' + max)) // If the character is not within min to max range, continue the loop
+			continue;
+		
+		UART_PutChar(c); // Put the character on the serial
+		UART_PutCRLF();
+		return (c - '0'); // This returns the integer number entered instead of the ASCII value
+	}
+	
+	return 0;
+}
+
+// This function plays a block of data where opt is the data block 0-3.
+void PlaySamples(void)
+{	
+	WORD startAddrA = chAMemBlk * 0x2000; // Where the address starts for block
+	WORD endAddrA = startAddrA + 0x2000; // Where the address ends for block
+	WORD addrA = startAddrA;
+	
+	WORD startAddrB = chBMemBlk * 0x2000; // Where the address starts for block
+	WORD endAddrB = startAddrB + 0x2000; // Where the address ends for block
+	WORD addrB = startAddrB;
+	
+	SPIRAM_WriteStatusRegister(SPIRAM_BYTE_MODE | SPIRAM_DISABLE_HOLD);
+	UART_CPutString("Press any key to abort\r\n");
+	DACUpdate_Start();
+	while (!UART_cReadChar())
+	{
+		//TRIGGER_Data_ADDR |= TRIGGER_MASK;	// take trigger high then low
+		//TRIGGER_Data_ADDR &=  ~TRIGGER_MASK;
+		
+		if (DACUpdateDone)
+		{
+			if (chAMemBlk != -1)
+			{
+				DAC8A_WriteStall(SPIRAM_ReadByte(addrA));
+				if (++addrA > endAddrA) addrA = startAddrA;
+			}
+			
+			if (chBMemBlk != -1)
+			{
+				DAC8B_WriteStall(SPIRAM_ReadByte(addrB));
+				if (++addrB > endAddrB) addrB = startAddrB;
+			}
+			
+			DACUpdateDone = 0;
+		}
+	}
+		
+}
+
+void SampleAnalog(char channel, char memBlock)
+{	
+	WORD startAddr = 0x2000 * memBlock; // Where the address starts for block
+	WORD endAddr = startAddr + 0x2000; // Where the address ends for block
+	WORD addr;
+	BYTE i;
+	char temp[128];
+	
+	AMUX4_InputSelect(channel == 0 ? AMUX4_PORT0_1: AMUX4_PORT0_7); // change sample analog source channel
+	SPIRAM_WriteStatusRegister(SPIRAM_SEQUENTIAL_MODE | SPIRAM_DISABLE_HOLD);
+	DelSig_StartAD();
+	for (addr = startAddr; addr < endAddr; addr += 128)
+	{
+		UART_CPutString("Write to ");
+		UART_PutSHexInt(addr);
+		UART_PutCRLF();
+		
+		for (i = 0; i < 128; i++)
+		{
+			while (!DelSig_fIsDataAvailable());
+			temp[i] = DelSig_cGetDataClearFlag();
+		}
+		SPIRAM_WriteArray(addr, temp, 128);
+	}	
+	DelSig_StopAD();
+}
 
 void main(void)
 {
@@ -145,19 +291,18 @@ void main(void)
 	// Start the DACs
 	DAC8A_Start(DAC8A_HIGHPOWER);
 	DAC8B_Start(DAC8B_HIGHPOWER);
-	
-	while(1) {
+		// This is the command usage string
 	UART_CPutString("########################## Lab 11 Data Acquisition System ########################\r\n\
-# input X # \r\n\
+# input X A \r\n\
 #\r\n\
-#	Routes input channel to write to memory block\r\n\			
-#	H - Either A/B to signify channel being altered\r\n");
-/*#		# - Memory block(0-3) being routed\r\n");
+#	Samples input channel to memory block\r\n\
+#		X - Either A/B to signify channel being altered\r\n\
+#		A - Memory block(0-3) being routed\r\n\
 #\r\n\
-# output X #\r\n\
+# output X A\r\n\
 #	Routes output channel to read from memory block \r\n\
-#		X - Either A/B to signify channel being altered\r\n");
-#		# - Memory block(0-3 or N for none) being routed\r\n\
+#		X - Either A/B to signify channel being altered\r\n\
+#		A - Memory block(0-3 or -1 for none) being routed\r\n\
 #\r\n\
 # rate X\r\n\
 #	Selects a rate to sample the channels when reading and writing\r\n\
@@ -172,16 +317,190 @@ void main(void)
 #			8. 7.5   ksps\r\n\
 #			9. 9.37  ksps\r\n\
 #\r\n\
-# trigger XXX # H\r\n\
+# trigger XXX H\r\n\
 #	Sets the relative address to trigger\r\n\
-#		XXX - Either hex/DEC_CR0 for the address\r\n\
-#		X - Memory block(0-3) that the trigger occurs\r\n\
-#		H - values in hexadecimal or decimal.  Range is 0-8192 for decimal or 0-0x2000 for hex\r\n\
+#		XXX - Either hex/dec for the address\r\n\
+#		H - values in hexadecimal or decimal.  Range is 0-8192 for dec or 0-2000 for hex\r\n\
 #\r\n\
 # start\r\n\
-#	Starts the stuff\r\n\
-#####################################################################\r\n");*/
+#	Starts the output channels. They will continue to play until looped over\r\n\
+#####################################################################\r\n");
+	while (1)
+	{
+		char *cmd;
+		char *params;
+		
+		GetLine(buf, 79); // Retrieves a line with a maximum length of 79 characters and put it in buf.
+		
+		cmd = Lowercase(cstrtok(buf, " ")); // Get the first word from the entered string and lowercase it.
+		if (!cstrcmp("input", cmd)) // If the command input was entered
+		{
+			char channel;
+			int memBlock;
+
+			params = cstrtok(0x00, " "); // 0x00 indicates it will continue from last cstrtok command and get next word. This gets the next parameter
+
+			// csscanf if used to parse the string into values such as hexadecimal or integers
+			// It returns the number of parameters it parsed which should be one
+			// If the length of the params is not right or it does not parse the right amount, it returns an error
+			// %c gets a character, the channel
+			if (strlen(params) != 1 || csscanf(params, "%c", &channel) != 1) goto error;
+			
+			// %d gets an integer, this is the memory block at which to write
+			params = cstrtok(0x00, " ");
+			if (strlen(params) != 1 || csscanf(params, "%d", &memBlock) != 1) goto error;			
+			
+			// If there is any data after the last arg, then the format is invalid and it should return an error
+			if (cstrtok(0x00, " ") != 0x00) goto error;
+			
+			channel = tolower(channel);
+			if ((channel != 'a' && channel != 'b') || memBlock < 0 || memBlock > 3)
+				goto error; // Memory block was out of range or the channel was not A or B
+			
+			SampleAnalog((channel == 'b'), (char)memBlock);
+		}
+		else if (!cstrcmp("output", cmd)) // If the command output was entered
+		{
+			char channel;
+			int memBlock;
+
+			params = cstrtok(0x00, " "); // 0x00 indicates it will continue from last cstrtok command and get next word. This gets the next parameter
+
+			// csscanf if used to parse the string into values such as hexadecimal or integers
+			// It returns the number of parameters it parsed which should be one
+			// If the length of the params is not right or it does not parse the right amount, it returns an error
+			// %c gets a character, the channel
+			if (strlen(params) != 1 || csscanf(params, "%c", &channel) != 1) goto error;
+
+			// %d gets an integer, this is the memory block
+			params = cstrtok(0x00, " ");
+			if (strlen(params) != 1 || csscanf(params, "%d", &memBlock) != 1) goto error;
+			
+			// If there is any data after the last arg, then the format is invalid and it should return an error
+			if (cstrtok(0x00, " ") != 0x00) goto error;	
+			
+			channel = tolower(channel);
+			if ((channel != 'a' && channel != 'b') || memBlock < -1 || memBlock > 3)
+				goto error; // Memory block was out of range or the channel was not A or B
+			
+			if (channel == 'a') chAMemBlk = memBlock;
+			else chBMemBlk = memBlock;
+		}
+		else if (!cstrcmp("rate", cmd)) // If the command rate was entered
+		{
+			int samplingRate;
+			int ksps;
+			params = cstrtok(0x00, " "); // 0x00 indicates it will continue from last cstrtok command and get next word. This gets the next parameter
+
+			// csscanf if used to parse the string into values such as hexadecimal or integers
+			// It returns the number of parameters it parsed which should be one
+			// If the length of the params is not right or it does not parse the right amount, it returns an error
+			// %d gets an integer, this is the memory block
+			if (strlen(params) != 1 || csscanf(params, "%d", &samplingRate) != 1) goto error;
+			
+			// If there is any data after the last arg, then the format is invalid and it should return an error
+			if (cstrtok(0x00, " ") != 0x00) goto error;	
+			
+			if (samplingRate < 0 || samplingRate > 9)
+				goto error; // Invalid sampling rate was selected
+			DelSigClock_Stop();
+			switch (samplingRate)
+			{
+				case 1: ksps = SAMPLING_RATE_1250; break;
+				case 2: ksps = SAMPLING_RATE_1500; break;
+				case 3: ksps = SAMPLING_RATE_1875; break;
+				case 4: ksps = SAMPLING_RATE_2500; break;
+				case 5: ksps = SAMPLING_RATE_3125; break;
+				case 6: ksps = SAMPLING_RATE_3750; break;
+				case 7: ksps = SAMPLING_RATE_6250; break;
+				case 8: ksps = SAMPLING_RATE_7500; break;
+				case 9: ksps = SAMPLING_RATE_9375; break;
+				default: break;
+			}
+			DelSigClock_WritePeriod(ksps);
+			DelSigClock_WriteCompareValue(ksps>>1);
+			DelSigClock_Start();
+		}
+		else if (!cstrcmp("trigger", cmd)) // If the command trigger was entered
+		{
+			int address;
+
+			// csscanf if used to parse the string into values such as hexadecimal or integers
+			// It returns the number of parameters it parsed which should be one
+			// If the length of the params is not right or it does not parse the right amount, it returns an error
+			// %d gets an integer, this is the memory block
+			params = Lowercase(cstrtok(0x00, " "));
+			if (!cstrcmp("hex", params))
+			{
+				// %x gets a hexadecimal value, this can read capital or lowercase letters, this is the address
+				params = cstrtok(0x00, " ");
+				if (strlen(params) > 4 || csscanf(params, "%x", &address) != 1) goto error;
+			}
+			else if (!cstrcmp("dec", params))
+			{
+				params = cstrtok(0x00, " ");
+				// %d gets an integer, this is the address
+				if (strlen(params) > 4 || csscanf(params, "%d", &address) != 1) goto error;
+			}
+			else 
+				goto error; // Invalid data type entered
+			
+			if (address < 0 || address > 8192)
+				goto error; // Invalid address range specified
+
+			// If there is any data after the last arg, then the format is invalid and it should return an error
+			if (cstrtok(0x00, " ") != 0x00) goto error;
+		
+			triggerAddress = address;
+			
+		}
+		else if (!cstrcmp("start", cmd)) // If the command start was entered
+		{
+			// If there is any data after the number of bytes, then the format is invalid and it should return an error
+			if (cstrtok(0x00, " ") != 0x00) goto error;
+			
+			PlaySamples();
+		}
+		else 
+			goto error;
+		
+		continue; // This is so that the error is skipped when everything goes right
+		error: // This outputs an invalid format message and continues on to read another line
+			UART_CPutString("########################## Lab 11 Data Acquisition System ########################\r\n\
+# input X A \r\n\
+#\r\n\
+#	Samples input channel to memory block\r\n\
+#		X - Either A/B to signify channel being altered\r\n\
+#		A - Memory block(0-3) being routed\r\n\
+#\r\n\
+# output X A\r\n\
+#	Routes output channel to read from memory block \r\n\
+#		X - Either A/B to signify channel being altered\r\n\
+#		A - Memory block(0-3 or -1 for none) being routed\r\n\
+#\r\n\
+# rate X\r\n\
+#	Selects a rate to sample the channels when reading and writing\r\n\
+#		X - One of the values below\r\n\
+#			1. 1.25  ksps \r\n\
+#			2. 1.5   ksps\r\n\
+#			3. 1.87  ksps\r\n\
+#			4. 2.5   ksps\r\n\
+#			5. 3.125 ksps\r\n\
+#			6. 3.75  ksps\r\n\
+#			7. 6.25  ksps\r\n\
+#			8. 7.5   ksps\r\n\
+#			9. 9.37  ksps\r\n\
+#\r\n\
+# trigger XXX H\r\n\
+#	Sets the relative address to trigger\r\n\
+#		XXX - Either hex/dec for the address\r\n\
+#		H - values in hexadecimal or decimal.  Range is 0-8192 for dec or 0-2000 for hex\r\n\
+#\r\n\
+# start\r\n\
+#	Starts the output channels. They will continue to play until looped over\r\n\
+#####################################################################\r\n");
 	}
+
 }
 
 /*****************************************************************************/
