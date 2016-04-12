@@ -70,10 +70,10 @@
 #include "PSoCAPI.h"    // PSoC API definitions for all User Modules
 #include "stdlib.h"
 #include "spi_sram.h"
-#include "math.h"
 #include "string.h"		// used for any of the string fcns supported by API
 #include "stdio.h"		// this is used for fcns....
 #include "ctype.h"		// this is used for fcns.. csspanf() and cstork()
+
 // GPIO Defines
 #define TRIGGER_HIGH	{TRIGGER_Data_ADDR |=  TRIGGER_MASK;}
 #define TRIGGER_LOW		{TRIGGER_Data_ADDR &= ~TRIGGER_MASK;}
@@ -93,15 +93,12 @@
 #define DACUPDATE_PERIOD   127 // (128 - 1)
 
 // Globals
-BYTE DACUpdateDone = 0;
-char buf [80];
-char chAMemBlk = -1;
-char chBMemBlk = -1;
-int triggerAddress = 0;
+BYTE DACUpdateDone = 0;	// Flag which ISR sets when its time to update the DACs with output
+char buf[80];			// Buffer which the UART command line will be stored		
+char chAMemBlk = -1;	// Memory block that channel B will use (-1 for none)
+char chBMemBlk = -1;	// Memory block that channel B will use (-1 for none)
+int triggerAddress = 0; // Address at which the trigger will be triggered
 
-// add your globals here
-// This function reads characters from the serial until a character is entered that is within the min & max ASCII characters.
-// That character is returned
 // This function gets a line of text. It writes data into buffer with a maximum size of bufferLen. The function returns number of bytes written
 // when enter is pressed
 void GetLine(char *buffer, char bufferLen)
@@ -156,88 +153,68 @@ char *Lowercase(char *str)
 	return str; // Return the string
 }
 
-char GetNumber(char min, char max)
-{
-	char c;
-	
-	while (1)
-	{
-		c = UART_cReadChar(); // Read the character
-		if (c < ('0' + min) || c > ('0' + max)) // If the character is not within min to max range, continue the loop
-			continue;
-		
-		UART_PutChar(c); // Put the character on the serial
-		UART_PutCRLF();
-		return (c - '0'); // This returns the integer number entered instead of the ASCII value
-	}
-	
-	return 0;
-}
-
-// This function plays a block of data where opt is the data block 0-3.
+// This function plays channel A and B with the data at memory blocks chAMemBlk and chBMemBlk, respectively
 void PlaySamples(void)
 {	
-	WORD startAddrA = chAMemBlk * 0x2000; // Where the address starts for block
-	WORD endAddrA = startAddrA + 0x2000; // Where the address ends for block
-	WORD addrA = startAddrA;
+	WORD startAddrA = chAMemBlk * 0x2000; // Where the address starts for channel A
+	WORD endAddrA = startAddrA + 0x2000; // Where the address ends for channel A
+	WORD addrA = startAddrA; // Current address position for channel B
 	
-	WORD startAddrB = chBMemBlk * 0x2000; // Where the address starts for block
-	WORD endAddrB = startAddrB + 0x2000; // Where the address ends for block
-	WORD addrB = startAddrB;
+	WORD startAddrB = chBMemBlk * 0x2000; // Where the address starts for channel B
+	WORD endAddrB = startAddrB + 0x2000; // Where the address ends for channel B
+	WORD addrB = startAddrB; // Current address position for channel B
 	
-	SPIRAM_WriteStatusRegister(SPIRAM_BYTE_MODE | SPIRAM_DISABLE_HOLD);
+	SPIRAM_WriteStatusRegister(SPIRAM_BYTE_MODE | SPIRAM_DISABLE_HOLD); // Set SPIRAM to byte mode b/c we read one byte at a time
+	DACUpdate_Start(); // Start the DACUpdate timer
 	UART_CPutString("Press any key to abort\r\n");
-	DACUpdate_Start();
 	while (!UART_cReadChar())
 	{
 		//TRIGGER_Data_ADDR |= TRIGGER_MASK;	// take trigger high then low
 		//TRIGGER_Data_ADDR &=  ~TRIGGER_MASK;
 		
-		if (DACUpdateDone)
+		if (DACUpdateDone) // Time to update the DACs
 		{
-			if (chAMemBlk != -1)
+			if (chAMemBlk != -1) // If there is a valid memory block to output
 			{
 				DAC8A_WriteStall(SPIRAM_ReadByte(addrA));
 				if (++addrA > endAddrA) addrA = startAddrA;
 			}
 			
-			if (chBMemBlk != -1)
+			if (chBMemBlk != -1) // If there is a valid memory block to output
 			{
 				DAC8B_WriteStall(SPIRAM_ReadByte(addrB));
 				if (++addrB > endAddrB) addrB = startAddrB;
 			}
 			
-			DACUpdateDone = 0;
+			DACUpdateDone = 0; // Reset flag
 		}
 	}
-		
+	DACUpdate_Stop(); // Stop the timer because we're done playing
 }
 
+// Samples data from channel and puts it into memBlock. Samples 8kB worth of data at the current sampling rate
 void SampleAnalog(char channel, char memBlock)
 {	
-	WORD startAddr = 0x2000 * memBlock; // Where the address starts for block
-	WORD endAddr = startAddr + 0x2000; // Where the address ends for block
+	WORD startAddr = 0x2000 * memBlock; // Where the address starts for memBlock
+	WORD endAddr = startAddr + 0x2000; // Where the address ends for memBlock
 	WORD addr;
 	BYTE i;
 	char temp[128];
 	
-	AMUX4_InputSelect(channel == 0 ? AMUX4_PORT0_1: AMUX4_PORT0_7); // change sample analog source channel
-	SPIRAM_WriteStatusRegister(SPIRAM_SEQUENTIAL_MODE | SPIRAM_DISABLE_HOLD);
-	DelSig_StartAD();
-	for (addr = startAddr; addr < endAddr; addr += 128)
+	AMUX4_InputSelect(channel == 0 ? AMUX4_PORT0_1: AMUX4_PORT0_7); // Change sample analog source channel
+	SPIRAM_WriteStatusRegister(SPIRAM_SEQUENTIAL_MODE | SPIRAM_DISABLE_HOLD); // Set SPIRAM to sequential mode, we write bytes in packets of 128
+	DelSig_StartAD(); // Start the analog to digital conversion in DelSig
+	for (addr = startAddr; addr < endAddr; addr += 128) // Loop through startAddr-endAddr in 128 increments
 	{
-		UART_CPutString("Write to ");
-		UART_PutSHexInt(addr);
-		UART_PutCRLF();
-		
-		for (i = 0; i < 128; i++)
+		for (i = 0; i < 128; i++) // Read 128 bytes from the DelSig
 		{
 			while (!DelSig_fIsDataAvailable());
 			temp[i] = DelSig_cGetDataClearFlag();
 		}
-		SPIRAM_WriteArray(addr, temp, 128);
+		
+		SPIRAM_WriteArray(addr, temp, 128); // Write those bytes to SPIRAm
 	}	
-	DelSig_StopAD();
+	DelSig_StopAD(); // Stop the conversions once were done sampling
 }
 
 void main(void)
@@ -291,6 +268,7 @@ void main(void)
 	// Start the DACs
 	DAC8A_Start(DAC8A_HIGHPOWER);
 	DAC8B_Start(DAC8B_HIGHPOWER);
+	
 		// This is the command usage string
 	UART_CPutString("########################## Lab 11 Data Acquisition System ########################\r\n\
 # input X A \r\n\
@@ -357,6 +335,7 @@ void main(void)
 			if ((channel != 'a' && channel != 'b') || memBlock < 0 || memBlock > 3)
 				goto error; // Memory block was out of range or the channel was not A or B
 			
+			// Sample given channel at memBlock
 			SampleAnalog((channel == 'b'), (char)memBlock);
 		}
 		else if (!cstrcmp("output", cmd)) // If the command output was entered
@@ -383,6 +362,7 @@ void main(void)
 			if ((channel != 'a' && channel != 'b') || memBlock < -1 || memBlock > 3)
 				goto error; // Memory block was out of range or the channel was not A or B
 			
+			// Set specified memory block to given channel
 			if (channel == 'a') chAMemBlk = memBlock;
 			else chBMemBlk = memBlock;
 		}
@@ -403,7 +383,7 @@ void main(void)
 			
 			if (samplingRate < 0 || samplingRate > 9)
 				goto error; // Invalid sampling rate was selected
-			DelSigClock_Stop();
+			
 			switch (samplingRate)
 			{
 				case 1: ksps = SAMPLING_RATE_1250; break;
@@ -417,9 +397,11 @@ void main(void)
 				case 9: ksps = SAMPLING_RATE_9375; break;
 				default: break;
 			}
+			
+			DelSigClock_Stop(); // Stop the DelSigClock before writing
 			DelSigClock_WritePeriod(ksps);
-			DelSigClock_WriteCompareValue(ksps>>1);
-			DelSigClock_Start();
+			DelSigClock_WriteCompareValue(ksps>>1); // 50% duty cycle
+			DelSigClock_Start(); // Start it again
 		}
 		else if (!cstrcmp("trigger", cmd)) // If the command trigger was entered
 		{
@@ -451,6 +433,7 @@ void main(void)
 			// If there is any data after the last arg, then the format is invalid and it should return an error
 			if (cstrtok(0x00, " ") != 0x00) goto error;
 		
+			// triggerAddress is the specified address
 			triggerAddress = address;
 			
 		}
@@ -459,6 +442,7 @@ void main(void)
 			// If there is any data after the number of bytes, then the format is invalid and it should return an error
 			if (cstrtok(0x00, " ") != 0x00) goto error;
 			
+			// Start playing the data
 			PlaySamples();
 		}
 		else 

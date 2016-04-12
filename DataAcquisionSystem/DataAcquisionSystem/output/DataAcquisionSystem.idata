@@ -1,10 +1,10 @@
-flash 2E2A SRAM    2:
+flash 2DC9 SRAM    2:
  00 80 bytes
-flash 2E2E SRAM   5D:
+flash 2DCD SRAM   5D:
  <size at next line>   8 20  8
   [size:] 3 bytes
-flash 2E34 SRAM   60:
+flash 2DD3 SRAM   60:
  00 11 bytes
-flash 2E38 SRAM   6B:
+flash 2DD7 SRAM   6B:
  <size at next line>  FF  0  0 FF
   [size:] 4 bytes
