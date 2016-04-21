@@ -156,36 +156,31 @@ char *Lowercase(char *str)
 // This function plays channel A and B with the data at memory blocks chAMemBlk and chBMemBlk, respectively
 void PlaySamples(void)
 {	
-	WORD startAddrA = chAMemBlk * 0x2000; // Where the address starts for channel A
-	WORD endAddrA = startAddrA + 0x2000; // Where the address ends for channel A
-	WORD addrA = startAddrA; // Current address position for channel B
+	WORD addr = 0x0000; // Starting point of the relative address
+	WORD endAddr = 0x2000; // Ending point of the relative address
 	
+	WORD startAddrA = chAMemBlk * 0x2000; // Where the address starts for channel A
 	WORD startAddrB = chBMemBlk * 0x2000; // Where the address starts for channel B
-	WORD endAddrB = startAddrB + 0x2000; // Where the address ends for channel B
-	WORD addrB = startAddrB; // Current address position for channel B
 	
 	SPIRAM_WriteStatusRegister(SPIRAM_BYTE_MODE | SPIRAM_DISABLE_HOLD); // Set SPIRAM to byte mode b/c we read one byte at a time
 	DACUpdate_Start(); // Start the DACUpdate timer
 	UART_CPutString("Press any key to abort\r\n");
 	while (!UART_cReadChar())
 	{
-		//TRIGGER_Data_ADDR |= TRIGGER_MASK;	// take trigger high then low
-		//TRIGGER_Data_ADDR &=  ~TRIGGER_MASK;
-		
 		if (DACUpdateDone) // Time to update the DACs
 		{
 			if (chAMemBlk != -1) // If there is a valid memory block to output
-			{
-				DAC8A_WriteStall(SPIRAM_ReadByte(addrA));
-				if (++addrA > endAddrA) addrA = startAddrA;
-			}
+				DAC8A_WriteStall(SPIRAM_ReadByte(startAddrA+addr));
 			
 			if (chBMemBlk != -1) // If there is a valid memory block to output
+				DAC8B_WriteStall(SPIRAM_ReadByte(startAddrB+addr));
+		
+			if (addr == triggerAddress) // If its time to trigger, pull trigger high and low quickly
 			{
-				DAC8B_WriteStall(SPIRAM_ReadByte(addrB));
-				if (++addrB > endAddrB) addrB = startAddrB;
+				TRIGGER_HIGH;
+				TRIGGER_LOW;
 			}
-			
+			if (++addr > endAddr) addr = 0x000; // Increments addr by one, if its past endAddr, loop back to 0x0000
 			DACUpdateDone = 0; // Reset flag
 		}
 	}

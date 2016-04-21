@@ -1,0 +1,6 @@
+C:\Program Files (x86)\Cypress\PSoC Creator\3.3\PSoC Creator\psoc\content\default\CyAnnotationLibrary\CyAnnotationLibrary.cylib\CyAnnotationLibrary.cyprj|125e6331-a3d2-4de4-939a-6d8a130b2ff4
+C:\Program Files (x86)\Cypress\PSoC Creator\3.3\PSoC Creator\psoc\content\cycomponentlibraryupdates\CyComponentLibraryUpdates.cylib\CyComponentLibraryUpdates.cyprj|b25ea49c-91c2-408e-aaf7-eeed50ff1cd1
+C:\Program Files (x86)\Cypress\PSoC Creator\3.3\PSoC Creator\psoc\content\cycomponentlibrary\CyComponentLibrary.cylib\CyComponentLibrary.cyprj|25e34df1-62c8-40d8-8509-1f47886cc3bd
+C:\Program Files (x86)\Cypress\PSoC Creator\3.3\PSoC Creator\psoc\content\cyprimitives\CyPrimitives.cylib\CyPrimitives.cyprj|e0ef9262-a96e-4132-a36b-903e014769b3
+C:\Users\addis\Documents\PSoC Creator\Workspace02\PS2Keyboard.cydsn\PS2Keyboard.cyprj|6add20e9-a154-4fa2-b7bb-6e8b87d3bdaf
+C:\Program Files (x86)\Cypress\PSoC Creator\3.3\PSoC Creator\dev\psoc3\AnalogDevice\PSoC35AnalogDevice.cylib\PSoC35AnalogDevice.cyprj|9ce23dec-eef2-4e4e-88d1-873d2899cdc7

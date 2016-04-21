@@ -1,0 +1,39 @@
+--------------- Rebuild Started: 04/21/2016 01:49:01 Project: PS2Keyboard, Configuration: ARM GCC 4.9-2015-q1-update Debug ---------------
+Deleting file ".\CortexM3\ARM_GCC_493\Debug\main.o"
+Deleting file ".\CortexM3\ARM_GCC_493\Debug\cyfitter_cfg.o"
+Deleting file ".\CortexM3\ARM_GCC_493\Debug\cymetadata.o"
+Deleting file ".\CortexM3\ARM_GCC_493\Debug\Cm3Start.o"
+Deleting file ".\CortexM3\ARM_GCC_493\Debug\CyBootAsmGnu.o"
+Deleting file ".\CortexM3\ARM_GCC_493\Debug\CyDmac.o"
+Deleting file ".\CortexM3\ARM_GCC_493\Debug\CyFlash.o"
+Deleting file ".\CortexM3\ARM_GCC_493\Debug\CyLib.o"
+Deleting file ".\CortexM3\ARM_GCC_493\Debug\cyPm.o"
+Deleting file ".\CortexM3\ARM_GCC_493\Debug\CySpc.o"
+Deleting file ".\CortexM3\ARM_GCC_493\Debug\cyutils.o"
+Deleting file ".\CortexM3\ARM_GCC_493\Debug\PS2Keyboard.hex"
+Deleting file ".\CortexM3\ARM_GCC_493\Debug\PS2Keyboard.elf"
+Deleting file ".\CortexM3\ARM_GCC_493\Debug\PS2Keyboard.map"
+Deleting file ".\PS2Keyboard.cycdx"
+Deleting file ".\PS2Keyboard.rpt"
+Deleting file ".\PS2Keyboard_timing.html"
+Deleting file ".\CortexM3\ARM_GCC_493\Debug\.deps\C_FILE.P"
+Deleting file ".\CortexM3\ARM_GCC_493\Debug\.deps\ARM_C_FILE.P"
+Deleting file ".\CortexM3\ARM_GCC_493\Debug\.deps\GNU_ARM_ASM_FILE.P"
+cydsfit.exe -.appdatapath "C:\Users\addis\AppData\Local\Cypress Semiconductor\PSoC Creator\3.3" -.fdsnotice -.fdswarpdepfile=warp_dependencies.txt -.fdselabdepfile=elab_dependencies.txt -.fdsbldfile=generated_files.txt -p "C:\Users\addis\Documents\PSoC Creator\Workspace02\PS2Keyboard.cydsn\PS2Keyboard.cyprj" -d CY8C5888LTI-LP097 -s "C:\Users\addis\Documents\PSoC Creator\Workspace02\PS2Keyboard.cydsn\Generated_Source\PSoC5" -- -yv2 -q10 -ygs -o2 -v3 -.fftcfgtype=LE
+Elaborating Design...
+ADD: sdb.M0029: error: Signal "Net_817" has invalid terminal connections. Detailed Error reasons are the following: ( An instance inout terminal has to be connected to a schematic inout terminal; ). 
+ * C:\Users\addis\Documents\PSoC Creator\Workspace02\PS2Keyboard.cydsn\TopDesign\TopDesign.cysch (Signal: Net_817)
+ * C:\Users\addis\Documents\PSoC Creator\Workspace02\PS2Keyboard.cydsn\TopDesign\TopDesign.cysch (Shape_28.11)
+ * C:\Users\addis\Documents\PSoC Creator\Workspace02\PS2Keyboard.cydsn\TopDesign\TopDesign.cysch (Shape_41.34)
+ * C:\Users\addis\Documents\PSoC Creator\Workspace02\PS2Keyboard.cydsn\TopDesign\TopDesign.cysch (Shape_44)
+ * C:\Users\addis\Documents\PSoC Creator\Workspace02\PS2Keyboard.cydsn\TopDesign\TopDesign.cysch (Shape_45)
+ * C:\Users\addis\Documents\PSoC Creator\Workspace02\PS2Keyboard.cydsn\TopDesign\TopDesign.cysch (Shape_46)
+ADD: sdb.M0024: error: Terminal "Status_Reg_1.status_bus[4:0]" with width 5 is connected to "Net_817" with width 1.
+ * C:\Users\addis\Documents\PSoC Creator\Workspace02\PS2Keyboard.cydsn\TopDesign\TopDesign.cysch (Signal: Net_817)
+ * C:\Users\addis\Documents\PSoC Creator\Workspace02\PS2Keyboard.cydsn\TopDesign\TopDesign.cysch (Shape_28.11)
+ * C:\Users\addis\Documents\PSoC Creator\Workspace02\PS2Keyboard.cydsn\TopDesign\TopDesign.cysch (Shape_41.34)
+ * C:\Users\addis\Documents\PSoC Creator\Workspace02\PS2Keyboard.cydsn\TopDesign\TopDesign.cysch (Shape_44)
+ * C:\Users\addis\Documents\PSoC Creator\Workspace02\PS2Keyboard.cydsn\TopDesign\TopDesign.cysch (Shape_45)
+ * C:\Users\addis\Documents\PSoC Creator\Workspace02\PS2Keyboard.cydsn\TopDesign\TopDesign.cysch (Shape_46)
+Error: cdf.M0005: CyDsFit aborted due to errors, please address all errors and rerun CyDsFit. (App=cydsfit)
+--------------- Rebuild Failed: 04/21/2016 01:49:03 ---------------

@@ -1,0 +1,1087 @@
+ARM GAS  C:\Users\addis\AppData\Local\Temp\ccmHqk3Q.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m3
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.file	"PS2_ps2.c"
+  15              		.text
+  16              	.Ltext0:
+  17              		.cfi_sections	.debug_frame
+  18              		.section	.text.PS2_TIMER,"ax",%progbits
+  19              		.align	2
+  20              		.global	PS2_TIMER
+  21              		.thumb
+  22              		.thumb_func
+  23              		.type	PS2_TIMER, %function
+  24              	PS2_TIMER:
+  25              	.LFB0:
+  26              		.file 1 ".\\Generated_Source\\PSoC5\\PS2_ps2.c"
+   1:.\Generated_Source\PSoC5/PS2_ps2.c **** /* ========================================
+   2:.\Generated_Source\PSoC5/PS2_ps2.c ****  *
+   3:.\Generated_Source\PSoC5/PS2_ps2.c ****  * Copyright YOUR COMPANY, THE YEAR
+   4:.\Generated_Source\PSoC5/PS2_ps2.c ****  * All Rights Reserved
+   5:.\Generated_Source\PSoC5/PS2_ps2.c ****  * UNPUBLISHED, LICENSED SOFTWARE.
+   6:.\Generated_Source\PSoC5/PS2_ps2.c ****  *
+   7:.\Generated_Source\PSoC5/PS2_ps2.c ****  * CONFIDENTIAL AND PROPRIETARY INFORMATION
+   8:.\Generated_Source\PSoC5/PS2_ps2.c ****  * WHICH IS THE PROPERTY OF your company.
+   9:.\Generated_Source\PSoC5/PS2_ps2.c ****  *
+  10:.\Generated_Source\PSoC5/PS2_ps2.c ****  * ========================================
+  11:.\Generated_Source\PSoC5/PS2_ps2.c **** */
+  12:.\Generated_Source\PSoC5/PS2_ps2.c **** 
+  13:.\Generated_Source\PSoC5/PS2_ps2.c **** #include "PS2_ps2.h"
+  14:.\Generated_Source\PSoC5/PS2_ps2.c **** 
+  15:.\Generated_Source\PSoC5/PS2_ps2.c **** uint8 PS2_counter_trigger;
+  16:.\Generated_Source\PSoC5/PS2_ps2.c **** uint8 PS2_initVar;
+  17:.\Generated_Source\PSoC5/PS2_ps2.c **** 
+  18:.\Generated_Source\PSoC5/PS2_ps2.c **** CY_ISR(PS2_TIMER)
+  19:.\Generated_Source\PSoC5/PS2_ps2.c **** {
+  27              		.loc 1 19 0
+  28              		.cfi_startproc
+  29              		@ args = 0, pretend = 0, frame = 0
+  30              		@ frame_needed = 0, uses_anonymous_args = 0
+  31 0000 08B5     		push	{r3, lr}
+  32              		.cfi_def_cfa_offset 8
+  33              		.cfi_offset 3, -8
+  34              		.cfi_offset 14, -4
+  20:.\Generated_Source\PSoC5/PS2_ps2.c ****     PS2_Timer_STATUS;
+  35              		.loc 1 20 0
+  36 0002 044B     		ldr	r3, .L3
+  37 0004 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ARM GAS  C:\Users\addis\AppData\Local\Temp\ccmHqk3Q.s 			page 2
+
+
+  21:.\Generated_Source\PSoC5/PS2_ps2.c ****     PS2_counter_trigger = 1;    
+  38              		.loc 1 21 0
+  39 0006 0122     		movs	r2, #1
+  40 0008 034B     		ldr	r3, .L3+4
+  41 000a 1A70     		strb	r2, [r3]
+  22:.\Generated_Source\PSoC5/PS2_ps2.c ****     PS2_Timer_Stop();
+  42              		.loc 1 22 0
+  43 000c FFF7FEFF 		bl	PS2_Timer_Stop
+  44              	.LVL0:
+  45 0010 08BD     		pop	{r3, pc}
+  46              	.L4:
+  47 0012 00BF     		.align	2
+  48              	.L3:
+  49 0014 034F0040 		.word	1073762051
+  50 0018 00000000 		.word	PS2_counter_trigger
+  51              		.cfi_endproc
+  52              	.LFE0:
+  53              		.size	PS2_TIMER, .-PS2_TIMER
+  54              		.section	.text.PS2_Init,"ax",%progbits
+  55              		.align	2
+  56              		.global	PS2_Init
+  57              		.thumb
+  58              		.thumb_func
+  59              		.type	PS2_Init, %function
+  60              	PS2_Init:
+  61              	.LFB1:
+  23:.\Generated_Source\PSoC5/PS2_ps2.c **** }
+  24:.\Generated_Source\PSoC5/PS2_ps2.c **** 
+  25:.\Generated_Source\PSoC5/PS2_ps2.c **** void PS2_Init(void) 
+  26:.\Generated_Source\PSoC5/PS2_ps2.c **** {
+  62              		.loc 1 26 0
+  63              		.cfi_startproc
+  64              		@ args = 0, pretend = 0, frame = 0
+  65              		@ frame_needed = 0, uses_anonymous_args = 0
+  66 0000 08B5     		push	{r3, lr}
+  67              		.cfi_def_cfa_offset 8
+  68              		.cfi_offset 3, -8
+  69              		.cfi_offset 14, -4
+  27:.\Generated_Source\PSoC5/PS2_ps2.c ****     PS2_counter_trigger = 0;
+  70              		.loc 1 27 0
+  71 0002 0022     		movs	r2, #0
+  72 0004 044B     		ldr	r3, .L7
+  73 0006 1A70     		strb	r2, [r3]
+  28:.\Generated_Source\PSoC5/PS2_ps2.c ****     PS2_Timer_ISR_StartEx(PS2_TIMER);
+  74              		.loc 1 28 0
+  75 0008 0448     		ldr	r0, .L7+4
+  76 000a FFF7FEFF 		bl	PS2_Timer_ISR_StartEx
+  77              	.LVL1:
+  29:.\Generated_Source\PSoC5/PS2_ps2.c ****     PS2_Timer_Start();
+  78              		.loc 1 29 0
+  79 000e FFF7FEFF 		bl	PS2_Timer_Start
+  80              	.LVL2:
+  30:.\Generated_Source\PSoC5/PS2_ps2.c ****     PS2_Timer_Stop();
+  81              		.loc 1 30 0
+  82 0012 FFF7FEFF 		bl	PS2_Timer_Stop
+  83              	.LVL3:
+  84 0016 08BD     		pop	{r3, pc}
+ARM GAS  C:\Users\addis\AppData\Local\Temp\ccmHqk3Q.s 			page 3
+
+
+  85              	.L8:
+  86              		.align	2
+  87              	.L7:
+  88 0018 00000000 		.word	PS2_counter_trigger
+  89 001c 00000000 		.word	PS2_TIMER
+  90              		.cfi_endproc
+  91              	.LFE1:
+  92              		.size	PS2_Init, .-PS2_Init
+  93              		.section	.text.PS2_Start,"ax",%progbits
+  94              		.align	2
+  95              		.global	PS2_Start
+  96              		.thumb
+  97              		.thumb_func
+  98              		.type	PS2_Start, %function
+  99              	PS2_Start:
+ 100              	.LFB2:
+  31:.\Generated_Source\PSoC5/PS2_ps2.c **** }
+  32:.\Generated_Source\PSoC5/PS2_ps2.c **** 
+  33:.\Generated_Source\PSoC5/PS2_ps2.c **** void PS2_Start(void) 
+  34:.\Generated_Source\PSoC5/PS2_ps2.c **** {
+ 101              		.loc 1 34 0
+ 102              		.cfi_startproc
+ 103              		@ args = 0, pretend = 0, frame = 0
+ 104              		@ frame_needed = 0, uses_anonymous_args = 0
+ 105 0000 08B5     		push	{r3, lr}
+ 106              		.cfi_def_cfa_offset 8
+ 107              		.cfi_offset 3, -8
+ 108              		.cfi_offset 14, -4
+  35:.\Generated_Source\PSoC5/PS2_ps2.c ****     if (0u == PS2_initVar)
+ 109              		.loc 1 35 0
+ 110 0002 044B     		ldr	r3, .L12
+ 111 0004 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 112 0006 23B9     		cbnz	r3, .L9
+  36:.\Generated_Source\PSoC5/PS2_ps2.c ****     {
+  37:.\Generated_Source\PSoC5/PS2_ps2.c ****         PS2_Init();
+ 113              		.loc 1 37 0
+ 114 0008 FFF7FEFF 		bl	PS2_Init
+ 115              	.LVL4:
+  38:.\Generated_Source\PSoC5/PS2_ps2.c ****         PS2_initVar = 1u; /* Component initialized */
+ 116              		.loc 1 38 0
+ 117 000c 0122     		movs	r2, #1
+ 118 000e 014B     		ldr	r3, .L12
+ 119 0010 1A70     		strb	r2, [r3]
+ 120              	.L9:
+ 121 0012 08BD     		pop	{r3, pc}
+ 122              	.L13:
+ 123              		.align	2
+ 124              	.L12:
+ 125 0014 00000000 		.word	PS2_initVar
+ 126              		.cfi_endproc
+ 127              	.LFE2:
+ 128              		.size	PS2_Start, .-PS2_Start
+ 129              		.section	.text.PS2_DetectDevice,"ax",%progbits
+ 130              		.align	2
+ 131              		.global	PS2_DetectDevice
+ 132              		.thumb
+ 133              		.thumb_func
+ARM GAS  C:\Users\addis\AppData\Local\Temp\ccmHqk3Q.s 			page 4
+
+
+ 134              		.type	PS2_DetectDevice, %function
+ 135              	PS2_DetectDevice:
+ 136              	.LFB3:
+  39:.\Generated_Source\PSoC5/PS2_ps2.c ****     }
+  40:.\Generated_Source\PSoC5/PS2_ps2.c **** }
+  41:.\Generated_Source\PSoC5/PS2_ps2.c **** 
+  42:.\Generated_Source\PSoC5/PS2_ps2.c **** uint8 PS2_DetectDevice(void) 
+  43:.\Generated_Source\PSoC5/PS2_ps2.c **** {
+ 137              		.loc 1 43 0
+ 138              		.cfi_startproc
+ 139              		@ args = 0, pretend = 0, frame = 0
+ 140              		@ frame_needed = 0, uses_anonymous_args = 0
+ 141 0000 10B5     		push	{r4, lr}
+ 142              		.cfi_def_cfa_offset 8
+ 143              		.cfi_offset 4, -8
+ 144              		.cfi_offset 14, -4
+  44:.\Generated_Source\PSoC5/PS2_ps2.c ****     PS2_TIMER_START(200); // Set a timer for 1000ms
+ 145              		.loc 1 44 0
+ 146 0002 0022     		movs	r2, #0
+ 147 0004 154B     		ldr	r3, .L22
+ 148 0006 1A70     		strb	r2, [r3]
+ 149 0008 C820     		movs	r0, #200
+ 150 000a FFF7FEFF 		bl	PS2_Timer_WritePeriod
+ 151              	.LVL5:
+ 152 000e FFF7FEFF 		bl	PS2_Timer_Start
+ 153              	.LVL6:
+  45:.\Generated_Source\PSoC5/PS2_ps2.c ****     
+  46:.\Generated_Source\PSoC5/PS2_ps2.c ****     PS2_READ; // Make sure the state machine knows to read
+ 154              		.loc 1 46 0
+ 155 0012 FFF7FEFF 		bl	PS2_controlReg_Read
+ 156              	.LVL7:
+ 157 0016 00F0FD00 		and	r0, r0, #253
+ 158 001a FFF7FEFF 		bl	PS2_controlReg_Write
+ 159              	.LVL8:
+ 160              	.L16:
+  47:.\Generated_Source\PSoC5/PS2_ps2.c ****     
+  48:.\Generated_Source\PSoC5/PS2_ps2.c ****     while (PS2_STATUS == PS2_STATUS_PENDING && !PS2_counter_trigger); // Wait until timeout or some
+ 161              		.loc 1 48 0 discriminator 2
+ 162 001e FFF7FEFF 		bl	PS2_statusReg_Read
+ 163              	.LVL9:
+ 164 0022 18B9     		cbnz	r0, .L15
+ 165              		.loc 1 48 0 is_stmt 0 discriminator 1
+ 166 0024 0D4B     		ldr	r3, .L22
+ 167 0026 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 168 0028 002B     		cmp	r3, #0
+ 169 002a F8D0     		beq	.L16
+ 170              	.L15:
+  49:.\Generated_Source\PSoC5/PS2_ps2.c ****     if (PS2_STATUS == PS2_STATUS_DONE)
+ 171              		.loc 1 49 0 is_stmt 1
+ 172 002c FFF7FEFF 		bl	PS2_statusReg_Read
+ 173              	.LVL10:
+ 174 0030 0446     		mov	r4, r0
+ 175 0032 0128     		cmp	r0, #1
+ 176 0034 07D1     		bne	.L17
+  50:.\Generated_Source\PSoC5/PS2_ps2.c ****     {
+  51:.\Generated_Source\PSoC5/PS2_ps2.c ****         CyDelay(1); // Delay one millisecond to give the status register time to update
+ 177              		.loc 1 51 0
+ARM GAS  C:\Users\addis\AppData\Local\Temp\ccmHqk3Q.s 			page 5
+
+
+ 178 0036 0120     		movs	r0, #1
+ 179 0038 FFF7FEFF 		bl	CyDelay
+ 180              	.LVL11:
+  52:.\Generated_Source\PSoC5/PS2_ps2.c ****         if (PS2_BYTE_R == 0xAA)
+ 181              		.loc 1 52 0
+ 182 003c FFF7FEFF 		bl	PS2_dataOut_Read
+ 183              	.LVL12:
+ 184 0040 AA28     		cmp	r0, #170
+ 185 0042 06D1     		bne	.L19
+ 186 0044 08E0     		b	.L18
+ 187              	.L17:
+  53:.\Generated_Source\PSoC5/PS2_ps2.c ****         {
+  54:.\Generated_Source\PSoC5/PS2_ps2.c ****             //PS2_TIMER_START(4); // Set a timer for 20ms; mouse sends ID packet within 20ms of BAT
+  55:.\Generated_Source\PSoC5/PS2_ps2.c ****             //PS2_READ; // Make sure the state machine knows to read
+  56:.\Generated_Source\PSoC5/PS2_ps2.c ****             
+  57:.\Generated_Source\PSoC5/PS2_ps2.c ****             return PS2_SUCCESS;
+  58:.\Generated_Source\PSoC5/PS2_ps2.c ****         }
+  59:.\Generated_Source\PSoC5/PS2_ps2.c ****         else
+  60:.\Generated_Source\PSoC5/PS2_ps2.c ****         {
+  61:.\Generated_Source\PSoC5/PS2_ps2.c ****             return PS2_BAD_BAT;   
+  62:.\Generated_Source\PSoC5/PS2_ps2.c ****         }
+  63:.\Generated_Source\PSoC5/PS2_ps2.c ****         return PS2_BYTE_R;
+  64:.\Generated_Source\PSoC5/PS2_ps2.c ****     }
+  65:.\Generated_Source\PSoC5/PS2_ps2.c ****     else if (PS2_STATUS == PS2_STATUS_ERROR)
+ 188              		.loc 1 65 0
+ 189 0046 FFF7FEFF 		bl	PS2_statusReg_Read
+ 190              	.LVL13:
+ 191 004a 0228     		cmp	r0, #2
+ 192 004c 03D1     		bne	.L20
+  66:.\Generated_Source\PSoC5/PS2_ps2.c ****     {
+  67:.\Generated_Source\PSoC5/PS2_ps2.c ****         return PS2_ERROR;
+ 193              		.loc 1 67 0
+ 194 004e 0524     		movs	r4, #5
+ 195 0050 02E0     		b	.L18
+ 196              	.L19:
+  61:.\Generated_Source\PSoC5/PS2_ps2.c ****         }
+ 197              		.loc 1 61 0
+ 198 0052 0324     		movs	r4, #3
+ 199 0054 00E0     		b	.L18
+ 200              	.L20:
+  68:.\Generated_Source\PSoC5/PS2_ps2.c ****     }
+  69:.\Generated_Source\PSoC5/PS2_ps2.c ****     else
+  70:.\Generated_Source\PSoC5/PS2_ps2.c ****         return PS2_TIMEOUT;
+ 201              		.loc 1 70 0
+ 202 0056 0424     		movs	r4, #4
+ 203              	.L18:
+  71:.\Generated_Source\PSoC5/PS2_ps2.c **** }
+ 204              		.loc 1 71 0
+ 205 0058 2046     		mov	r0, r4
+ 206 005a 10BD     		pop	{r4, pc}
+ 207              	.L23:
+ 208              		.align	2
+ 209              	.L22:
+ 210 005c 00000000 		.word	PS2_counter_trigger
+ 211              		.cfi_endproc
+ 212              	.LFE3:
+ 213              		.size	PS2_DetectDevice, .-PS2_DetectDevice
+ARM GAS  C:\Users\addis\AppData\Local\Temp\ccmHqk3Q.s 			page 6
+
+
+ 214              		.comm	PS2_initVar,1,1
+ 215              		.comm	PS2_counter_trigger,1,1
+ 216              		.text
+ 217              	.Letext0:
+ 218              		.file 2 ".\\Generated_Source\\PSoC5\\cytypes.h"
+ 219              		.file 3 ".\\Generated_Source\\PSoC5\\PS2_Timer.h"
+ 220              		.file 4 ".\\Generated_Source\\PSoC5\\PS2_Timer_ISR.h"
+ 221              		.file 5 ".\\Generated_Source\\PSoC5\\PS2_controlReg.h"
+ 222              		.file 6 ".\\Generated_Source\\PSoC5\\PS2_statusReg.h"
+ 223              		.file 7 ".\\Generated_Source\\PSoC5\\CyLib.h"
+ 224              		.file 8 ".\\Generated_Source\\PSoC5\\PS2_dataOut.h"
+ 225              		.section	.debug_info,"",%progbits
+ 226              	.Ldebug_info0:
+ 227 0000 52020000 		.4byte	0x252
+ 228 0004 0400     		.2byte	0x4
+ 229 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 230 000a 04       		.byte	0x4
+ 231 000b 01       		.uleb128 0x1
+ 232 000c 1D010000 		.4byte	.LASF31
+ 233 0010 01       		.byte	0x1
+ 234 0011 57000000 		.4byte	.LASF32
+ 235 0015 00000000 		.4byte	.LASF33
+ 236 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 237 001d 00000000 		.4byte	0
+ 238 0021 00000000 		.4byte	.Ldebug_line0
+ 239 0025 02       		.uleb128 0x2
+ 240 0026 01       		.byte	0x1
+ 241 0027 06       		.byte	0x6
+ 242 0028 79020000 		.4byte	.LASF0
+ 243 002c 02       		.uleb128 0x2
+ 244 002d 01       		.byte	0x1
+ 245 002e 08       		.byte	0x8
+ 246 002f A0000000 		.4byte	.LASF1
+ 247 0033 02       		.uleb128 0x2
+ 248 0034 02       		.byte	0x2
+ 249 0035 05       		.byte	0x5
+ 250 0036 53020000 		.4byte	.LASF2
+ 251 003a 02       		.uleb128 0x2
+ 252 003b 02       		.byte	0x2
+ 253 003c 07       		.byte	0x7
+ 254 003d 44000000 		.4byte	.LASF3
+ 255 0041 02       		.uleb128 0x2
+ 256 0042 04       		.byte	0x4
+ 257 0043 05       		.byte	0x5
+ 258 0044 5D020000 		.4byte	.LASF4
+ 259 0048 02       		.uleb128 0x2
+ 260 0049 04       		.byte	0x4
+ 261 004a 07       		.byte	0x7
+ 262 004b AB010000 		.4byte	.LASF5
+ 263 004f 02       		.uleb128 0x2
+ 264 0050 08       		.byte	0x8
+ 265 0051 05       		.byte	0x5
+ 266 0052 14020000 		.4byte	.LASF6
+ 267 0056 02       		.uleb128 0x2
+ 268 0057 08       		.byte	0x8
+ 269 0058 07       		.byte	0x7
+ 270 0059 CA010000 		.4byte	.LASF7
+ARM GAS  C:\Users\addis\AppData\Local\Temp\ccmHqk3Q.s 			page 7
+
+
+ 271 005d 03       		.uleb128 0x3
+ 272 005e 04       		.byte	0x4
+ 273 005f 05       		.byte	0x5
+ 274 0060 696E7400 		.ascii	"int\000"
+ 275 0064 02       		.uleb128 0x2
+ 276 0065 04       		.byte	0x4
+ 277 0066 07       		.byte	0x7
+ 278 0067 BD010000 		.4byte	.LASF8
+ 279 006b 04       		.uleb128 0x4
+ 280 006c C8000000 		.4byte	.LASF9
+ 281 0070 02       		.byte	0x2
+ 282 0071 3801     		.2byte	0x138
+ 283 0073 2C000000 		.4byte	0x2c
+ 284 0077 04       		.uleb128 0x4
+ 285 0078 16010000 		.4byte	.LASF10
+ 286 007c 02       		.byte	0x2
+ 287 007d 3A01     		.2byte	0x13a
+ 288 007f 48000000 		.4byte	0x48
+ 289 0083 02       		.uleb128 0x2
+ 290 0084 04       		.byte	0x4
+ 291 0085 04       		.byte	0x4
+ 292 0086 9A000000 		.4byte	.LASF11
+ 293 008a 02       		.uleb128 0x2
+ 294 008b 08       		.byte	0x8
+ 295 008c 04       		.byte	0x4
+ 296 008d D8000000 		.4byte	.LASF12
+ 297 0091 02       		.uleb128 0x2
+ 298 0092 01       		.byte	0x1
+ 299 0093 08       		.byte	0x8
+ 300 0094 3F020000 		.4byte	.LASF13
+ 301 0098 04       		.uleb128 0x4
+ 302 0099 AE000000 		.4byte	.LASF14
+ 303 009d 02       		.byte	0x2
+ 304 009e E201     		.2byte	0x1e2
+ 305 00a0 A4000000 		.4byte	0xa4
+ 306 00a4 05       		.uleb128 0x5
+ 307 00a5 6B000000 		.4byte	0x6b
+ 308 00a9 04       		.uleb128 0x4
+ 309 00aa F5010000 		.4byte	.LASF15
+ 310 00ae 02       		.byte	0x2
+ 311 00af F401     		.2byte	0x1f4
+ 312 00b1 B5000000 		.4byte	0xb5
+ 313 00b5 06       		.uleb128 0x6
+ 314 00b6 04       		.byte	0x4
+ 315 00b7 BB000000 		.4byte	0xbb
+ 316 00bb 07       		.uleb128 0x7
+ 317 00bc 02       		.uleb128 0x2
+ 318 00bd 04       		.byte	0x4
+ 319 00be 07       		.byte	0x7
+ 320 00bf 02020000 		.4byte	.LASF16
+ 321 00c3 08       		.uleb128 0x8
+ 322 00c4 CE000000 		.4byte	.LASF17
+ 323 00c8 01       		.byte	0x1
+ 324 00c9 12       		.byte	0x12
+ 325 00ca 00000000 		.4byte	.LFB0
+ 326 00ce 1C000000 		.4byte	.LFE0-.LFB0
+ 327 00d2 01       		.uleb128 0x1
+ARM GAS  C:\Users\addis\AppData\Local\Temp\ccmHqk3Q.s 			page 8
+
+
+ 328 00d3 9C       		.byte	0x9c
+ 329 00d4 E2000000 		.4byte	0xe2
+ 330 00d8 09       		.uleb128 0x9
+ 331 00d9 10000000 		.4byte	.LVL0
+ 332 00dd E2010000 		.4byte	0x1e2
+ 333 00e1 00       		.byte	0
+ 334 00e2 08       		.uleb128 0x8
+ 335 00e3 0B020000 		.4byte	.LASF18
+ 336 00e7 01       		.byte	0x1
+ 337 00e8 19       		.byte	0x19
+ 338 00e9 00000000 		.4byte	.LFB1
+ 339 00ed 20000000 		.4byte	.LFE1-.LFB1
+ 340 00f1 01       		.uleb128 0x1
+ 341 00f2 9C       		.byte	0x9c
+ 342 00f3 21010000 		.4byte	0x121
+ 343 00f7 0A       		.uleb128 0xa
+ 344 00f8 0E000000 		.4byte	.LVL1
+ 345 00fc E9010000 		.4byte	0x1e9
+ 346 0100 0E010000 		.4byte	0x10e
+ 347 0104 0B       		.uleb128 0xb
+ 348 0105 01       		.uleb128 0x1
+ 349 0106 50       		.byte	0x50
+ 350 0107 05       		.uleb128 0x5
+ 351 0108 03       		.byte	0x3
+ 352 0109 00000000 		.4byte	PS2_TIMER
+ 353 010d 00       		.byte	0
+ 354 010e 09       		.uleb128 0x9
+ 355 010f 12000000 		.4byte	.LVL2
+ 356 0113 FA010000 		.4byte	0x1fa
+ 357 0117 09       		.uleb128 0x9
+ 358 0118 16000000 		.4byte	.LVL3
+ 359 011c E2010000 		.4byte	0x1e2
+ 360 0120 00       		.byte	0
+ 361 0121 08       		.uleb128 0x8
+ 362 0122 90000000 		.4byte	.LASF19
+ 363 0126 01       		.byte	0x1
+ 364 0127 21       		.byte	0x21
+ 365 0128 00000000 		.4byte	.LFB2
+ 366 012c 18000000 		.4byte	.LFE2-.LFB2
+ 367 0130 01       		.uleb128 0x1
+ 368 0131 9C       		.byte	0x9c
+ 369 0132 40010000 		.4byte	0x140
+ 370 0136 09       		.uleb128 0x9
+ 371 0137 0C000000 		.4byte	.LVL4
+ 372 013b E2000000 		.4byte	0xe2
+ 373 013f 00       		.byte	0
+ 374 0140 0C       		.uleb128 0xc
+ 375 0141 F5000000 		.4byte	.LASF34
+ 376 0145 01       		.byte	0x1
+ 377 0146 2A       		.byte	0x2a
+ 378 0147 6B000000 		.4byte	0x6b
+ 379 014b 00000000 		.4byte	.LFB3
+ 380 014f 60000000 		.4byte	.LFE3-.LFB3
+ 381 0153 01       		.uleb128 0x1
+ 382 0154 9C       		.byte	0x9c
+ 383 0155 C0010000 		.4byte	0x1c0
+ 384 0159 0A       		.uleb128 0xa
+ARM GAS  C:\Users\addis\AppData\Local\Temp\ccmHqk3Q.s 			page 9
+
+
+ 385 015a 0E000000 		.4byte	.LVL5
+ 386 015e 01020000 		.4byte	0x201
+ 387 0162 6D010000 		.4byte	0x16d
+ 388 0166 0B       		.uleb128 0xb
+ 389 0167 01       		.uleb128 0x1
+ 390 0168 50       		.byte	0x50
+ 391 0169 02       		.uleb128 0x2
+ 392 016a 09       		.byte	0x9
+ 393 016b C8       		.byte	0xc8
+ 394 016c 00       		.byte	0
+ 395 016d 09       		.uleb128 0x9
+ 396 016e 12000000 		.4byte	.LVL6
+ 397 0172 FA010000 		.4byte	0x1fa
+ 398 0176 09       		.uleb128 0x9
+ 399 0177 16000000 		.4byte	.LVL7
+ 400 017b 12020000 		.4byte	0x212
+ 401 017f 09       		.uleb128 0x9
+ 402 0180 1E000000 		.4byte	.LVL8
+ 403 0184 1D020000 		.4byte	0x21d
+ 404 0188 09       		.uleb128 0x9
+ 405 0189 22000000 		.4byte	.LVL9
+ 406 018d 2E020000 		.4byte	0x22e
+ 407 0191 09       		.uleb128 0x9
+ 408 0192 30000000 		.4byte	.LVL10
+ 409 0196 2E020000 		.4byte	0x22e
+ 410 019a 0A       		.uleb128 0xa
+ 411 019b 3C000000 		.4byte	.LVL11
+ 412 019f 39020000 		.4byte	0x239
+ 413 01a3 AD010000 		.4byte	0x1ad
+ 414 01a7 0B       		.uleb128 0xb
+ 415 01a8 01       		.uleb128 0x1
+ 416 01a9 50       		.byte	0x50
+ 417 01aa 01       		.uleb128 0x1
+ 418 01ab 31       		.byte	0x31
+ 419 01ac 00       		.byte	0
+ 420 01ad 09       		.uleb128 0x9
+ 421 01ae 40000000 		.4byte	.LVL12
+ 422 01b2 4A020000 		.4byte	0x24a
+ 423 01b6 09       		.uleb128 0x9
+ 424 01b7 4A000000 		.4byte	.LVL13
+ 425 01bb 2E020000 		.4byte	0x22e
+ 426 01bf 00       		.byte	0
+ 427 01c0 0D       		.uleb128 0xd
+ 428 01c1 85020000 		.4byte	.LASF20
+ 429 01c5 01       		.byte	0x1
+ 430 01c6 0F       		.byte	0xf
+ 431 01c7 6B000000 		.4byte	0x6b
+ 432 01cb 05       		.uleb128 0x5
+ 433 01cc 03       		.byte	0x3
+ 434 01cd 00000000 		.4byte	PS2_counter_trigger
+ 435 01d1 0D       		.uleb128 0xd
+ 436 01d2 22020000 		.4byte	.LASF21
+ 437 01d6 01       		.byte	0x1
+ 438 01d7 10       		.byte	0x10
+ 439 01d8 6B000000 		.4byte	0x6b
+ 440 01dc 05       		.uleb128 0x5
+ 441 01dd 03       		.byte	0x3
+ARM GAS  C:\Users\addis\AppData\Local\Temp\ccmHqk3Q.s 			page 10
+
+
+ 442 01de 00000000 		.4byte	PS2_initVar
+ 443 01e2 0E       		.uleb128 0xe
+ 444 01e3 44020000 		.4byte	.LASF22
+ 445 01e7 03       		.byte	0x3
+ 446 01e8 5B       		.byte	0x5b
+ 447 01e9 0F       		.uleb128 0xf
+ 448 01ea DF000000 		.4byte	.LASF24
+ 449 01ee 04       		.byte	0x4
+ 450 01ef 18       		.byte	0x18
+ 451 01f0 FA010000 		.4byte	0x1fa
+ 452 01f4 10       		.uleb128 0x10
+ 453 01f5 A9000000 		.4byte	0xa9
+ 454 01f9 00       		.byte	0
+ 455 01fa 0E       		.uleb128 0xe
+ 456 01fb 06010000 		.4byte	.LASF23
+ 457 01ff 03       		.byte	0x3
+ 458 0200 5A       		.byte	0x5a
+ 459 0201 0F       		.uleb128 0xf
+ 460 0202 7A000000 		.4byte	.LASF25
+ 461 0206 03       		.byte	0x3
+ 462 0207 68       		.byte	0x68
+ 463 0208 12020000 		.4byte	0x212
+ 464 020c 10       		.uleb128 0x10
+ 465 020d 6B000000 		.4byte	0x6b
+ 466 0211 00       		.byte	0
+ 467 0212 11       		.uleb128 0x11
+ 468 0213 E1010000 		.4byte	.LASF27
+ 469 0217 05       		.byte	0x5
+ 470 0218 28       		.byte	0x28
+ 471 0219 6B000000 		.4byte	0x6b
+ 472 021d 0F       		.uleb128 0xf
+ 473 021e B3000000 		.4byte	.LASF26
+ 474 0222 05       		.byte	0x5
+ 475 0223 27       		.byte	0x27
+ 476 0224 2E020000 		.4byte	0x22e
+ 477 0228 10       		.uleb128 0x10
+ 478 0229 6B000000 		.4byte	0x6b
+ 479 022d 00       		.byte	0
+ 480 022e 11       		.uleb128 0x11
+ 481 022f 66020000 		.4byte	.LASF28
+ 482 0233 06       		.byte	0x6
+ 483 0234 28       		.byte	0x28
+ 484 0235 6B000000 		.4byte	0x6b
+ 485 0239 0F       		.uleb128 0xf
+ 486 023a 99020000 		.4byte	.LASF29
+ 487 023e 07       		.byte	0x7
+ 488 023f 77       		.byte	0x77
+ 489 0240 4A020000 		.4byte	0x24a
+ 490 0244 10       		.uleb128 0x10
+ 491 0245 77000000 		.4byte	0x77
+ 492 0249 00       		.byte	0
+ 493 024a 11       		.uleb128 0x11
+ 494 024b 2E020000 		.4byte	.LASF30
+ 495 024f 08       		.byte	0x8
+ 496 0250 28       		.byte	0x28
+ 497 0251 6B000000 		.4byte	0x6b
+ 498 0255 00       		.byte	0
+ARM GAS  C:\Users\addis\AppData\Local\Temp\ccmHqk3Q.s 			page 11
+
+
+ 499              		.section	.debug_abbrev,"",%progbits
+ 500              	.Ldebug_abbrev0:
+ 501 0000 01       		.uleb128 0x1
+ 502 0001 11       		.uleb128 0x11
+ 503 0002 01       		.byte	0x1
+ 504 0003 25       		.uleb128 0x25
+ 505 0004 0E       		.uleb128 0xe
+ 506 0005 13       		.uleb128 0x13
+ 507 0006 0B       		.uleb128 0xb
+ 508 0007 03       		.uleb128 0x3
+ 509 0008 0E       		.uleb128 0xe
+ 510 0009 1B       		.uleb128 0x1b
+ 511 000a 0E       		.uleb128 0xe
+ 512 000b 55       		.uleb128 0x55
+ 513 000c 17       		.uleb128 0x17
+ 514 000d 11       		.uleb128 0x11
+ 515 000e 01       		.uleb128 0x1
+ 516 000f 10       		.uleb128 0x10
+ 517 0010 17       		.uleb128 0x17
+ 518 0011 00       		.byte	0
+ 519 0012 00       		.byte	0
+ 520 0013 02       		.uleb128 0x2
+ 521 0014 24       		.uleb128 0x24
+ 522 0015 00       		.byte	0
+ 523 0016 0B       		.uleb128 0xb
+ 524 0017 0B       		.uleb128 0xb
+ 525 0018 3E       		.uleb128 0x3e
+ 526 0019 0B       		.uleb128 0xb
+ 527 001a 03       		.uleb128 0x3
+ 528 001b 0E       		.uleb128 0xe
+ 529 001c 00       		.byte	0
+ 530 001d 00       		.byte	0
+ 531 001e 03       		.uleb128 0x3
+ 532 001f 24       		.uleb128 0x24
+ 533 0020 00       		.byte	0
+ 534 0021 0B       		.uleb128 0xb
+ 535 0022 0B       		.uleb128 0xb
+ 536 0023 3E       		.uleb128 0x3e
+ 537 0024 0B       		.uleb128 0xb
+ 538 0025 03       		.uleb128 0x3
+ 539 0026 08       		.uleb128 0x8
+ 540 0027 00       		.byte	0
+ 541 0028 00       		.byte	0
+ 542 0029 04       		.uleb128 0x4
+ 543 002a 16       		.uleb128 0x16
+ 544 002b 00       		.byte	0
+ 545 002c 03       		.uleb128 0x3
+ 546 002d 0E       		.uleb128 0xe
+ 547 002e 3A       		.uleb128 0x3a
+ 548 002f 0B       		.uleb128 0xb
+ 549 0030 3B       		.uleb128 0x3b
+ 550 0031 05       		.uleb128 0x5
+ 551 0032 49       		.uleb128 0x49
+ 552 0033 13       		.uleb128 0x13
+ 553 0034 00       		.byte	0
+ 554 0035 00       		.byte	0
+ 555 0036 05       		.uleb128 0x5
+ARM GAS  C:\Users\addis\AppData\Local\Temp\ccmHqk3Q.s 			page 12
+
+
+ 556 0037 35       		.uleb128 0x35
+ 557 0038 00       		.byte	0
+ 558 0039 49       		.uleb128 0x49
+ 559 003a 13       		.uleb128 0x13
+ 560 003b 00       		.byte	0
+ 561 003c 00       		.byte	0
+ 562 003d 06       		.uleb128 0x6
+ 563 003e 0F       		.uleb128 0xf
+ 564 003f 00       		.byte	0
+ 565 0040 0B       		.uleb128 0xb
+ 566 0041 0B       		.uleb128 0xb
+ 567 0042 49       		.uleb128 0x49
+ 568 0043 13       		.uleb128 0x13
+ 569 0044 00       		.byte	0
+ 570 0045 00       		.byte	0
+ 571 0046 07       		.uleb128 0x7
+ 572 0047 15       		.uleb128 0x15
+ 573 0048 00       		.byte	0
+ 574 0049 27       		.uleb128 0x27
+ 575 004a 19       		.uleb128 0x19
+ 576 004b 00       		.byte	0
+ 577 004c 00       		.byte	0
+ 578 004d 08       		.uleb128 0x8
+ 579 004e 2E       		.uleb128 0x2e
+ 580 004f 01       		.byte	0x1
+ 581 0050 3F       		.uleb128 0x3f
+ 582 0051 19       		.uleb128 0x19
+ 583 0052 03       		.uleb128 0x3
+ 584 0053 0E       		.uleb128 0xe
+ 585 0054 3A       		.uleb128 0x3a
+ 586 0055 0B       		.uleb128 0xb
+ 587 0056 3B       		.uleb128 0x3b
+ 588 0057 0B       		.uleb128 0xb
+ 589 0058 27       		.uleb128 0x27
+ 590 0059 19       		.uleb128 0x19
+ 591 005a 11       		.uleb128 0x11
+ 592 005b 01       		.uleb128 0x1
+ 593 005c 12       		.uleb128 0x12
+ 594 005d 06       		.uleb128 0x6
+ 595 005e 40       		.uleb128 0x40
+ 596 005f 18       		.uleb128 0x18
+ 597 0060 9742     		.uleb128 0x2117
+ 598 0062 19       		.uleb128 0x19
+ 599 0063 01       		.uleb128 0x1
+ 600 0064 13       		.uleb128 0x13
+ 601 0065 00       		.byte	0
+ 602 0066 00       		.byte	0
+ 603 0067 09       		.uleb128 0x9
+ 604 0068 898201   		.uleb128 0x4109
+ 605 006b 00       		.byte	0
+ 606 006c 11       		.uleb128 0x11
+ 607 006d 01       		.uleb128 0x1
+ 608 006e 31       		.uleb128 0x31
+ 609 006f 13       		.uleb128 0x13
+ 610 0070 00       		.byte	0
+ 611 0071 00       		.byte	0
+ 612 0072 0A       		.uleb128 0xa
+ARM GAS  C:\Users\addis\AppData\Local\Temp\ccmHqk3Q.s 			page 13
+
+
+ 613 0073 898201   		.uleb128 0x4109
+ 614 0076 01       		.byte	0x1
+ 615 0077 11       		.uleb128 0x11
+ 616 0078 01       		.uleb128 0x1
+ 617 0079 31       		.uleb128 0x31
+ 618 007a 13       		.uleb128 0x13
+ 619 007b 01       		.uleb128 0x1
+ 620 007c 13       		.uleb128 0x13
+ 621 007d 00       		.byte	0
+ 622 007e 00       		.byte	0
+ 623 007f 0B       		.uleb128 0xb
+ 624 0080 8A8201   		.uleb128 0x410a
+ 625 0083 00       		.byte	0
+ 626 0084 02       		.uleb128 0x2
+ 627 0085 18       		.uleb128 0x18
+ 628 0086 9142     		.uleb128 0x2111
+ 629 0088 18       		.uleb128 0x18
+ 630 0089 00       		.byte	0
+ 631 008a 00       		.byte	0
+ 632 008b 0C       		.uleb128 0xc
+ 633 008c 2E       		.uleb128 0x2e
+ 634 008d 01       		.byte	0x1
+ 635 008e 3F       		.uleb128 0x3f
+ 636 008f 19       		.uleb128 0x19
+ 637 0090 03       		.uleb128 0x3
+ 638 0091 0E       		.uleb128 0xe
+ 639 0092 3A       		.uleb128 0x3a
+ 640 0093 0B       		.uleb128 0xb
+ 641 0094 3B       		.uleb128 0x3b
+ 642 0095 0B       		.uleb128 0xb
+ 643 0096 27       		.uleb128 0x27
+ 644 0097 19       		.uleb128 0x19
+ 645 0098 49       		.uleb128 0x49
+ 646 0099 13       		.uleb128 0x13
+ 647 009a 11       		.uleb128 0x11
+ 648 009b 01       		.uleb128 0x1
+ 649 009c 12       		.uleb128 0x12
+ 650 009d 06       		.uleb128 0x6
+ 651 009e 40       		.uleb128 0x40
+ 652 009f 18       		.uleb128 0x18
+ 653 00a0 9742     		.uleb128 0x2117
+ 654 00a2 19       		.uleb128 0x19
+ 655 00a3 01       		.uleb128 0x1
+ 656 00a4 13       		.uleb128 0x13
+ 657 00a5 00       		.byte	0
+ 658 00a6 00       		.byte	0
+ 659 00a7 0D       		.uleb128 0xd
+ 660 00a8 34       		.uleb128 0x34
+ 661 00a9 00       		.byte	0
+ 662 00aa 03       		.uleb128 0x3
+ 663 00ab 0E       		.uleb128 0xe
+ 664 00ac 3A       		.uleb128 0x3a
+ 665 00ad 0B       		.uleb128 0xb
+ 666 00ae 3B       		.uleb128 0x3b
+ 667 00af 0B       		.uleb128 0xb
+ 668 00b0 49       		.uleb128 0x49
+ 669 00b1 13       		.uleb128 0x13
+ARM GAS  C:\Users\addis\AppData\Local\Temp\ccmHqk3Q.s 			page 14
+
+
+ 670 00b2 3F       		.uleb128 0x3f
+ 671 00b3 19       		.uleb128 0x19
+ 672 00b4 02       		.uleb128 0x2
+ 673 00b5 18       		.uleb128 0x18
+ 674 00b6 00       		.byte	0
+ 675 00b7 00       		.byte	0
+ 676 00b8 0E       		.uleb128 0xe
+ 677 00b9 2E       		.uleb128 0x2e
+ 678 00ba 00       		.byte	0
+ 679 00bb 3F       		.uleb128 0x3f
+ 680 00bc 19       		.uleb128 0x19
+ 681 00bd 03       		.uleb128 0x3
+ 682 00be 0E       		.uleb128 0xe
+ 683 00bf 3A       		.uleb128 0x3a
+ 684 00c0 0B       		.uleb128 0xb
+ 685 00c1 3B       		.uleb128 0x3b
+ 686 00c2 0B       		.uleb128 0xb
+ 687 00c3 27       		.uleb128 0x27
+ 688 00c4 19       		.uleb128 0x19
+ 689 00c5 3C       		.uleb128 0x3c
+ 690 00c6 19       		.uleb128 0x19
+ 691 00c7 00       		.byte	0
+ 692 00c8 00       		.byte	0
+ 693 00c9 0F       		.uleb128 0xf
+ 694 00ca 2E       		.uleb128 0x2e
+ 695 00cb 01       		.byte	0x1
+ 696 00cc 3F       		.uleb128 0x3f
+ 697 00cd 19       		.uleb128 0x19
+ 698 00ce 03       		.uleb128 0x3
+ 699 00cf 0E       		.uleb128 0xe
+ 700 00d0 3A       		.uleb128 0x3a
+ 701 00d1 0B       		.uleb128 0xb
+ 702 00d2 3B       		.uleb128 0x3b
+ 703 00d3 0B       		.uleb128 0xb
+ 704 00d4 27       		.uleb128 0x27
+ 705 00d5 19       		.uleb128 0x19
+ 706 00d6 3C       		.uleb128 0x3c
+ 707 00d7 19       		.uleb128 0x19
+ 708 00d8 01       		.uleb128 0x1
+ 709 00d9 13       		.uleb128 0x13
+ 710 00da 00       		.byte	0
+ 711 00db 00       		.byte	0
+ 712 00dc 10       		.uleb128 0x10
+ 713 00dd 05       		.uleb128 0x5
+ 714 00de 00       		.byte	0
+ 715 00df 49       		.uleb128 0x49
+ 716 00e0 13       		.uleb128 0x13
+ 717 00e1 00       		.byte	0
+ 718 00e2 00       		.byte	0
+ 719 00e3 11       		.uleb128 0x11
+ 720 00e4 2E       		.uleb128 0x2e
+ 721 00e5 00       		.byte	0
+ 722 00e6 3F       		.uleb128 0x3f
+ 723 00e7 19       		.uleb128 0x19
+ 724 00e8 03       		.uleb128 0x3
+ 725 00e9 0E       		.uleb128 0xe
+ 726 00ea 3A       		.uleb128 0x3a
+ARM GAS  C:\Users\addis\AppData\Local\Temp\ccmHqk3Q.s 			page 15
+
+
+ 727 00eb 0B       		.uleb128 0xb
+ 728 00ec 3B       		.uleb128 0x3b
+ 729 00ed 0B       		.uleb128 0xb
+ 730 00ee 27       		.uleb128 0x27
+ 731 00ef 19       		.uleb128 0x19
+ 732 00f0 49       		.uleb128 0x49
+ 733 00f1 13       		.uleb128 0x13
+ 734 00f2 3C       		.uleb128 0x3c
+ 735 00f3 19       		.uleb128 0x19
+ 736 00f4 00       		.byte	0
+ 737 00f5 00       		.byte	0
+ 738 00f6 00       		.byte	0
+ 739              		.section	.debug_aranges,"",%progbits
+ 740 0000 34000000 		.4byte	0x34
+ 741 0004 0200     		.2byte	0x2
+ 742 0006 00000000 		.4byte	.Ldebug_info0
+ 743 000a 04       		.byte	0x4
+ 744 000b 00       		.byte	0
+ 745 000c 0000     		.2byte	0
+ 746 000e 0000     		.2byte	0
+ 747 0010 00000000 		.4byte	.LFB0
+ 748 0014 1C000000 		.4byte	.LFE0-.LFB0
+ 749 0018 00000000 		.4byte	.LFB1
+ 750 001c 20000000 		.4byte	.LFE1-.LFB1
+ 751 0020 00000000 		.4byte	.LFB2
+ 752 0024 18000000 		.4byte	.LFE2-.LFB2
+ 753 0028 00000000 		.4byte	.LFB3
+ 754 002c 60000000 		.4byte	.LFE3-.LFB3
+ 755 0030 00000000 		.4byte	0
+ 756 0034 00000000 		.4byte	0
+ 757              		.section	.debug_ranges,"",%progbits
+ 758              	.Ldebug_ranges0:
+ 759 0000 00000000 		.4byte	.LFB0
+ 760 0004 1C000000 		.4byte	.LFE0
+ 761 0008 00000000 		.4byte	.LFB1
+ 762 000c 20000000 		.4byte	.LFE1
+ 763 0010 00000000 		.4byte	.LFB2
+ 764 0014 18000000 		.4byte	.LFE2
+ 765 0018 00000000 		.4byte	.LFB3
+ 766 001c 60000000 		.4byte	.LFE3
+ 767 0020 00000000 		.4byte	0
+ 768 0024 00000000 		.4byte	0
+ 769              		.section	.debug_line,"",%progbits
+ 770              	.Ldebug_line0:
+ 771 0000 13010000 		.section	.debug_str,"MS",%progbits,1
+ 771      0200AB00 
+ 771      00000201 
+ 771      FB0E0D00 
+ 771      01010101 
+ 772              	.LASF33:
+ 773 0000 433A5C55 		.ascii	"C:\\Users\\addis\\Documents\\PSoC Creator\\Workspac"
+ 773      73657273 
+ 773      5C616464 
+ 773      69735C44 
+ 773      6F63756D 
+ 774 002e 6530325C 		.ascii	"e02\\PS2Keyboard.cydsn\000"
+ 774      5053324B 
+ARM GAS  C:\Users\addis\AppData\Local\Temp\ccmHqk3Q.s 			page 16
+
+
+ 774      6579626F 
+ 774      6172642E 
+ 774      63796473 
+ 775              	.LASF3:
+ 776 0044 73686F72 		.ascii	"short unsigned int\000"
+ 776      7420756E 
+ 776      7369676E 
+ 776      65642069 
+ 776      6E7400
+ 777              	.LASF32:
+ 778 0057 2E5C4765 		.ascii	".\\Generated_Source\\PSoC5\\PS2_ps2.c\000"
+ 778      6E657261 
+ 778      7465645F 
+ 778      536F7572 
+ 778      63655C50 
+ 779              	.LASF25:
+ 780 007a 5053325F 		.ascii	"PS2_Timer_WritePeriod\000"
+ 780      54696D65 
+ 780      725F5772 
+ 780      69746550 
+ 780      6572696F 
+ 781              	.LASF19:
+ 782 0090 5053325F 		.ascii	"PS2_Start\000"
+ 782      53746172 
+ 782      7400
+ 783              	.LASF11:
+ 784 009a 666C6F61 		.ascii	"float\000"
+ 784      7400
+ 785              	.LASF1:
+ 786 00a0 756E7369 		.ascii	"unsigned char\000"
+ 786      676E6564 
+ 786      20636861 
+ 786      7200
+ 787              	.LASF14:
+ 788 00ae 72656738 		.ascii	"reg8\000"
+ 788      00
+ 789              	.LASF26:
+ 790 00b3 5053325F 		.ascii	"PS2_controlReg_Write\000"
+ 790      636F6E74 
+ 790      726F6C52 
+ 790      65675F57 
+ 790      72697465 
+ 791              	.LASF9:
+ 792 00c8 75696E74 		.ascii	"uint8\000"
+ 792      3800
+ 793              	.LASF17:
+ 794 00ce 5053325F 		.ascii	"PS2_TIMER\000"
+ 794      54494D45 
+ 794      5200
+ 795              	.LASF12:
+ 796 00d8 646F7562 		.ascii	"double\000"
+ 796      6C6500
+ 797              	.LASF24:
+ 798 00df 5053325F 		.ascii	"PS2_Timer_ISR_StartEx\000"
+ 798      54696D65 
+ 798      725F4953 
+ 798      525F5374 
+ARM GAS  C:\Users\addis\AppData\Local\Temp\ccmHqk3Q.s 			page 17
+
+
+ 798      61727445 
+ 799              	.LASF34:
+ 800 00f5 5053325F 		.ascii	"PS2_DetectDevice\000"
+ 800      44657465 
+ 800      63744465 
+ 800      76696365 
+ 800      00
+ 801              	.LASF23:
+ 802 0106 5053325F 		.ascii	"PS2_Timer_Start\000"
+ 802      54696D65 
+ 802      725F5374 
+ 802      61727400 
+ 803              	.LASF10:
+ 804 0116 75696E74 		.ascii	"uint32\000"
+ 804      333200
+ 805              	.LASF31:
+ 806 011d 474E5520 		.ascii	"GNU C 4.9.3 20150303 (release) [ARM/embedded-4_9-br"
+ 806      4320342E 
+ 806      392E3320 
+ 806      32303135 
+ 806      30333033 
+ 807 0150 616E6368 		.ascii	"anch revision 221220] -mcpu=cortex-m3 -mthumb -g -O"
+ 807      20726576 
+ 807      6973696F 
+ 807      6E203232 
+ 807      31323230 
+ 808 0183 67202D66 		.ascii	"g -ffunction-sections -ffat-lto-objects\000"
+ 808      66756E63 
+ 808      74696F6E 
+ 808      2D736563 
+ 808      74696F6E 
+ 809              	.LASF5:
+ 810 01ab 6C6F6E67 		.ascii	"long unsigned int\000"
+ 810      20756E73 
+ 810      69676E65 
+ 810      6420696E 
+ 810      7400
+ 811              	.LASF8:
+ 812 01bd 756E7369 		.ascii	"unsigned int\000"
+ 812      676E6564 
+ 812      20696E74 
+ 812      00
+ 813              	.LASF7:
+ 814 01ca 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 814      206C6F6E 
+ 814      6720756E 
+ 814      7369676E 
+ 814      65642069 
+ 815              	.LASF27:
+ 816 01e1 5053325F 		.ascii	"PS2_controlReg_Read\000"
+ 816      636F6E74 
+ 816      726F6C52 
+ 816      65675F52 
+ 816      65616400 
+ 817              	.LASF15:
+ 818 01f5 63796973 		.ascii	"cyisraddress\000"
+ 818      72616464 
+ARM GAS  C:\Users\addis\AppData\Local\Temp\ccmHqk3Q.s 			page 18
+
+
+ 818      72657373 
+ 818      00
+ 819              	.LASF16:
+ 820 0202 73697A65 		.ascii	"sizetype\000"
+ 820      74797065 
+ 820      00
+ 821              	.LASF18:
+ 822 020b 5053325F 		.ascii	"PS2_Init\000"
+ 822      496E6974 
+ 822      00
+ 823              	.LASF6:
+ 824 0214 6C6F6E67 		.ascii	"long long int\000"
+ 824      206C6F6E 
+ 824      6720696E 
+ 824      7400
+ 825              	.LASF21:
+ 826 0222 5053325F 		.ascii	"PS2_initVar\000"
+ 826      696E6974 
+ 826      56617200 
+ 827              	.LASF30:
+ 828 022e 5053325F 		.ascii	"PS2_dataOut_Read\000"
+ 828      64617461 
+ 828      4F75745F 
+ 828      52656164 
+ 828      00
+ 829              	.LASF13:
+ 830 023f 63686172 		.ascii	"char\000"
+ 830      00
+ 831              	.LASF22:
+ 832 0244 5053325F 		.ascii	"PS2_Timer_Stop\000"
+ 832      54696D65 
+ 832      725F5374 
+ 832      6F7000
+ 833              	.LASF2:
+ 834 0253 73686F72 		.ascii	"short int\000"
+ 834      7420696E 
+ 834      7400
+ 835              	.LASF4:
+ 836 025d 6C6F6E67 		.ascii	"long int\000"
+ 836      20696E74 
+ 836      00
+ 837              	.LASF28:
+ 838 0266 5053325F 		.ascii	"PS2_statusReg_Read\000"
+ 838      73746174 
+ 838      75735265 
+ 838      675F5265 
+ 838      616400
+ 839              	.LASF0:
+ 840 0279 7369676E 		.ascii	"signed char\000"
+ 840      65642063 
+ 840      68617200 
+ 841              	.LASF20:
+ 842 0285 5053325F 		.ascii	"PS2_counter_trigger\000"
+ 842      636F756E 
+ 842      7465725F 
+ 842      74726967 
+ 842      67657200 
+ARM GAS  C:\Users\addis\AppData\Local\Temp\ccmHqk3Q.s 			page 19
+
+
+ 843              	.LASF29:
+ 844 0299 43794465 		.ascii	"CyDelay\000"
+ 844      6C617900 
+ 845              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 4.9.3 20150303 (release) [ARM/embedded-4_9-br
