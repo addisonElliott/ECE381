@@ -27,6 +27,8 @@
 #include "ps2_data.h"
 #include "ps2_clock_aliases.h"
 #include "ps2_clock.h"
+#include "Pin_1_aliases.h"
+#include "Pin_1.h"
 #include "UART_IntClock.h"
 #include "PS2_Timer_ISR.h"
 #include "PS2_Timer.h"

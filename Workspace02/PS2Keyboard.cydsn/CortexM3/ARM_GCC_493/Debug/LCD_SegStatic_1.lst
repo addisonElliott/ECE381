@@ -1,0 +1,4217 @@
+ARM GAS  C:\Users\addis\AppData\Local\Temp\ccUS9kEI.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m3
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.file	"LCD_SegStatic_1.c"
+  15              		.text
+  16              	.Ltext0:
+  17              		.cfi_sections	.debug_frame
+  18              		.section	.text.LCD_SegStatic_1_DmaConfigure,"ax",%progbits
+  19              		.align	2
+  20              		.thumb
+  21              		.thumb_func
+  22              		.type	LCD_SegStatic_1_DmaConfigure, %function
+  23              	LCD_SegStatic_1_DmaConfigure:
+  24              	.LFB2:
+  25              		.file 1 ".\\Generated_Source\\PSoC5\\LCD_SegStatic_1.c"
+   1:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** /*******************************************************************************
+   2:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** * File Name: LCD_SegStatic_1.c
+   3:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** * Version 2.30
+   4:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *
+   5:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** * Description:
+   6:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *  This file provides the API source code for the Static Segment LCD component.
+   7:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *
+   8:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** * Note:
+   9:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *
+  10:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** ********************************************************************************
+  11:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** * Copyright 2008-2013, Cypress Semiconductor Corporation.  All rights reserved.
+  12:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** * You may use this file only in accordance with the license, terms, conditions,
+  13:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** * disclaimers, and limitations in the end user license agreement accompanying
+  14:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** * the software package with which this file was provided.
+  15:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *******************************************************************************/
+  16:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** 
+  17:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** #include "LCD_SegStatic_1.h"
+  18:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** #include <LCD_SegStatic_1_InClock.h>
+  19:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** #include <LCD_SegStatic_1_LCD_ISR.h>
+  20:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** #include <LCD_SegStatic_1_Lcd_Dma_dma.h>
+  21:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** 
+  22:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** static uint8  LCD_SegStatic_1_DmaConfigure(void) CYREENTRANT;
+  23:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** static void   LCD_SegStatic_1_DmaDispose(void) CYREENTRANT;
+  24:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** 
+  25:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** 
+  26:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** /* Look-up tables for different kinds of displays */
+  27:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** #ifdef LCD_SegStatic_1_7SEG
+  28:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** 
+  29:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****     static const uint8 CYCODE LCD_SegStatic_1_7SegDigits[] =
+  30:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****     /* '0'   '1'    '2'    '3'    '4'    '5'    '6'    '7' */
+  31:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****     {0x3fu, 0x06u, 0x5bu, 0x4fu, 0x66u, 0x6du, 0x7du, 0x07u,
+  32:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****     /* '8'  '9'    'A'    'B'    'C'    'D'    'E'    'F'   null */
+ARM GAS  C:\Users\addis\AppData\Local\Temp\ccUS9kEI.s 			page 2
+
+
+  33:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****     0x7fu, 0x6fu, 0x77u, 0x7cu, 0x39u, 0x5eu, 0x79u, 0x71u, 0x00u};
+  34:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** 
+  35:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** #endif /* LCD_SegStatic_1_7SEG */
+  36:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** 
+  37:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** #ifdef ALPHANUMERIC
+  38:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** 
+  39:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****     #ifdef LCD_SegStatic_1_14SEG
+  40:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** 
+  41:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         static const uint16 CYCODE LCD_SegStatic_1_14SegChars[] = {
+  42:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         /*------------------------------------------------------------*/
+  43:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         /*                           Blank                            */
+  44:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         /*------------------------------------------------------------*/
+  45:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         0x0000u,0x0000u,0x0000u,0x0000u,0x0000u,0x0000u,0x0000u,0x0000u,
+  46:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         0x0000u,0x0000u,0x0000u,0x0000u,0x0000u,0x0000u,0x0000u,0x0000u,
+  47:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         0x0000u,0x0000u,0x0000u,0x0000u,0x0000u,0x0000u,0x0000u,0x0000u,
+  48:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         0x0000u,0x0000u,0x0000u,0x0000u,0x0000u,0x0000u,0x0000u,0x0000u,
+  49:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         /*------------------------------------------------------------*/
+  50:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         /*         !       "       #       $       %       &       '  */
+  51:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         /*------------------------------------------------------------*/
+  52:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         0x0000u,0x0006u,0x0120u,0x3fffu,0x156du,0x2ee4u,0x2a8du,0x0200u,
+  53:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         /*------------------------------------------------------------*/
+  54:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         /* (       )       *       +       ,       -       .       /  */
+  55:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         /*------------------------------------------------------------*/
+  56:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         0x0a00u,0x2080u,0x3fc0u,0x1540u,0x2000u,0x0440u,0x1058u,0x2200u,
+  57:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         /*------------------------------------------------------------*/
+  58:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         /* 0       1       2       3       4       5       6       7  */
+  59:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         /*------------------------------------------------------------*/
+  60:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         0x223fu,0x0206u,0x045bu,0x040fu,0x0466u,0x0869u,0x047du,0x1201u,
+  61:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         /*------------------------------------------------------------*/
+  62:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         /* 8       9       :       ;       <       =       >       ?  */
+  63:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         /*------------------------------------------------------------*/
+  64:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         0x047fu,0x046fu,0x1100u,0x2100u,0x0a00u,0x0448u,0x2080u,0x1423u,
+  65:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         /*------------------------------------------------------------*/
+  66:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         /* @       A       B       C       D       E       F       G  */
+  67:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         /*------------------------------------------------------------*/
+  68:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         0x053bu,0x0477u,0x150fu,0x0039u,0x110Fu,0x0079u,0x0071u,0x043du,
+  69:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         /*------------------------------------------------------------*/
+  70:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         /* H       I       J       K       L       M       N       O  */
+  71:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         /*------------------------------------------------------------*/
+  72:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         0x0476u,0x1100u,0x001eu,0x0a70u,0x0038u,0x02b6u,0x08b6u,0x003fu,
+  73:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         /*------------------------------------------------------------*/
+  74:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         /* P       Q       R       S       T       U       V       W  */
+  75:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         /*------------------------------------------------------------*/
+  76:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         0x0473u,0x083fu,0x0C73u,0x046du,0x1101u,0x003eu,0x2230u,0x2836u,
+  77:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         /*------------------------------------------------------------*/
+  78:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         /* X       Y       Z       [       \       ]       ^       _  */
+  79:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         /*------------------------------------------------------------*/
+  80:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         0x2a80u,0x1462u,0x2209u,0x0039u,0x0880u,0x000fu,0x0003u,0x0008u,
+  81:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         /*------------------------------------------------------------*/
+  82:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         /* @       a       b       c       d       e       f       g  */
+  83:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         /*------------------------------------------------------------*/
+  84:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         0x053bu,0x0477u,0x150fu,0x0039u,0x110Fu,0x0079u,0x0071u,0x043du,
+  85:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         /*------------------------------------------------------------*/
+  86:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         /* h       i       j       k       l       m       n       o  */
+  87:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         /*------------------------------------------------------------*/
+  88:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         0x0476u,0x1100u,0x001eu,0x0a70u,0x0038u,0x02b6u,0x08b6u,0x003fu,
+  89:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         /*------------------------------------------------------------*/
+ARM GAS  C:\Users\addis\AppData\Local\Temp\ccUS9kEI.s 			page 3
+
+
+  90:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         /* p       q       r       s       t       u       v       w  */
+  91:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         /*------------------------------------------------------------*/
+  92:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         0x0473u,0x083fu,0x0C73u,0x046du,0x1101u,0x003eu,0x2230u,0x2836u,
+  93:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         /*------------------------------------------------------------*/
+  94:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         /* x       y       z       {       |       }        ~      O  */
+  95:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         /*------------------------------------------------------------*/
+  96:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         0x2a80u,0x1280u,0x2209u,0x0e00u,0x1100u,0x20C0u,0x0452u,0x003fu};
+  97:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** 
+  98:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****     #endif /* LCD_SegStatic_1_14SEG */
+  99:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** 
+ 100:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****     #ifdef LCD_SegStatic_1_16SEG
+ 101:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** 
+ 102:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         static const uint16 CYCODE LCD_SegStatic_1_16SegChars[] = {
+ 103:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         /*------------------------------------------------------------*/
+ 104:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         /*                           Blank                            */
+ 105:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         /*------------------------------------------------------------*/
+ 106:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         0x0000u,0x0000u,0x0000u,0x0000u,0x0000u,0x0000u,0x0000u,0x0000u,
+ 107:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         0x0000u,0x0000u,0x0000u,0x0000u,0x0000u,0x0000u,0x0000u,0x0000u,
+ 108:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         0x0000u,0x0000u,0x0000u,0x0000u,0x0000u,0x0000u,0x0000u,0x0000u,
+ 109:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         0x0000u,0x0000u,0x0000u,0x0000u,0x0000u,0x0000u,0x0000u,0x0000u,
+ 110:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         /*------------------------------------------------------------*/
+ 111:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         /*         !       "       #       $       %       &       '  */
+ 112:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         /*------------------------------------------------------------*/
+ 113:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         0x0000u,0x000cu,0x0480u,0xffffu,0x55bbu,0xdd99u,0xaa3bu,0x0800u,
+ 114:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         /*------------------------------------------------------------*/
+ 115:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         /* (       )       *       +       ,       -       .       /  */
+ 116:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         /*------------------------------------------------------------*/
+ 117:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         0x2800u,0x8200u,0xff00u,0x5500u,0x8000u,0x1100u,0x4160u,0x8800u,
+ 118:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         /*------------------------------------------------------------*/
+ 119:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         /* 0       1       2       3       4       5       6       7  */
+ 120:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         /*------------------------------------------------------------*/
+ 121:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         0x88ffu,0x000cu,0x1177u,0x103fu,0x118cu,0x21b3u,0x11fbu,0x4803u,
+ 122:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         /*------------------------------------------------------------*/
+ 123:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         /* 8       9       :       ;       <       =       >       ?  */
+ 124:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         /*------------------------------------------------------------*/
+ 125:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         0x11ffu,0x11bfu,0x4400u,0x8400u,0x2800u,0x1130u,0x8200u,0x5087u,
+ 126:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         /*------------------------------------------------------------*/
+ 127:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         /* @       A       B       C       D       E       F       G  */
+ 128:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         /*------------------------------------------------------------*/
+ 129:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         0x14f7u,0x11cfu,0x543fu,0x00f3u,0x443fu,0x01f3u,0x01c3u,0x10fbu,
+ 130:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         /*------------------------------------------------------------*/
+ 131:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         /* H       I       J       K       L       M       N       O  */
+ 132:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         /*------------------------------------------------------------*/
+ 133:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         0x11ccu,0x4400u,0x007eu,0x29c0u,0x00f0u,0x0accu,0x22ccu,0x00ffu,
+ 134:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         /*------------------------------------------------------------*/
+ 135:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         /* P       Q       R       S       T       U       V       W  */
+ 136:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         /*------------------------------------------------------------*/
+ 137:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         0x11c7u,0x20ffu,0x31c7u,0x11bbu,0x4403u,0x00fcu,0x88c0u,0xa0ccu,
+ 138:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         /*------------------------------------------------------------*/
+ 139:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         /* X       Y       Z       [       \       ]       ^       _  */
+ 140:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         /*------------------------------------------------------------*/
+ 141:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         0xaa00u,0x5184u,0x8833u,0x4412u,0x2200u,0x4421u,0x0006u,0x0030u,
+ 142:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         /*------------------------------------------------------------*/
+ 143:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         /* @       a       b       c       d       e       f       g  */
+ 144:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         /*------------------------------------------------------------*/
+ 145:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         0x14f7u,0x11cfu,0x543fu,0x00f3u,0x443fu,0x01f3u,0x01c3u,0x10fbu,
+ 146:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         /*------------------------------------------------------------*/
+ARM GAS  C:\Users\addis\AppData\Local\Temp\ccUS9kEI.s 			page 4
+
+
+ 147:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         /* h       i       j       k       l       m       n       o  */
+ 148:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         /*------------------------------------------------------------*/
+ 149:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         0x11ccu,0x4400u,0x007eu,0x29c0u,0x00f0u,0x0accu,0x22ccu,0x00ffu,
+ 150:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         /*------------------------------------------------------------*/
+ 151:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         /* p       q       r       s       t       u       v       w  */
+ 152:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         /*------------------------------------------------------------*/
+ 153:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         0x11c7u,0x20ffu,0x31c7u,0x11bbu,0x4403u,0x00fcu,0x88c0u,0xa0ccu,
+ 154:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         /*------------------------------------------------------------*/
+ 155:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         /* x       y       z       {       |       }        ~         */
+ 156:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         /*------------------------------------------------------------*/
+ 157:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         0xaa00u,0x4A00u,0x8833u,0x3800u,0x4400u,0x8300u,0x1144u,0x0000u};
+ 158:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** 
+ 159:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****     #endif /* LCD_SegStatic_1_16SEG */
+ 160:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** 
+ 161:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** #endif /* ALPHANUMERIC */
+ 162:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** 
+ 163:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** /* Frame Buffer */
+ 164:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** static uint8 LCD_SegStatic_1_buffer[LCD_SegStatic_1_BUFFER_LENGTH] ;
+ 165:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** 
+ 166:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** /* Array of common port TDs */
+ 167:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** static uint8 LCD_SegStatic_1_lcdTd[LCD_SegStatic_1_LCD_TD_SIZE * LCD_SegStatic_1_COMM_NUM];
+ 168:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** 
+ 169:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** /* DMA channel dedicated for SegLCD commons */
+ 170:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** static uint8 LCD_SegStatic_1_lcdChannel;
+ 171:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** 
+ 172:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** uint8 LCD_SegStatic_1_initVar = 0u;
+ 173:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** 
+ 174:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** /* Saves state of the component if it turned on or off */
+ 175:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** uint8 LCD_SegStatic_1_enableState = 0u;
+ 176:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** 
+ 177:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** /* Start of customizer generated code */
+ 178:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** 
+ 179:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** static uint16 CYCODE LCD_SegStatic_1_commons[1u] = {LCD_SegStatic_1_Com0};
+ 180:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** 
+ 181:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** 
+ 182:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** /*******************************************************************************
+ 183:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** * Function Name: LCD_SegStatic_1_Init
+ 184:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** ********************************************************************************
+ 185:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *
+ 186:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** * Summary:
+ 187:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *  Configures every-frame ISR and initializes a Frame Buffer.
+ 188:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *
+ 189:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** * Parameters:
+ 190:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *  None.
+ 191:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *
+ 192:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** * Return:
+ 193:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *  None.
+ 194:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *
+ 195:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** * Reentrant:
+ 196:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *  No.
+ 197:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *
+ 198:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *******************************************************************************/
+ 199:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** void LCD_SegStatic_1_Init(void) 
+ 200:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** {
+ 201:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****     LCD_SegStatic_1_ClearDisplay();
+ 202:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** 
+ 203:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****     /*ISR initialization */
+ARM GAS  C:\Users\addis\AppData\Local\Temp\ccUS9kEI.s 			page 5
+
+
+ 204:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****     CyIntDisable(LCD_SegStatic_1_ISR_NUMBER);
+ 205:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** 
+ 206:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****     /* Set the ISR to point to the RTC_SUT_isr Interrupt. */
+ 207:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****     (void) CyIntSetVector(LCD_SegStatic_1_ISR_NUMBER, &LCD_SegStatic_1_ISR);
+ 208:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** 
+ 209:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****     /* Set the priority. */
+ 210:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****     CyIntSetPriority(LCD_SegStatic_1_ISR_NUMBER, LCD_SegStatic_1_ISR_PRIORITY);
+ 211:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** }
+ 212:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** 
+ 213:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** 
+ 214:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** /*******************************************************************************
+ 215:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** * Function Name: LCD_SegStatic_1_Enable
+ 216:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** ********************************************************************************
+ 217:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *
+ 218:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** * Summary:
+ 219:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *  Enables clock generation for the component and configures DMA channels.
+ 220:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *
+ 221:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** * Parameters:
+ 222:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *  None.
+ 223:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *
+ 224:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** * Return:
+ 225:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *  Status one of standard status for PSoC3 Component:
+ 226:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *      CYRET_SUCCESS - Function completed successfully.
+ 227:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *      CYRET_LOCKED - The object was locked, already in use. Some of TDs or
+ 228:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *                     a channel already in use.
+ 229:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *
+ 230:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** * Global variables:
+ 231:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *  LCD_SegStatic_1_enableState - Initializes variable to '1', it means that
+ 232:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *  the component was initialized and enabled before entering into a Sleep.
+ 233:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *
+ 234:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** * Reentrant:
+ 235:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *  No.
+ 236:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *
+ 237:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *******************************************************************************/
+ 238:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** uint8 LCD_SegStatic_1_Enable(void) 
+ 239:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** {
+ 240:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****     uint8 status;
+ 241:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** 
+ 242:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****     /* Configure DMA TDs and return status */
+ 243:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****     status = LCD_SegStatic_1_DmaConfigure();
+ 244:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** 
+ 245:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****     /* Enable Internal clock */
+ 246:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****     LCD_SegStatic_1_InClock_Enable();
+ 247:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** 
+ 248:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****     /* The component is started so set the state appropriately */
+ 249:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****     LCD_SegStatic_1_enableState = 1u;
+ 250:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** 
+ 251:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****     return(status);
+ 252:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** }
+ 253:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** 
+ 254:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** 
+ 255:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** /*******************************************************************************
+ 256:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** * Function Name: LCD_SegStatic_1_DmaConfigure
+ 257:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** ********************************************************************************
+ 258:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *
+ 259:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** * Summary:
+ 260:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *  Configures DMA to transfer data from the frame buffer to port alliased
+ARM GAS  C:\Users\addis\AppData\Local\Temp\ccUS9kEI.s 			page 6
+
+
+ 261:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *  memory.
+ 262:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *
+ 263:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** * Parameters:
+ 264:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *  None.
+ 265:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *
+ 266:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** * Return:
+ 267:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *  Status one of standard status for PSoC3 Component
+ 268:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *      CYRET_SUCCESS - Function completed successfully.
+ 269:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *      CYRET_LOCKED - The object was locked, already in use. Some of TDs or
+ 270:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *                     a channel already in use.
+ 271:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *
+ 272:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** * Global variables:
+ 273:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** * LCD_SegStatic_1_lcdTd[] - used to store a set of allocated TD IDs that are
+ 274:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *  used by this component.
+ 275:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *
+ 276:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *  LCD_SegStatic_1_lcdChannel - stores a DMA Channel allocated for an LCD usage.
+ 277:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *
+ 278:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *  LCD_SegStatic_1_termOut - used as a parameter for LCD DMA configuration API
+ 279:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *  to select proper TermOut signal that was previously calculated.
+ 280:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *
+ 281:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *  LCD_SegStatic_1LcdPort_DMA_TD_PROTO_BLOCK[] - used as a parameter for DMA
+ 282:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *  configuration API.
+ 283:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *
+ 284:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** * Reentrant:
+ 285:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *  No.
+ 286:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *
+ 287:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *******************************************************************************/
+ 288:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** static uint8 LCD_SegStatic_1_DmaConfigure(void) CYREENTRANT
+ 289:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** {
+  26              		.loc 1 289 0
+  27              		.cfi_startproc
+  28              		@ args = 0, pretend = 0, frame = 0
+  29              		@ frame_needed = 0, uses_anonymous_args = 0
+  30 0000 2DE9F843 		push	{r3, r4, r5, r6, r7, r8, r9, lr}
+  31              		.cfi_def_cfa_offset 32
+  32              		.cfi_offset 3, -32
+  33              		.cfi_offset 4, -28
+  34              		.cfi_offset 5, -24
+  35              		.cfi_offset 6, -20
+  36              		.cfi_offset 7, -16
+  37              		.cfi_offset 8, -12
+  38              		.cfi_offset 9, -8
+  39              		.cfi_offset 14, -4
+  40              	.LVL0:
+ 290:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****     uint8 status = CYRET_LOCKED;
+ 291:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****     uint8 i;
+ 292:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****     uint8 j;
+ 293:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****     uint8 errorCnt = 0u;
+ 294:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****     uint32 srcAddr;
+ 295:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****     uint32 dstAddr;
+ 296:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****     uint8 comTdCount;
+ 297:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****     /* DMA_PROTO_TD_DEF */
+ 298:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****     static const struct LCD_SegStatic_1_DMA_TD_PROTO_ENTRY CYCODE LCD_SegStatic_1_StSegLcdPort_DMA_
+ 299:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****     {
+ 300:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         {0u, 1u},
+ 301:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****     };
+ 302:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** 
+ARM GAS  C:\Users\addis\AppData\Local\Temp\ccUS9kEI.s 			page 7
+
+
+ 303:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****     /* LCD_SegStatic_1_termOut selects signal which triggers
+ 304:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****     * LCD every frame interrupt.
+ 305:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****     */
+ 306:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****     static uint8 LCD_SegStatic_1_termOut = (LCD_SegStatic_1_Lcd_Dma__TERMOUT0_EN ? TD_TERMOUT0_EN :
+ 307:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****                                  (LCD_SegStatic_1_Lcd_Dma__TERMOUT1_EN ? TD_TERMOUT1_EN : 0u);
+ 308:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** 
+ 309:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****     /* Get addressed of source and destination for DMA transactions */
+ 310:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****     srcAddr = LCD_SegStatic_1_DMA_ADDRESS_MASK & ((uint32) LCD_SegStatic_1_buffer);
+  41              		.loc 1 310 0
+  42 0004 414F     		ldr	r7, .L19
+  43              	.LVL1:
+ 311:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****     dstAddr = LCD_SegStatic_1_DMA_ADDRESS_MASK & LCD_SegStatic_1_ALIASED_AREA_PTR;
+ 312:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** 
+ 313:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****     /* Allocate DMA channel */
+ 314:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****     LCD_SegStatic_1_lcdChannel = LCD_SegStatic_1_Lcd_Dma_DmaInitialize(0u, 0u, HI16(srcAddr), HI16(
+  44              		.loc 1 314 0
+  45 0006 0020     		movs	r0, #0
+  46 0008 0146     		mov	r1, r0
+  47 000a 3A0C     		lsrs	r2, r7, #16
+  48 000c 4FF48043 		mov	r3, #16384
+  49 0010 FFF7FEFF 		bl	LCD_SegStatic_1_Lcd_Dma_DmaInitialize
+  50              	.LVL2:
+  51 0014 87F82000 		strb	r0, [r7, #32]
+ 315:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** 
+ 316:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****     /* Check if the channel is valid */
+ 317:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****     if(LCD_SegStatic_1_lcdChannel == DMA_INVALID_CHANNEL)
+  52              		.loc 1 317 0
+  53 0018 FF28     		cmp	r0, #255
+  54 001a 01D0     		beq	.L14
+ 293:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****     uint32 srcAddr;
+  55              		.loc 1 293 0
+  56 001c 0026     		movs	r6, #0
+  57 001e 00E0     		b	.L2
+  58              	.L14:
+ 318:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****     {
+ 319:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         errorCnt++;
+  59              		.loc 1 319 0
+  60 0020 0126     		movs	r6, #1
+  61              	.L2:
+  62 0022 4FF00008 		mov	r8, #0
+  63 0026 15E0     		b	.L3
+  64              	.LVL3:
+  65              	.L5:
+ 320:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****     }
+ 321:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** 
+ 322:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****     /* Allocate required number of DMA TDs */
+ 323:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****     for(j = 0u; j < LCD_SegStatic_1_COMM_NUM; j++)
+ 324:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****     {
+ 325:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         for(i = 0u; i < LCD_SegStatic_1_LCD_TD_SIZE; i++)
+ 326:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         {
+ 327:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****             LCD_SegStatic_1_lcdTd[(j * LCD_SegStatic_1_LCD_TD_SIZE) + i] = CyDmaTdAllocate();
+  66              		.loc 1 327 0
+  67 0028 08EB0405 		add	r5, r8, r4
+  68 002c FFF7FEFF 		bl	CyDmaTdAllocate
+  69              	.LVL4:
+  70 0030 364B     		ldr	r3, .L19
+  71 0032 1D44     		add	r5, r5, r3
+ARM GAS  C:\Users\addis\AppData\Local\Temp\ccUS9kEI.s 			page 8
+
+
+  72 0034 85F82400 		strb	r0, [r5, #36]
+ 328:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****             if(LCD_SegStatic_1_lcdTd[(j * LCD_SegStatic_1_LCD_TD_SIZE) + i] == DMA_INVALID_TD)
+  73              		.loc 1 328 0
+  74 0038 FF28     		cmp	r0, #255
+  75 003a 01D1     		bne	.L4
+ 329:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****             {
+ 330:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****                 errorCnt++;
+  76              		.loc 1 330 0
+  77 003c 0136     		adds	r6, r6, #1
+  78              	.LVL5:
+  79 003e F6B2     		uxtb	r6, r6
+  80              	.LVL6:
+  81              	.L4:
+ 325:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         {
+  82              		.loc 1 325 0 discriminator 2
+  83 0040 0134     		adds	r4, r4, #1
+  84              	.LVL7:
+  85 0042 E4B2     		uxtb	r4, r4
+  86              	.LVL8:
+  87 0044 00E0     		b	.L6
+  88              	.LVL9:
+  89              	.L15:
+  90 0046 0024     		movs	r4, #0
+  91              	.L6:
+  92              	.LVL10:
+ 325:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         {
+  93              		.loc 1 325 0 is_stmt 0 discriminator 1
+  94 0048 002C     		cmp	r4, #0
+  95 004a EDD0     		beq	.L5
+ 323:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****     {
+  96              		.loc 1 323 0 is_stmt 1 discriminator 2
+  97 004c 08F10108 		add	r8, r8, #1
+  98              	.LVL11:
+  99 0050 5FFA88F8 		uxtb	r8, r8
+ 100              	.LVL12:
+ 101              	.L3:
+ 323:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****     {
+ 102              		.loc 1 323 0 is_stmt 0 discriminator 1
+ 103 0054 B8F1010F 		cmp	r8, #1
+ 104 0058 F5D9     		bls	.L15
+ 105 005a 0025     		movs	r5, #0
+ 106 005c 41E0     		b	.L7
+ 107              	.LVL13:
+ 108              	.L11:
+ 331:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****             }
+ 332:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         }
+ 333:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****     }
+ 334:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** 
+ 335:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****     /* comTdCount stores the number of TDs allocated for this configuration */
+ 336:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****     comTdCount = (LCD_SegStatic_1_COMM_NUM * LCD_SegStatic_1_LCD_TD_SIZE);
+ 337:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** 
+ 338:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****     /* TD configuration loop */
+ 339:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****     for(j = 0u; j < LCD_SegStatic_1_COMM_NUM; j++)
+ 340:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****     {
+ 341:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         for(i = 0u; i < LCD_SegStatic_1_LCD_TD_SIZE; i++)
+ 342:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         {
+ 343:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****             /* The last TD need to point to TD[0] */
+ARM GAS  C:\Users\addis\AppData\Local\Temp\ccUS9kEI.s 			page 9
+
+
+ 344:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****             if(((j * LCD_SegStatic_1_LCD_TD_SIZE) + i) == (comTdCount - 1u))
+ 109              		.loc 1 344 0 is_stmt 1
+ 110 005e A146     		mov	r9, r4
+ 111 0060 05EB0408 		add	r8, r5, r4
+ 112 0064 B8F1010F 		cmp	r8, #1
+ 113 0068 0BD1     		bne	.L8
+ 345:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****             {
+ 346:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****                 (void) CyDmaTdSetConfiguration(LCD_SegStatic_1_lcdTd[(j * LCD_SegStatic_1_LCD_TD_SI
+ 114              		.loc 1 346 0
+ 115 006a 284B     		ldr	r3, .L19
+ 116 006c 03EB0802 		add	r2, r3, r8
+ 117 0070 92F82400 		ldrb	r0, [r2, #36]	@ zero_extendqisi2
+ 118 0074 0121     		movs	r1, #1
+ 119 0076 93F82420 		ldrb	r2, [r3, #36]	@ zero_extendqisi2
+ 120 007a 0723     		movs	r3, #7
+ 121 007c FFF7FEFF 		bl	CyDmaTdSetConfiguration
+ 122              	.LVL14:
+ 123 0080 17E0     		b	.L9
+ 124              	.L8:
+ 347:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****                                         (uint16) LCD_SegStatic_1_StSegLcdPort_DMA_TD_PROTO_BLOCK[i]
+ 348:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****                                         LCD_SegStatic_1_lcdTd[0u],
+ 349:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****                                         TD_INC_DST_ADR | TD_INC_SRC_ADR | LCD_SegStatic_1_termOut);
+ 350:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****             }
+ 351:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****             /* Last TD in the row should generate an interrupt signal */
+ 352:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****             else if(i == (LCD_SegStatic_1_LCD_TD_SIZE - 1u))
+ 125              		.loc 1 352 0
+ 126 0082 5CB9     		cbnz	r4, .L10
+ 353:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****             {
+ 354:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****                 (void) CyDmaTdSetConfiguration(LCD_SegStatic_1_lcdTd[(j * LCD_SegStatic_1_LCD_TD_SI
+ 127              		.loc 1 354 0
+ 128 0084 214B     		ldr	r3, .L19
+ 129 0086 03EB0802 		add	r2, r3, r8
+ 130 008a 92F82400 		ldrb	r0, [r2, #36]	@ zero_extendqisi2
+ 131 008e 0121     		movs	r1, #1
+ 132 0090 92F82520 		ldrb	r2, [r2, #37]	@ zero_extendqisi2
+ 133 0094 0723     		movs	r3, #7
+ 134 0096 FFF7FEFF 		bl	CyDmaTdSetConfiguration
+ 135              	.LVL15:
+ 136 009a 0AE0     		b	.L9
+ 137              	.L10:
+ 355:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****                                         (uint16) LCD_SegStatic_1_StSegLcdPort_DMA_TD_PROTO_BLOCK[i]
+ 356:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****                                         LCD_SegStatic_1_lcdTd[(j * LCD_SegStatic_1_LCD_TD_SIZE) + i
+ 357:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****                                         TD_INC_DST_ADR | TD_INC_SRC_ADR | LCD_SegStatic_1_termOut);
+ 358:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****             }
+ 359:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****             else
+ 360:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****             {
+ 361:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****                 /* If this is not the last TD in the row it should automatically
+ 362:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****                 * next standing TDs.
+ 363:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****                 */
+ 364:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****                (void) CyDmaTdSetConfiguration(LCD_SegStatic_1_lcdTd[(j * LCD_SegStatic_1_LCD_TD_SIZ
+ 138              		.loc 1 364 0
+ 139 009c 1B4B     		ldr	r3, .L19
+ 140 009e 03EB0802 		add	r2, r3, r8
+ 141 00a2 92F82400 		ldrb	r0, [r2, #36]	@ zero_extendqisi2
+ 142 00a6 0121     		movs	r1, #1
+ 143 00a8 92F82520 		ldrb	r2, [r2, #37]	@ zero_extendqisi2
+ 144 00ac 2323     		movs	r3, #35
+ARM GAS  C:\Users\addis\AppData\Local\Temp\ccUS9kEI.s 			page 10
+
+
+ 145 00ae FFF7FEFF 		bl	CyDmaTdSetConfiguration
+ 146              	.LVL16:
+ 147              	.L9:
+ 365:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****                                         (uint16) LCD_SegStatic_1_StSegLcdPort_DMA_TD_PROTO_BLOCK[i]
+ 366:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****                                         LCD_SegStatic_1_lcdTd[(j * LCD_SegStatic_1_LCD_TD_SIZE) + i
+ 367:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****                                         TD_INC_DST_ADR | TD_INC_SRC_ADR | TD_AUTO_EXEC_NEXT);
+ 368:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****             }
+ 369:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** 
+ 370:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****             /* Set the low 16 bits of the source and destination addresses
+ 371:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****             * for TDs.
+ 372:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****             */
+ 373:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****             (void) CyDmaTdSetAddress(LCD_SegStatic_1_lcdTd[(j * LCD_SegStatic_1_LCD_TD_SIZE) + i],
+ 148              		.loc 1 373 0 discriminator 2
+ 149 00b2 164B     		ldr	r3, .L19
+ 150 00b4 9844     		add	r8, r8, r3
+ 374:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****                               LO16(srcAddr) + (((uint16) j) * LCD_SegStatic_1_ROW_LENGTH) +
+ 151              		.loc 1 374 0 discriminator 2
+ 152 00b6 B9B2     		uxth	r1, r7
+ 373:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****                               LO16(srcAddr) + (((uint16) j) * LCD_SegStatic_1_ROW_LENGTH) +
+ 153              		.loc 1 373 0 discriminator 2
+ 154 00b8 154B     		ldr	r3, .L19+4
+ 155 00ba 13F81920 		ldrb	r2, [r3, r9, lsl #1]	@ zero_extendqisi2
+ 156 00be 01EB0511 		add	r1, r1, r5, lsl #4
+ 157 00c2 1144     		add	r1, r1, r2
+ 158 00c4 98F82400 		ldrb	r0, [r8, #36]	@ zero_extendqisi2
+ 159 00c8 89B2     		uxth	r1, r1
+ 160 00ca 02F5A142 		add	r2, r2, #20608
+ 161 00ce FFF7FEFF 		bl	CyDmaTdSetAddress
+ 162              	.LVL17:
+ 341:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         {
+ 163              		.loc 1 341 0 discriminator 2
+ 164 00d2 0134     		adds	r4, r4, #1
+ 165              	.LVL18:
+ 166 00d4 E4B2     		uxtb	r4, r4
+ 167              	.LVL19:
+ 168 00d6 00E0     		b	.L12
+ 169              	.LVL20:
+ 170              	.L16:
+ 171 00d8 0024     		movs	r4, #0
+ 172              	.L12:
+ 173              	.LVL21:
+ 341:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         {
+ 174              		.loc 1 341 0 is_stmt 0 discriminator 1
+ 175 00da 002C     		cmp	r4, #0
+ 176 00dc BFD0     		beq	.L11
+ 339:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****     {
+ 177              		.loc 1 339 0 is_stmt 1 discriminator 2
+ 178 00de 0135     		adds	r5, r5, #1
+ 179              	.LVL22:
+ 180 00e0 EDB2     		uxtb	r5, r5
+ 181              	.LVL23:
+ 182              	.L7:
+ 339:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****     {
+ 183              		.loc 1 339 0 is_stmt 0 discriminator 1
+ 184 00e2 012D     		cmp	r5, #1
+ 185 00e4 F8D9     		bls	.L16
+ 375:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****                               (uint16) LCD_SegStatic_1_StSegLcdPort_DMA_TD_PROTO_BLOCK[i].offset,
+ARM GAS  C:\Users\addis\AppData\Local\Temp\ccUS9kEI.s 			page 11
+
+
+ 376:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****                               LO16(dstAddr) + LCD_SegStatic_1_StSegLcdPort_DMA_TD_PROTO_BLOCK[i].of
+ 377:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         }
+ 378:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****     }
+ 379:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** 
+ 380:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****     /* If there was no errors during DMA configuration then enable the channel. */
+ 381:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****     if(errorCnt == 0u)
+ 186              		.loc 1 381 0 is_stmt 1
+ 187 00e6 76B9     		cbnz	r6, .L17
+ 382:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****     {
+ 383:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         (void) CyDmaChSetInitialTd(LCD_SegStatic_1_lcdChannel, LCD_SegStatic_1_lcdTd[0u]);
+ 188              		.loc 1 383 0
+ 189 00e8 084C     		ldr	r4, .L19
+ 190 00ea 94F82000 		ldrb	r0, [r4, #32]	@ zero_extendqisi2
+ 191 00ee 94F82410 		ldrb	r1, [r4, #36]	@ zero_extendqisi2
+ 192 00f2 FFF7FEFF 		bl	CyDmaChSetInitialTd
+ 193              	.LVL24:
+ 384:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         (void) CyDmaChEnable(LCD_SegStatic_1_lcdChannel, 1u);
+ 194              		.loc 1 384 0
+ 195 00f6 94F82000 		ldrb	r0, [r4, #32]	@ zero_extendqisi2
+ 196 00fa 0121     		movs	r1, #1
+ 197 00fc FFF7FEFF 		bl	CyDmaChEnable
+ 198              	.LVL25:
+ 385:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         status = CYRET_SUCCESS;
+ 199              		.loc 1 385 0
+ 200 0100 0020     		movs	r0, #0
+ 201 0102 BDE8F883 		pop	{r3, r4, r5, r6, r7, r8, r9, pc}
+ 202              	.LVL26:
+ 203              	.L17:
+ 290:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****     uint8 i;
+ 204              		.loc 1 290 0
+ 205 0106 0420     		movs	r0, #4
+ 206              	.LVL27:
+ 386:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****     }
+ 387:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** 
+ 388:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****     return(status);
+ 389:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** }
+ 207              		.loc 1 389 0
+ 208 0108 BDE8F883 		pop	{r3, r4, r5, r6, r7, r8, r9, pc}
+ 209              	.LVL28:
+ 210              	.L20:
+ 211              		.align	2
+ 212              	.L19:
+ 213 010c 00000000 		.word	.LANCHOR0
+ 214 0110 00000000 		.word	.LANCHOR1
+ 215              		.cfi_endproc
+ 216              	.LFE2:
+ 217              		.size	LCD_SegStatic_1_DmaConfigure, .-LCD_SegStatic_1_DmaConfigure
+ 218              		.section	.text.LCD_SegStatic_1_DmaDispose,"ax",%progbits
+ 219              		.align	2
+ 220              		.thumb
+ 221              		.thumb_func
+ 222              		.type	LCD_SegStatic_1_DmaDispose, %function
+ 223              	LCD_SegStatic_1_DmaDispose:
+ 224              	.LFB3:
+ 390:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** 
+ 391:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** 
+ 392:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** /*******************************************************************************
+ARM GAS  C:\Users\addis\AppData\Local\Temp\ccUS9kEI.s 			page 12
+
+
+ 393:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** * Function Name: LCD_SegStatic_1_DmaDispose
+ 394:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** ********************************************************************************
+ 395:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *
+ 396:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** * Summary:
+ 397:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *  Releases transaction descriptors and DMA channel previously used by the
+ 398:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *  component.
+ 399:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *
+ 400:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** * Parameters:
+ 401:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *  None.
+ 402:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *
+ 403:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** * Return:
+ 404:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *  None.
+ 405:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *
+ 406:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** * Global variables:
+ 407:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *  LCD_SegStatic_1_lcdTd[] - used  store a set of allocated TD IDs that are
+ 408:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *  used by this component which will be released by this function.
+ 409:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *
+ 410:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *  LCD_SegStatic_1_lcdChannel - holds the channel number used by the LCD
+ 411:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *  component that will be released by this function.
+ 412:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *
+ 413:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** * Reentrant:
+ 414:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *  No.
+ 415:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *
+ 416:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *******************************************************************************/
+ 417:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** static void LCD_SegStatic_1_DmaDispose(void) CYREENTRANT
+ 418:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** {
+ 225              		.loc 1 418 0
+ 226              		.cfi_startproc
+ 227              		@ args = 0, pretend = 0, frame = 0
+ 228              		@ frame_needed = 0, uses_anonymous_args = 0
+ 229 0000 10B5     		push	{r4, lr}
+ 230              		.cfi_def_cfa_offset 8
+ 231              		.cfi_offset 4, -8
+ 232              		.cfi_offset 14, -4
+ 419:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****     uint8 i;
+ 420:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** 
+ 421:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****     /* Release DMA handle, this will disable the LCD channel */
+ 422:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****     LCD_SegStatic_1_Lcd_Dma_DmaRelease();
+ 233              		.loc 1 422 0
+ 234 0002 FFF7FEFF 		bl	LCD_SegStatic_1_Lcd_Dma_DmaRelease
+ 235              	.LVL29:
+ 423:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** 
+ 424:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****     /* Free unused channel */
+ 425:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****     (void) CyDmaChFree(LCD_SegStatic_1_lcdChannel);
+ 236              		.loc 1 425 0
+ 237 0006 094B     		ldr	r3, .L25
+ 238 0008 93F82000 		ldrb	r0, [r3, #32]	@ zero_extendqisi2
+ 239 000c FFF7FEFF 		bl	CyDmaChFree
+ 240              	.LVL30:
+ 426:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** 
+ 427:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****     /* Release all allocated TDs */
+ 428:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****     for(i = 0u; i < (LCD_SegStatic_1_LCD_TD_SIZE * LCD_SegStatic_1_COMM_NUM); i++)
+ 241              		.loc 1 428 0
+ 242 0010 0024     		movs	r4, #0
+ 243 0012 07E0     		b	.L22
+ 244              	.LVL31:
+ 245              	.L23:
+ARM GAS  C:\Users\addis\AppData\Local\Temp\ccUS9kEI.s 			page 13
+
+
+ 429:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****     {
+ 430:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         CyDmaTdFree(LCD_SegStatic_1_lcdTd[i]);
+ 246              		.loc 1 430 0 discriminator 3
+ 247 0014 054B     		ldr	r3, .L25
+ 248 0016 2344     		add	r3, r3, r4
+ 249 0018 93F82400 		ldrb	r0, [r3, #36]	@ zero_extendqisi2
+ 250 001c FFF7FEFF 		bl	CyDmaTdFree
+ 251              	.LVL32:
+ 428:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****     {
+ 252              		.loc 1 428 0 discriminator 3
+ 253 0020 0134     		adds	r4, r4, #1
+ 254              	.LVL33:
+ 255 0022 E4B2     		uxtb	r4, r4
+ 256              	.LVL34:
+ 257              	.L22:
+ 428:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****     {
+ 258              		.loc 1 428 0 is_stmt 0 discriminator 1
+ 259 0024 012C     		cmp	r4, #1
+ 260 0026 F5D9     		bls	.L23
+ 431:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****     }
+ 432:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** }
+ 261              		.loc 1 432 0 is_stmt 1
+ 262 0028 10BD     		pop	{r4, pc}
+ 263              	.LVL35:
+ 264              	.L26:
+ 265 002a 00BF     		.align	2
+ 266              	.L25:
+ 267 002c 00000000 		.word	.LANCHOR0
+ 268              		.cfi_endproc
+ 269              	.LFE3:
+ 270              		.size	LCD_SegStatic_1_DmaDispose, .-LCD_SegStatic_1_DmaDispose
+ 271              		.section	.text.LCD_SegStatic_1_Enable,"ax",%progbits
+ 272              		.align	2
+ 273              		.global	LCD_SegStatic_1_Enable
+ 274              		.thumb
+ 275              		.thumb_func
+ 276              		.type	LCD_SegStatic_1_Enable, %function
+ 277              	LCD_SegStatic_1_Enable:
+ 278              	.LFB1:
+ 239:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****     uint8 status;
+ 279              		.loc 1 239 0
+ 280              		.cfi_startproc
+ 281              		@ args = 0, pretend = 0, frame = 0
+ 282              		@ frame_needed = 0, uses_anonymous_args = 0
+ 283 0000 10B5     		push	{r4, lr}
+ 284              		.cfi_def_cfa_offset 8
+ 285              		.cfi_offset 4, -8
+ 286              		.cfi_offset 14, -4
+ 243:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** 
+ 287              		.loc 1 243 0
+ 288 0002 FFF7FEFF 		bl	LCD_SegStatic_1_DmaConfigure
+ 289              	.LVL36:
+ 290 0006 0446     		mov	r4, r0
+ 291              	.LVL37:
+ 246:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** 
+ 292              		.loc 1 246 0
+ 293 0008 FFF7FEFF 		bl	LCD_SegStatic_1_InClock_Start
+ARM GAS  C:\Users\addis\AppData\Local\Temp\ccUS9kEI.s 			page 14
+
+
+ 294              	.LVL38:
+ 249:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** 
+ 295              		.loc 1 249 0
+ 296 000c 0122     		movs	r2, #1
+ 297 000e 024B     		ldr	r3, .L29
+ 298 0010 83F82620 		strb	r2, [r3, #38]
+ 252:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** 
+ 299              		.loc 1 252 0
+ 300 0014 2046     		mov	r0, r4
+ 301 0016 10BD     		pop	{r4, pc}
+ 302              	.LVL39:
+ 303              	.L30:
+ 304              		.align	2
+ 305              	.L29:
+ 306 0018 00000000 		.word	.LANCHOR0
+ 307              		.cfi_endproc
+ 308              	.LFE1:
+ 309              		.size	LCD_SegStatic_1_Enable, .-LCD_SegStatic_1_Enable
+ 310              		.section	.text.LCD_SegStatic_1_Stop,"ax",%progbits
+ 311              		.align	2
+ 312              		.global	LCD_SegStatic_1_Stop
+ 313              		.thumb
+ 314              		.thumb_func
+ 315              		.type	LCD_SegStatic_1_Stop, %function
+ 316              	LCD_SegStatic_1_Stop:
+ 317              	.LFB5:
+ 433:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** 
+ 434:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** 
+ 435:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** /*******************************************************************************
+ 436:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** * Function Name: LCD_SegStatic_1_Start
+ 437:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** ********************************************************************************
+ 438:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *
+ 439:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** * Summary:
+ 440:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *  Starts the LCD component , DMA channels and initializes the frame buffer.
+ 441:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *
+ 442:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** * Parameters:
+ 443:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *  None.
+ 444:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *
+ 445:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** * Return:
+ 446:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *  One of standard status for PSoC3 Component:
+ 447:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *      CYRET_SUCCESS - Function completed successfully.
+ 448:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *      CYRET_LOCKED - The object was locked, already in use. Some of TDs or
+ 449:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *                     channel already in use.
+ 450:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *
+ 451:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** * Global variables:
+ 452:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *  LCD_SegStatic_1_initVar - is used to indicate initial configuration of
+ 453:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *  this component. The variable is initialized to zero and set to 1 the first
+ 454:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *  time LCD_SegStatic_1_Start() is called. This allows for component
+ 455:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *  initialization without re-initialization in all subsequent calls to the
+ 456:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *  LCD_SegStatic_1_Start() routine.
+ 457:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *
+ 458:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** * Reentrant:
+ 459:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *  No.
+ 460:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *
+ 461:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *******************************************************************************/
+ 462:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** uint8 LCD_SegStatic_1_Start(void) 
+ 463:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** {
+ARM GAS  C:\Users\addis\AppData\Local\Temp\ccUS9kEI.s 			page 15
+
+
+ 464:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****     uint8 status;
+ 465:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** 
+ 466:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****     /* If not Initialized then initialize all required hardware and software */
+ 467:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****     if(LCD_SegStatic_1_initVar == 0u)
+ 468:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****     {
+ 469:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         LCD_SegStatic_1_initVar = 1u;
+ 470:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         LCD_SegStatic_1_Init();
+ 471:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****     }
+ 472:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** 
+ 473:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****     status = LCD_SegStatic_1_Enable();
+ 474:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** 
+ 475:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****     return(status);
+ 476:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** }
+ 477:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** 
+ 478:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** 
+ 479:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** /*******************************************************************************
+ 480:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** * Function Name: LCD_SegStatic_1_Stop
+ 481:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** ********************************************************************************
+ 482:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *
+ 483:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** * Summary:
+ 484:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *  Disables the LCD component and disables any required interrupts and DMA
+ 485:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *  channels. Automatically blanks the display to avoid damage from DC offsets.
+ 486:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *  Does not clear the frame buffer. Disables LCD every frame interrupt.
+ 487:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *
+ 488:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** * Parameters:
+ 489:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *  None.
+ 490:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *
+ 491:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** * Return:
+ 492:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *  None.
+ 493:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *
+ 494:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** * Global variables:
+ 495:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *  LCD_SegStatic_1_enableState - cleared to 0 by this function indicating
+ 496:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *  that the component is disabled.
+ 497:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *
+ 498:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *******************************************************************************/
+ 499:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** void LCD_SegStatic_1_Stop(void) 
+ 500:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** {
+ 318              		.loc 1 500 0
+ 319              		.cfi_startproc
+ 320              		@ args = 0, pretend = 0, frame = 0
+ 321              		@ frame_needed = 0, uses_anonymous_args = 0
+ 322 0000 08B5     		push	{r3, lr}
+ 323              		.cfi_def_cfa_offset 8
+ 324              		.cfi_offset 3, -8
+ 325              		.cfi_offset 14, -4
+ 501:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****     CyIntDisable(LCD_SegStatic_1_ISR_NUMBER);
+ 326              		.loc 1 501 0
+ 327 0002 0122     		movs	r2, #1
+ 328 0004 054B     		ldr	r3, .L33
+ 329 0006 1A60     		str	r2, [r3]
+ 502:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** 
+ 503:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****     /* Stop clock generation */
+ 504:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****     LCD_SegStatic_1_InClock_Disable();
+ 330              		.loc 1 504 0
+ 331 0008 FFF7FEFF 		bl	LCD_SegStatic_1_InClock_Stop
+ 332              	.LVL40:
+ 505:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** 
+ARM GAS  C:\Users\addis\AppData\Local\Temp\ccUS9kEI.s 			page 16
+
+
+ 506:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****     /* Release DMA resources used for the LCD */
+ 507:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****     LCD_SegStatic_1_DmaDispose();
+ 333              		.loc 1 507 0
+ 334 000c FFF7FEFF 		bl	LCD_SegStatic_1_DmaDispose
+ 335              	.LVL41:
+ 508:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** 
+ 509:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****     /* Now the component is disabled so save its state */
+ 510:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****     LCD_SegStatic_1_enableState = 0u;
+ 336              		.loc 1 510 0
+ 337 0010 0022     		movs	r2, #0
+ 338 0012 034B     		ldr	r3, .L33+4
+ 339 0014 83F82620 		strb	r2, [r3, #38]
+ 340 0018 08BD     		pop	{r3, pc}
+ 341              	.L34:
+ 342 001a 00BF     		.align	2
+ 343              	.L33:
+ 344 001c 80E100E0 		.word	-536813184
+ 345 0020 00000000 		.word	.LANCHOR0
+ 346              		.cfi_endproc
+ 347              	.LFE5:
+ 348              		.size	LCD_SegStatic_1_Stop, .-LCD_SegStatic_1_Stop
+ 349              		.section	.text.LCD_SegStatic_1_EnableInt,"ax",%progbits
+ 350              		.align	2
+ 351              		.global	LCD_SegStatic_1_EnableInt
+ 352              		.thumb
+ 353              		.thumb_func
+ 354              		.type	LCD_SegStatic_1_EnableInt, %function
+ 355              	LCD_SegStatic_1_EnableInt:
+ 356              	.LFB6:
+ 511:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** }
+ 512:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** 
+ 513:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** 
+ 514:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** /*******************************************************************************
+ 515:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** * Function Name: LCD_SegStatic_1_EnableInt
+ 516:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** ********************************************************************************
+ 517:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *
+ 518:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** * Summary:
+ 519:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *  Enables LCD every-frame interrupt.
+ 520:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *
+ 521:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** * Parameters:
+ 522:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *  None.
+ 523:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *
+ 524:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** * Return:
+ 525:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *  None.
+ 526:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *
+ 527:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *******************************************************************************/
+ 528:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** void LCD_SegStatic_1_EnableInt(void) 
+ 529:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** {
+ 357              		.loc 1 529 0
+ 358              		.cfi_startproc
+ 359              		@ args = 0, pretend = 0, frame = 0
+ 360              		@ frame_needed = 0, uses_anonymous_args = 0
+ 361              		@ link register save eliminated.
+ 530:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****     CyIntEnable(LCD_SegStatic_1_ISR_NUMBER);
+ 362              		.loc 1 530 0
+ 363 0000 0122     		movs	r2, #1
+ 364 0002 014B     		ldr	r3, .L36
+ARM GAS  C:\Users\addis\AppData\Local\Temp\ccUS9kEI.s 			page 17
+
+
+ 365 0004 1A60     		str	r2, [r3]
+ 366 0006 7047     		bx	lr
+ 367              	.L37:
+ 368              		.align	2
+ 369              	.L36:
+ 370 0008 00E100E0 		.word	-536813312
+ 371              		.cfi_endproc
+ 372              	.LFE6:
+ 373              		.size	LCD_SegStatic_1_EnableInt, .-LCD_SegStatic_1_EnableInt
+ 374              		.section	.text.LCD_SegStatic_1_DisableInt,"ax",%progbits
+ 375              		.align	2
+ 376              		.global	LCD_SegStatic_1_DisableInt
+ 377              		.thumb
+ 378              		.thumb_func
+ 379              		.type	LCD_SegStatic_1_DisableInt, %function
+ 380              	LCD_SegStatic_1_DisableInt:
+ 381              	.LFB7:
+ 531:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** }
+ 532:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** 
+ 533:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** 
+ 534:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** /*******************************************************************************
+ 535:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** * Function Name: LCD_SegStatic_1_DisableInt
+ 536:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** ********************************************************************************
+ 537:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** * Summary:
+ 538:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *  Description: Disables LCD interrupt. Not required if LCD_SegStatic_1_Stop
+ 539:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *  called.
+ 540:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *
+ 541:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** * Parameters:
+ 542:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *  None.
+ 543:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *
+ 544:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** * Return:
+ 545:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *  None.
+ 546:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *
+ 547:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *******************************************************************************/
+ 548:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** void LCD_SegStatic_1_DisableInt(void) 
+ 549:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** {
+ 382              		.loc 1 549 0
+ 383              		.cfi_startproc
+ 384              		@ args = 0, pretend = 0, frame = 0
+ 385              		@ frame_needed = 0, uses_anonymous_args = 0
+ 386              		@ link register save eliminated.
+ 550:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****    CyIntDisable(LCD_SegStatic_1_ISR_NUMBER);
+ 387              		.loc 1 550 0
+ 388 0000 0122     		movs	r2, #1
+ 389 0002 014B     		ldr	r3, .L39
+ 390 0004 1A60     		str	r2, [r3]
+ 391 0006 7047     		bx	lr
+ 392              	.L40:
+ 393              		.align	2
+ 394              	.L39:
+ 395 0008 80E100E0 		.word	-536813184
+ 396              		.cfi_endproc
+ 397              	.LFE7:
+ 398              		.size	LCD_SegStatic_1_DisableInt, .-LCD_SegStatic_1_DisableInt
+ 399              		.section	.text.LCD_SegStatic_1_ReadPixel,"ax",%progbits
+ 400              		.align	2
+ 401              		.global	LCD_SegStatic_1_ReadPixel
+ARM GAS  C:\Users\addis\AppData\Local\Temp\ccUS9kEI.s 			page 18
+
+
+ 402              		.thumb
+ 403              		.thumb_func
+ 404              		.type	LCD_SegStatic_1_ReadPixel, %function
+ 405              	LCD_SegStatic_1_ReadPixel:
+ 406              	.LFB10:
+ 551:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** }
+ 552:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** 
+ 553:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** 
+ 554:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** /*******************************************************************************
+ 555:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** * Function Name: LCD_SegStatic_1_ClearDisplay
+ 556:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** ********************************************************************************
+ 557:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *
+ 558:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** * Summary:
+ 559:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *  This function clears the display RAM of the frame buffer.
+ 560:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *
+ 561:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** * Parameters:
+ 562:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *  None.
+ 563:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *
+ 564:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** * Return:
+ 565:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *  None.
+ 566:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *
+ 567:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** * Global variables:
+ 568:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *  LCD_SegStatic_1_buffer[] - an array is modified by this API. Clears the
+ 569:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *  frame buffer to all zeroes and then reinitialize it with a 1 in the
+ 570:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *  locations specified by the values from LCD_SegStatic_1_commons[].
+ 571:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *
+ 572:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *  LCD_SegStatic_1_commons[] - holds the pixel locations for common lines.
+ 573:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *
+ 574:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** * Reentrant:
+ 575:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *  No.
+ 576:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *
+ 577:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *******************************************************************************/
+ 578:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** void LCD_SegStatic_1_ClearDisplay(void) 
+ 579:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** {
+ 580:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****     uint16 i;
+ 581:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** 
+ 582:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****     /* Clear entire frame buffer to "zero" values */
+ 583:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****     for(i = 0u ; i < LCD_SegStatic_1_BUFFER_LENGTH; i++)
+ 584:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****     {
+ 585:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         if(i < (LCD_SegStatic_1_BUFFER_LENGTH / 2u))
+ 586:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         {
+ 587:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****             /* First line(frame) of the buffer should contain pixel data */
+ 588:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****             LCD_SegStatic_1_buffer[i] = 0x00u;
+ 589:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         }
+ 590:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         else
+ 591:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         {
+ 592:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****             /* Second line(frame) of the buffer should contain inverted pixel data */
+ 593:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****             LCD_SegStatic_1_buffer[i] = 0xFFu;
+ 594:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         }
+ 595:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****     }
+ 596:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** 
+ 597:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****     /* Reinitialize the commons */
+ 598:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****     LCD_SegStatic_1_WRITE_PIXEL(LCD_SegStatic_1_commons[0u], LCD_SegStatic_1_PIXEL_STATE_OFF);
+ 599:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** }
+ 600:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** 
+ 601:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** 
+ 602:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** /*******************************************************************************
+ARM GAS  C:\Users\addis\AppData\Local\Temp\ccUS9kEI.s 			page 19
+
+
+ 603:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** * Function Name: LCD_SegStatic_1_WritePixel
+ 604:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** ********************************************************************************
+ 605:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *
+ 606:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** * Summary:
+ 607:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *  This function sets or clears a pixel based on pixelState in a frame buffer.
+ 608:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *  The Pixel is addressed by a packed number.
+ 609:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *
+ 610:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** * Parameters:
+ 611:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *  pixelNumber: is the packed number that points to the pixels location in the
+ 612:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *               frame buffer. The lowest three bits in the LSB low nibble are
+ 613:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *               the bit position in the byte, the LSB upper nibble (4 bits) is
+ 614:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *               the byte address in the multiplex Row and the MSB low nibble
+ 615:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *               (4 bits) is the multiplex Row number.
+ 616:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *  pixelState : 0 for pixel off,1 for pixel on, 2 for pixel invert.
+ 617:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *
+ 618:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** * Return:
+ 619:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *  Status returns the standardized return value for pass or fail on a range
+ 620:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *  check of the byte address and multiplex Row number:
+ 621:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *      CYRET_SUCCESS - Function completed successfully.
+ 622:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *      CYRET_BAD_PARAM - One of the parameters is invalid.
+ 623:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *
+ 624:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** * Global variables:
+ 625:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *  LCD_SegStatic_1_buffer[] - an array is modified by this API. This API sets
+ 626:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *  or clears certain bit in the array defined by the input parameter.
+ 627:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *
+ 628:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** * Reentrant:
+ 629:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *  No.
+ 630:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *
+ 631:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *******************************************************************************/
+ 632:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** uint8 LCD_SegStatic_1_WritePixel(uint16 pixelNumber, uint8 pixelState) 
+ 633:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** {
+ 634:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****     uint16 byteAddr;
+ 635:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****     uint16 bitAddr;
+ 636:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****     uint16 row;
+ 637:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****     uint8 mask;
+ 638:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****     uint8 status;
+ 639:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** 
+ 640:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****     /* Let the User know that he has entered wrong parameter
+ 641:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****     * which is pixel state greater than 2 or unconnected pixel.
+ 642:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****     */
+ 643:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****     if((pixelState > LCD_SegStatic_1_PIXEL_STATE_INVERT) || (pixelNumber == LCD_SegStatic_1_NOT_CON
+ 644:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****     {
+ 645:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         status = CYRET_BAD_PARAM;
+ 646:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****     }
+ 647:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****     else
+ 648:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****     {
+ 649:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         /* Extract bit position in the byte */
+ 650:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         bitAddr = (pixelNumber & LCD_SegStatic_1_BIT_MASK);
+ 651:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** 
+ 652:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         /* Extract byte position in the Row */
+ 653:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         byteAddr = (pixelNumber & LCD_SegStatic_1_PORT_MASK) >> LCD_SegStatic_1_PORT_SHIFT;
+ 654:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** 
+ 655:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         /* Extract Row position */
+ 656:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         row = (pixelNumber & LCD_SegStatic_1_ROW_MASK) >> LCD_SegStatic_1_ROW_SHIFT;
+ 657:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** 
+ 658:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         if(pixelState == LCD_SegStatic_1_PIXEL_STATE_INVERT)
+ 659:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         {
+ARM GAS  C:\Users\addis\AppData\Local\Temp\ccUS9kEI.s 			page 20
+
+
+ 660:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****             /* Invert actual pixel state */
+ 661:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****             pixelState = ~(LCD_SegStatic_1_ReadPixel(pixelNumber));
+ 662:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         }
+ 663:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** 
+ 664:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         mask = ~(uint8) (((uint8) LCD_SegStatic_1_PIXEL_STATE_ON) << bitAddr);
+ 665:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** 
+ 666:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         /* Set pixel in first frame buffer line */
+ 667:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         LCD_SegStatic_1_buffer[(row * LCD_SegStatic_1_ROW_BYTE_LENGTH) + byteAddr] =
+ 668:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****             (LCD_SegStatic_1_buffer[(row * LCD_SegStatic_1_ROW_BYTE_LENGTH) + byteAddr] & mask) |
+ 669:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****             ((uint8) (((uint8) pixelState) << bitAddr));
+ 670:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** 
+ 671:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         /* Invert pixel state */
+ 672:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         pixelState ^= LCD_SegStatic_1_PIXEL_STATE_ON;
+ 673:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** 
+ 674:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         LCD_SegStatic_1_buffer[((row + 1u) * LCD_SegStatic_1_ROW_BYTE_LENGTH) + byteAddr] =
+ 675:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****             (LCD_SegStatic_1_buffer[((row + 1u) * LCD_SegStatic_1_ROW_BYTE_LENGTH) + byteAddr] & ma
+ 676:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****             ((uint8) (((uint8) pixelState) << bitAddr));
+ 677:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** 
+ 678:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         status = CYRET_SUCCESS;
+ 679:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****     }
+ 680:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** 
+ 681:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****     return(status);
+ 682:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** }
+ 683:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** 
+ 684:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** 
+ 685:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** /*******************************************************************************
+ 686:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** * Function Name: LCD_SegStatic_1_ReadPixel
+ 687:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** ********************************************************************************
+ 688:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *
+ 689:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** * Summary:
+ 690:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *  This function reads a pixels state in a large frame buffer. The Pixel is
+ 691:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *  addressed by a packed number.
+ 692:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *
+ 693:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** * Parameters:
+ 694:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *  pixelNumber: is the packed number that points to the pixels location in the
+ 695:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *               frame buffer. The lowest three bits in the LSB low nibble are
+ 696:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *               the bit position in the byte, the LSB upper nibble (4 bits) is
+ 697:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *               the byte address in the multiplex Row and the MSB low nibble
+ 698:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *               (4 bits) is the multiplex Row number.
+ 699:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *
+ 700:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** * Return:
+ 701:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *  Pixel State:
+ 702:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *      0x00 (LCD_SegStatic_1_PIXEL_STATE_OFF) - for pixel off.
+ 703:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *      0x01 (LCD_SegStatic_1_PIXEL_STATE_ON) - for pixel on.
+ 704:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *      0xFF (LCD_SegStatic_1_PIXEL_UNKNOWN_STATE) - indicates that pixel
+ 705:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *                                                    isn't assigned.
+ 706:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *
+ 707:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** * Global variables:
+ 708:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *  LCD_SegStatic_1_buffer[] - holds the state of every pixel of the LCD glass
+ 709:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *  which can be read by this function.
+ 710:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *
+ 711:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *******************************************************************************/
+ 712:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** uint8 LCD_SegStatic_1_ReadPixel(uint16 pixelNumber) 
+ 713:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** {
+ 407              		.loc 1 713 0
+ 408              		.cfi_startproc
+ 409              		@ args = 0, pretend = 0, frame = 0
+ARM GAS  C:\Users\addis\AppData\Local\Temp\ccUS9kEI.s 			page 21
+
+
+ 410              		@ frame_needed = 0, uses_anonymous_args = 0
+ 411              		@ link register save eliminated.
+ 412              	.LVL42:
+ 714:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****     uint16 byteAddr;
+ 715:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****     uint16 bitAddr;
+ 716:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****     uint16 row;
+ 717:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****     uint8 pixelState;
+ 718:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** 
+ 719:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****     if(pixelNumber != LCD_SegStatic_1_NOT_CON)
+ 413              		.loc 1 719 0
+ 414 0000 FF28     		cmp	r0, #255
+ 415 0002 09D0     		beq	.L43
+ 720:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****     {
+ 721:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         /* Extract all required information from pixelNumber to address required pixel */
+ 722:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         bitAddr = (pixelNumber & LCD_SegStatic_1_BIT_MASK);
+ 416              		.loc 1 722 0
+ 417 0004 00F00703 		and	r3, r0, #7
+ 418              	.LVL43:
+ 723:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         byteAddr = (pixelNumber & LCD_SegStatic_1_PORT_MASK) >> LCD_SegStatic_1_PORT_SHIFT;
+ 724:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         row = (pixelNumber & LCD_SegStatic_1_ROW_MASK) >> LCD_SegStatic_1_ROW_SHIFT;
+ 725:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** 
+ 726:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         pixelState = ((LCD_SegStatic_1_buffer[(row * LCD_SegStatic_1_ROW_BYTE_LENGTH) + byteAddr] >
+ 419              		.loc 1 726 0
+ 420 0008 C0F30710 		ubfx	r0, r0, #4, #8
+ 421              	.LVL44:
+ 422 000c 034A     		ldr	r2, .L44
+ 423 000e 105C     		ldrb	r0, [r2, r0]	@ zero_extendqisi2
+ 424 0010 1841     		asrs	r0, r0, r3
+ 425 0012 00F00100 		and	r0, r0, #1
+ 426              	.LVL45:
+ 427 0016 7047     		bx	lr
+ 428              	.LVL46:
+ 429              	.L43:
+ 727:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****                        LCD_SegStatic_1_PIXEL_STATE_ON);
+ 728:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****     }
+ 729:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****     else
+ 730:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****     {
+ 731:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         /* Indicate that the pixel number is invalid */
+ 732:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         pixelState = LCD_SegStatic_1_PIXEL_UNKNOWN_STATE;
+ 430              		.loc 1 732 0
+ 431 0018 FF20     		movs	r0, #255
+ 432              	.LVL47:
+ 733:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****     }
+ 734:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** 
+ 735:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****     return (pixelState);
+ 736:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** }
+ 433              		.loc 1 736 0
+ 434 001a 7047     		bx	lr
+ 435              	.L45:
+ 436              		.align	2
+ 437              	.L44:
+ 438 001c 00000000 		.word	.LANCHOR0
+ 439              		.cfi_endproc
+ 440              	.LFE10:
+ 441              		.size	LCD_SegStatic_1_ReadPixel, .-LCD_SegStatic_1_ReadPixel
+ 442              		.section	.text.LCD_SegStatic_1_WritePixel,"ax",%progbits
+ 443              		.align	2
+ARM GAS  C:\Users\addis\AppData\Local\Temp\ccUS9kEI.s 			page 22
+
+
+ 444              		.global	LCD_SegStatic_1_WritePixel
+ 445              		.thumb
+ 446              		.thumb_func
+ 447              		.type	LCD_SegStatic_1_WritePixel, %function
+ 448              	LCD_SegStatic_1_WritePixel:
+ 449              	.LFB9:
+ 633:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****     uint16 byteAddr;
+ 450              		.loc 1 633 0
+ 451              		.cfi_startproc
+ 452              		@ args = 0, pretend = 0, frame = 0
+ 453              		@ frame_needed = 0, uses_anonymous_args = 0
+ 454              	.LVL48:
+ 643:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****     {
+ 455              		.loc 1 643 0
+ 456 0000 0229     		cmp	r1, #2
+ 457 0002 2BD8     		bhi	.L49
+ 643:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****     {
+ 458              		.loc 1 643 0 is_stmt 0 discriminator 1
+ 459 0004 FF28     		cmp	r0, #255
+ 460 0006 2BD0     		beq	.L50
+ 633:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****     uint16 byteAddr;
+ 461              		.loc 1 633 0 is_stmt 1
+ 462 0008 F8B5     		push	{r3, r4, r5, r6, r7, lr}
+ 463              		.cfi_def_cfa_offset 24
+ 464              		.cfi_offset 3, -24
+ 465              		.cfi_offset 4, -20
+ 466              		.cfi_offset 5, -16
+ 467              		.cfi_offset 6, -12
+ 468              		.cfi_offset 7, -8
+ 469              		.cfi_offset 14, -4
+ 650:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** 
+ 470              		.loc 1 650 0
+ 471 000a 00F00705 		and	r5, r0, #7
+ 472              	.LVL49:
+ 653:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** 
+ 473              		.loc 1 653 0
+ 474 000e C0F30314 		ubfx	r4, r0, #4, #4
+ 475              	.LVL50:
+ 656:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** 
+ 476              		.loc 1 656 0
+ 477 0012 C0F30326 		ubfx	r6, r0, #8, #4
+ 478              	.LVL51:
+ 658:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         {
+ 479              		.loc 1 658 0
+ 480 0016 0229     		cmp	r1, #2
+ 481 0018 03D1     		bne	.L48
+ 661:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         }
+ 482              		.loc 1 661 0
+ 483 001a FFF7FEFF 		bl	LCD_SegStatic_1_ReadPixel
+ 484              	.LVL52:
+ 485 001e C043     		mvns	r0, r0
+ 486 0020 C1B2     		uxtb	r1, r0
+ 487              	.LVL53:
+ 488              	.L48:
+ 664:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** 
+ 489              		.loc 1 664 0
+ 490 0022 0123     		movs	r3, #1
+ARM GAS  C:\Users\addis\AppData\Local\Temp\ccUS9kEI.s 			page 23
+
+
+ 491 0024 AB40     		lsls	r3, r3, r5
+ 492 0026 DB43     		mvns	r3, r3
+ 493 0028 03F0FF03 		and	r3, r3, #255
+ 494              	.LVL54:
+ 668:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****             ((uint8) (((uint8) pixelState) << bitAddr));
+ 495              		.loc 1 668 0
+ 496 002c B2B2     		uxth	r2, r6
+ 497 002e A0B2     		uxth	r0, r4
+ 498 0030 00EB0217 		add	r7, r0, r2, lsl #4
+ 499 0034 0B4E     		ldr	r6, .L53
+ 500              	.LVL55:
+ 501 0036 F45D     		ldrb	r4, [r6, r7]	@ zero_extendqisi2
+ 502              	.LVL56:
+ 669:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** 
+ 503              		.loc 1 669 0
+ 504 0038 01FA05FE 		lsl	lr, r1, r5
+ 667:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****             (LCD_SegStatic_1_buffer[(row * LCD_SegStatic_1_ROW_BYTE_LENGTH) + byteAddr] & mask) |
+ 505              		.loc 1 667 0
+ 506 003c 1C40     		ands	r4, r4, r3
+ 507 003e 4EEA0404 		orr	r4, lr, r4
+ 508 0042 F455     		strb	r4, [r6, r7]
+ 672:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** 
+ 509              		.loc 1 672 0
+ 510 0044 81F00101 		eor	r1, r1, #1
+ 511              	.LVL57:
+ 675:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****             ((uint8) (((uint8) pixelState) << bitAddr));
+ 512              		.loc 1 675 0
+ 513 0048 0132     		adds	r2, r2, #1
+ 514              	.LVL58:
+ 515 004a 00EB0212 		add	r2, r0, r2, lsl #4
+ 516              	.LVL59:
+ 517 004e B05C     		ldrb	r0, [r6, r2]	@ zero_extendqisi2
+ 518              	.LVL60:
+ 676:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** 
+ 519              		.loc 1 676 0
+ 520 0050 A940     		lsls	r1, r1, r5
+ 521              	.LVL61:
+ 674:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****             (LCD_SegStatic_1_buffer[((row + 1u) * LCD_SegStatic_1_ROW_BYTE_LENGTH) + byteAddr] & ma
+ 522              		.loc 1 674 0
+ 523 0052 0340     		ands	r3, r3, r0
+ 524              	.LVL62:
+ 525 0054 1943     		orrs	r1, r1, r3
+ 526 0056 B154     		strb	r1, [r6, r2]
+ 527              	.LVL63:
+ 678:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****     }
+ 528              		.loc 1 678 0
+ 529 0058 0020     		movs	r0, #0
+ 530 005a F8BD     		pop	{r3, r4, r5, r6, r7, pc}
+ 531              	.LVL64:
+ 532              	.L49:
+ 533              		.cfi_def_cfa_offset 0
+ 534              		.cfi_restore 3
+ 535              		.cfi_restore 4
+ 536              		.cfi_restore 5
+ 537              		.cfi_restore 6
+ 538              		.cfi_restore 7
+ 539              		.cfi_restore 14
+ARM GAS  C:\Users\addis\AppData\Local\Temp\ccUS9kEI.s 			page 24
+
+
+ 645:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****     }
+ 540              		.loc 1 645 0
+ 541 005c 0120     		movs	r0, #1
+ 542              	.LVL65:
+ 543 005e 7047     		bx	lr
+ 544              	.LVL66:
+ 545              	.L50:
+ 546 0060 0120     		movs	r0, #1
+ 547              	.LVL67:
+ 548 0062 7047     		bx	lr
+ 549              	.L54:
+ 550              		.align	2
+ 551              	.L53:
+ 552 0064 00000000 		.word	.LANCHOR0
+ 553              		.cfi_endproc
+ 554              	.LFE9:
+ 555              		.size	LCD_SegStatic_1_WritePixel, .-LCD_SegStatic_1_WritePixel
+ 556              		.section	.text.LCD_SegStatic_1_ClearDisplay,"ax",%progbits
+ 557              		.align	2
+ 558              		.global	LCD_SegStatic_1_ClearDisplay
+ 559              		.thumb
+ 560              		.thumb_func
+ 561              		.type	LCD_SegStatic_1_ClearDisplay, %function
+ 562              	LCD_SegStatic_1_ClearDisplay:
+ 563              	.LFB8:
+ 579:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****     uint16 i;
+ 564              		.loc 1 579 0
+ 565              		.cfi_startproc
+ 566              		@ args = 0, pretend = 0, frame = 0
+ 567              		@ frame_needed = 0, uses_anonymous_args = 0
+ 568 0000 08B5     		push	{r3, lr}
+ 569              		.cfi_def_cfa_offset 8
+ 570              		.cfi_offset 3, -8
+ 571              		.cfi_offset 14, -4
+ 572              	.LVL68:
+ 583:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****     {
+ 573              		.loc 1 583 0
+ 574 0002 0023     		movs	r3, #0
+ 575 0004 0AE0     		b	.L56
+ 576              	.LVL69:
+ 577              	.L59:
+ 585:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         {
+ 578              		.loc 1 585 0
+ 579 0006 0F2B     		cmp	r3, #15
+ 580 0008 03D8     		bhi	.L57
+ 588:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         }
+ 581              		.loc 1 588 0
+ 582 000a 0021     		movs	r1, #0
+ 583 000c 074A     		ldr	r2, .L61
+ 584 000e D154     		strb	r1, [r2, r3]
+ 585 0010 02E0     		b	.L58
+ 586              	.L57:
+ 593:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         }
+ 587              		.loc 1 593 0
+ 588 0012 FF21     		movs	r1, #255
+ 589 0014 054A     		ldr	r2, .L61
+ 590 0016 D154     		strb	r1, [r2, r3]
+ARM GAS  C:\Users\addis\AppData\Local\Temp\ccUS9kEI.s 			page 25
+
+
+ 591              	.L58:
+ 583:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****     {
+ 592              		.loc 1 583 0 discriminator 2
+ 593 0018 0133     		adds	r3, r3, #1
+ 594              	.LVL70:
+ 595 001a 9BB2     		uxth	r3, r3
+ 596              	.LVL71:
+ 597              	.L56:
+ 583:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****     {
+ 598              		.loc 1 583 0 is_stmt 0 discriminator 1
+ 599 001c 1F2B     		cmp	r3, #31
+ 600 001e F2D9     		bls	.L59
+ 598:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** }
+ 601              		.loc 1 598 0 is_stmt 1
+ 602 0020 0320     		movs	r0, #3
+ 603 0022 0021     		movs	r1, #0
+ 604 0024 FFF7FEFF 		bl	LCD_SegStatic_1_WritePixel
+ 605              	.LVL72:
+ 606 0028 08BD     		pop	{r3, pc}
+ 607              	.L62:
+ 608 002a 00BF     		.align	2
+ 609              	.L61:
+ 610 002c 00000000 		.word	.LANCHOR0
+ 611              		.cfi_endproc
+ 612              	.LFE8:
+ 613              		.size	LCD_SegStatic_1_ClearDisplay, .-LCD_SegStatic_1_ClearDisplay
+ 614              		.section	.text.LCD_SegStatic_1_Init,"ax",%progbits
+ 615              		.align	2
+ 616              		.global	LCD_SegStatic_1_Init
+ 617              		.thumb
+ 618              		.thumb_func
+ 619              		.type	LCD_SegStatic_1_Init, %function
+ 620              	LCD_SegStatic_1_Init:
+ 621              	.LFB0:
+ 200:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****     LCD_SegStatic_1_ClearDisplay();
+ 622              		.loc 1 200 0
+ 623              		.cfi_startproc
+ 624              		@ args = 0, pretend = 0, frame = 0
+ 625              		@ frame_needed = 0, uses_anonymous_args = 0
+ 626 0000 08B5     		push	{r3, lr}
+ 627              		.cfi_def_cfa_offset 8
+ 628              		.cfi_offset 3, -8
+ 629              		.cfi_offset 14, -4
+ 201:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** 
+ 630              		.loc 1 201 0
+ 631 0002 FFF7FEFF 		bl	LCD_SegStatic_1_ClearDisplay
+ 632              	.LVL73:
+ 204:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** 
+ 633              		.loc 1 204 0
+ 634 0006 0122     		movs	r2, #1
+ 635 0008 054B     		ldr	r3, .L65
+ 636 000a 1A60     		str	r2, [r3]
+ 207:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** 
+ 637              		.loc 1 207 0
+ 638 000c 0020     		movs	r0, #0
+ 639 000e 0549     		ldr	r1, .L65+4
+ 640 0010 FFF7FEFF 		bl	CyIntSetVector
+ARM GAS  C:\Users\addis\AppData\Local\Temp\ccUS9kEI.s 			page 26
+
+
+ 641              	.LVL74:
+ 210:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** }
+ 642              		.loc 1 210 0
+ 643 0014 0020     		movs	r0, #0
+ 644 0016 0721     		movs	r1, #7
+ 645 0018 FFF7FEFF 		bl	CyIntSetPriority
+ 646              	.LVL75:
+ 647 001c 08BD     		pop	{r3, pc}
+ 648              	.L66:
+ 649 001e 00BF     		.align	2
+ 650              	.L65:
+ 651 0020 80E100E0 		.word	-536813184
+ 652 0024 00000000 		.word	LCD_SegStatic_1_ISR
+ 653              		.cfi_endproc
+ 654              	.LFE0:
+ 655              		.size	LCD_SegStatic_1_Init, .-LCD_SegStatic_1_Init
+ 656              		.section	.text.LCD_SegStatic_1_Start,"ax",%progbits
+ 657              		.align	2
+ 658              		.global	LCD_SegStatic_1_Start
+ 659              		.thumb
+ 660              		.thumb_func
+ 661              		.type	LCD_SegStatic_1_Start, %function
+ 662              	LCD_SegStatic_1_Start:
+ 663              	.LFB4:
+ 463:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****     uint8 status;
+ 664              		.loc 1 463 0
+ 665              		.cfi_startproc
+ 666              		@ args = 0, pretend = 0, frame = 0
+ 667              		@ frame_needed = 0, uses_anonymous_args = 0
+ 668 0000 08B5     		push	{r3, lr}
+ 669              		.cfi_def_cfa_offset 8
+ 670              		.cfi_offset 3, -8
+ 671              		.cfi_offset 14, -4
+ 467:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****     {
+ 672              		.loc 1 467 0
+ 673 0002 064B     		ldr	r3, .L70
+ 674 0004 93F82730 		ldrb	r3, [r3, #39]	@ zero_extendqisi2
+ 675 0008 2BB9     		cbnz	r3, .L68
+ 469:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         LCD_SegStatic_1_Init();
+ 676              		.loc 1 469 0
+ 677 000a 0122     		movs	r2, #1
+ 678 000c 034B     		ldr	r3, .L70
+ 679 000e 83F82720 		strb	r2, [r3, #39]
+ 470:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****     }
+ 680              		.loc 1 470 0
+ 681 0012 FFF7FEFF 		bl	LCD_SegStatic_1_Init
+ 682              	.LVL76:
+ 683              	.L68:
+ 473:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** 
+ 684              		.loc 1 473 0
+ 685 0016 FFF7FEFF 		bl	LCD_SegStatic_1_Enable
+ 686              	.LVL77:
+ 476:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** 
+ 687              		.loc 1 476 0
+ 688 001a 08BD     		pop	{r3, pc}
+ 689              	.L71:
+ 690              		.align	2
+ARM GAS  C:\Users\addis\AppData\Local\Temp\ccUS9kEI.s 			page 27
+
+
+ 691              	.L70:
+ 692 001c 00000000 		.word	.LANCHOR0
+ 693              		.cfi_endproc
+ 694              	.LFE4:
+ 695              		.size	LCD_SegStatic_1_Start, .-LCD_SegStatic_1_Start
+ 696              		.section	.text.LCD_SegStatic_1_WriteInvertState,"ax",%progbits
+ 697              		.align	2
+ 698              		.global	LCD_SegStatic_1_WriteInvertState
+ 699              		.thumb
+ 700              		.thumb_func
+ 701              		.type	LCD_SegStatic_1_WriteInvertState, %function
+ 702              	LCD_SegStatic_1_WriteInvertState:
+ 703              	.LFB11:
+ 737:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** 
+ 738:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** 
+ 739:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** /*******************************************************************************
+ 740:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** * Function Name: LCD_SegStatic_1_WriteInvertState
+ 741:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** ********************************************************************************
+ 742:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *
+ 743:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** * Summary:
+ 744:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *  This function inverts the display based on invertState.
+ 745:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *
+ 746:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** * Parameters:
+ 747:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *  invertState: the values can be - 0 (#LCD_SegStatic_1_NORMAL_STATE) for
+ 748:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *               normal noninverted display and 1
+ 749:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *                (#LCD_SegStatic_1_INVERTED_STATE) for inverted display.
+ 750:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *
+ 751:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** * Return:
+ 752:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *  One of standard status for PSoC3 Component:
+ 753:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *      CYRET_SUCCESS - function completed successfully.
+ 754:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *      CYRET_BAD_PARAM - evaluation of invertState parameter is failed.
+ 755:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *
+ 756:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *******************************************************************************/
+ 757:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** uint8 LCD_SegStatic_1_WriteInvertState(uint8 invertState) 
+ 758:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** {
+ 704              		.loc 1 758 0
+ 705              		.cfi_startproc
+ 706              		@ args = 0, pretend = 0, frame = 0
+ 707              		@ frame_needed = 0, uses_anonymous_args = 0
+ 708              	.LVL78:
+ 759:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****     uint8 status;
+ 760:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** 
+ 761:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****     /* Check if inverstState parameter is valid */
+ 762:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****     if(invertState <= LCD_SegStatic_1_INVERTED_STATE)
+ 709              		.loc 1 762 0
+ 710 0000 0128     		cmp	r0, #1
+ 711 0002 0DD8     		bhi	.L75
+ 758:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****     uint8 status;
+ 712              		.loc 1 758 0
+ 713 0004 08B5     		push	{r3, lr}
+ 714              		.cfi_def_cfa_offset 8
+ 715              		.cfi_offset 3, -8
+ 716              		.cfi_offset 14, -4
+ 763:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****     {
+ 764:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         /* If the staate is "Invert" then then set pixel - com0 to "1", otherwise
+ 765:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         * set it to "0".
+ 766:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         */
+ARM GAS  C:\Users\addis\AppData\Local\Temp\ccUS9kEI.s 			page 28
+
+
+ 767:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         if(LCD_SegStatic_1_INVERTED_STATE == invertState)
+ 717              		.loc 1 767 0
+ 718 0006 05D1     		bne	.L74
+ 768:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         {
+ 769:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****             LCD_SegStatic_1_WRITE_PIXEL(LCD_SegStatic_1_commons[0u], LCD_SegStatic_1_PIXEL_STATE_ON
+ 719              		.loc 1 769 0
+ 720 0008 0320     		movs	r0, #3
+ 721              	.LVL79:
+ 722 000a 0121     		movs	r1, #1
+ 723 000c FFF7FEFF 		bl	LCD_SegStatic_1_WritePixel
+ 724              	.LVL80:
+ 770:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         }
+ 771:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         else
+ 772:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         {
+ 773:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****             LCD_SegStatic_1_WRITE_PIXEL(LCD_SegStatic_1_commons[0u], LCD_SegStatic_1_PIXEL_STATE_OF
+ 774:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         }
+ 775:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** 
+ 776:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         status = CYRET_SUCCESS;
+ 725              		.loc 1 776 0
+ 726 0010 0020     		movs	r0, #0
+ 727 0012 08BD     		pop	{r3, pc}
+ 728              	.LVL81:
+ 729              	.L74:
+ 773:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         }
+ 730              		.loc 1 773 0
+ 731 0014 0320     		movs	r0, #3
+ 732              	.LVL82:
+ 733 0016 0021     		movs	r1, #0
+ 734 0018 FFF7FEFF 		bl	LCD_SegStatic_1_WritePixel
+ 735              	.LVL83:
+ 736              		.loc 1 776 0
+ 737 001c 0020     		movs	r0, #0
+ 738 001e 08BD     		pop	{r3, pc}
+ 739              	.LVL84:
+ 740              	.L75:
+ 741              		.cfi_def_cfa_offset 0
+ 742              		.cfi_restore 3
+ 743              		.cfi_restore 14
+ 777:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****     }
+ 778:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****     else
+ 779:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****     {
+ 780:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         status = CYRET_BAD_PARAM;
+ 744              		.loc 1 780 0
+ 745 0020 0120     		movs	r0, #1
+ 746              	.LVL85:
+ 747 0022 7047     		bx	lr
+ 748              		.cfi_endproc
+ 749              	.LFE11:
+ 750              		.size	LCD_SegStatic_1_WriteInvertState, .-LCD_SegStatic_1_WriteInvertState
+ 751              		.section	.text.LCD_SegStatic_1_ReadInvertState,"ax",%progbits
+ 752              		.align	2
+ 753              		.global	LCD_SegStatic_1_ReadInvertState
+ 754              		.thumb
+ 755              		.thumb_func
+ 756              		.type	LCD_SegStatic_1_ReadInvertState, %function
+ 757              	LCD_SegStatic_1_ReadInvertState:
+ 758              	.LFB12:
+ARM GAS  C:\Users\addis\AppData\Local\Temp\ccUS9kEI.s 			page 29
+
+
+ 781:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****     }
+ 782:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** 
+ 783:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****     return(status);
+ 784:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** }
+ 785:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** 
+ 786:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** 
+ 787:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** /*******************************************************************************
+ 788:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** * Function Name: LCD_SegStatic_1_ReadInvertState
+ 789:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** ********************************************************************************
+ 790:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *
+ 791:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** * Summary:
+ 792:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *  This function returns the current state of the display, possible states are
+ 793:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *  normal and inverted.
+ 794:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *
+ 795:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** * Parameters:
+ 796:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *  None.
+ 797:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *
+ 798:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** * Return:
+ 799:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *  LCD_SegStatic_1_NORMAL_STATE (0) - for normal non-inverted display.
+ 800:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *  LCD_SegStatic_1_INVERTED_STATE (1) -  for inverted display.
+ 801:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *
+ 802:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** *******************************************************************************/
+ 803:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** uint8 LCD_SegStatic_1_ReadInvertState(void) 
+ 804:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** {
+ 759              		.loc 1 804 0
+ 760              		.cfi_startproc
+ 761              		@ args = 0, pretend = 0, frame = 0
+ 762              		@ frame_needed = 0, uses_anonymous_args = 0
+ 763 0000 08B5     		push	{r3, lr}
+ 764              		.cfi_def_cfa_offset 8
+ 765              		.cfi_offset 3, -8
+ 766              		.cfi_offset 14, -4
+ 767              	.LVL86:
+ 805:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****     uint8 state = LCD_SegStatic_1_INVERTED_STATE;
+ 806:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** 
+ 807:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****     /* Get only invert bit of Driver Control Register */
+ 808:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****     if(LCD_SegStatic_1_PIXEL_STATE_OFF == LCD_SegStatic_1_ReadPixel(LCD_SegStatic_1_commons[0u]))
+ 768              		.loc 1 808 0
+ 769 0002 0320     		movs	r0, #3
+ 770 0004 FFF7FEFF 		bl	LCD_SegStatic_1_ReadPixel
+ 771              	.LVL87:
+ 772 0008 08B1     		cbz	r0, .L80
+ 805:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****     uint8 state = LCD_SegStatic_1_INVERTED_STATE;
+ 773              		.loc 1 805 0
+ 774 000a 0120     		movs	r0, #1
+ 775 000c 08BD     		pop	{r3, pc}
+ 776              	.L80:
+ 809:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****     {
+ 810:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****         state = LCD_SegStatic_1_NORMAL_STATE;
+ 777              		.loc 1 810 0
+ 778 000e 0020     		movs	r0, #0
+ 779              	.LVL88:
+ 811:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****     }
+ 812:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** 
+ 813:.\Generated_Source\PSoC5/LCD_SegStatic_1.c ****     return(state);
+ 814:.\Generated_Source\PSoC5/LCD_SegStatic_1.c **** }
+ 780              		.loc 1 814 0
+ARM GAS  C:\Users\addis\AppData\Local\Temp\ccUS9kEI.s 			page 30
+
+
+ 781 0010 08BD     		pop	{r3, pc}
+ 782              		.cfi_endproc
+ 783              	.LFE12:
+ 784              		.size	LCD_SegStatic_1_ReadInvertState, .-LCD_SegStatic_1_ReadInvertState
+ 785              		.global	LCD_SegStatic_1_enableState
+ 786              		.global	LCD_SegStatic_1_initVar
+ 787 0012 00BF     		.section	.rodata
+ 788              		.align	2
+ 789              		.set	.LANCHOR1,. + 0
+ 790              		.type	LCD_SegStatic_1_StSegLcdPort_DMA_TD_PROTO_BLOCK.5019, %object
+ 791              		.size	LCD_SegStatic_1_StSegLcdPort_DMA_TD_PROTO_BLOCK.5019, 2
+ 792              	LCD_SegStatic_1_StSegLcdPort_DMA_TD_PROTO_BLOCK.5019:
+ 793 0000 00       		.byte	0
+ 794 0001 01       		.byte	1
+ 795 0002 0000     		.bss
+ 796              		.align	2
+ 797              		.set	.LANCHOR0,. + 0
+ 798              		.type	LCD_SegStatic_1_buffer, %object
+ 799              		.size	LCD_SegStatic_1_buffer, 32
+ 800              	LCD_SegStatic_1_buffer:
+ 801 0000 00000000 		.space	32
+ 801      00000000 
+ 801      00000000 
+ 801      00000000 
+ 801      00000000 
+ 802              		.type	LCD_SegStatic_1_lcdChannel, %object
+ 803              		.size	LCD_SegStatic_1_lcdChannel, 1
+ 804              	LCD_SegStatic_1_lcdChannel:
+ 805 0020 00       		.space	1
+ 806 0021 000000   		.space	3
+ 807              		.type	LCD_SegStatic_1_lcdTd, %object
+ 808              		.size	LCD_SegStatic_1_lcdTd, 2
+ 809              	LCD_SegStatic_1_lcdTd:
+ 810 0024 0000     		.space	2
+ 811              		.type	LCD_SegStatic_1_enableState, %object
+ 812              		.size	LCD_SegStatic_1_enableState, 1
+ 813              	LCD_SegStatic_1_enableState:
+ 814 0026 00       		.space	1
+ 815              		.type	LCD_SegStatic_1_initVar, %object
+ 816              		.size	LCD_SegStatic_1_initVar, 1
+ 817              	LCD_SegStatic_1_initVar:
+ 818 0027 00       		.space	1
+ 819              		.text
+ 820              	.Letext0:
+ 821              		.file 2 ".\\Generated_Source\\PSoC5\\cytypes.h"
+ 822              		.file 3 ".\\Generated_Source\\PSoC5\\LCD_SegStatic_1.h"
+ 823              		.file 4 "Generated_Source\\PSoC5/LCD_SegStatic_1_Lcd_Dma_dma.h"
+ 824              		.file 5 "Generated_Source\\PSoC5/CYDMAC.H"
+ 825              		.file 6 "Generated_Source\\PSoC5/LCD_SegStatic_1_InClock.h"
+ 826              		.file 7 "Generated_Source\\PSoC5/CyLib.h"
+ 827              		.section	.debug_info,"",%progbits
+ 828              	.Ldebug_info0:
+ 829 0000 56070000 		.4byte	0x756
+ 830 0004 0400     		.2byte	0x4
+ 831 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 832 000a 04       		.byte	0x4
+ 833 000b 01       		.uleb128 0x1
+ARM GAS  C:\Users\addis\AppData\Local\Temp\ccUS9kEI.s 			page 31
+
+
+ 834 000c A9040000 		.4byte	.LASF61
+ 835 0010 01       		.byte	0x1
+ 836 0011 CF030000 		.4byte	.LASF62
+ 837 0015 07000000 		.4byte	.LASF63
+ 838 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 839 001d 00000000 		.4byte	0
+ 840 0021 00000000 		.4byte	.Ldebug_line0
+ 841 0025 02       		.uleb128 0x2
+ 842 0026 01       		.byte	0x1
+ 843 0027 06       		.byte	0x6
+ 844 0028 0F010000 		.4byte	.LASF0
+ 845 002c 02       		.uleb128 0x2
+ 846 002d 01       		.byte	0x1
+ 847 002e 08       		.byte	0x8
+ 848 002f D0020000 		.4byte	.LASF1
+ 849 0033 02       		.uleb128 0x2
+ 850 0034 02       		.byte	0x2
+ 851 0035 05       		.byte	0x5
+ 852 0036 FB020000 		.4byte	.LASF2
+ 853 003a 02       		.uleb128 0x2
+ 854 003b 02       		.byte	0x2
+ 855 003c 07       		.byte	0x7
+ 856 003d EA010000 		.4byte	.LASF3
+ 857 0041 02       		.uleb128 0x2
+ 858 0042 04       		.byte	0x4
+ 859 0043 05       		.byte	0x5
+ 860 0044 46010000 		.4byte	.LASF4
+ 861 0048 02       		.uleb128 0x2
+ 862 0049 04       		.byte	0x4
+ 863 004a 07       		.byte	0x7
+ 864 004b B8010000 		.4byte	.LASF5
+ 865 004f 02       		.uleb128 0x2
+ 866 0050 08       		.byte	0x8
+ 867 0051 05       		.byte	0x5
+ 868 0052 01010000 		.4byte	.LASF6
+ 869 0056 02       		.uleb128 0x2
+ 870 0057 08       		.byte	0x8
+ 871 0058 07       		.byte	0x7
+ 872 0059 A6000000 		.4byte	.LASF7
+ 873 005d 03       		.uleb128 0x3
+ 874 005e 04       		.byte	0x4
+ 875 005f 05       		.byte	0x5
+ 876 0060 696E7400 		.ascii	"int\000"
+ 877 0064 02       		.uleb128 0x2
+ 878 0065 04       		.byte	0x4
+ 879 0066 07       		.byte	0x7
+ 880 0067 94010000 		.4byte	.LASF8
+ 881 006b 04       		.uleb128 0x4
+ 882 006c 4F010000 		.4byte	.LASF9
+ 883 0070 02       		.byte	0x2
+ 884 0071 3801     		.2byte	0x138
+ 885 0073 2C000000 		.4byte	0x2c
+ 886 0077 04       		.uleb128 0x4
+ 887 0078 00000000 		.4byte	.LASF10
+ 888 007c 02       		.byte	0x2
+ 889 007d 3901     		.2byte	0x139
+ 890 007f 3A000000 		.4byte	0x3a
+ARM GAS  C:\Users\addis\AppData\Local\Temp\ccUS9kEI.s 			page 32
+
+
+ 891 0083 04       		.uleb128 0x4
+ 892 0084 74010000 		.4byte	.LASF11
+ 893 0088 02       		.byte	0x2
+ 894 0089 3A01     		.2byte	0x13a
+ 895 008b 48000000 		.4byte	0x48
+ 896 008f 02       		.uleb128 0x2
+ 897 0090 04       		.byte	0x4
+ 898 0091 04       		.byte	0x4
+ 899 0092 AC020000 		.4byte	.LASF12
+ 900 0096 02       		.uleb128 0x2
+ 901 0097 08       		.byte	0x8
+ 902 0098 04       		.byte	0x4
+ 903 0099 55010000 		.4byte	.LASF13
+ 904 009d 02       		.uleb128 0x2
+ 905 009e 01       		.byte	0x1
+ 906 009f 08       		.byte	0x8
+ 907 00a0 94030000 		.4byte	.LASF14
+ 908 00a4 04       		.uleb128 0x4
+ 909 00a5 6D050000 		.4byte	.LASF15
+ 910 00a9 02       		.byte	0x2
+ 911 00aa DA01     		.2byte	0x1da
+ 912 00ac 48000000 		.4byte	0x48
+ 913 00b0 04       		.uleb128 0x4
+ 914 00b1 4D020000 		.4byte	.LASF16
+ 915 00b5 02       		.byte	0x2
+ 916 00b6 E401     		.2byte	0x1e4
+ 917 00b8 BC000000 		.4byte	0xbc
+ 918 00bc 05       		.uleb128 0x5
+ 919 00bd 83000000 		.4byte	0x83
+ 920 00c1 04       		.uleb128 0x4
+ 921 00c2 99030000 		.4byte	.LASF17
+ 922 00c6 02       		.byte	0x2
+ 923 00c7 F401     		.2byte	0x1f4
+ 924 00c9 CD000000 		.4byte	0xcd
+ 925 00cd 06       		.uleb128 0x6
+ 926 00ce 04       		.byte	0x4
+ 927 00cf D3000000 		.4byte	0xd3
+ 928 00d3 07       		.uleb128 0x7
+ 929 00d4 08       		.uleb128 0x8
+ 930 00d5 DE000000 		.4byte	.LASF64
+ 931 00d9 02       		.byte	0x2
+ 932 00da 03       		.byte	0x3
+ 933 00db 32       		.byte	0x32
+ 934 00dc F9000000 		.4byte	0xf9
+ 935 00e0 09       		.uleb128 0x9
+ 936 00e1 BC030000 		.4byte	.LASF18
+ 937 00e5 03       		.byte	0x3
+ 938 00e6 34       		.byte	0x34
+ 939 00e7 6B000000 		.4byte	0x6b
+ 940 00eb 00       		.byte	0
+ 941 00ec 09       		.uleb128 0x9
+ 942 00ed 8D030000 		.4byte	.LASF19
+ 943 00f1 03       		.byte	0x3
+ 944 00f2 35       		.byte	0x35
+ 945 00f3 6B000000 		.4byte	0x6b
+ 946 00f7 01       		.byte	0x1
+ 947 00f8 00       		.byte	0
+ARM GAS  C:\Users\addis\AppData\Local\Temp\ccUS9kEI.s 			page 33
+
+
+ 948 00f9 02       		.uleb128 0x2
+ 949 00fa 04       		.byte	0x4
+ 950 00fb 07       		.byte	0x7
+ 951 00fc 74020000 		.4byte	.LASF20
+ 952 0100 0A       		.uleb128 0xa
+ 953 0101 4B000000 		.4byte	.LASF65
+ 954 0105 01       		.byte	0x1
+ 955 0106 2001     		.2byte	0x120
+ 956 0108 6B000000 		.4byte	0x6b
+ 957 010c 00000000 		.4byte	.LFB2
+ 958 0110 14010000 		.4byte	.LFE2-.LFB2
+ 959 0114 01       		.uleb128 0x1
+ 960 0115 9C       		.byte	0x9c
+ 961 0116 7A020000 		.4byte	0x27a
+ 962 011a 0B       		.uleb128 0xb
+ 963 011b 87040000 		.4byte	.LASF21
+ 964 011f 01       		.byte	0x1
+ 965 0120 2201     		.2byte	0x122
+ 966 0122 6B000000 		.4byte	0x6b
+ 967 0126 00000000 		.4byte	.LLST0
+ 968 012a 0C       		.uleb128 0xc
+ 969 012b 6900     		.ascii	"i\000"
+ 970 012d 01       		.byte	0x1
+ 971 012e 2301     		.2byte	0x123
+ 972 0130 6B000000 		.4byte	0x6b
+ 973 0134 37000000 		.4byte	.LLST1
+ 974 0138 0C       		.uleb128 0xc
+ 975 0139 6A00     		.ascii	"j\000"
+ 976 013b 01       		.byte	0x1
+ 977 013c 2401     		.2byte	0x124
+ 978 013e 6B000000 		.4byte	0x6b
+ 979 0142 81000000 		.4byte	.LLST2
+ 980 0146 0B       		.uleb128 0xb
+ 981 0147 3D010000 		.4byte	.LASF22
+ 982 014b 01       		.byte	0x1
+ 983 014c 2501     		.2byte	0x125
+ 984 014e 6B000000 		.4byte	0x6b
+ 985 0152 B5000000 		.4byte	.LLST3
+ 986 0156 0D       		.uleb128 0xd
+ 987 0157 7B010000 		.4byte	.LASF23
+ 988 015b 01       		.byte	0x1
+ 989 015c 2601     		.2byte	0x126
+ 990 015e 83000000 		.4byte	0x83
+ 991 0162 06       		.uleb128 0x6
+ 992 0163 03       		.byte	0x3
+ 993 0164 00000000 		.4byte	.LANCHOR0
+ 994 0168 9F       		.byte	0x9f
+ 995 0169 0E       		.uleb128 0xe
+ 996 016a 90000000 		.4byte	.LASF24
+ 997 016e 01       		.byte	0x1
+ 998 016f 2701     		.2byte	0x127
+ 999 0171 83000000 		.4byte	0x83
+ 1000 0175 80500040 		.4byte	0x40005080
+ 1001 0179 0F       		.uleb128 0xf
+ 1002 017a 6A030000 		.4byte	.LASF66
+ 1003 017e 01       		.byte	0x1
+ 1004 017f 2801     		.2byte	0x128
+ARM GAS  C:\Users\addis\AppData\Local\Temp\ccUS9kEI.s 			page 34
+
+
+ 1005 0181 6B000000 		.4byte	0x6b
+ 1006 0185 0D       		.uleb128 0xd
+ 1007 0186 05030000 		.4byte	.LASF25
+ 1008 018a 01       		.byte	0x1
+ 1009 018b 2A01     		.2byte	0x12a
+ 1010 018d 8A020000 		.4byte	0x28a
+ 1011 0191 05       		.uleb128 0x5
+ 1012 0192 03       		.byte	0x3
+ 1013 0193 00000000 		.4byte	LCD_SegStatic_1_StSegLcdPort_DMA_TD_PROTO_BLOCK.5019
+ 1014 0197 10       		.uleb128 0x10
+ 1015 0198 68000000 		.4byte	.LASF26
+ 1016 019c 01       		.byte	0x1
+ 1017 019d 3201     		.2byte	0x132
+ 1018 019f 8F020000 		.4byte	0x28f
+ 1019 01a3 04       		.byte	0x4
+ 1020 01a4 11       		.uleb128 0x11
+ 1021 01a5 14000000 		.4byte	.LVL2
+ 1022 01a9 4C060000 		.4byte	0x64c
+ 1023 01ad CB010000 		.4byte	0x1cb
+ 1024 01b1 12       		.uleb128 0x12
+ 1025 01b2 01       		.uleb128 0x1
+ 1026 01b3 53       		.byte	0x53
+ 1027 01b4 03       		.uleb128 0x3
+ 1028 01b5 0A       		.byte	0xa
+ 1029 01b6 0040     		.2byte	0x4000
+ 1030 01b8 12       		.uleb128 0x12
+ 1031 01b9 01       		.uleb128 0x1
+ 1032 01ba 52       		.byte	0x52
+ 1033 01bb 04       		.uleb128 0x4
+ 1034 01bc 77       		.byte	0x77
+ 1035 01bd 00       		.sleb128 0
+ 1036 01be 40       		.byte	0x40
+ 1037 01bf 25       		.byte	0x25
+ 1038 01c0 12       		.uleb128 0x12
+ 1039 01c1 01       		.uleb128 0x1
+ 1040 01c2 51       		.byte	0x51
+ 1041 01c3 01       		.uleb128 0x1
+ 1042 01c4 30       		.byte	0x30
+ 1043 01c5 12       		.uleb128 0x12
+ 1044 01c6 01       		.uleb128 0x1
+ 1045 01c7 50       		.byte	0x50
+ 1046 01c8 01       		.uleb128 0x1
+ 1047 01c9 30       		.byte	0x30
+ 1048 01ca 00       		.byte	0
+ 1049 01cb 13       		.uleb128 0x13
+ 1050 01cc 30000000 		.4byte	.LVL4
+ 1051 01d0 70060000 		.4byte	0x670
+ 1052 01d4 11       		.uleb128 0x11
+ 1053 01d5 80000000 		.4byte	.LVL14
+ 1054 01d9 7B060000 		.4byte	0x67b
+ 1055 01dd EC010000 		.4byte	0x1ec
+ 1056 01e1 12       		.uleb128 0x12
+ 1057 01e2 01       		.uleb128 0x1
+ 1058 01e3 53       		.byte	0x53
+ 1059 01e4 01       		.uleb128 0x1
+ 1060 01e5 37       		.byte	0x37
+ 1061 01e6 12       		.uleb128 0x12
+ARM GAS  C:\Users\addis\AppData\Local\Temp\ccUS9kEI.s 			page 35
+
+
+ 1062 01e7 01       		.uleb128 0x1
+ 1063 01e8 51       		.byte	0x51
+ 1064 01e9 01       		.uleb128 0x1
+ 1065 01ea 31       		.byte	0x31
+ 1066 01eb 00       		.byte	0
+ 1067 01ec 11       		.uleb128 0x11
+ 1068 01ed 9A000000 		.4byte	.LVL15
+ 1069 01f1 7B060000 		.4byte	0x67b
+ 1070 01f5 04020000 		.4byte	0x204
+ 1071 01f9 12       		.uleb128 0x12
+ 1072 01fa 01       		.uleb128 0x1
+ 1073 01fb 53       		.byte	0x53
+ 1074 01fc 01       		.uleb128 0x1
+ 1075 01fd 37       		.byte	0x37
+ 1076 01fe 12       		.uleb128 0x12
+ 1077 01ff 01       		.uleb128 0x1
+ 1078 0200 51       		.byte	0x51
+ 1079 0201 01       		.uleb128 0x1
+ 1080 0202 31       		.byte	0x31
+ 1081 0203 00       		.byte	0
+ 1082 0204 11       		.uleb128 0x11
+ 1083 0205 B2000000 		.4byte	.LVL16
+ 1084 0209 7B060000 		.4byte	0x67b
+ 1085 020d 1D020000 		.4byte	0x21d
+ 1086 0211 12       		.uleb128 0x12
+ 1087 0212 01       		.uleb128 0x1
+ 1088 0213 53       		.byte	0x53
+ 1089 0214 02       		.uleb128 0x2
+ 1090 0215 08       		.byte	0x8
+ 1091 0216 23       		.byte	0x23
+ 1092 0217 12       		.uleb128 0x12
+ 1093 0218 01       		.uleb128 0x1
+ 1094 0219 51       		.byte	0x51
+ 1095 021a 01       		.uleb128 0x1
+ 1096 021b 31       		.byte	0x31
+ 1097 021c 00       		.byte	0
+ 1098 021d 11       		.uleb128 0x11
+ 1099 021e D2000000 		.4byte	.LVL17
+ 1100 0222 9F060000 		.4byte	0x69f
+ 1101 0226 61020000 		.4byte	0x261
+ 1102 022a 12       		.uleb128 0x12
+ 1103 022b 01       		.uleb128 0x1
+ 1104 022c 52       		.byte	0x52
+ 1105 022d 13       		.uleb128 0x13
+ 1106 022e 74       		.byte	0x74
+ 1107 022f 00       		.sleb128 0
+ 1108 0230 31       		.byte	0x31
+ 1109 0231 24       		.byte	0x24
+ 1110 0232 03       		.byte	0x3
+ 1111 0233 00000000 		.4byte	.LANCHOR1
+ 1112 0237 22       		.byte	0x22
+ 1113 0238 94       		.byte	0x94
+ 1114 0239 01       		.byte	0x1
+ 1115 023a 08       		.byte	0x8
+ 1116 023b FF       		.byte	0xff
+ 1117 023c 1A       		.byte	0x1a
+ 1118 023d 23       		.byte	0x23
+ARM GAS  C:\Users\addis\AppData\Local\Temp\ccUS9kEI.s 			page 36
+
+
+ 1119 023e 80A101   		.uleb128 0x5080
+ 1120 0241 12       		.uleb128 0x12
+ 1121 0242 01       		.uleb128 0x1
+ 1122 0243 51       		.byte	0x51
+ 1123 0244 1B       		.uleb128 0x1b
+ 1124 0245 75       		.byte	0x75
+ 1125 0246 00       		.sleb128 0
+ 1126 0247 34       		.byte	0x34
+ 1127 0248 24       		.byte	0x24
+ 1128 0249 77       		.byte	0x77
+ 1129 024a 00       		.sleb128 0
+ 1130 024b 0A       		.byte	0xa
+ 1131 024c FFFF     		.2byte	0xffff
+ 1132 024e 1A       		.byte	0x1a
+ 1133 024f 22       		.byte	0x22
+ 1134 0250 74       		.byte	0x74
+ 1135 0251 00       		.sleb128 0
+ 1136 0252 31       		.byte	0x31
+ 1137 0253 24       		.byte	0x24
+ 1138 0254 03       		.byte	0x3
+ 1139 0255 00000000 		.4byte	.LANCHOR1
+ 1140 0259 22       		.byte	0x22
+ 1141 025a 94       		.byte	0x94
+ 1142 025b 01       		.byte	0x1
+ 1143 025c 08       		.byte	0x8
+ 1144 025d FF       		.byte	0xff
+ 1145 025e 1A       		.byte	0x1a
+ 1146 025f 22       		.byte	0x22
+ 1147 0260 00       		.byte	0
+ 1148 0261 13       		.uleb128 0x13
+ 1149 0262 F6000000 		.4byte	.LVL24
+ 1150 0266 BE060000 		.4byte	0x6be
+ 1151 026a 14       		.uleb128 0x14
+ 1152 026b 00010000 		.4byte	.LVL25
+ 1153 026f D8060000 		.4byte	0x6d8
+ 1154 0273 12       		.uleb128 0x12
+ 1155 0274 01       		.uleb128 0x1
+ 1156 0275 51       		.byte	0x51
+ 1157 0276 01       		.uleb128 0x1
+ 1158 0277 31       		.byte	0x31
+ 1159 0278 00       		.byte	0
+ 1160 0279 00       		.byte	0
+ 1161 027a 15       		.uleb128 0x15
+ 1162 027b D4000000 		.4byte	0xd4
+ 1163 027f 8A020000 		.4byte	0x28a
+ 1164 0283 16       		.uleb128 0x16
+ 1165 0284 F9000000 		.4byte	0xf9
+ 1166 0288 00       		.byte	0
+ 1167 0289 00       		.byte	0
+ 1168 028a 17       		.uleb128 0x17
+ 1169 028b 7A020000 		.4byte	0x27a
+ 1170 028f 17       		.uleb128 0x17
+ 1171 0290 6B000000 		.4byte	0x6b
+ 1172 0294 18       		.uleb128 0x18
+ 1173 0295 35030000 		.4byte	.LASF67
+ 1174 0299 01       		.byte	0x1
+ 1175 029a A101     		.2byte	0x1a1
+ARM GAS  C:\Users\addis\AppData\Local\Temp\ccUS9kEI.s 			page 37
+
+
+ 1176 029c 00000000 		.4byte	.LFB3
+ 1177 02a0 30000000 		.4byte	.LFE3-.LFB3
+ 1178 02a4 01       		.uleb128 0x1
+ 1179 02a5 9C       		.byte	0x9c
+ 1180 02a6 D4020000 		.4byte	0x2d4
+ 1181 02aa 0C       		.uleb128 0xc
+ 1182 02ab 6900     		.ascii	"i\000"
+ 1183 02ad 01       		.byte	0x1
+ 1184 02ae A301     		.2byte	0x1a3
+ 1185 02b0 6B000000 		.4byte	0x6b
+ 1186 02b4 DF000000 		.4byte	.LLST4
+ 1187 02b8 13       		.uleb128 0x13
+ 1188 02b9 06000000 		.4byte	.LVL29
+ 1189 02bd F2060000 		.4byte	0x6f2
+ 1190 02c1 13       		.uleb128 0x13
+ 1191 02c2 10000000 		.4byte	.LVL30
+ 1192 02c6 F9060000 		.4byte	0x6f9
+ 1193 02ca 13       		.uleb128 0x13
+ 1194 02cb 20000000 		.4byte	.LVL32
+ 1195 02cf 0E070000 		.4byte	0x70e
+ 1196 02d3 00       		.byte	0
+ 1197 02d4 19       		.uleb128 0x19
+ 1198 02d5 10040000 		.4byte	.LASF29
+ 1199 02d9 01       		.byte	0x1
+ 1200 02da EE       		.byte	0xee
+ 1201 02db 6B000000 		.4byte	0x6b
+ 1202 02df 00000000 		.4byte	.LFB1
+ 1203 02e3 1C000000 		.4byte	.LFE1-.LFB1
+ 1204 02e7 01       		.uleb128 0x1
+ 1205 02e8 9C       		.byte	0x9c
+ 1206 02e9 0F030000 		.4byte	0x30f
+ 1207 02ed 1A       		.uleb128 0x1a
+ 1208 02ee 87040000 		.4byte	.LASF21
+ 1209 02f2 01       		.byte	0x1
+ 1210 02f3 F0       		.byte	0xf0
+ 1211 02f4 6B000000 		.4byte	0x6b
+ 1212 02f8 09010000 		.4byte	.LLST5
+ 1213 02fc 13       		.uleb128 0x13
+ 1214 02fd 06000000 		.4byte	.LVL36
+ 1215 0301 00010000 		.4byte	0x100
+ 1216 0305 13       		.uleb128 0x13
+ 1217 0306 0C000000 		.4byte	.LVL38
+ 1218 030a 1F070000 		.4byte	0x71f
+ 1219 030e 00       		.byte	0
+ 1220 030f 1B       		.uleb128 0x1b
+ 1221 0310 91050000 		.4byte	.LASF37
+ 1222 0314 01       		.byte	0x1
+ 1223 0315 F301     		.2byte	0x1f3
+ 1224 0317 00000000 		.4byte	.LFB5
+ 1225 031b 24000000 		.4byte	.LFE5-.LFB5
+ 1226 031f 01       		.uleb128 0x1
+ 1227 0320 9C       		.byte	0x9c
+ 1228 0321 38030000 		.4byte	0x338
+ 1229 0325 13       		.uleb128 0x13
+ 1230 0326 0C000000 		.4byte	.LVL40
+ 1231 032a 26070000 		.4byte	0x726
+ 1232 032e 13       		.uleb128 0x13
+ARM GAS  C:\Users\addis\AppData\Local\Temp\ccUS9kEI.s 			page 38
+
+
+ 1233 032f 10000000 		.4byte	.LVL41
+ 1234 0333 94020000 		.4byte	0x294
+ 1235 0337 00       		.byte	0
+ 1236 0338 1C       		.uleb128 0x1c
+ 1237 0339 50030000 		.4byte	.LASF27
+ 1238 033d 01       		.byte	0x1
+ 1239 033e 1002     		.2byte	0x210
+ 1240 0340 00000000 		.4byte	.LFB6
+ 1241 0344 0C000000 		.4byte	.LFE6-.LFB6
+ 1242 0348 01       		.uleb128 0x1
+ 1243 0349 9C       		.byte	0x9c
+ 1244 034a 1C       		.uleb128 0x1c
+ 1245 034b 23020000 		.4byte	.LASF28
+ 1246 034f 01       		.byte	0x1
+ 1247 0350 2402     		.2byte	0x224
+ 1248 0352 00000000 		.4byte	.LFB7
+ 1249 0356 0C000000 		.4byte	.LFE7-.LFB7
+ 1250 035a 01       		.uleb128 0x1
+ 1251 035b 9C       		.byte	0x9c
+ 1252 035c 1D       		.uleb128 0x1d
+ 1253 035d 37050000 		.4byte	.LASF30
+ 1254 0361 01       		.byte	0x1
+ 1255 0362 C802     		.2byte	0x2c8
+ 1256 0364 6B000000 		.4byte	0x6b
+ 1257 0368 00000000 		.4byte	.LFB10
+ 1258 036c 20000000 		.4byte	.LFE10-.LFB10
+ 1259 0370 01       		.uleb128 0x1
+ 1260 0371 9C       		.byte	0x9c
+ 1261 0372 C7030000 		.4byte	0x3c7
+ 1262 0376 1E       		.uleb128 0x1e
+ 1263 0377 7D020000 		.4byte	.LASF35
+ 1264 037b 01       		.byte	0x1
+ 1265 037c C802     		.2byte	0x2c8
+ 1266 037e 77000000 		.4byte	0x77
+ 1267 0382 1C010000 		.4byte	.LLST6
+ 1268 0386 0B       		.uleb128 0xb
+ 1269 0387 BD000000 		.4byte	.LASF31
+ 1270 038b 01       		.byte	0x1
+ 1271 038c CA02     		.2byte	0x2ca
+ 1272 038e 77000000 		.4byte	0x77
+ 1273 0392 56010000 		.4byte	.LLST7
+ 1274 0396 0B       		.uleb128 0xb
+ 1275 0397 51050000 		.4byte	.LASF32
+ 1276 039b 01       		.byte	0x1
+ 1277 039c CB02     		.2byte	0x2cb
+ 1278 039e 77000000 		.4byte	0x77
+ 1279 03a2 6E010000 		.4byte	.LLST8
+ 1280 03a6 0C       		.uleb128 0xc
+ 1281 03a7 726F7700 		.ascii	"row\000"
+ 1282 03ab 01       		.byte	0x1
+ 1283 03ac CC02     		.2byte	0x2cc
+ 1284 03ae 77000000 		.4byte	0x77
+ 1285 03b2 81010000 		.4byte	.LLST9
+ 1286 03b6 0B       		.uleb128 0xb
+ 1287 03b7 CA010000 		.4byte	.LASF33
+ 1288 03bb 01       		.byte	0x1
+ 1289 03bc CD02     		.2byte	0x2cd
+ARM GAS  C:\Users\addis\AppData\Local\Temp\ccUS9kEI.s 			page 39
+
+
+ 1290 03be 6B000000 		.4byte	0x6b
+ 1291 03c2 99010000 		.4byte	.LLST10
+ 1292 03c6 00       		.byte	0
+ 1293 03c7 1D       		.uleb128 0x1d
+ 1294 03c8 76050000 		.4byte	.LASF34
+ 1295 03cc 01       		.byte	0x1
+ 1296 03cd 7802     		.2byte	0x278
+ 1297 03cf 6B000000 		.4byte	0x6b
+ 1298 03d3 00000000 		.4byte	.LFB9
+ 1299 03d7 68000000 		.4byte	.LFE9-.LFB9
+ 1300 03db 01       		.uleb128 0x1
+ 1301 03dc 9C       		.byte	0x9c
+ 1302 03dd 5B040000 		.4byte	0x45b
+ 1303 03e1 1E       		.uleb128 0x1e
+ 1304 03e2 7D020000 		.4byte	.LASF35
+ 1305 03e6 01       		.byte	0x1
+ 1306 03e7 7802     		.2byte	0x278
+ 1307 03e9 77000000 		.4byte	0x77
+ 1308 03ed B7010000 		.4byte	.LLST11
+ 1309 03f1 1E       		.uleb128 0x1e
+ 1310 03f2 CA010000 		.4byte	.LASF33
+ 1311 03f6 01       		.byte	0x1
+ 1312 03f7 7802     		.2byte	0x278
+ 1313 03f9 6B000000 		.4byte	0x6b
+ 1314 03fd 0A020000 		.4byte	.LLST12
+ 1315 0401 0B       		.uleb128 0xb
+ 1316 0402 BD000000 		.4byte	.LASF31
+ 1317 0406 01       		.byte	0x1
+ 1318 0407 7A02     		.2byte	0x27a
+ 1319 0409 77000000 		.4byte	0x77
+ 1320 040d 41020000 		.4byte	.LLST13
+ 1321 0411 0B       		.uleb128 0xb
+ 1322 0412 51050000 		.4byte	.LASF32
+ 1323 0416 01       		.byte	0x1
+ 1324 0417 7B02     		.2byte	0x27b
+ 1325 0419 77000000 		.4byte	0x77
+ 1326 041d 5F020000 		.4byte	.LLST14
+ 1327 0421 0C       		.uleb128 0xc
+ 1328 0422 726F7700 		.ascii	"row\000"
+ 1329 0426 01       		.byte	0x1
+ 1330 0427 7C02     		.2byte	0x27c
+ 1331 0429 77000000 		.4byte	0x77
+ 1332 042d 72020000 		.4byte	.LLST15
+ 1333 0431 0B       		.uleb128 0xb
+ 1334 0432 83010000 		.4byte	.LASF36
+ 1335 0436 01       		.byte	0x1
+ 1336 0437 7D02     		.2byte	0x27d
+ 1337 0439 6B000000 		.4byte	0x6b
+ 1338 043d 9D020000 		.4byte	.LLST16
+ 1339 0441 0B       		.uleb128 0xb
+ 1340 0442 87040000 		.4byte	.LASF21
+ 1341 0446 01       		.byte	0x1
+ 1342 0447 7E02     		.2byte	0x27e
+ 1343 0449 6B000000 		.4byte	0x6b
+ 1344 044d CB020000 		.4byte	.LLST17
+ 1345 0451 13       		.uleb128 0x13
+ 1346 0452 1E000000 		.4byte	.LVL52
+ARM GAS  C:\Users\addis\AppData\Local\Temp\ccUS9kEI.s 			page 40
+
+
+ 1347 0456 5C030000 		.4byte	0x35c
+ 1348 045a 00       		.byte	0
+ 1349 045b 1B       		.uleb128 0x1b
+ 1350 045c DE020000 		.4byte	.LASF38
+ 1351 0460 01       		.byte	0x1
+ 1352 0461 4202     		.2byte	0x242
+ 1353 0463 00000000 		.4byte	.LFB8
+ 1354 0467 30000000 		.4byte	.LFE8-.LFB8
+ 1355 046b 01       		.uleb128 0x1
+ 1356 046c 9C       		.byte	0x9c
+ 1357 046d 94040000 		.4byte	0x494
+ 1358 0471 0C       		.uleb128 0xc
+ 1359 0472 6900     		.ascii	"i\000"
+ 1360 0474 01       		.byte	0x1
+ 1361 0475 4402     		.2byte	0x244
+ 1362 0477 77000000 		.4byte	0x77
+ 1363 047b DF020000 		.4byte	.LLST18
+ 1364 047f 14       		.uleb128 0x14
+ 1365 0480 28000000 		.4byte	.LVL72
+ 1366 0484 C7030000 		.4byte	0x3c7
+ 1367 0488 12       		.uleb128 0x12
+ 1368 0489 01       		.uleb128 0x1
+ 1369 048a 51       		.byte	0x51
+ 1370 048b 01       		.uleb128 0x1
+ 1371 048c 30       		.byte	0x30
+ 1372 048d 12       		.uleb128 0x12
+ 1373 048e 01       		.uleb128 0x1
+ 1374 048f 50       		.byte	0x50
+ 1375 0490 01       		.uleb128 0x1
+ 1376 0491 33       		.byte	0x33
+ 1377 0492 00       		.byte	0
+ 1378 0493 00       		.byte	0
+ 1379 0494 1F       		.uleb128 0x1f
+ 1380 0495 D5010000 		.4byte	.LASF39
+ 1381 0499 01       		.byte	0x1
+ 1382 049a C7       		.byte	0xc7
+ 1383 049b 00000000 		.4byte	.LFB0
+ 1384 049f 28000000 		.4byte	.LFE0-.LFB0
+ 1385 04a3 01       		.uleb128 0x1
+ 1386 04a4 9C       		.byte	0x9c
+ 1387 04a5 DA040000 		.4byte	0x4da
+ 1388 04a9 13       		.uleb128 0x13
+ 1389 04aa 06000000 		.4byte	.LVL73
+ 1390 04ae 5B040000 		.4byte	0x45b
+ 1391 04b2 11       		.uleb128 0x11
+ 1392 04b3 14000000 		.4byte	.LVL74
+ 1393 04b7 2D070000 		.4byte	0x72d
+ 1394 04bb C5040000 		.4byte	0x4c5
+ 1395 04bf 12       		.uleb128 0x12
+ 1396 04c0 01       		.uleb128 0x1
+ 1397 04c1 50       		.byte	0x50
+ 1398 04c2 01       		.uleb128 0x1
+ 1399 04c3 30       		.byte	0x30
+ 1400 04c4 00       		.byte	0
+ 1401 04c5 14       		.uleb128 0x14
+ 1402 04c6 1C000000 		.4byte	.LVL75
+ 1403 04ca 47070000 		.4byte	0x747
+ARM GAS  C:\Users\addis\AppData\Local\Temp\ccUS9kEI.s 			page 41
+
+
+ 1404 04ce 12       		.uleb128 0x12
+ 1405 04cf 01       		.uleb128 0x1
+ 1406 04d0 51       		.byte	0x51
+ 1407 04d1 01       		.uleb128 0x1
+ 1408 04d2 37       		.byte	0x37
+ 1409 04d3 12       		.uleb128 0x12
+ 1410 04d4 01       		.uleb128 0x1
+ 1411 04d5 50       		.byte	0x50
+ 1412 04d6 01       		.uleb128 0x1
+ 1413 04d7 30       		.byte	0x30
+ 1414 04d8 00       		.byte	0
+ 1415 04d9 00       		.byte	0
+ 1416 04da 1D       		.uleb128 0x1d
+ 1417 04db A6030000 		.4byte	.LASF40
+ 1418 04df 01       		.byte	0x1
+ 1419 04e0 CE01     		.2byte	0x1ce
+ 1420 04e2 6B000000 		.4byte	0x6b
+ 1421 04e6 00000000 		.4byte	.LFB4
+ 1422 04ea 20000000 		.4byte	.LFE4-.LFB4
+ 1423 04ee 01       		.uleb128 0x1
+ 1424 04ef 9C       		.byte	0x9c
+ 1425 04f0 15050000 		.4byte	0x515
+ 1426 04f4 0D       		.uleb128 0xd
+ 1427 04f5 87040000 		.4byte	.LASF21
+ 1428 04f9 01       		.byte	0x1
+ 1429 04fa D001     		.2byte	0x1d0
+ 1430 04fc 6B000000 		.4byte	0x6b
+ 1431 0500 01       		.uleb128 0x1
+ 1432 0501 50       		.byte	0x50
+ 1433 0502 13       		.uleb128 0x13
+ 1434 0503 16000000 		.4byte	.LVL76
+ 1435 0507 94040000 		.4byte	0x494
+ 1436 050b 13       		.uleb128 0x13
+ 1437 050c 1A000000 		.4byte	.LVL77
+ 1438 0510 D4020000 		.4byte	0x2d4
+ 1439 0514 00       		.byte	0
+ 1440 0515 1D       		.uleb128 0x1d
+ 1441 0516 53020000 		.4byte	.LASF41
+ 1442 051a 01       		.byte	0x1
+ 1443 051b F502     		.2byte	0x2f5
+ 1444 051d 6B000000 		.4byte	0x6b
+ 1445 0521 00000000 		.4byte	.LFB11
+ 1446 0525 24000000 		.4byte	.LFE11-.LFB11
+ 1447 0529 01       		.uleb128 0x1
+ 1448 052a 9C       		.byte	0x9c
+ 1449 052b 7A050000 		.4byte	0x57a
+ 1450 052f 1E       		.uleb128 0x1e
+ 1451 0530 C3030000 		.4byte	.LASF42
+ 1452 0534 01       		.byte	0x1
+ 1453 0535 F502     		.2byte	0x2f5
+ 1454 0537 6B000000 		.4byte	0x6b
+ 1455 053b 09030000 		.4byte	.LLST19
+ 1456 053f 0D       		.uleb128 0xd
+ 1457 0540 87040000 		.4byte	.LASF21
+ 1458 0544 01       		.byte	0x1
+ 1459 0545 F702     		.2byte	0x2f7
+ 1460 0547 6B000000 		.4byte	0x6b
+ARM GAS  C:\Users\addis\AppData\Local\Temp\ccUS9kEI.s 			page 42
+
+
+ 1461 054b 01       		.uleb128 0x1
+ 1462 054c 50       		.byte	0x50
+ 1463 054d 11       		.uleb128 0x11
+ 1464 054e 10000000 		.4byte	.LVL80
+ 1465 0552 C7030000 		.4byte	0x3c7
+ 1466 0556 65050000 		.4byte	0x565
+ 1467 055a 12       		.uleb128 0x12
+ 1468 055b 01       		.uleb128 0x1
+ 1469 055c 51       		.byte	0x51
+ 1470 055d 01       		.uleb128 0x1
+ 1471 055e 31       		.byte	0x31
+ 1472 055f 12       		.uleb128 0x12
+ 1473 0560 01       		.uleb128 0x1
+ 1474 0561 50       		.byte	0x50
+ 1475 0562 01       		.uleb128 0x1
+ 1476 0563 33       		.byte	0x33
+ 1477 0564 00       		.byte	0
+ 1478 0565 14       		.uleb128 0x14
+ 1479 0566 1C000000 		.4byte	.LVL83
+ 1480 056a C7030000 		.4byte	0x3c7
+ 1481 056e 12       		.uleb128 0x12
+ 1482 056f 01       		.uleb128 0x1
+ 1483 0570 51       		.byte	0x51
+ 1484 0571 01       		.uleb128 0x1
+ 1485 0572 30       		.byte	0x30
+ 1486 0573 12       		.uleb128 0x12
+ 1487 0574 01       		.uleb128 0x1
+ 1488 0575 50       		.byte	0x50
+ 1489 0576 01       		.uleb128 0x1
+ 1490 0577 33       		.byte	0x33
+ 1491 0578 00       		.byte	0
+ 1492 0579 00       		.byte	0
+ 1493 057a 1D       		.uleb128 0x1d
+ 1494 057b 27040000 		.4byte	.LASF43
+ 1495 057f 01       		.byte	0x1
+ 1496 0580 2303     		.2byte	0x323
+ 1497 0582 6B000000 		.4byte	0x6b
+ 1498 0586 00000000 		.4byte	.LFB12
+ 1499 058a 12000000 		.4byte	.LFE12-.LFB12
+ 1500 058e 01       		.uleb128 0x1
+ 1501 058f 9C       		.byte	0x9c
+ 1502 0590 B4050000 		.4byte	0x5b4
+ 1503 0594 0B       		.uleb128 0xb
+ 1504 0595 37010000 		.4byte	.LASF44
+ 1505 0599 01       		.byte	0x1
+ 1506 059a 2503     		.2byte	0x325
+ 1507 059c 6B000000 		.4byte	0x6b
+ 1508 05a0 5C030000 		.4byte	.LLST20
+ 1509 05a4 14       		.uleb128 0x14
+ 1510 05a5 08000000 		.4byte	.LVL87
+ 1511 05a9 5C030000 		.4byte	0x35c
+ 1512 05ad 12       		.uleb128 0x12
+ 1513 05ae 01       		.uleb128 0x1
+ 1514 05af 50       		.byte	0x50
+ 1515 05b0 01       		.uleb128 0x1
+ 1516 05b1 33       		.byte	0x33
+ 1517 05b2 00       		.byte	0
+ARM GAS  C:\Users\addis\AppData\Local\Temp\ccUS9kEI.s 			page 43
+
+
+ 1518 05b3 00       		.byte	0
+ 1519 05b4 15       		.uleb128 0x15
+ 1520 05b5 6B000000 		.4byte	0x6b
+ 1521 05b9 C4050000 		.4byte	0x5c4
+ 1522 05bd 16       		.uleb128 0x16
+ 1523 05be F9000000 		.4byte	0xf9
+ 1524 05c2 1F       		.byte	0x1f
+ 1525 05c3 00       		.byte	0
+ 1526 05c4 20       		.uleb128 0x20
+ 1527 05c5 A1010000 		.4byte	.LASF45
+ 1528 05c9 01       		.byte	0x1
+ 1529 05ca A4       		.byte	0xa4
+ 1530 05cb B4050000 		.4byte	0x5b4
+ 1531 05cf 05       		.uleb128 0x5
+ 1532 05d0 03       		.byte	0x3
+ 1533 05d1 00000000 		.4byte	LCD_SegStatic_1_buffer
+ 1534 05d5 15       		.uleb128 0x15
+ 1535 05d6 6B000000 		.4byte	0x6b
+ 1536 05da E5050000 		.4byte	0x5e5
+ 1537 05de 16       		.uleb128 0x16
+ 1538 05df F9000000 		.4byte	0xf9
+ 1539 05e3 01       		.byte	0x1
+ 1540 05e4 00       		.byte	0
+ 1541 05e5 20       		.uleb128 0x20
+ 1542 05e6 FA030000 		.4byte	.LASF46
+ 1543 05ea 01       		.byte	0x1
+ 1544 05eb A7       		.byte	0xa7
+ 1545 05ec D5050000 		.4byte	0x5d5
+ 1546 05f0 05       		.uleb128 0x5
+ 1547 05f1 03       		.byte	0x3
+ 1548 05f2 24000000 		.4byte	LCD_SegStatic_1_lcdTd
+ 1549 05f6 20       		.uleb128 0x20
+ 1550 05f7 8E040000 		.4byte	.LASF47
+ 1551 05fb 01       		.byte	0x1
+ 1552 05fc AA       		.byte	0xaa
+ 1553 05fd 6B000000 		.4byte	0x6b
+ 1554 0601 05       		.uleb128 0x5
+ 1555 0602 03       		.byte	0x3
+ 1556 0603 20000000 		.4byte	LCD_SegStatic_1_lcdChannel
+ 1557 0607 15       		.uleb128 0x15
+ 1558 0608 77000000 		.4byte	0x77
+ 1559 060c 17060000 		.4byte	0x617
+ 1560 0610 16       		.uleb128 0x16
+ 1561 0611 F9000000 		.4byte	0xf9
+ 1562 0615 00       		.byte	0
+ 1563 0616 00       		.byte	0
+ 1564 0617 21       		.uleb128 0x21
+ 1565 0618 5C010000 		.4byte	.LASF48
+ 1566 061c 01       		.byte	0x1
+ 1567 061d B3       		.byte	0xb3
+ 1568 061e 25060000 		.4byte	0x625
+ 1569 0622 02       		.byte	0x2
+ 1570 0623 03       		.byte	0x3
+ 1571 0624 00       		.byte	0
+ 1572 0625 17       		.uleb128 0x17
+ 1573 0626 07060000 		.4byte	0x607
+ 1574 062a 22       		.uleb128 0x22
+ARM GAS  C:\Users\addis\AppData\Local\Temp\ccUS9kEI.s 			page 44
+
+
+ 1575 062b 1B010000 		.4byte	.LASF49
+ 1576 062f 01       		.byte	0x1
+ 1577 0630 AF       		.byte	0xaf
+ 1578 0631 6B000000 		.4byte	0x6b
+ 1579 0635 05       		.uleb128 0x5
+ 1580 0636 03       		.byte	0x3
+ 1581 0637 00000000 		.4byte	LCD_SegStatic_1_enableState
+ 1582 063b 22       		.uleb128 0x22
+ 1583 063c 75030000 		.4byte	.LASF50
+ 1584 0640 01       		.byte	0x1
+ 1585 0641 AC       		.byte	0xac
+ 1586 0642 6B000000 		.4byte	0x6b
+ 1587 0646 05       		.uleb128 0x5
+ 1588 0647 03       		.byte	0x3
+ 1589 0648 00000000 		.4byte	LCD_SegStatic_1_initVar
+ 1590 064c 23       		.uleb128 0x23
+ 1591 064d FD010000 		.4byte	.LASF51
+ 1592 0651 04       		.byte	0x4
+ 1593 0652 1E       		.byte	0x1e
+ 1594 0653 6B000000 		.4byte	0x6b
+ 1595 0657 70060000 		.4byte	0x670
+ 1596 065b 24       		.uleb128 0x24
+ 1597 065c 6B000000 		.4byte	0x6b
+ 1598 0660 24       		.uleb128 0x24
+ 1599 0661 6B000000 		.4byte	0x6b
+ 1600 0665 24       		.uleb128 0x24
+ 1601 0666 77000000 		.4byte	0x77
+ 1602 066a 24       		.uleb128 0x24
+ 1603 066b 77000000 		.4byte	0x77
+ 1604 066f 00       		.byte	0
+ 1605 0670 25       		.uleb128 0x25
+ 1606 0671 80000000 		.4byte	.LASF68
+ 1607 0675 05       		.byte	0x5
+ 1608 0676 39       		.byte	0x39
+ 1609 0677 6B000000 		.4byte	0x6b
+ 1610 067b 23       		.uleb128 0x23
+ 1611 067c C6000000 		.4byte	.LASF52
+ 1612 0680 05       		.byte	0x5
+ 1613 0681 3C       		.byte	0x3c
+ 1614 0682 A4000000 		.4byte	0xa4
+ 1615 0686 9F060000 		.4byte	0x69f
+ 1616 068a 24       		.uleb128 0x24
+ 1617 068b 6B000000 		.4byte	0x6b
+ 1618 068f 24       		.uleb128 0x24
+ 1619 0690 77000000 		.4byte	0x77
+ 1620 0694 24       		.uleb128 0x24
+ 1621 0695 6B000000 		.4byte	0x6b
+ 1622 0699 24       		.uleb128 0x24
+ 1623 069a 6B000000 		.4byte	0x6b
+ 1624 069e 00       		.byte	0
+ 1625 069f 23       		.uleb128 0x23
+ 1626 06a0 89020000 		.4byte	.LASF53
+ 1627 06a4 05       		.byte	0x5
+ 1628 06a5 40       		.byte	0x40
+ 1629 06a6 A4000000 		.4byte	0xa4
+ 1630 06aa BE060000 		.4byte	0x6be
+ 1631 06ae 24       		.uleb128 0x24
+ARM GAS  C:\Users\addis\AppData\Local\Temp\ccUS9kEI.s 			page 45
+
+
+ 1632 06af 6B000000 		.4byte	0x6b
+ 1633 06b3 24       		.uleb128 0x24
+ 1634 06b4 77000000 		.4byte	0x77
+ 1635 06b8 24       		.uleb128 0x24
+ 1636 06b9 77000000 		.4byte	0x77
+ 1637 06bd 00       		.byte	0
+ 1638 06be 23       		.uleb128 0x23
+ 1639 06bf 59050000 		.4byte	.LASF54
+ 1640 06c3 05       		.byte	0x5
+ 1641 06c4 30       		.byte	0x30
+ 1642 06c5 A4000000 		.4byte	0xa4
+ 1643 06c9 D8060000 		.4byte	0x6d8
+ 1644 06cd 24       		.uleb128 0x24
+ 1645 06ce 6B000000 		.4byte	0x6b
+ 1646 06d2 24       		.uleb128 0x24
+ 1647 06d3 6B000000 		.4byte	0x6b
+ 1648 06d7 00       		.byte	0
+ 1649 06d8 23       		.uleb128 0x23
+ 1650 06d9 98000000 		.4byte	.LASF55
+ 1651 06dd 05       		.byte	0x5
+ 1652 06de 2A       		.byte	0x2a
+ 1653 06df A4000000 		.4byte	0xa4
+ 1654 06e3 F2060000 		.4byte	0x6f2
+ 1655 06e7 24       		.uleb128 0x24
+ 1656 06e8 6B000000 		.4byte	0x6b
+ 1657 06ec 24       		.uleb128 0x24
+ 1658 06ed 6B000000 		.4byte	0x6b
+ 1659 06f1 00       		.byte	0
+ 1660 06f2 26       		.uleb128 0x26
+ 1661 06f3 47040000 		.4byte	.LASF57
+ 1662 06f7 04       		.byte	0x4
+ 1663 06f8 1F       		.byte	0x1f
+ 1664 06f9 23       		.uleb128 0x23
+ 1665 06fa A6050000 		.4byte	.LASF56
+ 1666 06fe 05       		.byte	0x5
+ 1667 06ff 29       		.byte	0x29
+ 1668 0700 A4000000 		.4byte	0xa4
+ 1669 0704 0E070000 		.4byte	0x70e
+ 1670 0708 24       		.uleb128 0x24
+ 1671 0709 6B000000 		.4byte	0x6b
+ 1672 070d 00       		.byte	0
+ 1673 070e 27       		.uleb128 0x27
+ 1674 070f 88010000 		.4byte	.LASF69
+ 1675 0713 05       		.byte	0x5
+ 1676 0714 3A       		.byte	0x3a
+ 1677 0715 1F070000 		.4byte	0x71f
+ 1678 0719 24       		.uleb128 0x24
+ 1679 071a 6B000000 		.4byte	0x6b
+ 1680 071e 00       		.byte	0
+ 1681 071f 26       		.uleb128 0x26
+ 1682 0720 B2020000 		.4byte	.LASF58
+ 1683 0724 06       		.byte	0x6
+ 1684 0725 27       		.byte	0x27
+ 1685 0726 26       		.uleb128 0x26
+ 1686 0727 6A040000 		.4byte	.LASF59
+ 1687 072b 06       		.byte	0x6
+ 1688 072c 28       		.byte	0x28
+ARM GAS  C:\Users\addis\AppData\Local\Temp\ccUS9kEI.s 			page 46
+
+
+ 1689 072d 23       		.uleb128 0x23
+ 1690 072e 3E020000 		.4byte	.LASF60
+ 1691 0732 07       		.byte	0x7
+ 1692 0733 89       		.byte	0x89
+ 1693 0734 C1000000 		.4byte	0xc1
+ 1694 0738 47070000 		.4byte	0x747
+ 1695 073c 24       		.uleb128 0x24
+ 1696 073d 6B000000 		.4byte	0x6b
+ 1697 0741 24       		.uleb128 0x24
+ 1698 0742 C1000000 		.4byte	0xc1
+ 1699 0746 00       		.byte	0
+ 1700 0747 28       		.uleb128 0x28
+ 1701 0748 9B020000 		.4byte	.LASF70
+ 1702 074c 07       		.byte	0x7
+ 1703 074d 8C       		.byte	0x8c
+ 1704 074e 24       		.uleb128 0x24
+ 1705 074f 6B000000 		.4byte	0x6b
+ 1706 0753 24       		.uleb128 0x24
+ 1707 0754 6B000000 		.4byte	0x6b
+ 1708 0758 00       		.byte	0
+ 1709 0759 00       		.byte	0
+ 1710              		.section	.debug_abbrev,"",%progbits
+ 1711              	.Ldebug_abbrev0:
+ 1712 0000 01       		.uleb128 0x1
+ 1713 0001 11       		.uleb128 0x11
+ 1714 0002 01       		.byte	0x1
+ 1715 0003 25       		.uleb128 0x25
+ 1716 0004 0E       		.uleb128 0xe
+ 1717 0005 13       		.uleb128 0x13
+ 1718 0006 0B       		.uleb128 0xb
+ 1719 0007 03       		.uleb128 0x3
+ 1720 0008 0E       		.uleb128 0xe
+ 1721 0009 1B       		.uleb128 0x1b
+ 1722 000a 0E       		.uleb128 0xe
+ 1723 000b 55       		.uleb128 0x55
+ 1724 000c 17       		.uleb128 0x17
+ 1725 000d 11       		.uleb128 0x11
+ 1726 000e 01       		.uleb128 0x1
+ 1727 000f 10       		.uleb128 0x10
+ 1728 0010 17       		.uleb128 0x17
+ 1729 0011 00       		.byte	0
+ 1730 0012 00       		.byte	0
+ 1731 0013 02       		.uleb128 0x2
+ 1732 0014 24       		.uleb128 0x24
+ 1733 0015 00       		.byte	0
+ 1734 0016 0B       		.uleb128 0xb
+ 1735 0017 0B       		.uleb128 0xb
+ 1736 0018 3E       		.uleb128 0x3e
+ 1737 0019 0B       		.uleb128 0xb
+ 1738 001a 03       		.uleb128 0x3
+ 1739 001b 0E       		.uleb128 0xe
+ 1740 001c 00       		.byte	0
+ 1741 001d 00       		.byte	0
+ 1742 001e 03       		.uleb128 0x3
+ 1743 001f 24       		.uleb128 0x24
+ 1744 0020 00       		.byte	0
+ 1745 0021 0B       		.uleb128 0xb
+ARM GAS  C:\Users\addis\AppData\Local\Temp\ccUS9kEI.s 			page 47
+
+
+ 1746 0022 0B       		.uleb128 0xb
+ 1747 0023 3E       		.uleb128 0x3e
+ 1748 0024 0B       		.uleb128 0xb
+ 1749 0025 03       		.uleb128 0x3
+ 1750 0026 08       		.uleb128 0x8
+ 1751 0027 00       		.byte	0
+ 1752 0028 00       		.byte	0
+ 1753 0029 04       		.uleb128 0x4
+ 1754 002a 16       		.uleb128 0x16
+ 1755 002b 00       		.byte	0
+ 1756 002c 03       		.uleb128 0x3
+ 1757 002d 0E       		.uleb128 0xe
+ 1758 002e 3A       		.uleb128 0x3a
+ 1759 002f 0B       		.uleb128 0xb
+ 1760 0030 3B       		.uleb128 0x3b
+ 1761 0031 05       		.uleb128 0x5
+ 1762 0032 49       		.uleb128 0x49
+ 1763 0033 13       		.uleb128 0x13
+ 1764 0034 00       		.byte	0
+ 1765 0035 00       		.byte	0
+ 1766 0036 05       		.uleb128 0x5
+ 1767 0037 35       		.uleb128 0x35
+ 1768 0038 00       		.byte	0
+ 1769 0039 49       		.uleb128 0x49
+ 1770 003a 13       		.uleb128 0x13
+ 1771 003b 00       		.byte	0
+ 1772 003c 00       		.byte	0
+ 1773 003d 06       		.uleb128 0x6
+ 1774 003e 0F       		.uleb128 0xf
+ 1775 003f 00       		.byte	0
+ 1776 0040 0B       		.uleb128 0xb
+ 1777 0041 0B       		.uleb128 0xb
+ 1778 0042 49       		.uleb128 0x49
+ 1779 0043 13       		.uleb128 0x13
+ 1780 0044 00       		.byte	0
+ 1781 0045 00       		.byte	0
+ 1782 0046 07       		.uleb128 0x7
+ 1783 0047 15       		.uleb128 0x15
+ 1784 0048 00       		.byte	0
+ 1785 0049 27       		.uleb128 0x27
+ 1786 004a 19       		.uleb128 0x19
+ 1787 004b 00       		.byte	0
+ 1788 004c 00       		.byte	0
+ 1789 004d 08       		.uleb128 0x8
+ 1790 004e 13       		.uleb128 0x13
+ 1791 004f 01       		.byte	0x1
+ 1792 0050 03       		.uleb128 0x3
+ 1793 0051 0E       		.uleb128 0xe
+ 1794 0052 0B       		.uleb128 0xb
+ 1795 0053 0B       		.uleb128 0xb
+ 1796 0054 3A       		.uleb128 0x3a
+ 1797 0055 0B       		.uleb128 0xb
+ 1798 0056 3B       		.uleb128 0x3b
+ 1799 0057 0B       		.uleb128 0xb
+ 1800 0058 01       		.uleb128 0x1
+ 1801 0059 13       		.uleb128 0x13
+ 1802 005a 00       		.byte	0
+ARM GAS  C:\Users\addis\AppData\Local\Temp\ccUS9kEI.s 			page 48
+
+
+ 1803 005b 00       		.byte	0
+ 1804 005c 09       		.uleb128 0x9
+ 1805 005d 0D       		.uleb128 0xd
+ 1806 005e 00       		.byte	0
+ 1807 005f 03       		.uleb128 0x3
+ 1808 0060 0E       		.uleb128 0xe
+ 1809 0061 3A       		.uleb128 0x3a
+ 1810 0062 0B       		.uleb128 0xb
+ 1811 0063 3B       		.uleb128 0x3b
+ 1812 0064 0B       		.uleb128 0xb
+ 1813 0065 49       		.uleb128 0x49
+ 1814 0066 13       		.uleb128 0x13
+ 1815 0067 38       		.uleb128 0x38
+ 1816 0068 0B       		.uleb128 0xb
+ 1817 0069 00       		.byte	0
+ 1818 006a 00       		.byte	0
+ 1819 006b 0A       		.uleb128 0xa
+ 1820 006c 2E       		.uleb128 0x2e
+ 1821 006d 01       		.byte	0x1
+ 1822 006e 03       		.uleb128 0x3
+ 1823 006f 0E       		.uleb128 0xe
+ 1824 0070 3A       		.uleb128 0x3a
+ 1825 0071 0B       		.uleb128 0xb
+ 1826 0072 3B       		.uleb128 0x3b
+ 1827 0073 05       		.uleb128 0x5
+ 1828 0074 27       		.uleb128 0x27
+ 1829 0075 19       		.uleb128 0x19
+ 1830 0076 49       		.uleb128 0x49
+ 1831 0077 13       		.uleb128 0x13
+ 1832 0078 11       		.uleb128 0x11
+ 1833 0079 01       		.uleb128 0x1
+ 1834 007a 12       		.uleb128 0x12
+ 1835 007b 06       		.uleb128 0x6
+ 1836 007c 40       		.uleb128 0x40
+ 1837 007d 18       		.uleb128 0x18
+ 1838 007e 9742     		.uleb128 0x2117
+ 1839 0080 19       		.uleb128 0x19
+ 1840 0081 01       		.uleb128 0x1
+ 1841 0082 13       		.uleb128 0x13
+ 1842 0083 00       		.byte	0
+ 1843 0084 00       		.byte	0
+ 1844 0085 0B       		.uleb128 0xb
+ 1845 0086 34       		.uleb128 0x34
+ 1846 0087 00       		.byte	0
+ 1847 0088 03       		.uleb128 0x3
+ 1848 0089 0E       		.uleb128 0xe
+ 1849 008a 3A       		.uleb128 0x3a
+ 1850 008b 0B       		.uleb128 0xb
+ 1851 008c 3B       		.uleb128 0x3b
+ 1852 008d 05       		.uleb128 0x5
+ 1853 008e 49       		.uleb128 0x49
+ 1854 008f 13       		.uleb128 0x13
+ 1855 0090 02       		.uleb128 0x2
+ 1856 0091 17       		.uleb128 0x17
+ 1857 0092 00       		.byte	0
+ 1858 0093 00       		.byte	0
+ 1859 0094 0C       		.uleb128 0xc
+ARM GAS  C:\Users\addis\AppData\Local\Temp\ccUS9kEI.s 			page 49
+
+
+ 1860 0095 34       		.uleb128 0x34
+ 1861 0096 00       		.byte	0
+ 1862 0097 03       		.uleb128 0x3
+ 1863 0098 08       		.uleb128 0x8
+ 1864 0099 3A       		.uleb128 0x3a
+ 1865 009a 0B       		.uleb128 0xb
+ 1866 009b 3B       		.uleb128 0x3b
+ 1867 009c 05       		.uleb128 0x5
+ 1868 009d 49       		.uleb128 0x49
+ 1869 009e 13       		.uleb128 0x13
+ 1870 009f 02       		.uleb128 0x2
+ 1871 00a0 17       		.uleb128 0x17
+ 1872 00a1 00       		.byte	0
+ 1873 00a2 00       		.byte	0
+ 1874 00a3 0D       		.uleb128 0xd
+ 1875 00a4 34       		.uleb128 0x34
+ 1876 00a5 00       		.byte	0
+ 1877 00a6 03       		.uleb128 0x3
+ 1878 00a7 0E       		.uleb128 0xe
+ 1879 00a8 3A       		.uleb128 0x3a
+ 1880 00a9 0B       		.uleb128 0xb
+ 1881 00aa 3B       		.uleb128 0x3b
+ 1882 00ab 05       		.uleb128 0x5
+ 1883 00ac 49       		.uleb128 0x49
+ 1884 00ad 13       		.uleb128 0x13
+ 1885 00ae 02       		.uleb128 0x2
+ 1886 00af 18       		.uleb128 0x18
+ 1887 00b0 00       		.byte	0
+ 1888 00b1 00       		.byte	0
+ 1889 00b2 0E       		.uleb128 0xe
+ 1890 00b3 34       		.uleb128 0x34
+ 1891 00b4 00       		.byte	0
+ 1892 00b5 03       		.uleb128 0x3
+ 1893 00b6 0E       		.uleb128 0xe
+ 1894 00b7 3A       		.uleb128 0x3a
+ 1895 00b8 0B       		.uleb128 0xb
+ 1896 00b9 3B       		.uleb128 0x3b
+ 1897 00ba 05       		.uleb128 0x5
+ 1898 00bb 49       		.uleb128 0x49
+ 1899 00bc 13       		.uleb128 0x13
+ 1900 00bd 1C       		.uleb128 0x1c
+ 1901 00be 06       		.uleb128 0x6
+ 1902 00bf 00       		.byte	0
+ 1903 00c0 00       		.byte	0
+ 1904 00c1 0F       		.uleb128 0xf
+ 1905 00c2 34       		.uleb128 0x34
+ 1906 00c3 00       		.byte	0
+ 1907 00c4 03       		.uleb128 0x3
+ 1908 00c5 0E       		.uleb128 0xe
+ 1909 00c6 3A       		.uleb128 0x3a
+ 1910 00c7 0B       		.uleb128 0xb
+ 1911 00c8 3B       		.uleb128 0x3b
+ 1912 00c9 05       		.uleb128 0x5
+ 1913 00ca 49       		.uleb128 0x49
+ 1914 00cb 13       		.uleb128 0x13
+ 1915 00cc 00       		.byte	0
+ 1916 00cd 00       		.byte	0
+ARM GAS  C:\Users\addis\AppData\Local\Temp\ccUS9kEI.s 			page 50
+
+
+ 1917 00ce 10       		.uleb128 0x10
+ 1918 00cf 34       		.uleb128 0x34
+ 1919 00d0 00       		.byte	0
+ 1920 00d1 03       		.uleb128 0x3
+ 1921 00d2 0E       		.uleb128 0xe
+ 1922 00d3 3A       		.uleb128 0x3a
+ 1923 00d4 0B       		.uleb128 0xb
+ 1924 00d5 3B       		.uleb128 0x3b
+ 1925 00d6 05       		.uleb128 0x5
+ 1926 00d7 49       		.uleb128 0x49
+ 1927 00d8 13       		.uleb128 0x13
+ 1928 00d9 1C       		.uleb128 0x1c
+ 1929 00da 0B       		.uleb128 0xb
+ 1930 00db 00       		.byte	0
+ 1931 00dc 00       		.byte	0
+ 1932 00dd 11       		.uleb128 0x11
+ 1933 00de 898201   		.uleb128 0x4109
+ 1934 00e1 01       		.byte	0x1
+ 1935 00e2 11       		.uleb128 0x11
+ 1936 00e3 01       		.uleb128 0x1
+ 1937 00e4 31       		.uleb128 0x31
+ 1938 00e5 13       		.uleb128 0x13
+ 1939 00e6 01       		.uleb128 0x1
+ 1940 00e7 13       		.uleb128 0x13
+ 1941 00e8 00       		.byte	0
+ 1942 00e9 00       		.byte	0
+ 1943 00ea 12       		.uleb128 0x12
+ 1944 00eb 8A8201   		.uleb128 0x410a
+ 1945 00ee 00       		.byte	0
+ 1946 00ef 02       		.uleb128 0x2
+ 1947 00f0 18       		.uleb128 0x18
+ 1948 00f1 9142     		.uleb128 0x2111
+ 1949 00f3 18       		.uleb128 0x18
+ 1950 00f4 00       		.byte	0
+ 1951 00f5 00       		.byte	0
+ 1952 00f6 13       		.uleb128 0x13
+ 1953 00f7 898201   		.uleb128 0x4109
+ 1954 00fa 00       		.byte	0
+ 1955 00fb 11       		.uleb128 0x11
+ 1956 00fc 01       		.uleb128 0x1
+ 1957 00fd 31       		.uleb128 0x31
+ 1958 00fe 13       		.uleb128 0x13
+ 1959 00ff 00       		.byte	0
+ 1960 0100 00       		.byte	0
+ 1961 0101 14       		.uleb128 0x14
+ 1962 0102 898201   		.uleb128 0x4109
+ 1963 0105 01       		.byte	0x1
+ 1964 0106 11       		.uleb128 0x11
+ 1965 0107 01       		.uleb128 0x1
+ 1966 0108 31       		.uleb128 0x31
+ 1967 0109 13       		.uleb128 0x13
+ 1968 010a 00       		.byte	0
+ 1969 010b 00       		.byte	0
+ 1970 010c 15       		.uleb128 0x15
+ 1971 010d 01       		.uleb128 0x1
+ 1972 010e 01       		.byte	0x1
+ 1973 010f 49       		.uleb128 0x49
+ARM GAS  C:\Users\addis\AppData\Local\Temp\ccUS9kEI.s 			page 51
+
+
+ 1974 0110 13       		.uleb128 0x13
+ 1975 0111 01       		.uleb128 0x1
+ 1976 0112 13       		.uleb128 0x13
+ 1977 0113 00       		.byte	0
+ 1978 0114 00       		.byte	0
+ 1979 0115 16       		.uleb128 0x16
+ 1980 0116 21       		.uleb128 0x21
+ 1981 0117 00       		.byte	0
+ 1982 0118 49       		.uleb128 0x49
+ 1983 0119 13       		.uleb128 0x13
+ 1984 011a 2F       		.uleb128 0x2f
+ 1985 011b 0B       		.uleb128 0xb
+ 1986 011c 00       		.byte	0
+ 1987 011d 00       		.byte	0
+ 1988 011e 17       		.uleb128 0x17
+ 1989 011f 26       		.uleb128 0x26
+ 1990 0120 00       		.byte	0
+ 1991 0121 49       		.uleb128 0x49
+ 1992 0122 13       		.uleb128 0x13
+ 1993 0123 00       		.byte	0
+ 1994 0124 00       		.byte	0
+ 1995 0125 18       		.uleb128 0x18
+ 1996 0126 2E       		.uleb128 0x2e
+ 1997 0127 01       		.byte	0x1
+ 1998 0128 03       		.uleb128 0x3
+ 1999 0129 0E       		.uleb128 0xe
+ 2000 012a 3A       		.uleb128 0x3a
+ 2001 012b 0B       		.uleb128 0xb
+ 2002 012c 3B       		.uleb128 0x3b
+ 2003 012d 05       		.uleb128 0x5
+ 2004 012e 27       		.uleb128 0x27
+ 2005 012f 19       		.uleb128 0x19
+ 2006 0130 11       		.uleb128 0x11
+ 2007 0131 01       		.uleb128 0x1
+ 2008 0132 12       		.uleb128 0x12
+ 2009 0133 06       		.uleb128 0x6
+ 2010 0134 40       		.uleb128 0x40
+ 2011 0135 18       		.uleb128 0x18
+ 2012 0136 9742     		.uleb128 0x2117
+ 2013 0138 19       		.uleb128 0x19
+ 2014 0139 01       		.uleb128 0x1
+ 2015 013a 13       		.uleb128 0x13
+ 2016 013b 00       		.byte	0
+ 2017 013c 00       		.byte	0
+ 2018 013d 19       		.uleb128 0x19
+ 2019 013e 2E       		.uleb128 0x2e
+ 2020 013f 01       		.byte	0x1
+ 2021 0140 3F       		.uleb128 0x3f
+ 2022 0141 19       		.uleb128 0x19
+ 2023 0142 03       		.uleb128 0x3
+ 2024 0143 0E       		.uleb128 0xe
+ 2025 0144 3A       		.uleb128 0x3a
+ 2026 0145 0B       		.uleb128 0xb
+ 2027 0146 3B       		.uleb128 0x3b
+ 2028 0147 0B       		.uleb128 0xb
+ 2029 0148 27       		.uleb128 0x27
+ 2030 0149 19       		.uleb128 0x19
+ARM GAS  C:\Users\addis\AppData\Local\Temp\ccUS9kEI.s 			page 52
+
+
+ 2031 014a 49       		.uleb128 0x49
+ 2032 014b 13       		.uleb128 0x13
+ 2033 014c 11       		.uleb128 0x11
+ 2034 014d 01       		.uleb128 0x1
+ 2035 014e 12       		.uleb128 0x12
+ 2036 014f 06       		.uleb128 0x6
+ 2037 0150 40       		.uleb128 0x40
+ 2038 0151 18       		.uleb128 0x18
+ 2039 0152 9742     		.uleb128 0x2117
+ 2040 0154 19       		.uleb128 0x19
+ 2041 0155 01       		.uleb128 0x1
+ 2042 0156 13       		.uleb128 0x13
+ 2043 0157 00       		.byte	0
+ 2044 0158 00       		.byte	0
+ 2045 0159 1A       		.uleb128 0x1a
+ 2046 015a 34       		.uleb128 0x34
+ 2047 015b 00       		.byte	0
+ 2048 015c 03       		.uleb128 0x3
+ 2049 015d 0E       		.uleb128 0xe
+ 2050 015e 3A       		.uleb128 0x3a
+ 2051 015f 0B       		.uleb128 0xb
+ 2052 0160 3B       		.uleb128 0x3b
+ 2053 0161 0B       		.uleb128 0xb
+ 2054 0162 49       		.uleb128 0x49
+ 2055 0163 13       		.uleb128 0x13
+ 2056 0164 02       		.uleb128 0x2
+ 2057 0165 17       		.uleb128 0x17
+ 2058 0166 00       		.byte	0
+ 2059 0167 00       		.byte	0
+ 2060 0168 1B       		.uleb128 0x1b
+ 2061 0169 2E       		.uleb128 0x2e
+ 2062 016a 01       		.byte	0x1
+ 2063 016b 3F       		.uleb128 0x3f
+ 2064 016c 19       		.uleb128 0x19
+ 2065 016d 03       		.uleb128 0x3
+ 2066 016e 0E       		.uleb128 0xe
+ 2067 016f 3A       		.uleb128 0x3a
+ 2068 0170 0B       		.uleb128 0xb
+ 2069 0171 3B       		.uleb128 0x3b
+ 2070 0172 05       		.uleb128 0x5
+ 2071 0173 27       		.uleb128 0x27
+ 2072 0174 19       		.uleb128 0x19
+ 2073 0175 11       		.uleb128 0x11
+ 2074 0176 01       		.uleb128 0x1
+ 2075 0177 12       		.uleb128 0x12
+ 2076 0178 06       		.uleb128 0x6
+ 2077 0179 40       		.uleb128 0x40
+ 2078 017a 18       		.uleb128 0x18
+ 2079 017b 9742     		.uleb128 0x2117
+ 2080 017d 19       		.uleb128 0x19
+ 2081 017e 01       		.uleb128 0x1
+ 2082 017f 13       		.uleb128 0x13
+ 2083 0180 00       		.byte	0
+ 2084 0181 00       		.byte	0
+ 2085 0182 1C       		.uleb128 0x1c
+ 2086 0183 2E       		.uleb128 0x2e
+ 2087 0184 00       		.byte	0
+ARM GAS  C:\Users\addis\AppData\Local\Temp\ccUS9kEI.s 			page 53
+
+
+ 2088 0185 3F       		.uleb128 0x3f
+ 2089 0186 19       		.uleb128 0x19
+ 2090 0187 03       		.uleb128 0x3
+ 2091 0188 0E       		.uleb128 0xe
+ 2092 0189 3A       		.uleb128 0x3a
+ 2093 018a 0B       		.uleb128 0xb
+ 2094 018b 3B       		.uleb128 0x3b
+ 2095 018c 05       		.uleb128 0x5
+ 2096 018d 27       		.uleb128 0x27
+ 2097 018e 19       		.uleb128 0x19
+ 2098 018f 11       		.uleb128 0x11
+ 2099 0190 01       		.uleb128 0x1
+ 2100 0191 12       		.uleb128 0x12
+ 2101 0192 06       		.uleb128 0x6
+ 2102 0193 40       		.uleb128 0x40
+ 2103 0194 18       		.uleb128 0x18
+ 2104 0195 9742     		.uleb128 0x2117
+ 2105 0197 19       		.uleb128 0x19
+ 2106 0198 00       		.byte	0
+ 2107 0199 00       		.byte	0
+ 2108 019a 1D       		.uleb128 0x1d
+ 2109 019b 2E       		.uleb128 0x2e
+ 2110 019c 01       		.byte	0x1
+ 2111 019d 3F       		.uleb128 0x3f
+ 2112 019e 19       		.uleb128 0x19
+ 2113 019f 03       		.uleb128 0x3
+ 2114 01a0 0E       		.uleb128 0xe
+ 2115 01a1 3A       		.uleb128 0x3a
+ 2116 01a2 0B       		.uleb128 0xb
+ 2117 01a3 3B       		.uleb128 0x3b
+ 2118 01a4 05       		.uleb128 0x5
+ 2119 01a5 27       		.uleb128 0x27
+ 2120 01a6 19       		.uleb128 0x19
+ 2121 01a7 49       		.uleb128 0x49
+ 2122 01a8 13       		.uleb128 0x13
+ 2123 01a9 11       		.uleb128 0x11
+ 2124 01aa 01       		.uleb128 0x1
+ 2125 01ab 12       		.uleb128 0x12
+ 2126 01ac 06       		.uleb128 0x6
+ 2127 01ad 40       		.uleb128 0x40
+ 2128 01ae 18       		.uleb128 0x18
+ 2129 01af 9742     		.uleb128 0x2117
+ 2130 01b1 19       		.uleb128 0x19
+ 2131 01b2 01       		.uleb128 0x1
+ 2132 01b3 13       		.uleb128 0x13
+ 2133 01b4 00       		.byte	0
+ 2134 01b5 00       		.byte	0
+ 2135 01b6 1E       		.uleb128 0x1e
+ 2136 01b7 05       		.uleb128 0x5
+ 2137 01b8 00       		.byte	0
+ 2138 01b9 03       		.uleb128 0x3
+ 2139 01ba 0E       		.uleb128 0xe
+ 2140 01bb 3A       		.uleb128 0x3a
+ 2141 01bc 0B       		.uleb128 0xb
+ 2142 01bd 3B       		.uleb128 0x3b
+ 2143 01be 05       		.uleb128 0x5
+ 2144 01bf 49       		.uleb128 0x49
+ARM GAS  C:\Users\addis\AppData\Local\Temp\ccUS9kEI.s 			page 54
+
+
+ 2145 01c0 13       		.uleb128 0x13
+ 2146 01c1 02       		.uleb128 0x2
+ 2147 01c2 17       		.uleb128 0x17
+ 2148 01c3 00       		.byte	0
+ 2149 01c4 00       		.byte	0
+ 2150 01c5 1F       		.uleb128 0x1f
+ 2151 01c6 2E       		.uleb128 0x2e
+ 2152 01c7 01       		.byte	0x1
+ 2153 01c8 3F       		.uleb128 0x3f
+ 2154 01c9 19       		.uleb128 0x19
+ 2155 01ca 03       		.uleb128 0x3
+ 2156 01cb 0E       		.uleb128 0xe
+ 2157 01cc 3A       		.uleb128 0x3a
+ 2158 01cd 0B       		.uleb128 0xb
+ 2159 01ce 3B       		.uleb128 0x3b
+ 2160 01cf 0B       		.uleb128 0xb
+ 2161 01d0 27       		.uleb128 0x27
+ 2162 01d1 19       		.uleb128 0x19
+ 2163 01d2 11       		.uleb128 0x11
+ 2164 01d3 01       		.uleb128 0x1
+ 2165 01d4 12       		.uleb128 0x12
+ 2166 01d5 06       		.uleb128 0x6
+ 2167 01d6 40       		.uleb128 0x40
+ 2168 01d7 18       		.uleb128 0x18
+ 2169 01d8 9742     		.uleb128 0x2117
+ 2170 01da 19       		.uleb128 0x19
+ 2171 01db 01       		.uleb128 0x1
+ 2172 01dc 13       		.uleb128 0x13
+ 2173 01dd 00       		.byte	0
+ 2174 01de 00       		.byte	0
+ 2175 01df 20       		.uleb128 0x20
+ 2176 01e0 34       		.uleb128 0x34
+ 2177 01e1 00       		.byte	0
+ 2178 01e2 03       		.uleb128 0x3
+ 2179 01e3 0E       		.uleb128 0xe
+ 2180 01e4 3A       		.uleb128 0x3a
+ 2181 01e5 0B       		.uleb128 0xb
+ 2182 01e6 3B       		.uleb128 0x3b
+ 2183 01e7 0B       		.uleb128 0xb
+ 2184 01e8 49       		.uleb128 0x49
+ 2185 01e9 13       		.uleb128 0x13
+ 2186 01ea 02       		.uleb128 0x2
+ 2187 01eb 18       		.uleb128 0x18
+ 2188 01ec 00       		.byte	0
+ 2189 01ed 00       		.byte	0
+ 2190 01ee 21       		.uleb128 0x21
+ 2191 01ef 34       		.uleb128 0x34
+ 2192 01f0 00       		.byte	0
+ 2193 01f1 03       		.uleb128 0x3
+ 2194 01f2 0E       		.uleb128 0xe
+ 2195 01f3 3A       		.uleb128 0x3a
+ 2196 01f4 0B       		.uleb128 0xb
+ 2197 01f5 3B       		.uleb128 0x3b
+ 2198 01f6 0B       		.uleb128 0xb
+ 2199 01f7 49       		.uleb128 0x49
+ 2200 01f8 13       		.uleb128 0x13
+ 2201 01f9 1C       		.uleb128 0x1c
+ARM GAS  C:\Users\addis\AppData\Local\Temp\ccUS9kEI.s 			page 55
+
+
+ 2202 01fa 0A       		.uleb128 0xa
+ 2203 01fb 00       		.byte	0
+ 2204 01fc 00       		.byte	0
+ 2205 01fd 22       		.uleb128 0x22
+ 2206 01fe 34       		.uleb128 0x34
+ 2207 01ff 00       		.byte	0
+ 2208 0200 03       		.uleb128 0x3
+ 2209 0201 0E       		.uleb128 0xe
+ 2210 0202 3A       		.uleb128 0x3a
+ 2211 0203 0B       		.uleb128 0xb
+ 2212 0204 3B       		.uleb128 0x3b
+ 2213 0205 0B       		.uleb128 0xb
+ 2214 0206 49       		.uleb128 0x49
+ 2215 0207 13       		.uleb128 0x13
+ 2216 0208 3F       		.uleb128 0x3f
+ 2217 0209 19       		.uleb128 0x19
+ 2218 020a 02       		.uleb128 0x2
+ 2219 020b 18       		.uleb128 0x18
+ 2220 020c 00       		.byte	0
+ 2221 020d 00       		.byte	0
+ 2222 020e 23       		.uleb128 0x23
+ 2223 020f 2E       		.uleb128 0x2e
+ 2224 0210 01       		.byte	0x1
+ 2225 0211 3F       		.uleb128 0x3f
+ 2226 0212 19       		.uleb128 0x19
+ 2227 0213 03       		.uleb128 0x3
+ 2228 0214 0E       		.uleb128 0xe
+ 2229 0215 3A       		.uleb128 0x3a
+ 2230 0216 0B       		.uleb128 0xb
+ 2231 0217 3B       		.uleb128 0x3b
+ 2232 0218 0B       		.uleb128 0xb
+ 2233 0219 27       		.uleb128 0x27
+ 2234 021a 19       		.uleb128 0x19
+ 2235 021b 49       		.uleb128 0x49
+ 2236 021c 13       		.uleb128 0x13
+ 2237 021d 3C       		.uleb128 0x3c
+ 2238 021e 19       		.uleb128 0x19
+ 2239 021f 01       		.uleb128 0x1
+ 2240 0220 13       		.uleb128 0x13
+ 2241 0221 00       		.byte	0
+ 2242 0222 00       		.byte	0
+ 2243 0223 24       		.uleb128 0x24
+ 2244 0224 05       		.uleb128 0x5
+ 2245 0225 00       		.byte	0
+ 2246 0226 49       		.uleb128 0x49
+ 2247 0227 13       		.uleb128 0x13
+ 2248 0228 00       		.byte	0
+ 2249 0229 00       		.byte	0
+ 2250 022a 25       		.uleb128 0x25
+ 2251 022b 2E       		.uleb128 0x2e
+ 2252 022c 00       		.byte	0
+ 2253 022d 3F       		.uleb128 0x3f
+ 2254 022e 19       		.uleb128 0x19
+ 2255 022f 03       		.uleb128 0x3
+ 2256 0230 0E       		.uleb128 0xe
+ 2257 0231 3A       		.uleb128 0x3a
+ 2258 0232 0B       		.uleb128 0xb
+ARM GAS  C:\Users\addis\AppData\Local\Temp\ccUS9kEI.s 			page 56
+
+
+ 2259 0233 3B       		.uleb128 0x3b
+ 2260 0234 0B       		.uleb128 0xb
+ 2261 0235 27       		.uleb128 0x27
+ 2262 0236 19       		.uleb128 0x19
+ 2263 0237 49       		.uleb128 0x49
+ 2264 0238 13       		.uleb128 0x13
+ 2265 0239 3C       		.uleb128 0x3c
+ 2266 023a 19       		.uleb128 0x19
+ 2267 023b 00       		.byte	0
+ 2268 023c 00       		.byte	0
+ 2269 023d 26       		.uleb128 0x26
+ 2270 023e 2E       		.uleb128 0x2e
+ 2271 023f 00       		.byte	0
+ 2272 0240 3F       		.uleb128 0x3f
+ 2273 0241 19       		.uleb128 0x19
+ 2274 0242 03       		.uleb128 0x3
+ 2275 0243 0E       		.uleb128 0xe
+ 2276 0244 3A       		.uleb128 0x3a
+ 2277 0245 0B       		.uleb128 0xb
+ 2278 0246 3B       		.uleb128 0x3b
+ 2279 0247 0B       		.uleb128 0xb
+ 2280 0248 27       		.uleb128 0x27
+ 2281 0249 19       		.uleb128 0x19
+ 2282 024a 3C       		.uleb128 0x3c
+ 2283 024b 19       		.uleb128 0x19
+ 2284 024c 00       		.byte	0
+ 2285 024d 00       		.byte	0
+ 2286 024e 27       		.uleb128 0x27
+ 2287 024f 2E       		.uleb128 0x2e
+ 2288 0250 01       		.byte	0x1
+ 2289 0251 3F       		.uleb128 0x3f
+ 2290 0252 19       		.uleb128 0x19
+ 2291 0253 03       		.uleb128 0x3
+ 2292 0254 0E       		.uleb128 0xe
+ 2293 0255 3A       		.uleb128 0x3a
+ 2294 0256 0B       		.uleb128 0xb
+ 2295 0257 3B       		.uleb128 0x3b
+ 2296 0258 0B       		.uleb128 0xb
+ 2297 0259 27       		.uleb128 0x27
+ 2298 025a 19       		.uleb128 0x19
+ 2299 025b 3C       		.uleb128 0x3c
+ 2300 025c 19       		.uleb128 0x19
+ 2301 025d 01       		.uleb128 0x1
+ 2302 025e 13       		.uleb128 0x13
+ 2303 025f 00       		.byte	0
+ 2304 0260 00       		.byte	0
+ 2305 0261 28       		.uleb128 0x28
+ 2306 0262 2E       		.uleb128 0x2e
+ 2307 0263 01       		.byte	0x1
+ 2308 0264 3F       		.uleb128 0x3f
+ 2309 0265 19       		.uleb128 0x19
+ 2310 0266 03       		.uleb128 0x3
+ 2311 0267 0E       		.uleb128 0xe
+ 2312 0268 3A       		.uleb128 0x3a
+ 2313 0269 0B       		.uleb128 0xb
+ 2314 026a 3B       		.uleb128 0x3b
+ 2315 026b 0B       		.uleb128 0xb
+ARM GAS  C:\Users\addis\AppData\Local\Temp\ccUS9kEI.s 			page 57
+
+
+ 2316 026c 27       		.uleb128 0x27
+ 2317 026d 19       		.uleb128 0x19
+ 2318 026e 3C       		.uleb128 0x3c
+ 2319 026f 19       		.uleb128 0x19
+ 2320 0270 00       		.byte	0
+ 2321 0271 00       		.byte	0
+ 2322 0272 00       		.byte	0
+ 2323              		.section	.debug_loc,"",%progbits
+ 2324              	.Ldebug_loc0:
+ 2325              	.LLST0:
+ 2326 0000 04000000 		.4byte	.LVL0
+ 2327 0004 00010000 		.4byte	.LVL25
+ 2328 0008 0200     		.2byte	0x2
+ 2329 000a 34       		.byte	0x34
+ 2330 000b 9F       		.byte	0x9f
+ 2331 000c 00010000 		.4byte	.LVL25
+ 2332 0010 06010000 		.4byte	.LVL26
+ 2333 0014 0200     		.2byte	0x2
+ 2334 0016 30       		.byte	0x30
+ 2335 0017 9F       		.byte	0x9f
+ 2336 0018 06010000 		.4byte	.LVL26
+ 2337 001c 08010000 		.4byte	.LVL27
+ 2338 0020 0200     		.2byte	0x2
+ 2339 0022 34       		.byte	0x34
+ 2340 0023 9F       		.byte	0x9f
+ 2341 0024 08010000 		.4byte	.LVL27
+ 2342 0028 14010000 		.4byte	.LFE2
+ 2343 002c 0100     		.2byte	0x1
+ 2344 002e 50       		.byte	0x50
+ 2345 002f 00000000 		.4byte	0
+ 2346 0033 00000000 		.4byte	0
+ 2347              	.LLST1:
+ 2348 0037 28000000 		.4byte	.LVL3
+ 2349 003b 42000000 		.4byte	.LVL7
+ 2350 003f 0100     		.2byte	0x1
+ 2351 0041 54       		.byte	0x54
+ 2352 0042 44000000 		.4byte	.LVL8
+ 2353 0046 46000000 		.4byte	.LVL9
+ 2354 004a 0100     		.2byte	0x1
+ 2355 004c 54       		.byte	0x54
+ 2356 004d 48000000 		.4byte	.LVL10
+ 2357 0051 54000000 		.4byte	.LVL12
+ 2358 0055 0100     		.2byte	0x1
+ 2359 0057 54       		.byte	0x54
+ 2360 0058 5E000000 		.4byte	.LVL13
+ 2361 005c D4000000 		.4byte	.LVL18
+ 2362 0060 0100     		.2byte	0x1
+ 2363 0062 54       		.byte	0x54
+ 2364 0063 D6000000 		.4byte	.LVL19
+ 2365 0067 D8000000 		.4byte	.LVL20
+ 2366 006b 0100     		.2byte	0x1
+ 2367 006d 54       		.byte	0x54
+ 2368 006e DA000000 		.4byte	.LVL21
+ 2369 0072 E2000000 		.4byte	.LVL23
+ 2370 0076 0100     		.2byte	0x1
+ 2371 0078 54       		.byte	0x54
+ 2372 0079 00000000 		.4byte	0
+ARM GAS  C:\Users\addis\AppData\Local\Temp\ccUS9kEI.s 			page 58
+
+
+ 2373 007d 00000000 		.4byte	0
+ 2374              	.LLST2:
+ 2375 0081 28000000 		.4byte	.LVL3
+ 2376 0085 50000000 		.4byte	.LVL11
+ 2377 0089 0100     		.2byte	0x1
+ 2378 008b 58       		.byte	0x58
+ 2379 008c 54000000 		.4byte	.LVL12
+ 2380 0090 5E000000 		.4byte	.LVL13
+ 2381 0094 0100     		.2byte	0x1
+ 2382 0096 58       		.byte	0x58
+ 2383 0097 5E000000 		.4byte	.LVL13
+ 2384 009b E0000000 		.4byte	.LVL22
+ 2385 009f 0100     		.2byte	0x1
+ 2386 00a1 55       		.byte	0x55
+ 2387 00a2 E2000000 		.4byte	.LVL23
+ 2388 00a6 0C010000 		.4byte	.LVL28
+ 2389 00aa 0100     		.2byte	0x1
+ 2390 00ac 55       		.byte	0x55
+ 2391 00ad 00000000 		.4byte	0
+ 2392 00b1 00000000 		.4byte	0
+ 2393              	.LLST3:
+ 2394 00b5 04000000 		.4byte	.LVL0
+ 2395 00b9 28000000 		.4byte	.LVL3
+ 2396 00bd 0200     		.2byte	0x2
+ 2397 00bf 30       		.byte	0x30
+ 2398 00c0 9F       		.byte	0x9f
+ 2399 00c1 28000000 		.4byte	.LVL3
+ 2400 00c5 3E000000 		.4byte	.LVL5
+ 2401 00c9 0100     		.2byte	0x1
+ 2402 00cb 56       		.byte	0x56
+ 2403 00cc 40000000 		.4byte	.LVL6
+ 2404 00d0 0C010000 		.4byte	.LVL28
+ 2405 00d4 0100     		.2byte	0x1
+ 2406 00d6 56       		.byte	0x56
+ 2407 00d7 00000000 		.4byte	0
+ 2408 00db 00000000 		.4byte	0
+ 2409              	.LLST4:
+ 2410 00df 10000000 		.4byte	.LVL30
+ 2411 00e3 14000000 		.4byte	.LVL31
+ 2412 00e7 0200     		.2byte	0x2
+ 2413 00e9 30       		.byte	0x30
+ 2414 00ea 9F       		.byte	0x9f
+ 2415 00eb 14000000 		.4byte	.LVL31
+ 2416 00ef 22000000 		.4byte	.LVL33
+ 2417 00f3 0100     		.2byte	0x1
+ 2418 00f5 54       		.byte	0x54
+ 2419 00f6 24000000 		.4byte	.LVL34
+ 2420 00fa 2A000000 		.4byte	.LVL35
+ 2421 00fe 0100     		.2byte	0x1
+ 2422 0100 54       		.byte	0x54
+ 2423 0101 00000000 		.4byte	0
+ 2424 0105 00000000 		.4byte	0
+ 2425              	.LLST5:
+ 2426 0109 08000000 		.4byte	.LVL37
+ 2427 010d 18000000 		.4byte	.LVL39
+ 2428 0111 0100     		.2byte	0x1
+ 2429 0113 54       		.byte	0x54
+ARM GAS  C:\Users\addis\AppData\Local\Temp\ccUS9kEI.s 			page 59
+
+
+ 2430 0114 00000000 		.4byte	0
+ 2431 0118 00000000 		.4byte	0
+ 2432              	.LLST6:
+ 2433 011c 00000000 		.4byte	.LVL42
+ 2434 0120 0C000000 		.4byte	.LVL44
+ 2435 0124 0100     		.2byte	0x1
+ 2436 0126 50       		.byte	0x50
+ 2437 0127 0C000000 		.4byte	.LVL44
+ 2438 012b 18000000 		.4byte	.LVL46
+ 2439 012f 0400     		.2byte	0x4
+ 2440 0131 F3       		.byte	0xf3
+ 2441 0132 01       		.uleb128 0x1
+ 2442 0133 50       		.byte	0x50
+ 2443 0134 9F       		.byte	0x9f
+ 2444 0135 18000000 		.4byte	.LVL46
+ 2445 0139 1A000000 		.4byte	.LVL47
+ 2446 013d 0100     		.2byte	0x1
+ 2447 013f 50       		.byte	0x50
+ 2448 0140 1A000000 		.4byte	.LVL47
+ 2449 0144 20000000 		.4byte	.LFE10
+ 2450 0148 0400     		.2byte	0x4
+ 2451 014a F3       		.byte	0xf3
+ 2452 014b 01       		.uleb128 0x1
+ 2453 014c 50       		.byte	0x50
+ 2454 014d 9F       		.byte	0x9f
+ 2455 014e 00000000 		.4byte	0
+ 2456 0152 00000000 		.4byte	0
+ 2457              	.LLST7:
+ 2458 0156 08000000 		.4byte	.LVL43
+ 2459 015a 0C000000 		.4byte	.LVL44
+ 2460 015e 0600     		.2byte	0x6
+ 2461 0160 70       		.byte	0x70
+ 2462 0161 00       		.sleb128 0
+ 2463 0162 09       		.byte	0x9
+ 2464 0163 FC       		.byte	0xfc
+ 2465 0164 24       		.byte	0x24
+ 2466 0165 9F       		.byte	0x9f
+ 2467 0166 00000000 		.4byte	0
+ 2468 016a 00000000 		.4byte	0
+ 2469              	.LLST8:
+ 2470 016e 08000000 		.4byte	.LVL43
+ 2471 0172 18000000 		.4byte	.LVL46
+ 2472 0176 0100     		.2byte	0x1
+ 2473 0178 53       		.byte	0x53
+ 2474 0179 00000000 		.4byte	0
+ 2475 017d 00000000 		.4byte	0
+ 2476              	.LLST9:
+ 2477 0181 08000000 		.4byte	.LVL43
+ 2478 0185 0C000000 		.4byte	.LVL44
+ 2479 0189 0600     		.2byte	0x6
+ 2480 018b 70       		.byte	0x70
+ 2481 018c 00       		.sleb128 0
+ 2482 018d 09       		.byte	0x9
+ 2483 018e F8       		.byte	0xf8
+ 2484 018f 24       		.byte	0x24
+ 2485 0190 9F       		.byte	0x9f
+ 2486 0191 00000000 		.4byte	0
+ARM GAS  C:\Users\addis\AppData\Local\Temp\ccUS9kEI.s 			page 60
+
+
+ 2487 0195 00000000 		.4byte	0
+ 2488              	.LLST10:
+ 2489 0199 16000000 		.4byte	.LVL45
+ 2490 019d 18000000 		.4byte	.LVL46
+ 2491 01a1 0100     		.2byte	0x1
+ 2492 01a3 50       		.byte	0x50
+ 2493 01a4 1A000000 		.4byte	.LVL47
+ 2494 01a8 20000000 		.4byte	.LFE10
+ 2495 01ac 0100     		.2byte	0x1
+ 2496 01ae 50       		.byte	0x50
+ 2497 01af 00000000 		.4byte	0
+ 2498 01b3 00000000 		.4byte	0
+ 2499              	.LLST11:
+ 2500 01b7 00000000 		.4byte	.LVL48
+ 2501 01bb 1D000000 		.4byte	.LVL52-1
+ 2502 01bf 0100     		.2byte	0x1
+ 2503 01c1 50       		.byte	0x50
+ 2504 01c2 1D000000 		.4byte	.LVL52-1
+ 2505 01c6 5C000000 		.4byte	.LVL64
+ 2506 01ca 0400     		.2byte	0x4
+ 2507 01cc F3       		.byte	0xf3
+ 2508 01cd 01       		.uleb128 0x1
+ 2509 01ce 50       		.byte	0x50
+ 2510 01cf 9F       		.byte	0x9f
+ 2511 01d0 5C000000 		.4byte	.LVL64
+ 2512 01d4 5E000000 		.4byte	.LVL65
+ 2513 01d8 0100     		.2byte	0x1
+ 2514 01da 50       		.byte	0x50
+ 2515 01db 5E000000 		.4byte	.LVL65
+ 2516 01df 60000000 		.4byte	.LVL66
+ 2517 01e3 0400     		.2byte	0x4
+ 2518 01e5 F3       		.byte	0xf3
+ 2519 01e6 01       		.uleb128 0x1
+ 2520 01e7 50       		.byte	0x50
+ 2521 01e8 9F       		.byte	0x9f
+ 2522 01e9 60000000 		.4byte	.LVL66
+ 2523 01ed 62000000 		.4byte	.LVL67
+ 2524 01f1 0100     		.2byte	0x1
+ 2525 01f3 50       		.byte	0x50
+ 2526 01f4 62000000 		.4byte	.LVL67
+ 2527 01f8 68000000 		.4byte	.LFE9
+ 2528 01fc 0400     		.2byte	0x4
+ 2529 01fe F3       		.byte	0xf3
+ 2530 01ff 01       		.uleb128 0x1
+ 2531 0200 50       		.byte	0x50
+ 2532 0201 9F       		.byte	0x9f
+ 2533 0202 00000000 		.4byte	0
+ 2534 0206 00000000 		.4byte	0
+ 2535              	.LLST12:
+ 2536 020a 00000000 		.4byte	.LVL48
+ 2537 020e 1D000000 		.4byte	.LVL52-1
+ 2538 0212 0100     		.2byte	0x1
+ 2539 0214 51       		.byte	0x51
+ 2540 0215 1D000000 		.4byte	.LVL52-1
+ 2541 0219 22000000 		.4byte	.LVL53
+ 2542 021d 0400     		.2byte	0x4
+ 2543 021f F3       		.byte	0xf3
+ARM GAS  C:\Users\addis\AppData\Local\Temp\ccUS9kEI.s 			page 61
+
+
+ 2544 0220 01       		.uleb128 0x1
+ 2545 0221 51       		.byte	0x51
+ 2546 0222 9F       		.byte	0x9f
+ 2547 0223 22000000 		.4byte	.LVL53
+ 2548 0227 52000000 		.4byte	.LVL61
+ 2549 022b 0100     		.2byte	0x1
+ 2550 022d 51       		.byte	0x51
+ 2551 022e 5C000000 		.4byte	.LVL64
+ 2552 0232 68000000 		.4byte	.LFE9
+ 2553 0236 0100     		.2byte	0x1
+ 2554 0238 51       		.byte	0x51
+ 2555 0239 00000000 		.4byte	0
+ 2556 023d 00000000 		.4byte	0
+ 2557              	.LLST13:
+ 2558 0241 12000000 		.4byte	.LVL50
+ 2559 0245 38000000 		.4byte	.LVL56
+ 2560 0249 0100     		.2byte	0x1
+ 2561 024b 54       		.byte	0x54
+ 2562 024c 38000000 		.4byte	.LVL56
+ 2563 0250 50000000 		.4byte	.LVL60
+ 2564 0254 0100     		.2byte	0x1
+ 2565 0256 50       		.byte	0x50
+ 2566 0257 00000000 		.4byte	0
+ 2567 025b 00000000 		.4byte	0
+ 2568              	.LLST14:
+ 2569 025f 0E000000 		.4byte	.LVL49
+ 2570 0263 5C000000 		.4byte	.LVL64
+ 2571 0267 0100     		.2byte	0x1
+ 2572 0269 55       		.byte	0x55
+ 2573 026a 00000000 		.4byte	0
+ 2574 026e 00000000 		.4byte	0
+ 2575              	.LLST15:
+ 2576 0272 16000000 		.4byte	.LVL51
+ 2577 0276 36000000 		.4byte	.LVL55
+ 2578 027a 0100     		.2byte	0x1
+ 2579 027c 56       		.byte	0x56
+ 2580 027d 36000000 		.4byte	.LVL55
+ 2581 0281 4A000000 		.4byte	.LVL58
+ 2582 0285 0100     		.2byte	0x1
+ 2583 0287 52       		.byte	0x52
+ 2584 0288 4A000000 		.4byte	.LVL58
+ 2585 028c 4E000000 		.4byte	.LVL59
+ 2586 0290 0300     		.2byte	0x3
+ 2587 0292 72       		.byte	0x72
+ 2588 0293 7F       		.sleb128 -1
+ 2589 0294 9F       		.byte	0x9f
+ 2590 0295 00000000 		.4byte	0
+ 2591 0299 00000000 		.4byte	0
+ 2592              	.LLST16:
+ 2593 029d 2C000000 		.4byte	.LVL54
+ 2594 02a1 54000000 		.4byte	.LVL62
+ 2595 02a5 0100     		.2byte	0x1
+ 2596 02a7 53       		.byte	0x53
+ 2597 02a8 54000000 		.4byte	.LVL62
+ 2598 02ac 5C000000 		.4byte	.LVL64
+ 2599 02b0 1100     		.2byte	0x11
+ 2600 02b2 09       		.byte	0x9
+ARM GAS  C:\Users\addis\AppData\Local\Temp\ccUS9kEI.s 			page 62
+
+
+ 2601 02b3 FE       		.byte	0xfe
+ 2602 02b4 75       		.byte	0x75
+ 2603 02b5 00       		.sleb128 0
+ 2604 02b6 14       		.byte	0x14
+ 2605 02b7 14       		.byte	0x14
+ 2606 02b8 24       		.byte	0x24
+ 2607 02b9 17       		.byte	0x17
+ 2608 02ba 1F       		.byte	0x1f
+ 2609 02bb 23       		.byte	0x23
+ 2610 02bc 20       		.uleb128 0x20
+ 2611 02bd 25       		.byte	0x25
+ 2612 02be 21       		.byte	0x21
+ 2613 02bf 08       		.byte	0x8
+ 2614 02c0 FF       		.byte	0xff
+ 2615 02c1 1A       		.byte	0x1a
+ 2616 02c2 9F       		.byte	0x9f
+ 2617 02c3 00000000 		.4byte	0
+ 2618 02c7 00000000 		.4byte	0
+ 2619              	.LLST17:
+ 2620 02cb 58000000 		.4byte	.LVL63
+ 2621 02cf 5C000000 		.4byte	.LVL64
+ 2622 02d3 0200     		.2byte	0x2
+ 2623 02d5 30       		.byte	0x30
+ 2624 02d6 9F       		.byte	0x9f
+ 2625 02d7 00000000 		.4byte	0
+ 2626 02db 00000000 		.4byte	0
+ 2627              	.LLST18:
+ 2628 02df 02000000 		.4byte	.LVL68
+ 2629 02e3 06000000 		.4byte	.LVL69
+ 2630 02e7 0200     		.2byte	0x2
+ 2631 02e9 30       		.byte	0x30
+ 2632 02ea 9F       		.byte	0x9f
+ 2633 02eb 06000000 		.4byte	.LVL69
+ 2634 02ef 1A000000 		.4byte	.LVL70
+ 2635 02f3 0100     		.2byte	0x1
+ 2636 02f5 53       		.byte	0x53
+ 2637 02f6 1C000000 		.4byte	.LVL71
+ 2638 02fa 27000000 		.4byte	.LVL72-1
+ 2639 02fe 0100     		.2byte	0x1
+ 2640 0300 53       		.byte	0x53
+ 2641 0301 00000000 		.4byte	0
+ 2642 0305 00000000 		.4byte	0
+ 2643              	.LLST19:
+ 2644 0309 00000000 		.4byte	.LVL78
+ 2645 030d 0A000000 		.4byte	.LVL79
+ 2646 0311 0100     		.2byte	0x1
+ 2647 0313 50       		.byte	0x50
+ 2648 0314 0A000000 		.4byte	.LVL79
+ 2649 0318 14000000 		.4byte	.LVL81
+ 2650 031c 0400     		.2byte	0x4
+ 2651 031e F3       		.byte	0xf3
+ 2652 031f 01       		.uleb128 0x1
+ 2653 0320 50       		.byte	0x50
+ 2654 0321 9F       		.byte	0x9f
+ 2655 0322 14000000 		.4byte	.LVL81
+ 2656 0326 16000000 		.4byte	.LVL82
+ 2657 032a 0100     		.2byte	0x1
+ARM GAS  C:\Users\addis\AppData\Local\Temp\ccUS9kEI.s 			page 63
+
+
+ 2658 032c 50       		.byte	0x50
+ 2659 032d 16000000 		.4byte	.LVL82
+ 2660 0331 20000000 		.4byte	.LVL84
+ 2661 0335 0400     		.2byte	0x4
+ 2662 0337 F3       		.byte	0xf3
+ 2663 0338 01       		.uleb128 0x1
+ 2664 0339 50       		.byte	0x50
+ 2665 033a 9F       		.byte	0x9f
+ 2666 033b 20000000 		.4byte	.LVL84
+ 2667 033f 22000000 		.4byte	.LVL85
+ 2668 0343 0100     		.2byte	0x1
+ 2669 0345 50       		.byte	0x50
+ 2670 0346 22000000 		.4byte	.LVL85
+ 2671 034a 24000000 		.4byte	.LFE11
+ 2672 034e 0400     		.2byte	0x4
+ 2673 0350 F3       		.byte	0xf3
+ 2674 0351 01       		.uleb128 0x1
+ 2675 0352 50       		.byte	0x50
+ 2676 0353 9F       		.byte	0x9f
+ 2677 0354 00000000 		.4byte	0
+ 2678 0358 00000000 		.4byte	0
+ 2679              	.LLST20:
+ 2680 035c 02000000 		.4byte	.LVL86
+ 2681 0360 10000000 		.4byte	.LVL88
+ 2682 0364 0200     		.2byte	0x2
+ 2683 0366 31       		.byte	0x31
+ 2684 0367 9F       		.byte	0x9f
+ 2685 0368 10000000 		.4byte	.LVL88
+ 2686 036c 12000000 		.4byte	.LFE12
+ 2687 0370 0100     		.2byte	0x1
+ 2688 0372 50       		.byte	0x50
+ 2689 0373 00000000 		.4byte	0
+ 2690 0377 00000000 		.4byte	0
+ 2691              		.section	.debug_aranges,"",%progbits
+ 2692 0000 7C000000 		.4byte	0x7c
+ 2693 0004 0200     		.2byte	0x2
+ 2694 0006 00000000 		.4byte	.Ldebug_info0
+ 2695 000a 04       		.byte	0x4
+ 2696 000b 00       		.byte	0
+ 2697 000c 0000     		.2byte	0
+ 2698 000e 0000     		.2byte	0
+ 2699 0010 00000000 		.4byte	.LFB2
+ 2700 0014 14010000 		.4byte	.LFE2-.LFB2
+ 2701 0018 00000000 		.4byte	.LFB3
+ 2702 001c 30000000 		.4byte	.LFE3-.LFB3
+ 2703 0020 00000000 		.4byte	.LFB1
+ 2704 0024 1C000000 		.4byte	.LFE1-.LFB1
+ 2705 0028 00000000 		.4byte	.LFB5
+ 2706 002c 24000000 		.4byte	.LFE5-.LFB5
+ 2707 0030 00000000 		.4byte	.LFB6
+ 2708 0034 0C000000 		.4byte	.LFE6-.LFB6
+ 2709 0038 00000000 		.4byte	.LFB7
+ 2710 003c 0C000000 		.4byte	.LFE7-.LFB7
+ 2711 0040 00000000 		.4byte	.LFB10
+ 2712 0044 20000000 		.4byte	.LFE10-.LFB10
+ 2713 0048 00000000 		.4byte	.LFB9
+ 2714 004c 68000000 		.4byte	.LFE9-.LFB9
+ARM GAS  C:\Users\addis\AppData\Local\Temp\ccUS9kEI.s 			page 64
+
+
+ 2715 0050 00000000 		.4byte	.LFB8
+ 2716 0054 30000000 		.4byte	.LFE8-.LFB8
+ 2717 0058 00000000 		.4byte	.LFB0
+ 2718 005c 28000000 		.4byte	.LFE0-.LFB0
+ 2719 0060 00000000 		.4byte	.LFB4
+ 2720 0064 20000000 		.4byte	.LFE4-.LFB4
+ 2721 0068 00000000 		.4byte	.LFB11
+ 2722 006c 24000000 		.4byte	.LFE11-.LFB11
+ 2723 0070 00000000 		.4byte	.LFB12
+ 2724 0074 12000000 		.4byte	.LFE12-.LFB12
+ 2725 0078 00000000 		.4byte	0
+ 2726 007c 00000000 		.4byte	0
+ 2727              		.section	.debug_ranges,"",%progbits
+ 2728              	.Ldebug_ranges0:
+ 2729 0000 00000000 		.4byte	.LFB2
+ 2730 0004 14010000 		.4byte	.LFE2
+ 2731 0008 00000000 		.4byte	.LFB3
+ 2732 000c 30000000 		.4byte	.LFE3
+ 2733 0010 00000000 		.4byte	.LFB1
+ 2734 0014 1C000000 		.4byte	.LFE1
+ 2735 0018 00000000 		.4byte	.LFB5
+ 2736 001c 24000000 		.4byte	.LFE5
+ 2737 0020 00000000 		.4byte	.LFB6
+ 2738 0024 0C000000 		.4byte	.LFE6
+ 2739 0028 00000000 		.4byte	.LFB7
+ 2740 002c 0C000000 		.4byte	.LFE7
+ 2741 0030 00000000 		.4byte	.LFB10
+ 2742 0034 20000000 		.4byte	.LFE10
+ 2743 0038 00000000 		.4byte	.LFB9
+ 2744 003c 68000000 		.4byte	.LFE9
+ 2745 0040 00000000 		.4byte	.LFB8
+ 2746 0044 30000000 		.4byte	.LFE8
+ 2747 0048 00000000 		.4byte	.LFB0
+ 2748 004c 28000000 		.4byte	.LFE0
+ 2749 0050 00000000 		.4byte	.LFB4
+ 2750 0054 20000000 		.4byte	.LFE4
+ 2751 0058 00000000 		.4byte	.LFB11
+ 2752 005c 24000000 		.4byte	.LFE11
+ 2753 0060 00000000 		.4byte	.LFB12
+ 2754 0064 12000000 		.4byte	.LFE12
+ 2755 0068 00000000 		.4byte	0
+ 2756 006c 00000000 		.4byte	0
+ 2757              		.section	.debug_line,"",%progbits
+ 2758              	.Ldebug_line0:
+ 2759 0000 7D020000 		.section	.debug_str,"MS",%progbits,1
+ 2759      0200CF00 
+ 2759      00000201 
+ 2759      FB0E0D00 
+ 2759      01010101 
+ 2760              	.LASF10:
+ 2761 0000 75696E74 		.ascii	"uint16\000"
+ 2761      313600
+ 2762              	.LASF63:
+ 2763 0007 433A5C55 		.ascii	"C:\\Users\\addis\\Documents\\PSoC Creator\\Workspac"
+ 2763      73657273 
+ 2763      5C616464 
+ 2763      69735C44 
+ARM GAS  C:\Users\addis\AppData\Local\Temp\ccUS9kEI.s 			page 65
+
+
+ 2763      6F63756D 
+ 2764 0035 6530325C 		.ascii	"e02\\PS2Keyboard.cydsn\000"
+ 2764      5053324B 
+ 2764      6579626F 
+ 2764      6172642E 
+ 2764      63796473 
+ 2765              	.LASF65:
+ 2766 004b 4C43445F 		.ascii	"LCD_SegStatic_1_DmaConfigure\000"
+ 2766      53656753 
+ 2766      74617469 
+ 2766      635F315F 
+ 2766      446D6143 
+ 2767              	.LASF26:
+ 2768 0068 4C43445F 		.ascii	"LCD_SegStatic_1_termOut\000"
+ 2768      53656753 
+ 2768      74617469 
+ 2768      635F315F 
+ 2768      7465726D 
+ 2769              	.LASF68:
+ 2770 0080 4379446D 		.ascii	"CyDmaTdAllocate\000"
+ 2770      61546441 
+ 2770      6C6C6F63 
+ 2770      61746500 
+ 2771              	.LASF24:
+ 2772 0090 64737441 		.ascii	"dstAddr\000"
+ 2772      64647200 
+ 2773              	.LASF55:
+ 2774 0098 4379446D 		.ascii	"CyDmaChEnable\000"
+ 2774      61436845 
+ 2774      6E61626C 
+ 2774      6500
+ 2775              	.LASF7:
+ 2776 00a6 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 2776      206C6F6E 
+ 2776      6720756E 
+ 2776      7369676E 
+ 2776      65642069 
+ 2777              	.LASF31:
+ 2778 00bd 62797465 		.ascii	"byteAddr\000"
+ 2778      41646472 
+ 2778      00
+ 2779              	.LASF52:
+ 2780 00c6 4379446D 		.ascii	"CyDmaTdSetConfiguration\000"
+ 2780      61546453 
+ 2780      6574436F 
+ 2780      6E666967 
+ 2780      75726174 
+ 2781              	.LASF64:
+ 2782 00de 4C43445F 		.ascii	"LCD_SegStatic_1_DMA_TD_PROTO_ENTRY\000"
+ 2782      53656753 
+ 2782      74617469 
+ 2782      635F315F 
+ 2782      444D415F 
+ 2783              	.LASF6:
+ 2784 0101 6C6F6E67 		.ascii	"long long int\000"
+ 2784      206C6F6E 
+ 2784      6720696E 
+ARM GAS  C:\Users\addis\AppData\Local\Temp\ccUS9kEI.s 			page 66
+
+
+ 2784      7400
+ 2785              	.LASF0:
+ 2786 010f 7369676E 		.ascii	"signed char\000"
+ 2786      65642063 
+ 2786      68617200 
+ 2787              	.LASF49:
+ 2788 011b 4C43445F 		.ascii	"LCD_SegStatic_1_enableState\000"
+ 2788      53656753 
+ 2788      74617469 
+ 2788      635F315F 
+ 2788      656E6162 
+ 2789              	.LASF44:
+ 2790 0137 73746174 		.ascii	"state\000"
+ 2790      6500
+ 2791              	.LASF22:
+ 2792 013d 6572726F 		.ascii	"errorCnt\000"
+ 2792      72436E74 
+ 2792      00
+ 2793              	.LASF4:
+ 2794 0146 6C6F6E67 		.ascii	"long int\000"
+ 2794      20696E74 
+ 2794      00
+ 2795              	.LASF9:
+ 2796 014f 75696E74 		.ascii	"uint8\000"
+ 2796      3800
+ 2797              	.LASF13:
+ 2798 0155 646F7562 		.ascii	"double\000"
+ 2798      6C6500
+ 2799              	.LASF48:
+ 2800 015c 4C43445F 		.ascii	"LCD_SegStatic_1_commons\000"
+ 2800      53656753 
+ 2800      74617469 
+ 2800      635F315F 
+ 2800      636F6D6D 
+ 2801              	.LASF11:
+ 2802 0174 75696E74 		.ascii	"uint32\000"
+ 2802      333200
+ 2803              	.LASF23:
+ 2804 017b 73726341 		.ascii	"srcAddr\000"
+ 2804      64647200 
+ 2805              	.LASF36:
+ 2806 0183 6D61736B 		.ascii	"mask\000"
+ 2806      00
+ 2807              	.LASF69:
+ 2808 0188 4379446D 		.ascii	"CyDmaTdFree\000"
+ 2808      61546446 
+ 2808      72656500 
+ 2809              	.LASF8:
+ 2810 0194 756E7369 		.ascii	"unsigned int\000"
+ 2810      676E6564 
+ 2810      20696E74 
+ 2810      00
+ 2811              	.LASF45:
+ 2812 01a1 4C43445F 		.ascii	"LCD_SegStatic_1_buffer\000"
+ 2812      53656753 
+ 2812      74617469 
+ 2812      635F315F 
+ARM GAS  C:\Users\addis\AppData\Local\Temp\ccUS9kEI.s 			page 67
+
+
+ 2812      62756666 
+ 2813              	.LASF5:
+ 2814 01b8 6C6F6E67 		.ascii	"long unsigned int\000"
+ 2814      20756E73 
+ 2814      69676E65 
+ 2814      6420696E 
+ 2814      7400
+ 2815              	.LASF33:
+ 2816 01ca 70697865 		.ascii	"pixelState\000"
+ 2816      6C537461 
+ 2816      746500
+ 2817              	.LASF39:
+ 2818 01d5 4C43445F 		.ascii	"LCD_SegStatic_1_Init\000"
+ 2818      53656753 
+ 2818      74617469 
+ 2818      635F315F 
+ 2818      496E6974 
+ 2819              	.LASF3:
+ 2820 01ea 73686F72 		.ascii	"short unsigned int\000"
+ 2820      7420756E 
+ 2820      7369676E 
+ 2820      65642069 
+ 2820      6E7400
+ 2821              	.LASF51:
+ 2822 01fd 4C43445F 		.ascii	"LCD_SegStatic_1_Lcd_Dma_DmaInitialize\000"
+ 2822      53656753 
+ 2822      74617469 
+ 2822      635F315F 
+ 2822      4C63645F 
+ 2823              	.LASF28:
+ 2824 0223 4C43445F 		.ascii	"LCD_SegStatic_1_DisableInt\000"
+ 2824      53656753 
+ 2824      74617469 
+ 2824      635F315F 
+ 2824      44697361 
+ 2825              	.LASF60:
+ 2826 023e 4379496E 		.ascii	"CyIntSetVector\000"
+ 2826      74536574 
+ 2826      56656374 
+ 2826      6F7200
+ 2827              	.LASF16:
+ 2828 024d 72656733 		.ascii	"reg32\000"
+ 2828      3200
+ 2829              	.LASF41:
+ 2830 0253 4C43445F 		.ascii	"LCD_SegStatic_1_WriteInvertState\000"
+ 2830      53656753 
+ 2830      74617469 
+ 2830      635F315F 
+ 2830      57726974 
+ 2831              	.LASF20:
+ 2832 0274 73697A65 		.ascii	"sizetype\000"
+ 2832      74797065 
+ 2832      00
+ 2833              	.LASF35:
+ 2834 027d 70697865 		.ascii	"pixelNumber\000"
+ 2834      6C4E756D 
+ 2834      62657200 
+ARM GAS  C:\Users\addis\AppData\Local\Temp\ccUS9kEI.s 			page 68
+
+
+ 2835              	.LASF53:
+ 2836 0289 4379446D 		.ascii	"CyDmaTdSetAddress\000"
+ 2836      61546453 
+ 2836      65744164 
+ 2836      64726573 
+ 2836      7300
+ 2837              	.LASF70:
+ 2838 029b 4379496E 		.ascii	"CyIntSetPriority\000"
+ 2838      74536574 
+ 2838      5072696F 
+ 2838      72697479 
+ 2838      00
+ 2839              	.LASF12:
+ 2840 02ac 666C6F61 		.ascii	"float\000"
+ 2840      7400
+ 2841              	.LASF58:
+ 2842 02b2 4C43445F 		.ascii	"LCD_SegStatic_1_InClock_Start\000"
+ 2842      53656753 
+ 2842      74617469 
+ 2842      635F315F 
+ 2842      496E436C 
+ 2843              	.LASF1:
+ 2844 02d0 756E7369 		.ascii	"unsigned char\000"
+ 2844      676E6564 
+ 2844      20636861 
+ 2844      7200
+ 2845              	.LASF38:
+ 2846 02de 4C43445F 		.ascii	"LCD_SegStatic_1_ClearDisplay\000"
+ 2846      53656753 
+ 2846      74617469 
+ 2846      635F315F 
+ 2846      436C6561 
+ 2847              	.LASF2:
+ 2848 02fb 73686F72 		.ascii	"short int\000"
+ 2848      7420696E 
+ 2848      7400
+ 2849              	.LASF25:
+ 2850 0305 4C43445F 		.ascii	"LCD_SegStatic_1_StSegLcdPort_DMA_TD_PROTO_BLOCK\000"
+ 2850      53656753 
+ 2850      74617469 
+ 2850      635F315F 
+ 2850      53745365 
+ 2851              	.LASF67:
+ 2852 0335 4C43445F 		.ascii	"LCD_SegStatic_1_DmaDispose\000"
+ 2852      53656753 
+ 2852      74617469 
+ 2852      635F315F 
+ 2852      446D6144 
+ 2853              	.LASF27:
+ 2854 0350 4C43445F 		.ascii	"LCD_SegStatic_1_EnableInt\000"
+ 2854      53656753 
+ 2854      74617469 
+ 2854      635F315F 
+ 2854      456E6162 
+ 2855              	.LASF66:
+ 2856 036a 636F6D54 		.ascii	"comTdCount\000"
+ 2856      64436F75 
+ARM GAS  C:\Users\addis\AppData\Local\Temp\ccUS9kEI.s 			page 69
+
+
+ 2856      6E7400
+ 2857              	.LASF50:
+ 2858 0375 4C43445F 		.ascii	"LCD_SegStatic_1_initVar\000"
+ 2858      53656753 
+ 2858      74617469 
+ 2858      635F315F 
+ 2858      696E6974 
+ 2859              	.LASF19:
+ 2860 038d 6C656E67 		.ascii	"length\000"
+ 2860      746800
+ 2861              	.LASF14:
+ 2862 0394 63686172 		.ascii	"char\000"
+ 2862      00
+ 2863              	.LASF17:
+ 2864 0399 63796973 		.ascii	"cyisraddress\000"
+ 2864      72616464 
+ 2864      72657373 
+ 2864      00
+ 2865              	.LASF40:
+ 2866 03a6 4C43445F 		.ascii	"LCD_SegStatic_1_Start\000"
+ 2866      53656753 
+ 2866      74617469 
+ 2866      635F315F 
+ 2866      53746172 
+ 2867              	.LASF18:
+ 2868 03bc 6F666673 		.ascii	"offset\000"
+ 2868      657400
+ 2869              	.LASF42:
+ 2870 03c3 696E7665 		.ascii	"invertState\000"
+ 2870      72745374 
+ 2870      61746500 
+ 2871              	.LASF62:
+ 2872 03cf 2E5C4765 		.ascii	".\\Generated_Source\\PSoC5\\LCD_SegStatic_1.c\000"
+ 2872      6E657261 
+ 2872      7465645F 
+ 2872      536F7572 
+ 2872      63655C50 
+ 2873              	.LASF46:
+ 2874 03fa 4C43445F 		.ascii	"LCD_SegStatic_1_lcdTd\000"
+ 2874      53656753 
+ 2874      74617469 
+ 2874      635F315F 
+ 2874      6C636454 
+ 2875              	.LASF29:
+ 2876 0410 4C43445F 		.ascii	"LCD_SegStatic_1_Enable\000"
+ 2876      53656753 
+ 2876      74617469 
+ 2876      635F315F 
+ 2876      456E6162 
+ 2877              	.LASF43:
+ 2878 0427 4C43445F 		.ascii	"LCD_SegStatic_1_ReadInvertState\000"
+ 2878      53656753 
+ 2878      74617469 
+ 2878      635F315F 
+ 2878      52656164 
+ 2879              	.LASF57:
+ 2880 0447 4C43445F 		.ascii	"LCD_SegStatic_1_Lcd_Dma_DmaRelease\000"
+ARM GAS  C:\Users\addis\AppData\Local\Temp\ccUS9kEI.s 			page 70
+
+
+ 2880      53656753 
+ 2880      74617469 
+ 2880      635F315F 
+ 2880      4C63645F 
+ 2881              	.LASF59:
+ 2882 046a 4C43445F 		.ascii	"LCD_SegStatic_1_InClock_Stop\000"
+ 2882      53656753 
+ 2882      74617469 
+ 2882      635F315F 
+ 2882      496E436C 
+ 2883              	.LASF21:
+ 2884 0487 73746174 		.ascii	"status\000"
+ 2884      757300
+ 2885              	.LASF47:
+ 2886 048e 4C43445F 		.ascii	"LCD_SegStatic_1_lcdChannel\000"
+ 2886      53656753 
+ 2886      74617469 
+ 2886      635F315F 
+ 2886      6C636443 
+ 2887              	.LASF61:
+ 2888 04a9 474E5520 		.ascii	"GNU C 4.9.3 20150303 (release) [ARM/embedded-4_9-br"
+ 2888      4320342E 
+ 2888      392E3320 
+ 2888      32303135 
+ 2888      30333033 
+ 2889 04dc 616E6368 		.ascii	"anch revision 221220] -mcpu=cortex-m3 -mthumb -g -O"
+ 2889      20726576 
+ 2889      6973696F 
+ 2889      6E203232 
+ 2889      31323230 
+ 2890 050f 67202D66 		.ascii	"g -ffunction-sections -ffat-lto-objects\000"
+ 2890      66756E63 
+ 2890      74696F6E 
+ 2890      2D736563 
+ 2890      74696F6E 
+ 2891              	.LASF30:
+ 2892 0537 4C43445F 		.ascii	"LCD_SegStatic_1_ReadPixel\000"
+ 2892      53656753 
+ 2892      74617469 
+ 2892      635F315F 
+ 2892      52656164 
+ 2893              	.LASF32:
+ 2894 0551 62697441 		.ascii	"bitAddr\000"
+ 2894      64647200 
+ 2895              	.LASF54:
+ 2896 0559 4379446D 		.ascii	"CyDmaChSetInitialTd\000"
+ 2896      61436853 
+ 2896      6574496E 
+ 2896      69746961 
+ 2896      6C546400 
+ 2897              	.LASF15:
+ 2898 056d 63797374 		.ascii	"cystatus\000"
+ 2898      61747573 
+ 2898      00
+ 2899              	.LASF34:
+ 2900 0576 4C43445F 		.ascii	"LCD_SegStatic_1_WritePixel\000"
+ 2900      53656753 
+ARM GAS  C:\Users\addis\AppData\Local\Temp\ccUS9kEI.s 			page 71
+
+
+ 2900      74617469 
+ 2900      635F315F 
+ 2900      57726974 
+ 2901              	.LASF37:
+ 2902 0591 4C43445F 		.ascii	"LCD_SegStatic_1_Stop\000"
+ 2902      53656753 
+ 2902      74617469 
+ 2902      635F315F 
+ 2902      53746F70 
+ 2903              	.LASF56:
+ 2904 05a6 4379446D 		.ascii	"CyDmaChFree\000"
+ 2904      61436846 
+ 2904      72656500 
+ 2905              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 4.9.3 20150303 (release) [ARM/embedded-4_9-br

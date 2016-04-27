@@ -56,7 +56,7 @@ uint8 PS2_statusReg_ReadMask(void) ;
 ***************************************/
 
 /* Status Register Inputs */
-#define PS2_statusReg_INPUTS              3
+#define PS2_statusReg_INPUTS              2
 
 
 /***************************************

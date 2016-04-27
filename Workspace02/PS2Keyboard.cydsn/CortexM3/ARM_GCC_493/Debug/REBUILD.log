@@ -1,7 +1,8 @@
---------------- Rebuild Started: 04/21/2016 01:49:01 Project: PS2Keyboard, Configuration: ARM GCC 4.9-2015-q1-update Debug ---------------
+--------------- Rebuild Started: 04/26/2016 10:42:00 Project: PS2Keyboard, Configuration: ARM GCC 4.9-2015-q1-update Debug ---------------
 Deleting file ".\CortexM3\ARM_GCC_493\Debug\main.o"
 Deleting file ".\CortexM3\ARM_GCC_493\Debug\cyfitter_cfg.o"
 Deleting file ".\CortexM3\ARM_GCC_493\Debug\cymetadata.o"
+Deleting file ".\CortexM3\ARM_GCC_493\Debug\Clock_1.o"
 Deleting file ".\CortexM3\ARM_GCC_493\Debug\Cm3Start.o"
 Deleting file ".\CortexM3\ARM_GCC_493\Debug\CyBootAsmGnu.o"
 Deleting file ".\CortexM3\ARM_GCC_493\Debug\CyDmac.o"
@@ -10,10 +11,29 @@ Deleting file ".\CortexM3\ARM_GCC_493\Debug\CyLib.o"
 Deleting file ".\CortexM3\ARM_GCC_493\Debug\cyPm.o"
 Deleting file ".\CortexM3\ARM_GCC_493\Debug\CySpc.o"
 Deleting file ".\CortexM3\ARM_GCC_493\Debug\cyutils.o"
+Deleting file ".\CortexM3\ARM_GCC_493\Debug\UART.o"
+Deleting file ".\CortexM3\ARM_GCC_493\Debug\UART_PM.o"
+Deleting file ".\CortexM3\ARM_GCC_493\Debug\UART_INT.o"
+Deleting file ".\CortexM3\ARM_GCC_493\Debug\UART_BOOT.o"
+Deleting file ".\CortexM3\ARM_GCC_493\Debug\PS2_ps2.o"
+Deleting file ".\CortexM3\ARM_GCC_493\Debug\ps2_data.o"
+Deleting file ".\CortexM3\ARM_GCC_493\Debug\UART_IntClock.o"
+Deleting file ".\CortexM3\ARM_GCC_493\Debug\PS2_controlReg.o"
+Deleting file ".\CortexM3\ARM_GCC_493\Debug\PS2_controlReg_PM.o"
+Deleting file ".\CortexM3\ARM_GCC_493\Debug\PS2_statusReg.o"
+Deleting file ".\CortexM3\ARM_GCC_493\Debug\PS2_stateReg.o"
+Deleting file ".\CortexM3\ARM_GCC_493\Debug\PS2_dataIn.o"
+Deleting file ".\CortexM3\ARM_GCC_493\Debug\PS2_dataIn_PM.o"
+Deleting file ".\CortexM3\ARM_GCC_493\Debug\PS2_dataOut.o"
+Deleting file ".\CortexM3\ARM_GCC_493\Debug\PS2_Timer.o"
+Deleting file ".\CortexM3\ARM_GCC_493\Debug\PS2_Timer_PM.o"
+Deleting file ".\CortexM3\ARM_GCC_493\Debug\PS2_Timer_ISR.o"
+Deleting file ".\CortexM3\ARM_GCC_493\Debug\Clock_2.o"
 Deleting file ".\CortexM3\ARM_GCC_493\Debug\PS2Keyboard.hex"
 Deleting file ".\CortexM3\ARM_GCC_493\Debug\PS2Keyboard.elf"
 Deleting file ".\CortexM3\ARM_GCC_493\Debug\PS2Keyboard.map"
 Deleting file ".\PS2Keyboard.cycdx"
+Deleting file ".\PS2Keyboard.svd"
 Deleting file ".\PS2Keyboard.rpt"
 Deleting file ".\PS2Keyboard_timing.html"
 Deleting file ".\CortexM3\ARM_GCC_493\Debug\.deps\C_FILE.P"
@@ -21,19 +41,65 @@ Deleting file ".\CortexM3\ARM_GCC_493\Debug\.deps\ARM_C_FILE.P"
 Deleting file ".\CortexM3\ARM_GCC_493\Debug\.deps\GNU_ARM_ASM_FILE.P"
 cydsfit.exe -.appdatapath "C:\Users\addis\AppData\Local\Cypress Semiconductor\PSoC Creator\3.3" -.fdsnotice -.fdswarpdepfile=warp_dependencies.txt -.fdselabdepfile=elab_dependencies.txt -.fdsbldfile=generated_files.txt -p "C:\Users\addis\Documents\PSoC Creator\Workspace02\PS2Keyboard.cydsn\PS2Keyboard.cyprj" -d CY8C5888LTI-LP097 -s "C:\Users\addis\Documents\PSoC Creator\Workspace02\PS2Keyboard.cydsn\Generated_Source\PSoC5" -- -yv2 -q10 -ygs -o2 -v3 -.fftcfgtype=LE
 Elaborating Design...
-ADD: sdb.M0029: error: Signal "Net_817" has invalid terminal connections. Detailed Error reasons are the following: ( An instance inout terminal has to be connected to a schematic inout terminal; ). 
- * C:\Users\addis\Documents\PSoC Creator\Workspace02\PS2Keyboard.cydsn\TopDesign\TopDesign.cysch (Signal: Net_817)
- * C:\Users\addis\Documents\PSoC Creator\Workspace02\PS2Keyboard.cydsn\TopDesign\TopDesign.cysch (Shape_28.11)
- * C:\Users\addis\Documents\PSoC Creator\Workspace02\PS2Keyboard.cydsn\TopDesign\TopDesign.cysch (Shape_41.34)
- * C:\Users\addis\Documents\PSoC Creator\Workspace02\PS2Keyboard.cydsn\TopDesign\TopDesign.cysch (Shape_44)
- * C:\Users\addis\Documents\PSoC Creator\Workspace02\PS2Keyboard.cydsn\TopDesign\TopDesign.cysch (Shape_45)
- * C:\Users\addis\Documents\PSoC Creator\Workspace02\PS2Keyboard.cydsn\TopDesign\TopDesign.cysch (Shape_46)
-ADD: sdb.M0024: error: Terminal "Status_Reg_1.status_bus[4:0]" with width 5 is connected to "Net_817" with width 1.
- * C:\Users\addis\Documents\PSoC Creator\Workspace02\PS2Keyboard.cydsn\TopDesign\TopDesign.cysch (Signal: Net_817)
- * C:\Users\addis\Documents\PSoC Creator\Workspace02\PS2Keyboard.cydsn\TopDesign\TopDesign.cysch (Shape_28.11)
- * C:\Users\addis\Documents\PSoC Creator\Workspace02\PS2Keyboard.cydsn\TopDesign\TopDesign.cysch (Shape_41.34)
- * C:\Users\addis\Documents\PSoC Creator\Workspace02\PS2Keyboard.cydsn\TopDesign\TopDesign.cysch (Shape_44)
- * C:\Users\addis\Documents\PSoC Creator\Workspace02\PS2Keyboard.cydsn\TopDesign\TopDesign.cysch (Shape_45)
- * C:\Users\addis\Documents\PSoC Creator\Workspace02\PS2Keyboard.cydsn\TopDesign\TopDesign.cysch (Shape_46)
-Error: cdf.M0005: CyDsFit aborted due to errors, please address all errors and rerun CyDsFit. (App=cydsfit)
---------------- Rebuild Failed: 04/21/2016 01:49:03 ---------------
+HDL Generation ...
+Synthesis ...
+Place and Route ...
+Tech mapping ...
+ADD: mpr.M0037: information: Unused pieces of the design have been optimized out. See the Tech mapping section of the report file for details.
+ * C:\Users\addis\Documents\PSoC Creator\Workspace02\PS2Keyboard.cydsn\codegentemp\PS2Keyboard.rpt (Tech mapping)
+Analog Placement ...
+Analog Routing ...
+Analog Code Generation ...
+Digital Placement ...
+Digital Routing ...
+Bitstream Generation ...
+Static timing analysis ...
+API Generation ...
+Dependency Generation ...
+Clean Temporary Files ...
+arm-none-eabi-gcc.exe -mcpu=cortex-m3 -mthumb -Wno-main -I. -IGenerated_Source\PSoC5 -Wa,-alh=.\CortexM3\ARM_GCC_493\Debug/main.lst -g -D DEBUG -Wall -ffunction-sections -Og -ffat-lto-objects -c .\main.c -o .\CortexM3\ARM_GCC_493\Debug\main.o
+arm-none-eabi-gcc.exe -mcpu=cortex-m3 -mthumb -Wno-main -I. -IGenerated_Source\PSoC5 -Wa,-alh=.\CortexM3\ARM_GCC_493\Debug/cyfitter_cfg.lst -g -D DEBUG -Wall -ffunction-sections -Og -ffat-lto-objects -c .\Generated_Source\PSoC5\cyfitter_cfg.c -o .\CortexM3\ARM_GCC_493\Debug\cyfitter_cfg.o
+arm-none-eabi-gcc.exe -mcpu=cortex-m3 -mthumb -Wno-main -I. -IGenerated_Source\PSoC5 -Wa,-alh=.\CortexM3\ARM_GCC_493\Debug/cymetadata.lst -g -D DEBUG -Wall -ffunction-sections -Og -ffat-lto-objects -c .\Generated_Source\PSoC5\cymetadata.c -o .\CortexM3\ARM_GCC_493\Debug\cymetadata.o
+arm-none-eabi-gcc.exe -mcpu=cortex-m3 -mthumb -Wno-main -I. -IGenerated_Source\PSoC5 -Wa,-alh=.\CortexM3\ARM_GCC_493\Debug/Clock_1.lst -g -D DEBUG -Wall -ffunction-sections -Og -ffat-lto-objects -c .\Generated_Source\PSoC5\Clock_1.c -o .\CortexM3\ARM_GCC_493\Debug\Clock_1.o
+arm-none-eabi-gcc.exe -mcpu=cortex-m3 -mthumb -Wno-main -I. -IGenerated_Source\PSoC5 -Wa,-alh=.\CortexM3\ARM_GCC_493\Debug/Cm3Start.lst -g -D DEBUG -Wall -ffunction-sections -Og -ffat-lto-objects -c .\Generated_Source\PSoC5\Cm3Start.c -o .\CortexM3\ARM_GCC_493\Debug\Cm3Start.o
+arm-none-eabi-as.exe -mcpu=cortex-m3 -mthumb -I. -IGenerated_Source\PSoC5 -alh=.\CortexM3\ARM_GCC_493\Debug/CyBootAsmGnu.lst -g -W -o .\CortexM3\ARM_GCC_493\Debug\CyBootAsmGnu.o .\Generated_Source\PSoC5\CyBootAsmGnu.s
+arm-none-eabi-gcc.exe -mcpu=cortex-m3 -mthumb -Wno-main -I. -IGenerated_Source\PSoC5 -Wa,-alh=.\CortexM3\ARM_GCC_493\Debug/CyDmac.lst -g -D DEBUG -Wall -ffunction-sections -Og -ffat-lto-objects -c .\Generated_Source\PSoC5\CyDmac.c -o .\CortexM3\ARM_GCC_493\Debug\CyDmac.o
+arm-none-eabi-gcc.exe -mcpu=cortex-m3 -mthumb -Wno-main -I. -IGenerated_Source\PSoC5 -Wa,-alh=.\CortexM3\ARM_GCC_493\Debug/CyFlash.lst -g -D DEBUG -Wall -ffunction-sections -Og -ffat-lto-objects -c .\Generated_Source\PSoC5\CyFlash.c -o .\CortexM3\ARM_GCC_493\Debug\CyFlash.o
+arm-none-eabi-gcc.exe -mcpu=cortex-m3 -mthumb -Wno-main -I. -IGenerated_Source\PSoC5 -Wa,-alh=.\CortexM3\ARM_GCC_493\Debug/CyLib.lst -g -D DEBUG -Wall -ffunction-sections -Og -ffat-lto-objects -c .\Generated_Source\PSoC5\CyLib.c -o .\CortexM3\ARM_GCC_493\Debug\CyLib.o
+arm-none-eabi-gcc.exe -mcpu=cortex-m3 -mthumb -Wno-main -I. -IGenerated_Source\PSoC5 -Wa,-alh=.\CortexM3\ARM_GCC_493\Debug/cyPm.lst -g -D DEBUG -Wall -ffunction-sections -Og -ffat-lto-objects -c .\Generated_Source\PSoC5\cyPm.c -o .\CortexM3\ARM_GCC_493\Debug\cyPm.o
+arm-none-eabi-gcc.exe -mcpu=cortex-m3 -mthumb -Wno-main -I. -IGenerated_Source\PSoC5 -Wa,-alh=.\CortexM3\ARM_GCC_493\Debug/CySpc.lst -g -D DEBUG -Wall -ffunction-sections -Og -ffat-lto-objects -c .\Generated_Source\PSoC5\CySpc.c -o .\CortexM3\ARM_GCC_493\Debug\CySpc.o
+arm-none-eabi-gcc.exe -mcpu=cortex-m3 -mthumb -Wno-main -I. -IGenerated_Source\PSoC5 -Wa,-alh=.\CortexM3\ARM_GCC_493\Debug/cyutils.lst -g -D DEBUG -Wall -ffunction-sections -Og -ffat-lto-objects -c .\Generated_Source\PSoC5\cyutils.c -o .\CortexM3\ARM_GCC_493\Debug\cyutils.o
+arm-none-eabi-gcc.exe -mcpu=cortex-m3 -mthumb -Wno-main -I. -IGenerated_Source\PSoC5 -Wa,-alh=.\CortexM3\ARM_GCC_493\Debug/UART.lst -g -D DEBUG -Wall -ffunction-sections -Og -ffat-lto-objects -c .\Generated_Source\PSoC5\UART.c -o .\CortexM3\ARM_GCC_493\Debug\UART.o
+arm-none-eabi-gcc.exe -mcpu=cortex-m3 -mthumb -Wno-main -I. -IGenerated_Source\PSoC5 -Wa,-alh=.\CortexM3\ARM_GCC_493\Debug/UART_PM.lst -g -D DEBUG -Wall -ffunction-sections -Og -ffat-lto-objects -c .\Generated_Source\PSoC5\UART_PM.c -o .\CortexM3\ARM_GCC_493\Debug\UART_PM.o
+arm-none-eabi-gcc.exe -mcpu=cortex-m3 -mthumb -Wno-main -I. -IGenerated_Source\PSoC5 -Wa,-alh=.\CortexM3\ARM_GCC_493\Debug/UART_INT.lst -g -D DEBUG -Wall -ffunction-sections -Og -ffat-lto-objects -c .\Generated_Source\PSoC5\UART_INT.c -o .\CortexM3\ARM_GCC_493\Debug\UART_INT.o
+arm-none-eabi-gcc.exe -mcpu=cortex-m3 -mthumb -Wno-main -I. -IGenerated_Source\PSoC5 -Wa,-alh=.\CortexM3\ARM_GCC_493\Debug/UART_BOOT.lst -g -D DEBUG -Wall -ffunction-sections -Og -ffat-lto-objects -c .\Generated_Source\PSoC5\UART_BOOT.c -o .\CortexM3\ARM_GCC_493\Debug\UART_BOOT.o
+arm-none-eabi-gcc.exe -mcpu=cortex-m3 -mthumb -Wno-main -I. -IGenerated_Source\PSoC5 -Wa,-alh=.\CortexM3\ARM_GCC_493\Debug/PS2_ps2.lst -g -D DEBUG -Wall -ffunction-sections -Og -ffat-lto-objects -c .\Generated_Source\PSoC5\PS2_ps2.c -o .\CortexM3\ARM_GCC_493\Debug\PS2_ps2.o
+In file included from .\Generated_Source\PSoC5\PS2_ps2.c:13:0:
+.\Generated_Source\PSoC5\PS2_ps2.c: In function 'PS2_DetectDevice':
+.\Generated_Source\PSoC5\PS2_ps2.c:55:26: warning: large integer implicitly truncated to unsigned type [-Woverflow]
+     PS2_TIMER_START(200, 500); // Set a timer for (10uS * 200 * 500) = 1000ms
+                          ^
+.\Generated_Source\PSoC5\PS2_ps2.h:42:76: note: in definition of macro 'PS2_TIMER_START'
+ #define PS2_TIMER_START(period, reps) { PS2_Timer_Stop(); PS2_timer_reps = reps; \
+                                                                            ^
+.\Generated_Source\PSoC5\PS2_ps2.c:56:5: error: 'PS2_READ' undeclared (first use in this function)
+     PS2_READ; // Make sure the state machine knows to read
+     ^
+.\Generated_Source\PSoC5\PS2_ps2.c:56:5: note: each undeclared identifier is reported only once for each function it appears in
+.\Generated_Source\PSoC5\PS2_ps2.c: In function 'PS2_WriteByte':
+.\Generated_Source\PSoC5\PS2_ps2.c:93:5: warning: implicit declaration of function 'ps2_clock_Write' [-Wimplicit-function-declaration]
+     ps2_clock_Write(0x00); // Set PS2 Clock low
+     ^
+.\Generated_Source\PSoC5\PS2_ps2.c: At top level:
+.\Generated_Source\PSoC5\PS2_ps2.c:97:1: error: expected identifier or '(' before '{' token
+ {
+ ^
+.\Generated_Source\PSoC5\PS2_ps2.c:102:1: error: expected identifier or '(' before '{' token
+ {
+ ^
+.\Generated_Source\PSoC5\PS2_ps2.c: In function 'PS2_WriteByte':
+.\Generated_Source\PSoC5\PS2_ps2.c:94:1: warning: control reaches end of non-void function [-Wreturn-type]
+ }
+ ^
+The command 'arm-none-eabi-gcc.exe' failed with exit code '1'.
+--------------- Rebuild Failed: 04/26/2016 10:42:25 ---------------

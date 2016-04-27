@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\addis\AppData\Local\Temp\ccmHqk3Q.s 			page 1
+ARM GAS  C:\Users\addis\AppData\Local\Temp\cc7XYADp.s 			page 1
 
 
    1              		.syntax unified
@@ -41,1047 +41,2698 @@ ARM GAS  C:\Users\addis\AppData\Local\Temp\ccmHqk3Q.s 			page 1
   12:.\Generated_Source\PSoC5/PS2_ps2.c **** 
   13:.\Generated_Source\PSoC5/PS2_ps2.c **** #include "PS2_ps2.h"
   14:.\Generated_Source\PSoC5/PS2_ps2.c **** 
-  15:.\Generated_Source\PSoC5/PS2_ps2.c **** uint8 PS2_counter_trigger;
+  15:.\Generated_Source\PSoC5/PS2_ps2.c **** uint16 PS2_timer_reps;
   16:.\Generated_Source\PSoC5/PS2_ps2.c **** uint8 PS2_initVar;
-  17:.\Generated_Source\PSoC5/PS2_ps2.c **** 
-  18:.\Generated_Source\PSoC5/PS2_ps2.c **** CY_ISR(PS2_TIMER)
-  19:.\Generated_Source\PSoC5/PS2_ps2.c **** {
-  27              		.loc 1 19 0
+  17:.\Generated_Source\PSoC5/PS2_ps2.c **** uint8 PS2_deviceDetectFail;
+  18:.\Generated_Source\PSoC5/PS2_ps2.c **** 
+  19:.\Generated_Source\PSoC5/PS2_ps2.c **** CY_ISR(PS2_TIMER)
+  20:.\Generated_Source\PSoC5/PS2_ps2.c **** {
+  27              		.loc 1 20 0
   28              		.cfi_startproc
   29              		@ args = 0, pretend = 0, frame = 0
   30              		@ frame_needed = 0, uses_anonymous_args = 0
-  31 0000 08B5     		push	{r3, lr}
-  32              		.cfi_def_cfa_offset 8
-  33              		.cfi_offset 3, -8
-  34              		.cfi_offset 14, -4
-  20:.\Generated_Source\PSoC5/PS2_ps2.c ****     PS2_Timer_STATUS;
-  35              		.loc 1 20 0
-  36 0002 044B     		ldr	r3, .L3
-  37 0004 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
-ARM GAS  C:\Users\addis\AppData\Local\Temp\ccmHqk3Q.s 			page 2
+  31              		@ link register save eliminated.
+  21:.\Generated_Source\PSoC5/PS2_ps2.c **** 	PS2_Timer_STATUS; // Resets the xxx bit
+  32              		.loc 1 21 0
+  33 0000 034B     		ldr	r3, .L2
+  34 0002 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+  22:.\Generated_Source\PSoC5/PS2_ps2.c **** 	
+  23:.\Generated_Source\PSoC5/PS2_ps2.c **** 	/* If the timer_reps is greater than zero, decrement it. If the decremented value is equal to zero
+ARM GAS  C:\Users\addis\AppData\Local\Temp\cc7XYADp.s 			page 2
 
 
-  21:.\Generated_Source\PSoC5/PS2_ps2.c ****     PS2_counter_trigger = 1;    
-  38              		.loc 1 21 0
-  39 0006 0122     		movs	r2, #1
-  40 0008 034B     		ldr	r3, .L3+4
-  41 000a 1A70     		strb	r2, [r3]
-  22:.\Generated_Source\PSoC5/PS2_ps2.c ****     PS2_Timer_Stop();
-  42              		.loc 1 22 0
-  43 000c FFF7FEFF 		bl	PS2_Timer_Stop
-  44              	.LVL0:
-  45 0010 08BD     		pop	{r3, pc}
-  46              	.L4:
-  47 0012 00BF     		.align	2
-  48              	.L3:
-  49 0014 034F0040 		.word	1073762051
-  50 0018 00000000 		.word	PS2_counter_trigger
-  51              		.cfi_endproc
-  52              	.LFE0:
-  53              		.size	PS2_TIMER, .-PS2_TIMER
-  54              		.section	.text.PS2_Init,"ax",%progbits
-  55              		.align	2
-  56              		.global	PS2_Init
-  57              		.thumb
-  58              		.thumb_func
-  59              		.type	PS2_Init, %function
-  60              	PS2_Init:
-  61              	.LFB1:
-  23:.\Generated_Source\PSoC5/PS2_ps2.c **** }
-  24:.\Generated_Source\PSoC5/PS2_ps2.c **** 
-  25:.\Generated_Source\PSoC5/PS2_ps2.c **** void PS2_Init(void) 
-  26:.\Generated_Source\PSoC5/PS2_ps2.c **** {
-  62              		.loc 1 26 0
-  63              		.cfi_startproc
-  64              		@ args = 0, pretend = 0, frame = 0
-  65              		@ frame_needed = 0, uses_anonymous_args = 0
-  66 0000 08B5     		push	{r3, lr}
-  67              		.cfi_def_cfa_offset 8
-  68              		.cfi_offset 3, -8
-  69              		.cfi_offset 14, -4
-  27:.\Generated_Source\PSoC5/PS2_ps2.c ****     PS2_counter_trigger = 0;
-  70              		.loc 1 27 0
-  71 0002 0022     		movs	r2, #0
-  72 0004 044B     		ldr	r3, .L7
-  73 0006 1A70     		strb	r2, [r3]
-  28:.\Generated_Source\PSoC5/PS2_ps2.c ****     PS2_Timer_ISR_StartEx(PS2_TIMER);
-  74              		.loc 1 28 0
-  75 0008 0448     		ldr	r0, .L7+4
-  76 000a FFF7FEFF 		bl	PS2_Timer_ISR_StartEx
-  77              	.LVL1:
-  29:.\Generated_Source\PSoC5/PS2_ps2.c ****     PS2_Timer_Start();
-  78              		.loc 1 29 0
-  79 000e FFF7FEFF 		bl	PS2_Timer_Start
-  80              	.LVL2:
-  30:.\Generated_Source\PSoC5/PS2_ps2.c ****     PS2_Timer_Stop();
-  81              		.loc 1 30 0
-  82 0012 FFF7FEFF 		bl	PS2_Timer_Stop
-  83              	.LVL3:
-  84 0016 08BD     		pop	{r3, pc}
-ARM GAS  C:\Users\addis\AppData\Local\Temp\ccmHqk3Q.s 			page 3
+  24:.\Generated_Source\PSoC5/PS2_ps2.c **** 	//if (PS2_timer_reps > 0 && --PS2_timer_reps == 0)
+  25:.\Generated_Source\PSoC5/PS2_ps2.c **** 	//	PS2_Timer_Stop();
+  26:.\Generated_Source\PSoC5/PS2_ps2.c **** 	--PS2_timer_reps;
+  35              		.loc 1 26 0
+  36 0004 034A     		ldr	r2, .L2+4
+  37 0006 1388     		ldrh	r3, [r2]
+  38 0008 013B     		subs	r3, r3, #1
+  39 000a 1380     		strh	r3, [r2]	@ movhi
+  40 000c 7047     		bx	lr
+  41              	.L3:
+  42 000e 00BF     		.align	2
+  43              	.L2:
+  44 0010 6A650040 		.word	1073767786
+  45 0014 00000000 		.word	PS2_timer_reps
+  46              		.cfi_endproc
+  47              	.LFE0:
+  48              		.size	PS2_TIMER, .-PS2_TIMER
+  49              		.section	.text.PS2_Init,"ax",%progbits
+  50              		.align	2
+  51              		.global	PS2_Init
+  52              		.thumb
+  53              		.thumb_func
+  54              		.type	PS2_Init, %function
+  55              	PS2_Init:
+  56              	.LFB1:
+  27:.\Generated_Source\PSoC5/PS2_ps2.c **** 	//PS2_Timer_Stop();
+  28:.\Generated_Source\PSoC5/PS2_ps2.c **** }
+  29:.\Generated_Source\PSoC5/PS2_ps2.c **** 
+  30:.\Generated_Source\PSoC5/PS2_ps2.c **** void PS2_Init(void) 
+  31:.\Generated_Source\PSoC5/PS2_ps2.c **** {
+  57              		.loc 1 31 0
+  58              		.cfi_startproc
+  59              		@ args = 0, pretend = 0, frame = 0
+  60              		@ frame_needed = 0, uses_anonymous_args = 0
+  61 0000 08B5     		push	{r3, lr}
+  62              		.cfi_def_cfa_offset 8
+  63              		.cfi_offset 3, -8
+  64              		.cfi_offset 14, -4
+  32:.\Generated_Source\PSoC5/PS2_ps2.c ****     PS2_timer_reps = 0; // Set number of repetitions to 0
+  65              		.loc 1 32 0
+  66 0002 0023     		movs	r3, #0
+  67 0004 164A     		ldr	r2, .L6
+  68 0006 1380     		strh	r3, [r2]	@ movhi
+  33:.\Generated_Source\PSoC5/PS2_ps2.c ****     PS2_deviceDetectFail = 0; // Set device detect failed to 0
+  69              		.loc 1 33 0
+  70 0008 164A     		ldr	r2, .L6+4
+  71 000a 1370     		strb	r3, [r2]
+  34:.\Generated_Source\PSoC5/PS2_ps2.c ****     PS2_Timer_ISR_StartEx(PS2_TIMER); // Setup ISR for the interrupt
+  72              		.loc 1 34 0
+  73 000c 1648     		ldr	r0, .L6+8
+  74 000e FFF7FEFF 		bl	PS2_Timer_ISR_StartEx
+  75              	.LVL0:
+  35:.\Generated_Source\PSoC5/PS2_ps2.c **** 	PS2_Timer_Start();
+  76              		.loc 1 35 0
+  77 0012 FFF7FEFF 		bl	PS2_Timer_Start
+  78              	.LVL1:
+  36:.\Generated_Source\PSoC5/PS2_ps2.c **** 	PS2_Timer_Stop(); // Start and stop the timer to initialize registers
+ARM GAS  C:\Users\addis\AppData\Local\Temp\cc7XYADp.s 			page 3
 
 
-  85              	.L8:
-  86              		.align	2
-  87              	.L7:
-  88 0018 00000000 		.word	PS2_counter_trigger
-  89 001c 00000000 		.word	PS2_TIMER
-  90              		.cfi_endproc
-  91              	.LFE1:
-  92              		.size	PS2_Init, .-PS2_Init
-  93              		.section	.text.PS2_Start,"ax",%progbits
-  94              		.align	2
-  95              		.global	PS2_Start
-  96              		.thumb
-  97              		.thumb_func
-  98              		.type	PS2_Start, %function
-  99              	PS2_Start:
- 100              	.LFB2:
-  31:.\Generated_Source\PSoC5/PS2_ps2.c **** }
-  32:.\Generated_Source\PSoC5/PS2_ps2.c **** 
-  33:.\Generated_Source\PSoC5/PS2_ps2.c **** void PS2_Start(void) 
-  34:.\Generated_Source\PSoC5/PS2_ps2.c **** {
- 101              		.loc 1 34 0
- 102              		.cfi_startproc
- 103              		@ args = 0, pretend = 0, frame = 0
- 104              		@ frame_needed = 0, uses_anonymous_args = 0
- 105 0000 08B5     		push	{r3, lr}
- 106              		.cfi_def_cfa_offset 8
- 107              		.cfi_offset 3, -8
- 108              		.cfi_offset 14, -4
-  35:.\Generated_Source\PSoC5/PS2_ps2.c ****     if (0u == PS2_initVar)
- 109              		.loc 1 35 0
- 110 0002 044B     		ldr	r3, .L12
- 111 0004 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
- 112 0006 23B9     		cbnz	r3, .L9
-  36:.\Generated_Source\PSoC5/PS2_ps2.c ****     {
-  37:.\Generated_Source\PSoC5/PS2_ps2.c ****         PS2_Init();
- 113              		.loc 1 37 0
- 114 0008 FFF7FEFF 		bl	PS2_Init
- 115              	.LVL4:
-  38:.\Generated_Source\PSoC5/PS2_ps2.c ****         PS2_initVar = 1u; /* Component initialized */
- 116              		.loc 1 38 0
- 117 000c 0122     		movs	r2, #1
- 118 000e 014B     		ldr	r3, .L12
- 119 0010 1A70     		strb	r2, [r3]
- 120              	.L9:
- 121 0012 08BD     		pop	{r3, pc}
- 122              	.L13:
- 123              		.align	2
- 124              	.L12:
- 125 0014 00000000 		.word	PS2_initVar
- 126              		.cfi_endproc
- 127              	.LFE2:
- 128              		.size	PS2_Start, .-PS2_Start
- 129              		.section	.text.PS2_DetectDevice,"ax",%progbits
- 130              		.align	2
- 131              		.global	PS2_DetectDevice
- 132              		.thumb
- 133              		.thumb_func
-ARM GAS  C:\Users\addis\AppData\Local\Temp\ccmHqk3Q.s 			page 4
+  79              		.loc 1 36 0
+  80 0016 FFF7FEFF 		bl	PS2_Timer_Stop
+  81              	.LVL2:
+  37:.\Generated_Source\PSoC5/PS2_ps2.c ****     
+  38:.\Generated_Source\PSoC5/PS2_ps2.c ****     PS2_RESET; // Initializes the PS2_Core state machine registers
+  82              		.loc 1 38 0
+  83 001a FFF7FEFF 		bl	PS2_controlReg_Read
+  84              	.LVL3:
+  85 001e 40F00200 		orr	r0, r0, #2
+  86 0022 C0B2     		uxtb	r0, r0
+  87 0024 FFF7FEFF 		bl	PS2_controlReg_Write
+  88              	.LVL4:
+  89 0028 FFF7FEFF 		bl	PS2_controlReg_Read
+  90              	.LVL5:
+  91 002c 00F0FD00 		and	r0, r0, #253
+  92 0030 FFF7FEFF 		bl	PS2_controlReg_Write
+  93              	.LVL6:
+  39:.\Generated_Source\PSoC5/PS2_ps2.c **** 	PS2_DATA_CTRL_SW; // Sets ps2_data line to software mode
+  94              		.loc 1 39 0
+  95 0034 FFF7FEFF 		bl	PS2_controlReg_Read
+  96              	.LVL7:
+  97 0038 00F0EF00 		and	r0, r0, #239
+  98 003c FFF7FEFF 		bl	PS2_controlReg_Write
+  99              	.LVL8:
+  40:.\Generated_Source\PSoC5/PS2_ps2.c **** 	PS2_DATA_HIGH; // Sets ps2_data software line to 1
+ 100              		.loc 1 40 0
+ 101 0040 FFF7FEFF 		bl	PS2_controlReg_Read
+ 102              	.LVL9:
+ 103 0044 40F00400 		orr	r0, r0, #4
+ 104 0048 C0B2     		uxtb	r0, r0
+ 105 004a FFF7FEFF 		bl	PS2_controlReg_Write
+ 106              	.LVL10:
+  41:.\Generated_Source\PSoC5/PS2_ps2.c **** 	PS2_CLOCK_HIGH; // Sets ps2_clock to 1
+ 107              		.loc 1 41 0
+ 108 004e FFF7FEFF 		bl	PS2_controlReg_Read
+ 109              	.LVL11:
+ 110 0052 40F00800 		orr	r0, r0, #8
+ 111 0056 C0B2     		uxtb	r0, r0
+ 112 0058 FFF7FEFF 		bl	PS2_controlReg_Write
+ 113              	.LVL12:
+ 114 005c 08BD     		pop	{r3, pc}
+ 115              	.L7:
+ 116 005e 00BF     		.align	2
+ 117              	.L6:
+ 118 0060 00000000 		.word	PS2_timer_reps
+ 119 0064 00000000 		.word	PS2_deviceDetectFail
+ 120 0068 00000000 		.word	PS2_TIMER
+ 121              		.cfi_endproc
+ 122              	.LFE1:
+ 123              		.size	PS2_Init, .-PS2_Init
+ 124              		.section	.text.PS2_Start,"ax",%progbits
+ 125              		.align	2
+ 126              		.global	PS2_Start
+ 127              		.thumb
+ 128              		.thumb_func
+ 129              		.type	PS2_Start, %function
+ 130              	PS2_Start:
+ARM GAS  C:\Users\addis\AppData\Local\Temp\cc7XYADp.s 			page 4
 
 
- 134              		.type	PS2_DetectDevice, %function
- 135              	PS2_DetectDevice:
- 136              	.LFB3:
-  39:.\Generated_Source\PSoC5/PS2_ps2.c ****     }
-  40:.\Generated_Source\PSoC5/PS2_ps2.c **** }
-  41:.\Generated_Source\PSoC5/PS2_ps2.c **** 
-  42:.\Generated_Source\PSoC5/PS2_ps2.c **** uint8 PS2_DetectDevice(void) 
-  43:.\Generated_Source\PSoC5/PS2_ps2.c **** {
- 137              		.loc 1 43 0
- 138              		.cfi_startproc
- 139              		@ args = 0, pretend = 0, frame = 0
- 140              		@ frame_needed = 0, uses_anonymous_args = 0
- 141 0000 10B5     		push	{r4, lr}
- 142              		.cfi_def_cfa_offset 8
- 143              		.cfi_offset 4, -8
- 144              		.cfi_offset 14, -4
-  44:.\Generated_Source\PSoC5/PS2_ps2.c ****     PS2_TIMER_START(200); // Set a timer for 1000ms
- 145              		.loc 1 44 0
- 146 0002 0022     		movs	r2, #0
- 147 0004 154B     		ldr	r3, .L22
- 148 0006 1A70     		strb	r2, [r3]
- 149 0008 C820     		movs	r0, #200
- 150 000a FFF7FEFF 		bl	PS2_Timer_WritePeriod
- 151              	.LVL5:
- 152 000e FFF7FEFF 		bl	PS2_Timer_Start
- 153              	.LVL6:
-  45:.\Generated_Source\PSoC5/PS2_ps2.c ****     
-  46:.\Generated_Source\PSoC5/PS2_ps2.c ****     PS2_READ; // Make sure the state machine knows to read
- 154              		.loc 1 46 0
- 155 0012 FFF7FEFF 		bl	PS2_controlReg_Read
- 156              	.LVL7:
- 157 0016 00F0FD00 		and	r0, r0, #253
- 158 001a FFF7FEFF 		bl	PS2_controlReg_Write
- 159              	.LVL8:
- 160              	.L16:
-  47:.\Generated_Source\PSoC5/PS2_ps2.c ****     
-  48:.\Generated_Source\PSoC5/PS2_ps2.c ****     while (PS2_STATUS == PS2_STATUS_PENDING && !PS2_counter_trigger); // Wait until timeout or some
- 161              		.loc 1 48 0 discriminator 2
- 162 001e FFF7FEFF 		bl	PS2_statusReg_Read
- 163              	.LVL9:
- 164 0022 18B9     		cbnz	r0, .L15
- 165              		.loc 1 48 0 is_stmt 0 discriminator 1
- 166 0024 0D4B     		ldr	r3, .L22
- 167 0026 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
- 168 0028 002B     		cmp	r3, #0
- 169 002a F8D0     		beq	.L16
- 170              	.L15:
-  49:.\Generated_Source\PSoC5/PS2_ps2.c ****     if (PS2_STATUS == PS2_STATUS_DONE)
- 171              		.loc 1 49 0 is_stmt 1
- 172 002c FFF7FEFF 		bl	PS2_statusReg_Read
- 173              	.LVL10:
- 174 0030 0446     		mov	r4, r0
- 175 0032 0128     		cmp	r0, #1
- 176 0034 07D1     		bne	.L17
-  50:.\Generated_Source\PSoC5/PS2_ps2.c ****     {
-  51:.\Generated_Source\PSoC5/PS2_ps2.c ****         CyDelay(1); // Delay one millisecond to give the status register time to update
- 177              		.loc 1 51 0
-ARM GAS  C:\Users\addis\AppData\Local\Temp\ccmHqk3Q.s 			page 5
+ 131              	.LFB2:
+  42:.\Generated_Source\PSoC5/PS2_ps2.c **** }
+  43:.\Generated_Source\PSoC5/PS2_ps2.c **** 
+  44:.\Generated_Source\PSoC5/PS2_ps2.c **** void PS2_Start(void) 
+  45:.\Generated_Source\PSoC5/PS2_ps2.c **** {
+ 132              		.loc 1 45 0
+ 133              		.cfi_startproc
+ 134              		@ args = 0, pretend = 0, frame = 0
+ 135              		@ frame_needed = 0, uses_anonymous_args = 0
+ 136 0000 08B5     		push	{r3, lr}
+ 137              		.cfi_def_cfa_offset 8
+ 138              		.cfi_offset 3, -8
+ 139              		.cfi_offset 14, -4
+  46:.\Generated_Source\PSoC5/PS2_ps2.c ****     if (0u == PS2_initVar)
+ 140              		.loc 1 46 0
+ 141 0002 044B     		ldr	r3, .L11
+ 142 0004 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 143 0006 23B9     		cbnz	r3, .L8
+  47:.\Generated_Source\PSoC5/PS2_ps2.c ****     {
+  48:.\Generated_Source\PSoC5/PS2_ps2.c ****         PS2_Init();
+ 144              		.loc 1 48 0
+ 145 0008 FFF7FEFF 		bl	PS2_Init
+ 146              	.LVL13:
+  49:.\Generated_Source\PSoC5/PS2_ps2.c ****         PS2_initVar = 1u; /* Component initialized */
+ 147              		.loc 1 49 0
+ 148 000c 0122     		movs	r2, #1
+ 149 000e 014B     		ldr	r3, .L11
+ 150 0010 1A70     		strb	r2, [r3]
+ 151              	.L8:
+ 152 0012 08BD     		pop	{r3, pc}
+ 153              	.L12:
+ 154              		.align	2
+ 155              	.L11:
+ 156 0014 00000000 		.word	PS2_initVar
+ 157              		.cfi_endproc
+ 158              	.LFE2:
+ 159              		.size	PS2_Start, .-PS2_Start
+ 160              		.section	.text.PS2_WriteByte,"ax",%progbits
+ 161              		.align	2
+ 162              		.global	PS2_WriteByte
+ 163              		.thumb
+ 164              		.thumb_func
+ 165              		.type	PS2_WriteByte, %function
+ 166              	PS2_WriteByte:
+ 167              	.LFB4:
+  50:.\Generated_Source\PSoC5/PS2_ps2.c ****     }
+  51:.\Generated_Source\PSoC5/PS2_ps2.c **** }
+  52:.\Generated_Source\PSoC5/PS2_ps2.c **** 
+  53:.\Generated_Source\PSoC5/PS2_ps2.c **** uint8 PS2_DetectDevice(void) 
+  54:.\Generated_Source\PSoC5/PS2_ps2.c **** {
+  55:.\Generated_Source\PSoC5/PS2_ps2.c ****     uint8 status;
+  56:.\Generated_Source\PSoC5/PS2_ps2.c **** 	
+  57:.\Generated_Source\PSoC5/PS2_ps2.c **** 	// If the previous device detect did not return a BAT code, send a reset command
+  58:.\Generated_Source\PSoC5/PS2_ps2.c **** 	// This is to notify the device to stop doing everything, and send a BAT test
+  59:.\Generated_Source\PSoC5/PS2_ps2.c ****     if (PS2_deviceDetectFail)
+  60:.\Generated_Source\PSoC5/PS2_ps2.c **** 		PS2_SendCommand(0xFF);
+  61:.\Generated_Source\PSoC5/PS2_ps2.c ****     
+ARM GAS  C:\Users\addis\AppData\Local\Temp\cc7XYADp.s 			page 5
 
 
- 178 0036 0120     		movs	r0, #1
- 179 0038 FFF7FEFF 		bl	CyDelay
- 180              	.LVL11:
-  52:.\Generated_Source\PSoC5/PS2_ps2.c ****         if (PS2_BYTE_R == 0xAA)
- 181              		.loc 1 52 0
- 182 003c FFF7FEFF 		bl	PS2_dataOut_Read
- 183              	.LVL12:
- 184 0040 AA28     		cmp	r0, #170
- 185 0042 06D1     		bne	.L19
- 186 0044 08E0     		b	.L18
- 187              	.L17:
-  53:.\Generated_Source\PSoC5/PS2_ps2.c ****         {
-  54:.\Generated_Source\PSoC5/PS2_ps2.c ****             //PS2_TIMER_START(4); // Set a timer for 20ms; mouse sends ID packet within 20ms of BAT
-  55:.\Generated_Source\PSoC5/PS2_ps2.c ****             //PS2_READ; // Make sure the state machine knows to read
-  56:.\Generated_Source\PSoC5/PS2_ps2.c ****             
-  57:.\Generated_Source\PSoC5/PS2_ps2.c ****             return PS2_SUCCESS;
-  58:.\Generated_Source\PSoC5/PS2_ps2.c ****         }
-  59:.\Generated_Source\PSoC5/PS2_ps2.c ****         else
-  60:.\Generated_Source\PSoC5/PS2_ps2.c ****         {
-  61:.\Generated_Source\PSoC5/PS2_ps2.c ****             return PS2_BAD_BAT;   
-  62:.\Generated_Source\PSoC5/PS2_ps2.c ****         }
-  63:.\Generated_Source\PSoC5/PS2_ps2.c ****         return PS2_BYTE_R;
-  64:.\Generated_Source\PSoC5/PS2_ps2.c ****     }
-  65:.\Generated_Source\PSoC5/PS2_ps2.c ****     else if (PS2_STATUS == PS2_STATUS_ERROR)
- 188              		.loc 1 65 0
- 189 0046 FFF7FEFF 		bl	PS2_statusReg_Read
- 190              	.LVL13:
- 191 004a 0228     		cmp	r0, #2
- 192 004c 03D1     		bne	.L20
+  62:.\Generated_Source\PSoC5/PS2_ps2.c ****     PS2_TIMER_START(200, 500); // Set a timer for (10uS * 200 * 500) = 1000ms
+  63:.\Generated_Source\PSoC5/PS2_ps2.c ****     PS2_READ; // Make sure the state machine knows to read
+  64:.\Generated_Source\PSoC5/PS2_ps2.c ****     
+  65:.\Generated_Source\PSoC5/PS2_ps2.c ****     while (PS2_STATUS == PS2_STATUS_PENDING && PS2_timer_reps); // Wait until timeout or something 
+  66:.\Generated_Source\PSoC5/PS2_ps2.c ****     if (PS2_STATUS == PS2_STATUS_DONE)
+  67:.\Generated_Source\PSoC5/PS2_ps2.c ****     {
+  68:.\Generated_Source\PSoC5/PS2_ps2.c ****         CyDelay(1); // Delay one millisecond to give the status register time to update
+  69:.\Generated_Source\PSoC5/PS2_ps2.c ****         if (PS2_BYTE_R == 0xAA)
+  70:.\Generated_Source\PSoC5/PS2_ps2.c ****         {
+  71:.\Generated_Source\PSoC5/PS2_ps2.c ****             // XXX: Mess with getting mouse to work with PS/2
+  72:.\Generated_Source\PSoC5/PS2_ps2.c ****             status = PS2_SUCCESS;
+  73:.\Generated_Source\PSoC5/PS2_ps2.c ****         }
+  74:.\Generated_Source\PSoC5/PS2_ps2.c ****         else
+  75:.\Generated_Source\PSoC5/PS2_ps2.c ****             status = PS2_BAD_BAT;
+  76:.\Generated_Source\PSoC5/PS2_ps2.c **** 
+  77:.\Generated_Source\PSoC5/PS2_ps2.c ****         PS2_deviceDetectFail = 0; // No need to reset, the BAT code was received correctly
+  78:.\Generated_Source\PSoC5/PS2_ps2.c ****     }
+  79:.\Generated_Source\PSoC5/PS2_ps2.c ****     else if (PS2_STATUS == PS2_STATUS_ERROR)
+  80:.\Generated_Source\PSoC5/PS2_ps2.c ****     {
+  81:.\Generated_Source\PSoC5/PS2_ps2.c ****         PS2_deviceDetectFail = 1; // If there was a transmission error, send reset command next fun
+  82:.\Generated_Source\PSoC5/PS2_ps2.c ****         status = PS2_ERROR;
+  83:.\Generated_Source\PSoC5/PS2_ps2.c ****     }
+  84:.\Generated_Source\PSoC5/PS2_ps2.c ****     else
+  85:.\Generated_Source\PSoC5/PS2_ps2.c ****     {
+  86:.\Generated_Source\PSoC5/PS2_ps2.c ****         PS2_deviceDetectFail = 1; // If there was a timeout, send reset command next function call
+  87:.\Generated_Source\PSoC5/PS2_ps2.c ****         status = PS2_TIMEOUT;
+  88:.\Generated_Source\PSoC5/PS2_ps2.c ****     }
+  89:.\Generated_Source\PSoC5/PS2_ps2.c ****     
+  90:.\Generated_Source\PSoC5/PS2_ps2.c ****     // The state machine needs to be reset everytime it sends or receives something. Yes, this coul
+  91:.\Generated_Source\PSoC5/PS2_ps2.c ****     // but there is not enough UDBs for it. Adding another if statement makes it break
+  92:.\Generated_Source\PSoC5/PS2_ps2.c ****     PS2_RESET;
+  93:.\Generated_Source\PSoC5/PS2_ps2.c ****     return status;
+  94:.\Generated_Source\PSoC5/PS2_ps2.c **** }
+  95:.\Generated_Source\PSoC5/PS2_ps2.c **** 
+  96:.\Generated_Source\PSoC5/PS2_ps2.c **** uint8 PS2_WriteByte(uint8 data) 
+  97:.\Generated_Source\PSoC5/PS2_ps2.c **** {
+ 168              		.loc 1 97 0
+ 169              		.cfi_startproc
+ 170              		@ args = 0, pretend = 0, frame = 0
+ 171              		@ frame_needed = 0, uses_anonymous_args = 0
+ 172              	.LVL14:
+ 173 0000 38B5     		push	{r3, r4, r5, lr}
+ 174              		.cfi_def_cfa_offset 16
+ 175              		.cfi_offset 3, -16
+ 176              		.cfi_offset 4, -12
+ 177              		.cfi_offset 5, -8
+ 178              		.cfi_offset 14, -4
+ 179 0002 0446     		mov	r4, r0
+ 180              	.LVL15:
+  98:.\Generated_Source\PSoC5/PS2_ps2.c ****     uint8 status = 0;
+  99:.\Generated_Source\PSoC5/PS2_ps2.c **** 	
+ 100:.\Generated_Source\PSoC5/PS2_ps2.c **** 	// If we are receiving something, give it 10ms to finish. If it is still in progress,
+ 101:.\Generated_Source\PSoC5/PS2_ps2.c **** 	// then it will have to be resent once the transmission is over. The device handles
+ 102:.\Generated_Source\PSoC5/PS2_ps2.c **** 	// this though
+ 103:.\Generated_Source\PSoC5/PS2_ps2.c ****     if (PS2_STATE != PS2_IDLE)
+ 181              		.loc 1 103 0
+ 182 0004 FFF7FEFF 		bl	PS2_stateReg_Read
+ARM GAS  C:\Users\addis\AppData\Local\Temp\cc7XYADp.s 			page 6
+
+
+ 183              	.LVL16:
+ 184 0008 E8B1     		cbz	r0, .L14
+ 104:.\Generated_Source\PSoC5/PS2_ps2.c **** 	{
+ 105:.\Generated_Source\PSoC5/PS2_ps2.c **** 	    PS2_TIMER_START(1, 1); // Set a timer for (10uS * 1 * 1) = 10us
+ 185              		.loc 1 105 0
+ 186 000a 0125     		movs	r5, #1
+ 187 000c 694B     		ldr	r3, .L28
+ 188 000e 1D80     		strh	r5, [r3]	@ movhi
+ 189 0010 2846     		mov	r0, r5
+ 190 0012 FFF7FEFF 		bl	PS2_Timer_WriteCounter
+ 191              	.LVL17:
+ 192 0016 2846     		mov	r0, r5
+ 193 0018 FFF7FEFF 		bl	PS2_Timer_WritePeriod
+ 194              	.LVL18:
+ 195 001c FFF7FEFF 		bl	PS2_Timer_Enable
+ 196              	.LVL19:
+ 197              	.L15:
+ 106:.\Generated_Source\PSoC5/PS2_ps2.c **** 	    while (PS2_timer_reps); // Wait 10us
+ 198              		.loc 1 106 0 discriminator 1
+ 199 0020 644B     		ldr	r3, .L28
+ 200 0022 1B88     		ldrh	r3, [r3]
+ 201 0024 002B     		cmp	r3, #0
+ 202 0026 FBD1     		bne	.L15
+ 107:.\Generated_Source\PSoC5/PS2_ps2.c **** 		PS2_Timer_Stop();
+ 203              		.loc 1 107 0
+ 204 0028 FFF7FEFF 		bl	PS2_Timer_Stop
+ 205              	.LVL20:
+ 108:.\Generated_Source\PSoC5/PS2_ps2.c **** 		
+ 109:.\Generated_Source\PSoC5/PS2_ps2.c **** 		PS2_RESET; // Reset the state machine once the wait is done
+ 206              		.loc 1 109 0
+ 207 002c FFF7FEFF 		bl	PS2_controlReg_Read
+ 208              	.LVL21:
+ 209 0030 40F00200 		orr	r0, r0, #2
+ 210 0034 C0B2     		uxtb	r0, r0
+ 211 0036 FFF7FEFF 		bl	PS2_controlReg_Write
+ 212              	.LVL22:
+ 213 003a FFF7FEFF 		bl	PS2_controlReg_Read
+ 214              	.LVL23:
+ 215 003e 00F0FD00 		and	r0, r0, #253
+ 216 0042 FFF7FEFF 		bl	PS2_controlReg_Write
+ 217              	.LVL24:
+ 218              	.L14:
+ 110:.\Generated_Source\PSoC5/PS2_ps2.c **** 	}
+ 111:.\Generated_Source\PSoC5/PS2_ps2.c **** 	
+ 112:.\Generated_Source\PSoC5/PS2_ps2.c ****     PS2_WRITE; // Tell state machine we are writing
+ 219              		.loc 1 112 0
+ 220 0046 FFF7FEFF 		bl	PS2_controlReg_Read
+ 221              	.LVL25:
+ 222 004a 40F00100 		orr	r0, r0, #1
+ 223 004e C0B2     		uxtb	r0, r0
+ 224 0050 FFF7FEFF 		bl	PS2_controlReg_Write
+ 225              	.LVL26:
+ 113:.\Generated_Source\PSoC5/PS2_ps2.c **** 	
+ 114:.\Generated_Source\PSoC5/PS2_ps2.c **** 	PS2_CLOCK_LOW; // Set clock line to low
+ 226              		.loc 1 114 0
+ 227 0054 FFF7FEFF 		bl	PS2_controlReg_Read
+ 228              	.LVL27:
+ARM GAS  C:\Users\addis\AppData\Local\Temp\cc7XYADp.s 			page 7
+
+
+ 229 0058 00F0F700 		and	r0, r0, #247
+ 230 005c FFF7FEFF 		bl	PS2_controlReg_Write
+ 231              	.LVL28:
+ 115:.\Generated_Source\PSoC5/PS2_ps2.c ****     PS2_TIMER_START(6, 1); // Set a timer for (10uS * 10 * 1) = 60us
+ 232              		.loc 1 115 0
+ 233 0060 0122     		movs	r2, #1
+ 234 0062 544B     		ldr	r3, .L28
+ 235 0064 1A80     		strh	r2, [r3]	@ movhi
+ 236 0066 0620     		movs	r0, #6
+ 237 0068 FFF7FEFF 		bl	PS2_Timer_WriteCounter
+ 238              	.LVL29:
+ 239 006c 0620     		movs	r0, #6
+ 240 006e FFF7FEFF 		bl	PS2_Timer_WritePeriod
+ 241              	.LVL30:
+ 242 0072 FFF7FEFF 		bl	PS2_Timer_Enable
+ 243              	.LVL31:
+ 244              	.L16:
+ 116:.\Generated_Source\PSoC5/PS2_ps2.c ****     while (PS2_timer_reps); // Wait 100us
+ 245              		.loc 1 116 0 discriminator 1
+ 246 0076 4F4B     		ldr	r3, .L28
+ 247 0078 1B88     		ldrh	r3, [r3]
+ 248 007a 002B     		cmp	r3, #0
+ 249 007c FBD1     		bne	.L16
+ 117:.\Generated_Source\PSoC5/PS2_ps2.c **** 	PS2_Timer_Stop();
+ 250              		.loc 1 117 0
+ 251 007e FFF7FEFF 		bl	PS2_Timer_Stop
+ 252              	.LVL32:
+ 118:.\Generated_Source\PSoC5/PS2_ps2.c **** 	
+ 119:.\Generated_Source\PSoC5/PS2_ps2.c **** 	PS2_DATA_LOW; // Pull data line low
+ 253              		.loc 1 119 0
+ 254 0082 FFF7FEFF 		bl	PS2_controlReg_Read
+ 255              	.LVL33:
+ 256 0086 00F0FB00 		and	r0, r0, #251
+ 257 008a FFF7FEFF 		bl	PS2_controlReg_Write
+ 258              	.LVL34:
+ 120:.\Generated_Source\PSoC5/PS2_ps2.c **** 
+ 121:.\Generated_Source\PSoC5/PS2_ps2.c ****     PS2_TIMER_START(5, 1); // Set a timer for (10uS * 3 * 1) = 30us
+ 259              		.loc 1 121 0
+ 260 008e 0122     		movs	r2, #1
+ 261 0090 484B     		ldr	r3, .L28
+ 262 0092 1A80     		strh	r2, [r3]	@ movhi
+ 263 0094 0520     		movs	r0, #5
+ 264 0096 FFF7FEFF 		bl	PS2_Timer_WriteCounter
+ 265              	.LVL35:
+ 266 009a 0520     		movs	r0, #5
+ 267 009c FFF7FEFF 		bl	PS2_Timer_WritePeriod
+ 268              	.LVL36:
+ 269 00a0 FFF7FEFF 		bl	PS2_Timer_Enable
+ 270              	.LVL37:
+ 271              	.L17:
+ 122:.\Generated_Source\PSoC5/PS2_ps2.c ****     while (PS2_timer_reps); // Wait 30us
+ 272              		.loc 1 122 0 discriminator 1
+ 273 00a4 434B     		ldr	r3, .L28
+ 274 00a6 1B88     		ldrh	r3, [r3]
+ 275 00a8 002B     		cmp	r3, #0
+ 276 00aa FBD1     		bne	.L17
+ 123:.\Generated_Source\PSoC5/PS2_ps2.c **** 	PS2_Timer_Stop();
+ARM GAS  C:\Users\addis\AppData\Local\Temp\cc7XYADp.s 			page 8
+
+
+ 277              		.loc 1 123 0
+ 278 00ac FFF7FEFF 		bl	PS2_Timer_Stop
+ 279              	.LVL38:
+ 124:.\Generated_Source\PSoC5/PS2_ps2.c **** 
+ 125:.\Generated_Source\PSoC5/PS2_ps2.c **** 	PS2_CLOCK_HIGH; // Bring the clock high again, the device should start generating clock signals
+ 280              		.loc 1 125 0
+ 281 00b0 FFF7FEFF 		bl	PS2_controlReg_Read
+ 282              	.LVL39:
+ 283 00b4 40F00800 		orr	r0, r0, #8
+ 284 00b8 C0B2     		uxtb	r0, r0
+ 285 00ba FFF7FEFF 		bl	PS2_controlReg_Write
+ 286              	.LVL40:
+ 126:.\Generated_Source\PSoC5/PS2_ps2.c **** 	
+ 127:.\Generated_Source\PSoC5/PS2_ps2.c **** 	PS2_DATA_WRITE(data);
+ 287              		.loc 1 127 0
+ 288 00be 2046     		mov	r0, r4
+ 289 00c0 FFF7FEFF 		bl	PS2_dataIn_Write
+ 290              	.LVL41:
+ 128:.\Generated_Source\PSoC5/PS2_ps2.c **** 	PS2_DATA_CTRL_HW;
+ 291              		.loc 1 128 0
+ 292 00c4 FFF7FEFF 		bl	PS2_controlReg_Read
+ 293              	.LVL42:
+ 294 00c8 40F01000 		orr	r0, r0, #16
+ 295 00cc C0B2     		uxtb	r0, r0
+ 296 00ce FFF7FEFF 		bl	PS2_controlReg_Write
+ 297              	.LVL43:
+ 129:.\Generated_Source\PSoC5/PS2_ps2.c **** 	PS2_DATA_HIGH;
+ 298              		.loc 1 129 0
+ 299 00d2 FFF7FEFF 		bl	PS2_controlReg_Read
+ 300              	.LVL44:
+ 301 00d6 40F00400 		orr	r0, r0, #4
+ 302 00da C0B2     		uxtb	r0, r0
+ 303 00dc FFF7FEFF 		bl	PS2_controlReg_Write
+ 304              	.LVL45:
+ 130:.\Generated_Source\PSoC5/PS2_ps2.c **** 	
+ 131:.\Generated_Source\PSoC5/PS2_ps2.c ****     // Per Adam Chapweske: Wait here for 15 ms or until we've transitioned
+ 132:.\Generated_Source\PSoC5/PS2_ps2.c ****     // out of the start bit state. If this time is exceeded, it's a timeout
+ 133:.\Generated_Source\PSoC5/PS2_ps2.c ****     PS2_TIMER_START(100, 15); // Set a timer for (10uS * 100 * 15) = 15ms
+ 305              		.loc 1 133 0
+ 306 00e0 0F22     		movs	r2, #15
+ 307 00e2 344B     		ldr	r3, .L28
+ 308 00e4 1A80     		strh	r2, [r3]	@ movhi
+ 309 00e6 6420     		movs	r0, #100
+ 310 00e8 FFF7FEFF 		bl	PS2_Timer_WriteCounter
+ 311              	.LVL46:
+ 312 00ec 6420     		movs	r0, #100
+ 313 00ee FFF7FEFF 		bl	PS2_Timer_WritePeriod
+ 314              	.LVL47:
+ 315 00f2 FFF7FEFF 		bl	PS2_Timer_Enable
+ 316              	.LVL48:
+ 317              	.L19:
+ 134:.\Generated_Source\PSoC5/PS2_ps2.c ****     while (PS2_STATE == PS2_WRITE_BIT_1 && PS2_timer_reps); // Wait 15ms
+ 318              		.loc 1 134 0 discriminator 2
+ 319 00f6 FFF7FEFF 		bl	PS2_stateReg_Read
+ 320              	.LVL49:
+ 321 00fa 0B28     		cmp	r0, #11
+ 322 00fc 03D1     		bne	.L18
+ARM GAS  C:\Users\addis\AppData\Local\Temp\cc7XYADp.s 			page 9
+
+
+ 323              		.loc 1 134 0 is_stmt 0 discriminator 1
+ 324 00fe 2D4B     		ldr	r3, .L28
+ 325 0100 1B88     		ldrh	r3, [r3]
+ 326 0102 002B     		cmp	r3, #0
+ 327 0104 F7D1     		bne	.L19
+ 328              	.L18:
+ 135:.\Generated_Source\PSoC5/PS2_ps2.c **** 	PS2_Timer_Stop();
+ 329              		.loc 1 135 0 is_stmt 1
+ 330 0106 FFF7FEFF 		bl	PS2_Timer_Stop
+ 331              	.LVL50:
+ 136:.\Generated_Source\PSoC5/PS2_ps2.c **** 	
+ 137:.\Generated_Source\PSoC5/PS2_ps2.c ****     if (PS2_STATE == PS2_WRITE_BIT_1)
+ 332              		.loc 1 137 0
+ 333 010a FFF7FEFF 		bl	PS2_stateReg_Read
+ 334              	.LVL51:
+ 335 010e 0B28     		cmp	r0, #11
+ 336 0110 14D1     		bne	.L20
+ 138:.\Generated_Source\PSoC5/PS2_ps2.c ****     {
+ 139:.\Generated_Source\PSoC5/PS2_ps2.c ****         // We have timed out because the state has not changed for 15ms
+ 140:.\Generated_Source\PSoC5/PS2_ps2.c ****         PS2_DATA_CTRL_SW; // Set data line back to software, its already high
+ 337              		.loc 1 140 0
+ 338 0112 FFF7FEFF 		bl	PS2_controlReg_Read
+ 339              	.LVL52:
+ 340 0116 00F0EF00 		and	r0, r0, #239
+ 341 011a FFF7FEFF 		bl	PS2_controlReg_Write
+ 342              	.LVL53:
+ 141:.\Generated_Source\PSoC5/PS2_ps2.c **** 		PS2_RESET; // Reset the state machine
+ 343              		.loc 1 141 0
+ 344 011e FFF7FEFF 		bl	PS2_controlReg_Read
+ 345              	.LVL54:
+ 346 0122 40F00200 		orr	r0, r0, #2
+ 347 0126 C0B2     		uxtb	r0, r0
+ 348 0128 FFF7FEFF 		bl	PS2_controlReg_Write
+ 349              	.LVL55:
+ 350 012c FFF7FEFF 		bl	PS2_controlReg_Read
+ 351              	.LVL56:
+ 352 0130 00F0FD00 		and	r0, r0, #253
+ 353 0134 FFF7FEFF 		bl	PS2_controlReg_Write
+ 354              	.LVL57:
+ 142:.\Generated_Source\PSoC5/PS2_ps2.c ****         return (PS2_TIMEOUT);
+ 355              		.loc 1 142 0
+ 356 0138 0220     		movs	r0, #2
+ 357 013a 38BD     		pop	{r3, r4, r5, pc}
+ 358              	.L20:
+ 143:.\Generated_Source\PSoC5/PS2_ps2.c ****     }
+ 144:.\Generated_Source\PSoC5/PS2_ps2.c **** 
+ 145:.\Generated_Source\PSoC5/PS2_ps2.c ****     // Per Adam Chapweske: The time it takes for the packet to be sent must be no greater than 2ms.
+ 146:.\Generated_Source\PSoC5/PS2_ps2.c ****     PS2_TIMER_START(100, 2); // Set a timer for (10uS * 100 * 2) = 2ms
+ 359              		.loc 1 146 0
+ 360 013c 0222     		movs	r2, #2
+ 361 013e 1D4B     		ldr	r3, .L28
+ 362 0140 1A80     		strh	r2, [r3]	@ movhi
+ 363 0142 6420     		movs	r0, #100
+ 364 0144 FFF7FEFF 		bl	PS2_Timer_WriteCounter
+ 365              	.LVL58:
+ 366 0148 6420     		movs	r0, #100
+ 367 014a FFF7FEFF 		bl	PS2_Timer_WritePeriod
+ARM GAS  C:\Users\addis\AppData\Local\Temp\cc7XYADp.s 			page 10
+
+
+ 368              	.LVL59:
+ 369 014e FFF7FEFF 		bl	PS2_Timer_Enable
+ 370              	.LVL60:
+ 371              	.L23:
+ 147:.\Generated_Source\PSoC5/PS2_ps2.c ****     while (PS2_STATUS == PS2_STATUS_PENDING && PS2_timer_reps); // Wait 2ms
+ 372              		.loc 1 147 0 discriminator 2
+ 373 0152 FFF7FEFF 		bl	PS2_statusReg_Read
+ 374              	.LVL61:
+ 375 0156 18B9     		cbnz	r0, .L22
+ 376              		.loc 1 147 0 is_stmt 0 discriminator 1
+ 377 0158 164B     		ldr	r3, .L28
+ 378 015a 1B88     		ldrh	r3, [r3]
+ 379 015c 002B     		cmp	r3, #0
+ 380 015e F8D1     		bne	.L23
+ 381              	.L22:
+ 148:.\Generated_Source\PSoC5/PS2_ps2.c ****     PS2_Timer_Stop();
+ 382              		.loc 1 148 0 is_stmt 1
+ 383 0160 FFF7FEFF 		bl	PS2_Timer_Stop
+ 384              	.LVL62:
+ 149:.\Generated_Source\PSoC5/PS2_ps2.c **** 	
+ 150:.\Generated_Source\PSoC5/PS2_ps2.c ****     if (PS2_STATUS == PS2_STATUS_DONE)
+ 385              		.loc 1 150 0
+ 386 0164 FFF7FEFF 		bl	PS2_statusReg_Read
+ 387              	.LVL63:
+ 388 0168 0128     		cmp	r0, #1
+ 389 016a 05D0     		beq	.L25
+ 151:.\Generated_Source\PSoC5/PS2_ps2.c ****         status = PS2_SUCCESS;
+ 152:.\Generated_Source\PSoC5/PS2_ps2.c ****     else if (PS2_STATUS == PS2_STATUS_ERROR)
+ 390              		.loc 1 152 0
+ 391 016c FFF7FEFF 		bl	PS2_statusReg_Read
+ 392              	.LVL64:
+ 393 0170 0228     		cmp	r0, #2
+ 394 0172 03D1     		bne	.L26
+ 153:.\Generated_Source\PSoC5/PS2_ps2.c ****         status = PS2_ERROR;
+ 395              		.loc 1 153 0
+ 396 0174 0324     		movs	r4, #3
+ 397 0176 02E0     		b	.L24
+ 398              	.L25:
+ 151:.\Generated_Source\PSoC5/PS2_ps2.c ****         status = PS2_SUCCESS;
+ 399              		.loc 1 151 0
+ 400 0178 0024     		movs	r4, #0
+ 401 017a 00E0     		b	.L24
+ 402              	.L26:
+ 154:.\Generated_Source\PSoC5/PS2_ps2.c ****     else
+ 155:.\Generated_Source\PSoC5/PS2_ps2.c ****         status = PS2_TIMEOUT;
+ 403              		.loc 1 155 0
+ 404 017c 0224     		movs	r4, #2
+ 405              	.L24:
+ 406              	.LVL65:
+ 156:.\Generated_Source\PSoC5/PS2_ps2.c **** 	
+ 157:.\Generated_Source\PSoC5/PS2_ps2.c **** 	PS2_DATA_CTRL_SW; // Set data line back to software, its already high
+ 407              		.loc 1 157 0
+ 408 017e FFF7FEFF 		bl	PS2_controlReg_Read
+ 409              	.LVL66:
+ 410 0182 00F0EF00 		and	r0, r0, #239
+ 411 0186 FFF7FEFF 		bl	PS2_controlReg_Write
+ 412              	.LVL67:
+ARM GAS  C:\Users\addis\AppData\Local\Temp\cc7XYADp.s 			page 11
+
+
+ 158:.\Generated_Source\PSoC5/PS2_ps2.c ****     PS2_RESET; // Reset the state machine
+ 413              		.loc 1 158 0
+ 414 018a FFF7FEFF 		bl	PS2_controlReg_Read
+ 415              	.LVL68:
+ 416 018e 40F00200 		orr	r0, r0, #2
+ 417 0192 C0B2     		uxtb	r0, r0
+ 418 0194 FFF7FEFF 		bl	PS2_controlReg_Write
+ 419              	.LVL69:
+ 420 0198 FFF7FEFF 		bl	PS2_controlReg_Read
+ 421              	.LVL70:
+ 422 019c 00F0FD00 		and	r0, r0, #253
+ 423 01a0 FFF7FEFF 		bl	PS2_controlReg_Write
+ 424              	.LVL71:
+ 159:.\Generated_Source\PSoC5/PS2_ps2.c **** 	PS2_READ; // Set the state machine back to read
+ 425              		.loc 1 159 0
+ 426 01a4 FFF7FEFF 		bl	PS2_controlReg_Read
+ 427              	.LVL72:
+ 428 01a8 00F0FE00 		and	r0, r0, #254
+ 429 01ac FFF7FEFF 		bl	PS2_controlReg_Write
+ 430              	.LVL73:
+ 160:.\Generated_Source\PSoC5/PS2_ps2.c ****     return status;
+ 431              		.loc 1 160 0
+ 432 01b0 2046     		mov	r0, r4
+ 161:.\Generated_Source\PSoC5/PS2_ps2.c **** }
+ 433              		.loc 1 161 0
+ 434 01b2 38BD     		pop	{r3, r4, r5, pc}
+ 435              	.LVL74:
+ 436              	.L29:
+ 437              		.align	2
+ 438              	.L28:
+ 439 01b4 00000000 		.word	PS2_timer_reps
+ 440              		.cfi_endproc
+ 441              	.LFE4:
+ 442              		.size	PS2_WriteByte, .-PS2_WriteByte
+ 443              		.section	.text.PS2_SendCommand,"ax",%progbits
+ 444              		.align	2
+ 445              		.global	PS2_SendCommand
+ 446              		.thumb
+ 447              		.thumb_func
+ 448              		.type	PS2_SendCommand, %function
+ 449              	PS2_SendCommand:
+ 450              	.LFB5:
+ 162:.\Generated_Source\PSoC5/PS2_ps2.c **** 
+ 163:.\Generated_Source\PSoC5/PS2_ps2.c **** uint8 PS2_SendCommand(uint8 data) 
+ 164:.\Generated_Source\PSoC5/PS2_ps2.c **** {
+ 451              		.loc 1 164 0
+ 452              		.cfi_startproc
+ 453              		@ args = 0, pretend = 0, frame = 0
+ 454              		@ frame_needed = 0, uses_anonymous_args = 0
+ 455              	.LVL75:
+ 456 0000 10B5     		push	{r4, lr}
+ 457              		.cfi_def_cfa_offset 8
+ 458              		.cfi_offset 4, -8
+ 459              		.cfi_offset 14, -4
+ 460 0002 0446     		mov	r4, r0
+ 461              	.LVL76:
+ 462              	.L40:
+ARM GAS  C:\Users\addis\AppData\Local\Temp\cc7XYADp.s 			page 12
+
+
+ 165:.\Generated_Source\PSoC5/PS2_ps2.c **** 	uint8 txStatus;
+ 166:.\Generated_Source\PSoC5/PS2_ps2.c **** 	
+ 167:.\Generated_Source\PSoC5/PS2_ps2.c **** 	// XXX - Maybe put an upper bound on the number of resends to do
+ 168:.\Generated_Source\PSoC5/PS2_ps2.c **** 	// Loop in case of resends
+ 169:.\Generated_Source\PSoC5/PS2_ps2.c **** 	while (1)
+ 170:.\Generated_Source\PSoC5/PS2_ps2.c **** 	{
+ 171:.\Generated_Source\PSoC5/PS2_ps2.c **** 		txStatus = PS2_WriteByte(data);
+ 463              		.loc 1 171 0
+ 464 0004 2046     		mov	r0, r4
+ 465 0006 FFF7FEFF 		bl	PS2_WriteByte
+ 466              	.LVL77:
+ 172:.\Generated_Source\PSoC5/PS2_ps2.c **** 		// Non-zero return means there was an error
+ 173:.\Generated_Source\PSoC5/PS2_ps2.c **** 		if (txStatus)
+ 467              		.loc 1 173 0
+ 468 000a 00B1     		cbz	r0, .L31
+ 174:.\Generated_Source\PSoC5/PS2_ps2.c **** 			return txStatus;
+ 469              		.loc 1 174 0
+ 470 000c 10BD     		pop	{r4, pc}
+ 471              	.L31:
+ 175:.\Generated_Source\PSoC5/PS2_ps2.c **** 
+ 176:.\Generated_Source\PSoC5/PS2_ps2.c **** 		// The device should respond within 20ms of the time of sending
+ 177:.\Generated_Source\PSoC5/PS2_ps2.c **** 	    PS2_TIMER_START(100, 20); // Set a timer for (10uS * 100 * 20) = 20ms
+ 472              		.loc 1 177 0
+ 473 000e 1422     		movs	r2, #20
+ 474 0010 334B     		ldr	r3, .L45
+ 475 0012 1A80     		strh	r2, [r3]	@ movhi
+ 476 0014 6420     		movs	r0, #100
+ 477              	.LVL78:
+ 478 0016 FFF7FEFF 		bl	PS2_Timer_WriteCounter
+ 479              	.LVL79:
+ 480 001a 6420     		movs	r0, #100
+ 481 001c FFF7FEFF 		bl	PS2_Timer_WritePeriod
+ 482              	.LVL80:
+ 483 0020 FFF7FEFF 		bl	PS2_Timer_Enable
+ 484              	.LVL81:
+ 485              	.L34:
+ 178:.\Generated_Source\PSoC5/PS2_ps2.c **** 	    while (PS2_STATUS == PS2_STATUS_PENDING && PS2_timer_reps);
+ 486              		.loc 1 178 0 discriminator 2
+ 487 0024 FFF7FEFF 		bl	PS2_statusReg_Read
+ 488              	.LVL82:
+ 489 0028 18B9     		cbnz	r0, .L33
+ 490              		.loc 1 178 0 is_stmt 0 discriminator 1
+ 491 002a 2D4B     		ldr	r3, .L45
+ 492 002c 1B88     		ldrh	r3, [r3]
+ 493 002e 002B     		cmp	r3, #0
+ 494 0030 F8D1     		bne	.L34
+ 495              	.L33:
+ 179:.\Generated_Source\PSoC5/PS2_ps2.c **** 		PS2_Timer_Stop();
+ 496              		.loc 1 179 0 is_stmt 1
+ 497 0032 FFF7FEFF 		bl	PS2_Timer_Stop
+ 498              	.LVL83:
+ 180:.\Generated_Source\PSoC5/PS2_ps2.c **** 		
+ 181:.\Generated_Source\PSoC5/PS2_ps2.c **** 		if (PS2_STATUS == PS2_STATUS_DONE)
+ 499              		.loc 1 181 0
+ 500 0036 FFF7FEFF 		bl	PS2_statusReg_Read
+ 501              	.LVL84:
+ 502 003a 0128     		cmp	r0, #1
+ARM GAS  C:\Users\addis\AppData\Local\Temp\cc7XYADp.s 			page 13
+
+
+ 503 003c 45D1     		bne	.L35
+ 182:.\Generated_Source\PSoC5/PS2_ps2.c **** 		{
+ 183:.\Generated_Source\PSoC5/PS2_ps2.c **** 			switch (PS2_BYTE_R)
+ 504              		.loc 1 183 0
+ 505 003e FFF7FEFF 		bl	PS2_dataOut_Read
+ 506              	.LVL85:
+ 507 0042 FA28     		cmp	r0, #250
+ 508 0044 04D0     		beq	.L37
+ 509 0046 FE28     		cmp	r0, #254
+ 510 0048 11D0     		beq	.L38
+ 511 004a EE28     		cmp	r0, #238
+ 512 004c 2ED1     		bne	.L43
+ 513 004e 1CE0     		b	.L39
+ 514              	.L37:
+ 184:.\Generated_Source\PSoC5/PS2_ps2.c **** 			{
+ 185:.\Generated_Source\PSoC5/PS2_ps2.c **** 				case 0xFA: // ACK: The device correctly received our command
+ 186:.\Generated_Source\PSoC5/PS2_ps2.c **** 					PS2_RESET;
+ 515              		.loc 1 186 0
+ 516 0050 FFF7FEFF 		bl	PS2_controlReg_Read
+ 517              	.LVL86:
+ 518 0054 40F00200 		orr	r0, r0, #2
+ 519 0058 C0B2     		uxtb	r0, r0
+ 520 005a FFF7FEFF 		bl	PS2_controlReg_Write
+ 521              	.LVL87:
+ 522 005e FFF7FEFF 		bl	PS2_controlReg_Read
+ 523              	.LVL88:
+ 524 0062 00F0FD00 		and	r0, r0, #253
+ 525 0066 FFF7FEFF 		bl	PS2_controlReg_Write
+ 526              	.LVL89:
+ 187:.\Generated_Source\PSoC5/PS2_ps2.c **** 					return PS2_SUCCESS;
+ 527              		.loc 1 187 0
+ 528 006a 0020     		movs	r0, #0
+ 529 006c 10BD     		pop	{r4, pc}
+ 530              	.L38:
+ 188:.\Generated_Source\PSoC5/PS2_ps2.c **** 					
+ 189:.\Generated_Source\PSoC5/PS2_ps2.c **** 				case 0xFE: // RESEND: The device wants us to resend the last byte
+ 190:.\Generated_Source\PSoC5/PS2_ps2.c **** 					// Caused by the device receiving an incorrect parity error
+ 191:.\Generated_Source\PSoC5/PS2_ps2.c **** 					// If we break out of this switch, the while loop will resend the byte
+ 192:.\Generated_Source\PSoC5/PS2_ps2.c **** 					PS2_RESET;
+ 531              		.loc 1 192 0
+ 532 006e FFF7FEFF 		bl	PS2_controlReg_Read
+ 533              	.LVL90:
+ 534 0072 40F00200 		orr	r0, r0, #2
+ 535 0076 C0B2     		uxtb	r0, r0
+ 536 0078 FFF7FEFF 		bl	PS2_controlReg_Write
+ 537              	.LVL91:
+ 538 007c FFF7FEFF 		bl	PS2_controlReg_Read
+ 539              	.LVL92:
+ 540 0080 00F0FD00 		and	r0, r0, #253
+ 541 0084 FFF7FEFF 		bl	PS2_controlReg_Write
+ 542              	.LVL93:
+ 543 0088 BCE7     		b	.L40
+ 544              	.L39:
+ 193:.\Generated_Source\PSoC5/PS2_ps2.c **** 					break;
+ 194:.\Generated_Source\PSoC5/PS2_ps2.c **** 				
+ 195:.\Generated_Source\PSoC5/PS2_ps2.c **** 				case 0xEE: // ECHO: The device responded with an Echo
+ 196:.\Generated_Source\PSoC5/PS2_ps2.c **** 					// This should be because we sent it an echo
+ARM GAS  C:\Users\addis\AppData\Local\Temp\cc7XYADp.s 			page 14
+
+
+ 197:.\Generated_Source\PSoC5/PS2_ps2.c **** 					PS2_RESET;
+ 545              		.loc 1 197 0
+ 546 008a FFF7FEFF 		bl	PS2_controlReg_Read
+ 547              	.LVL94:
+ 548 008e 40F00200 		orr	r0, r0, #2
+ 549 0092 C0B2     		uxtb	r0, r0
+ 550 0094 FFF7FEFF 		bl	PS2_controlReg_Write
+ 551              	.LVL95:
+ 552 0098 FFF7FEFF 		bl	PS2_controlReg_Read
+ 553              	.LVL96:
+ 554 009c 00F0FD00 		and	r0, r0, #253
+ 555 00a0 FFF7FEFF 		bl	PS2_controlReg_Write
+ 556              	.LVL97:
+ 198:.\Generated_Source\PSoC5/PS2_ps2.c **** 					if (data == 0xEE)
+ 557              		.loc 1 198 0
+ 558 00a4 EE2C     		cmp	r4, #238
+ 559 00a6 16D1     		bne	.L41
+ 199:.\Generated_Source\PSoC5/PS2_ps2.c **** 						return PS2_SUCCESS;
+ 560              		.loc 1 199 0
+ 561 00a8 0020     		movs	r0, #0
+ 562 00aa 10BD     		pop	{r4, pc}
+ 563              	.L43:
+ 200:.\Generated_Source\PSoC5/PS2_ps2.c **** 					return PS2_INVALID_RESPONSE;
+ 201:.\Generated_Source\PSoC5/PS2_ps2.c **** 					
+ 202:.\Generated_Source\PSoC5/PS2_ps2.c **** 				default:
+ 203:.\Generated_Source\PSoC5/PS2_ps2.c **** 					PS2_RESET;
+ 564              		.loc 1 203 0
+ 565 00ac FFF7FEFF 		bl	PS2_controlReg_Read
+ 566              	.LVL98:
+ 567 00b0 40F00200 		orr	r0, r0, #2
+ 568 00b4 C0B2     		uxtb	r0, r0
+ 569 00b6 FFF7FEFF 		bl	PS2_controlReg_Write
+ 570              	.LVL99:
+ 571 00ba FFF7FEFF 		bl	PS2_controlReg_Read
+ 572              	.LVL100:
+ 573 00be 00F0FD00 		and	r0, r0, #253
+ 574 00c2 FFF7FEFF 		bl	PS2_controlReg_Write
+ 575              	.LVL101:
+ 204:.\Generated_Source\PSoC5/PS2_ps2.c **** 					return PS2_INVALID_RESPONSE;
+ 576              		.loc 1 204 0
+ 577 00c6 0420     		movs	r0, #4
+ 578 00c8 10BD     		pop	{r4, pc}
+ 579              	.L35:
+ 205:.\Generated_Source\PSoC5/PS2_ps2.c **** 			}
+ 206:.\Generated_Source\PSoC5/PS2_ps2.c **** 		}
+ 207:.\Generated_Source\PSoC5/PS2_ps2.c **** 		else if (PS2_STATUS == PS2_STATUS_ERROR)
+ 580              		.loc 1 207 0
+ 581 00ca FFF7FEFF 		bl	PS2_statusReg_Read
+ 582              	.LVL102:
+ 583 00ce 0228     		cmp	r0, #2
+ 584 00d0 03D0     		beq	.L42
+ 208:.\Generated_Source\PSoC5/PS2_ps2.c **** 		{
+ 209:.\Generated_Source\PSoC5/PS2_ps2.c **** 			// Some sort of error such as parity or incorrect start/stop bit
+ 210:.\Generated_Source\PSoC5/PS2_ps2.c **** 			// Resend the byte
+ 211:.\Generated_Source\PSoC5/PS2_ps2.c **** 			break;	
+ 212:.\Generated_Source\PSoC5/PS2_ps2.c **** 		}
+ 213:.\Generated_Source\PSoC5/PS2_ps2.c **** 		else
+ARM GAS  C:\Users\addis\AppData\Local\Temp\cc7XYADp.s 			page 15
+
+
+ 214:.\Generated_Source\PSoC5/PS2_ps2.c **** 			return 0x10; // Device timed out
+ 585              		.loc 1 214 0
+ 586 00d2 1020     		movs	r0, #16
+ 587 00d4 10BD     		pop	{r4, pc}
+ 588              	.L41:
+ 200:.\Generated_Source\PSoC5/PS2_ps2.c **** 					
+ 589              		.loc 1 200 0
+ 590 00d6 0420     		movs	r0, #4
+ 591 00d8 10BD     		pop	{r4, pc}
+ 592              	.L42:
+ 215:.\Generated_Source\PSoC5/PS2_ps2.c **** 	}
+ 216:.\Generated_Source\PSoC5/PS2_ps2.c **** 	
+ 217:.\Generated_Source\PSoC5/PS2_ps2.c **** 	// The code should never reach here, but we return something to shut the compiler up
+ 218:.\Generated_Source\PSoC5/PS2_ps2.c **** 	return PS2_ERROR;
+ 593              		.loc 1 218 0
+ 594 00da 0320     		movs	r0, #3
+ 219:.\Generated_Source\PSoC5/PS2_ps2.c **** }
+ 595              		.loc 1 219 0
+ 596 00dc 10BD     		pop	{r4, pc}
+ 597              	.L46:
+ 598 00de 00BF     		.align	2
+ 599              	.L45:
+ 600 00e0 00000000 		.word	PS2_timer_reps
+ 601              		.cfi_endproc
+ 602              	.LFE5:
+ 603              		.size	PS2_SendCommand, .-PS2_SendCommand
+ 604              		.section	.text.PS2_DetectDevice,"ax",%progbits
+ 605              		.align	2
+ 606              		.global	PS2_DetectDevice
+ 607              		.thumb
+ 608              		.thumb_func
+ 609              		.type	PS2_DetectDevice, %function
+ 610              	PS2_DetectDevice:
+ 611              	.LFB3:
+  54:.\Generated_Source\PSoC5/PS2_ps2.c ****     uint8 status;
+ 612              		.loc 1 54 0
+ 613              		.cfi_startproc
+ 614              		@ args = 0, pretend = 0, frame = 0
+ 615              		@ frame_needed = 0, uses_anonymous_args = 0
+ 616 0000 10B5     		push	{r4, lr}
+ 617              		.cfi_def_cfa_offset 8
+ 618              		.cfi_offset 4, -8
+ 619              		.cfi_offset 14, -4
+  59:.\Generated_Source\PSoC5/PS2_ps2.c **** 		PS2_SendCommand(0xFF);
+ 620              		.loc 1 59 0
+ 621 0002 264B     		ldr	r3, .L57
+ 622 0004 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 623 0006 13B1     		cbz	r3, .L48
+  60:.\Generated_Source\PSoC5/PS2_ps2.c ****     
+ 624              		.loc 1 60 0
+ 625 0008 FF20     		movs	r0, #255
+ 626 000a FFF7FEFF 		bl	PS2_SendCommand
+ 627              	.LVL103:
+ 628              	.L48:
+  62:.\Generated_Source\PSoC5/PS2_ps2.c ****     PS2_READ; // Make sure the state machine knows to read
+ 629              		.loc 1 62 0
+ 630 000e 4FF4FA72 		mov	r2, #500
+ARM GAS  C:\Users\addis\AppData\Local\Temp\cc7XYADp.s 			page 16
+
+
+ 631 0012 234B     		ldr	r3, .L57+4
+ 632 0014 1A80     		strh	r2, [r3]	@ movhi
+ 633 0016 C820     		movs	r0, #200
+ 634 0018 FFF7FEFF 		bl	PS2_Timer_WriteCounter
+ 635              	.LVL104:
+ 636 001c C820     		movs	r0, #200
+ 637 001e FFF7FEFF 		bl	PS2_Timer_WritePeriod
+ 638              	.LVL105:
+ 639 0022 FFF7FEFF 		bl	PS2_Timer_Enable
+ 640              	.LVL106:
+  63:.\Generated_Source\PSoC5/PS2_ps2.c ****     
+ 641              		.loc 1 63 0
+ 642 0026 FFF7FEFF 		bl	PS2_controlReg_Read
+ 643              	.LVL107:
+ 644 002a 00F0FE00 		and	r0, r0, #254
+ 645 002e FFF7FEFF 		bl	PS2_controlReg_Write
+ 646              	.LVL108:
+ 647              	.L50:
+  65:.\Generated_Source\PSoC5/PS2_ps2.c ****     if (PS2_STATUS == PS2_STATUS_DONE)
+ 648              		.loc 1 65 0 discriminator 2
+ 649 0032 FFF7FEFF 		bl	PS2_statusReg_Read
+ 650              	.LVL109:
+ 651 0036 18B9     		cbnz	r0, .L49
+  65:.\Generated_Source\PSoC5/PS2_ps2.c ****     if (PS2_STATUS == PS2_STATUS_DONE)
+ 652              		.loc 1 65 0 is_stmt 0 discriminator 1
+ 653 0038 194B     		ldr	r3, .L57+4
+ 654 003a 1B88     		ldrh	r3, [r3]
+ 655 003c 002B     		cmp	r3, #0
+ 656 003e F8D1     		bne	.L50
+ 657              	.L49:
   66:.\Generated_Source\PSoC5/PS2_ps2.c ****     {
-  67:.\Generated_Source\PSoC5/PS2_ps2.c ****         return PS2_ERROR;
- 193              		.loc 1 67 0
- 194 004e 0524     		movs	r4, #5
- 195 0050 02E0     		b	.L18
- 196              	.L19:
-  61:.\Generated_Source\PSoC5/PS2_ps2.c ****         }
- 197              		.loc 1 61 0
- 198 0052 0324     		movs	r4, #3
- 199 0054 00E0     		b	.L18
- 200              	.L20:
-  68:.\Generated_Source\PSoC5/PS2_ps2.c ****     }
-  69:.\Generated_Source\PSoC5/PS2_ps2.c ****     else
-  70:.\Generated_Source\PSoC5/PS2_ps2.c ****         return PS2_TIMEOUT;
- 201              		.loc 1 70 0
- 202 0056 0424     		movs	r4, #4
- 203              	.L18:
-  71:.\Generated_Source\PSoC5/PS2_ps2.c **** }
- 204              		.loc 1 71 0
- 205 0058 2046     		mov	r0, r4
- 206 005a 10BD     		pop	{r4, pc}
- 207              	.L23:
- 208              		.align	2
- 209              	.L22:
- 210 005c 00000000 		.word	PS2_counter_trigger
- 211              		.cfi_endproc
- 212              	.LFE3:
- 213              		.size	PS2_DetectDevice, .-PS2_DetectDevice
-ARM GAS  C:\Users\addis\AppData\Local\Temp\ccmHqk3Q.s 			page 6
+ 658              		.loc 1 66 0 is_stmt 1
+ 659 0040 FFF7FEFF 		bl	PS2_statusReg_Read
+ 660              	.LVL110:
+ 661 0044 0128     		cmp	r0, #1
+ 662 0046 0CD1     		bne	.L51
+  68:.\Generated_Source\PSoC5/PS2_ps2.c ****         if (PS2_BYTE_R == 0xAA)
+ 663              		.loc 1 68 0
+ 664 0048 FFF7FEFF 		bl	CyDelay
+ 665              	.LVL111:
+  69:.\Generated_Source\PSoC5/PS2_ps2.c ****         {
+ 666              		.loc 1 69 0
+ 667 004c FFF7FEFF 		bl	PS2_dataOut_Read
+ 668              	.LVL112:
+ 669 0050 AA28     		cmp	r0, #170
+ 670 0052 01D1     		bne	.L55
+  72:.\Generated_Source\PSoC5/PS2_ps2.c ****         }
+ 671              		.loc 1 72 0
+ 672 0054 0024     		movs	r4, #0
+ 673 0056 00E0     		b	.L52
+ 674              	.L55:
+  75:.\Generated_Source\PSoC5/PS2_ps2.c **** 
+ 675              		.loc 1 75 0
+ 676 0058 0124     		movs	r4, #1
+ 677              	.L52:
+ 678              	.LVL113:
+  77:.\Generated_Source\PSoC5/PS2_ps2.c ****     }
+ARM GAS  C:\Users\addis\AppData\Local\Temp\cc7XYADp.s 			page 17
 
 
- 214              		.comm	PS2_initVar,1,1
- 215              		.comm	PS2_counter_trigger,1,1
- 216              		.text
- 217              	.Letext0:
- 218              		.file 2 ".\\Generated_Source\\PSoC5\\cytypes.h"
- 219              		.file 3 ".\\Generated_Source\\PSoC5\\PS2_Timer.h"
- 220              		.file 4 ".\\Generated_Source\\PSoC5\\PS2_Timer_ISR.h"
- 221              		.file 5 ".\\Generated_Source\\PSoC5\\PS2_controlReg.h"
- 222              		.file 6 ".\\Generated_Source\\PSoC5\\PS2_statusReg.h"
- 223              		.file 7 ".\\Generated_Source\\PSoC5\\CyLib.h"
- 224              		.file 8 ".\\Generated_Source\\PSoC5\\PS2_dataOut.h"
- 225              		.section	.debug_info,"",%progbits
- 226              	.Ldebug_info0:
- 227 0000 52020000 		.4byte	0x252
- 228 0004 0400     		.2byte	0x4
- 229 0006 00000000 		.4byte	.Ldebug_abbrev0
- 230 000a 04       		.byte	0x4
- 231 000b 01       		.uleb128 0x1
- 232 000c 1D010000 		.4byte	.LASF31
- 233 0010 01       		.byte	0x1
- 234 0011 57000000 		.4byte	.LASF32
- 235 0015 00000000 		.4byte	.LASF33
- 236 0019 00000000 		.4byte	.Ldebug_ranges0+0
- 237 001d 00000000 		.4byte	0
- 238 0021 00000000 		.4byte	.Ldebug_line0
- 239 0025 02       		.uleb128 0x2
- 240 0026 01       		.byte	0x1
- 241 0027 06       		.byte	0x6
- 242 0028 79020000 		.4byte	.LASF0
- 243 002c 02       		.uleb128 0x2
- 244 002d 01       		.byte	0x1
- 245 002e 08       		.byte	0x8
- 246 002f A0000000 		.4byte	.LASF1
- 247 0033 02       		.uleb128 0x2
- 248 0034 02       		.byte	0x2
- 249 0035 05       		.byte	0x5
- 250 0036 53020000 		.4byte	.LASF2
- 251 003a 02       		.uleb128 0x2
- 252 003b 02       		.byte	0x2
- 253 003c 07       		.byte	0x7
- 254 003d 44000000 		.4byte	.LASF3
- 255 0041 02       		.uleb128 0x2
- 256 0042 04       		.byte	0x4
- 257 0043 05       		.byte	0x5
- 258 0044 5D020000 		.4byte	.LASF4
- 259 0048 02       		.uleb128 0x2
- 260 0049 04       		.byte	0x4
- 261 004a 07       		.byte	0x7
- 262 004b AB010000 		.4byte	.LASF5
- 263 004f 02       		.uleb128 0x2
- 264 0050 08       		.byte	0x8
- 265 0051 05       		.byte	0x5
- 266 0052 14020000 		.4byte	.LASF6
- 267 0056 02       		.uleb128 0x2
- 268 0057 08       		.byte	0x8
- 269 0058 07       		.byte	0x7
- 270 0059 CA010000 		.4byte	.LASF7
-ARM GAS  C:\Users\addis\AppData\Local\Temp\ccmHqk3Q.s 			page 7
+ 679              		.loc 1 77 0
+ 680 005a 0022     		movs	r2, #0
+ 681 005c 0F4B     		ldr	r3, .L57
+ 682 005e 1A70     		strb	r2, [r3]
+ 683 0060 0CE0     		b	.L53
+ 684              	.LVL114:
+ 685              	.L51:
+  79:.\Generated_Source\PSoC5/PS2_ps2.c ****     {
+ 686              		.loc 1 79 0
+ 687 0062 FFF7FEFF 		bl	PS2_statusReg_Read
+ 688              	.LVL115:
+ 689 0066 0228     		cmp	r0, #2
+ 690 0068 04D1     		bne	.L54
+  81:.\Generated_Source\PSoC5/PS2_ps2.c ****         status = PS2_ERROR;
+ 691              		.loc 1 81 0
+ 692 006a 0122     		movs	r2, #1
+ 693 006c 0B4B     		ldr	r3, .L57
+ 694 006e 1A70     		strb	r2, [r3]
+ 695              	.LVL116:
+  82:.\Generated_Source\PSoC5/PS2_ps2.c ****     }
+ 696              		.loc 1 82 0
+ 697 0070 0324     		movs	r4, #3
+ 698 0072 03E0     		b	.L53
+ 699              	.LVL117:
+ 700              	.L54:
+  86:.\Generated_Source\PSoC5/PS2_ps2.c ****         status = PS2_TIMEOUT;
+ 701              		.loc 1 86 0
+ 702 0074 0122     		movs	r2, #1
+ 703 0076 094B     		ldr	r3, .L57
+ 704 0078 1A70     		strb	r2, [r3]
+ 705              	.LVL118:
+  87:.\Generated_Source\PSoC5/PS2_ps2.c ****     }
+ 706              		.loc 1 87 0
+ 707 007a 0224     		movs	r4, #2
+ 708              	.LVL119:
+ 709              	.L53:
+  92:.\Generated_Source\PSoC5/PS2_ps2.c ****     return status;
+ 710              		.loc 1 92 0
+ 711 007c FFF7FEFF 		bl	PS2_controlReg_Read
+ 712              	.LVL120:
+ 713 0080 40F00200 		orr	r0, r0, #2
+ 714 0084 C0B2     		uxtb	r0, r0
+ 715 0086 FFF7FEFF 		bl	PS2_controlReg_Write
+ 716              	.LVL121:
+ 717 008a FFF7FEFF 		bl	PS2_controlReg_Read
+ 718              	.LVL122:
+ 719 008e 00F0FD00 		and	r0, r0, #253
+ 720 0092 FFF7FEFF 		bl	PS2_controlReg_Write
+ 721              	.LVL123:
+  94:.\Generated_Source\PSoC5/PS2_ps2.c **** 
+ 722              		.loc 1 94 0
+ 723 0096 2046     		mov	r0, r4
+ 724 0098 10BD     		pop	{r4, pc}
+ 725              	.LVL124:
+ 726              	.L58:
+ 727 009a 00BF     		.align	2
+ 728              	.L57:
+ARM GAS  C:\Users\addis\AppData\Local\Temp\cc7XYADp.s 			page 18
 
 
- 271 005d 03       		.uleb128 0x3
- 272 005e 04       		.byte	0x4
- 273 005f 05       		.byte	0x5
- 274 0060 696E7400 		.ascii	"int\000"
- 275 0064 02       		.uleb128 0x2
- 276 0065 04       		.byte	0x4
- 277 0066 07       		.byte	0x7
- 278 0067 BD010000 		.4byte	.LASF8
- 279 006b 04       		.uleb128 0x4
- 280 006c C8000000 		.4byte	.LASF9
- 281 0070 02       		.byte	0x2
- 282 0071 3801     		.2byte	0x138
- 283 0073 2C000000 		.4byte	0x2c
- 284 0077 04       		.uleb128 0x4
- 285 0078 16010000 		.4byte	.LASF10
- 286 007c 02       		.byte	0x2
- 287 007d 3A01     		.2byte	0x13a
- 288 007f 48000000 		.4byte	0x48
- 289 0083 02       		.uleb128 0x2
- 290 0084 04       		.byte	0x4
- 291 0085 04       		.byte	0x4
- 292 0086 9A000000 		.4byte	.LASF11
- 293 008a 02       		.uleb128 0x2
- 294 008b 08       		.byte	0x8
- 295 008c 04       		.byte	0x4
- 296 008d D8000000 		.4byte	.LASF12
- 297 0091 02       		.uleb128 0x2
- 298 0092 01       		.byte	0x1
- 299 0093 08       		.byte	0x8
- 300 0094 3F020000 		.4byte	.LASF13
- 301 0098 04       		.uleb128 0x4
- 302 0099 AE000000 		.4byte	.LASF14
- 303 009d 02       		.byte	0x2
- 304 009e E201     		.2byte	0x1e2
- 305 00a0 A4000000 		.4byte	0xa4
- 306 00a4 05       		.uleb128 0x5
- 307 00a5 6B000000 		.4byte	0x6b
- 308 00a9 04       		.uleb128 0x4
- 309 00aa F5010000 		.4byte	.LASF15
- 310 00ae 02       		.byte	0x2
- 311 00af F401     		.2byte	0x1f4
- 312 00b1 B5000000 		.4byte	0xb5
- 313 00b5 06       		.uleb128 0x6
- 314 00b6 04       		.byte	0x4
- 315 00b7 BB000000 		.4byte	0xbb
- 316 00bb 07       		.uleb128 0x7
- 317 00bc 02       		.uleb128 0x2
- 318 00bd 04       		.byte	0x4
- 319 00be 07       		.byte	0x7
- 320 00bf 02020000 		.4byte	.LASF16
- 321 00c3 08       		.uleb128 0x8
- 322 00c4 CE000000 		.4byte	.LASF17
- 323 00c8 01       		.byte	0x1
- 324 00c9 12       		.byte	0x12
- 325 00ca 00000000 		.4byte	.LFB0
- 326 00ce 1C000000 		.4byte	.LFE0-.LFB0
- 327 00d2 01       		.uleb128 0x1
-ARM GAS  C:\Users\addis\AppData\Local\Temp\ccmHqk3Q.s 			page 8
+ 729 009c 00000000 		.word	PS2_deviceDetectFail
+ 730 00a0 00000000 		.word	PS2_timer_reps
+ 731              		.cfi_endproc
+ 732              	.LFE3:
+ 733              		.size	PS2_DetectDevice, .-PS2_DetectDevice
+ 734              		.section	.text.PS2_ReadByte,"ax",%progbits
+ 735              		.align	2
+ 736              		.global	PS2_ReadByte
+ 737              		.thumb
+ 738              		.thumb_func
+ 739              		.type	PS2_ReadByte, %function
+ 740              	PS2_ReadByte:
+ 741              	.LFB6:
+ 220:.\Generated_Source\PSoC5/PS2_ps2.c **** 
+ 221:.\Generated_Source\PSoC5/PS2_ps2.c **** // Blocking function to read a byte. Returns the byte read
+ 222:.\Generated_Source\PSoC5/PS2_ps2.c **** uint8 PS2_ReadByte(void) 
+ 223:.\Generated_Source\PSoC5/PS2_ps2.c **** {
+ 742              		.loc 1 223 0
+ 743              		.cfi_startproc
+ 744              		@ args = 0, pretend = 0, frame = 0
+ 745              		@ frame_needed = 0, uses_anonymous_args = 0
+ 746 0000 08B5     		push	{r3, lr}
+ 747              		.cfi_def_cfa_offset 8
+ 748              		.cfi_offset 3, -8
+ 749              		.cfi_offset 14, -4
+ 750              	.L60:
+ 224:.\Generated_Source\PSoC5/PS2_ps2.c **** 	while (PS2_STATUS != PS2_STATUS_DONE);
+ 751              		.loc 1 224 0 discriminator 1
+ 752 0002 FFF7FEFF 		bl	PS2_statusReg_Read
+ 753              	.LVL125:
+ 754 0006 0128     		cmp	r0, #1
+ 755 0008 FBD1     		bne	.L60
+ 225:.\Generated_Source\PSoC5/PS2_ps2.c **** 	
+ 226:.\Generated_Source\PSoC5/PS2_ps2.c **** 	PS2_RESET; // Reset the state machine
+ 756              		.loc 1 226 0
+ 757 000a FFF7FEFF 		bl	PS2_controlReg_Read
+ 758              	.LVL126:
+ 759 000e 40F00200 		orr	r0, r0, #2
+ 760 0012 C0B2     		uxtb	r0, r0
+ 761 0014 FFF7FEFF 		bl	PS2_controlReg_Write
+ 762              	.LVL127:
+ 763 0018 FFF7FEFF 		bl	PS2_controlReg_Read
+ 764              	.LVL128:
+ 765 001c 00F0FD00 		and	r0, r0, #253
+ 766 0020 FFF7FEFF 		bl	PS2_controlReg_Write
+ 767              	.LVL129:
+ 227:.\Generated_Source\PSoC5/PS2_ps2.c **** 	return PS2_BYTE_R; // Return the read byte
+ 768              		.loc 1 227 0
+ 769 0024 FFF7FEFF 		bl	PS2_dataOut_Read
+ 770              	.LVL130:
+ 228:.\Generated_Source\PSoC5/PS2_ps2.c **** }
+ 771              		.loc 1 228 0
+ 772 0028 08BD     		pop	{r3, pc}
+ 773              		.cfi_endproc
+ 774              	.LFE6:
+ 775              		.size	PS2_ReadByte, .-PS2_ReadByte
+ 776 002a 00BF     		.section	.text.PS2_cReadByte,"ax",%progbits
+ARM GAS  C:\Users\addis\AppData\Local\Temp\cc7XYADp.s 			page 19
 
 
- 328 00d3 9C       		.byte	0x9c
- 329 00d4 E2000000 		.4byte	0xe2
- 330 00d8 09       		.uleb128 0x9
- 331 00d9 10000000 		.4byte	.LVL0
- 332 00dd E2010000 		.4byte	0x1e2
- 333 00e1 00       		.byte	0
- 334 00e2 08       		.uleb128 0x8
- 335 00e3 0B020000 		.4byte	.LASF18
- 336 00e7 01       		.byte	0x1
- 337 00e8 19       		.byte	0x19
- 338 00e9 00000000 		.4byte	.LFB1
- 339 00ed 20000000 		.4byte	.LFE1-.LFB1
- 340 00f1 01       		.uleb128 0x1
- 341 00f2 9C       		.byte	0x9c
- 342 00f3 21010000 		.4byte	0x121
- 343 00f7 0A       		.uleb128 0xa
- 344 00f8 0E000000 		.4byte	.LVL1
- 345 00fc E9010000 		.4byte	0x1e9
- 346 0100 0E010000 		.4byte	0x10e
- 347 0104 0B       		.uleb128 0xb
- 348 0105 01       		.uleb128 0x1
- 349 0106 50       		.byte	0x50
- 350 0107 05       		.uleb128 0x5
- 351 0108 03       		.byte	0x3
- 352 0109 00000000 		.4byte	PS2_TIMER
- 353 010d 00       		.byte	0
- 354 010e 09       		.uleb128 0x9
- 355 010f 12000000 		.4byte	.LVL2
- 356 0113 FA010000 		.4byte	0x1fa
- 357 0117 09       		.uleb128 0x9
- 358 0118 16000000 		.4byte	.LVL3
- 359 011c E2010000 		.4byte	0x1e2
- 360 0120 00       		.byte	0
- 361 0121 08       		.uleb128 0x8
- 362 0122 90000000 		.4byte	.LASF19
- 363 0126 01       		.byte	0x1
- 364 0127 21       		.byte	0x21
- 365 0128 00000000 		.4byte	.LFB2
- 366 012c 18000000 		.4byte	.LFE2-.LFB2
- 367 0130 01       		.uleb128 0x1
- 368 0131 9C       		.byte	0x9c
- 369 0132 40010000 		.4byte	0x140
- 370 0136 09       		.uleb128 0x9
- 371 0137 0C000000 		.4byte	.LVL4
- 372 013b E2000000 		.4byte	0xe2
- 373 013f 00       		.byte	0
- 374 0140 0C       		.uleb128 0xc
- 375 0141 F5000000 		.4byte	.LASF34
- 376 0145 01       		.byte	0x1
- 377 0146 2A       		.byte	0x2a
- 378 0147 6B000000 		.4byte	0x6b
- 379 014b 00000000 		.4byte	.LFB3
- 380 014f 60000000 		.4byte	.LFE3-.LFB3
- 381 0153 01       		.uleb128 0x1
- 382 0154 9C       		.byte	0x9c
- 383 0155 C0010000 		.4byte	0x1c0
- 384 0159 0A       		.uleb128 0xa
-ARM GAS  C:\Users\addis\AppData\Local\Temp\ccmHqk3Q.s 			page 9
+ 777              		.align	2
+ 778              		.global	PS2_cReadByte
+ 779              		.thumb
+ 780              		.thumb_func
+ 781              		.type	PS2_cReadByte, %function
+ 782              	PS2_cReadByte:
+ 783              	.LFB7:
+ 229:.\Generated_Source\PSoC5/PS2_ps2.c **** 
+ 230:.\Generated_Source\PSoC5/PS2_ps2.c **** // Non-blocking function to read a byte. Returns 0x00 if no data is available. Otherwise it returns
+ 231:.\Generated_Source\PSoC5/PS2_ps2.c **** uint8 PS2_cReadByte(void) 
+ 232:.\Generated_Source\PSoC5/PS2_ps2.c **** {
+ 784              		.loc 1 232 0
+ 785              		.cfi_startproc
+ 786              		@ args = 0, pretend = 0, frame = 0
+ 787              		@ frame_needed = 0, uses_anonymous_args = 0
+ 788 0000 08B5     		push	{r3, lr}
+ 789              		.cfi_def_cfa_offset 8
+ 790              		.cfi_offset 3, -8
+ 791              		.cfi_offset 14, -4
+ 233:.\Generated_Source\PSoC5/PS2_ps2.c **** 	if (PS2_STATUS != PS2_STATUS_DONE)
+ 792              		.loc 1 233 0
+ 793 0002 FFF7FEFF 		bl	PS2_statusReg_Read
+ 794              	.LVL131:
+ 795 0006 0128     		cmp	r0, #1
+ 796 0008 0FD1     		bne	.L64
+ 234:.\Generated_Source\PSoC5/PS2_ps2.c **** 		return 0x00;
+ 235:.\Generated_Source\PSoC5/PS2_ps2.c **** 
+ 236:.\Generated_Source\PSoC5/PS2_ps2.c **** 	PS2_RESET; // Reset the state machine
+ 797              		.loc 1 236 0
+ 798 000a FFF7FEFF 		bl	PS2_controlReg_Read
+ 799              	.LVL132:
+ 800 000e 40F00200 		orr	r0, r0, #2
+ 801 0012 C0B2     		uxtb	r0, r0
+ 802 0014 FFF7FEFF 		bl	PS2_controlReg_Write
+ 803              	.LVL133:
+ 804 0018 FFF7FEFF 		bl	PS2_controlReg_Read
+ 805              	.LVL134:
+ 806 001c 00F0FD00 		and	r0, r0, #253
+ 807 0020 FFF7FEFF 		bl	PS2_controlReg_Write
+ 808              	.LVL135:
+ 237:.\Generated_Source\PSoC5/PS2_ps2.c **** 	return PS2_BYTE_R; // Return the read byte
+ 809              		.loc 1 237 0
+ 810 0024 FFF7FEFF 		bl	PS2_dataOut_Read
+ 811              	.LVL136:
+ 812 0028 08BD     		pop	{r3, pc}
+ 813              	.L64:
+ 234:.\Generated_Source\PSoC5/PS2_ps2.c **** 		return 0x00;
+ 814              		.loc 1 234 0
+ 815 002a 0020     		movs	r0, #0
+ 238:.\Generated_Source\PSoC5/PS2_ps2.c **** }    
+ 816              		.loc 1 238 0
+ 817 002c 08BD     		pop	{r3, pc}
+ 818              		.cfi_endproc
+ 819              	.LFE7:
+ 820              		.size	PS2_cReadByte, .-PS2_cReadByte
+ 821              		.comm	PS2_deviceDetectFail,1,1
+ 822              		.comm	PS2_initVar,1,1
+ARM GAS  C:\Users\addis\AppData\Local\Temp\cc7XYADp.s 			page 20
 
 
- 385 015a 0E000000 		.4byte	.LVL5
- 386 015e 01020000 		.4byte	0x201
- 387 0162 6D010000 		.4byte	0x16d
- 388 0166 0B       		.uleb128 0xb
- 389 0167 01       		.uleb128 0x1
- 390 0168 50       		.byte	0x50
- 391 0169 02       		.uleb128 0x2
- 392 016a 09       		.byte	0x9
- 393 016b C8       		.byte	0xc8
- 394 016c 00       		.byte	0
- 395 016d 09       		.uleb128 0x9
- 396 016e 12000000 		.4byte	.LVL6
- 397 0172 FA010000 		.4byte	0x1fa
- 398 0176 09       		.uleb128 0x9
- 399 0177 16000000 		.4byte	.LVL7
- 400 017b 12020000 		.4byte	0x212
- 401 017f 09       		.uleb128 0x9
- 402 0180 1E000000 		.4byte	.LVL8
- 403 0184 1D020000 		.4byte	0x21d
- 404 0188 09       		.uleb128 0x9
- 405 0189 22000000 		.4byte	.LVL9
- 406 018d 2E020000 		.4byte	0x22e
- 407 0191 09       		.uleb128 0x9
- 408 0192 30000000 		.4byte	.LVL10
- 409 0196 2E020000 		.4byte	0x22e
- 410 019a 0A       		.uleb128 0xa
- 411 019b 3C000000 		.4byte	.LVL11
- 412 019f 39020000 		.4byte	0x239
- 413 01a3 AD010000 		.4byte	0x1ad
- 414 01a7 0B       		.uleb128 0xb
- 415 01a8 01       		.uleb128 0x1
- 416 01a9 50       		.byte	0x50
- 417 01aa 01       		.uleb128 0x1
- 418 01ab 31       		.byte	0x31
- 419 01ac 00       		.byte	0
- 420 01ad 09       		.uleb128 0x9
- 421 01ae 40000000 		.4byte	.LVL12
- 422 01b2 4A020000 		.4byte	0x24a
- 423 01b6 09       		.uleb128 0x9
- 424 01b7 4A000000 		.4byte	.LVL13
- 425 01bb 2E020000 		.4byte	0x22e
- 426 01bf 00       		.byte	0
- 427 01c0 0D       		.uleb128 0xd
- 428 01c1 85020000 		.4byte	.LASF20
- 429 01c5 01       		.byte	0x1
- 430 01c6 0F       		.byte	0xf
- 431 01c7 6B000000 		.4byte	0x6b
- 432 01cb 05       		.uleb128 0x5
- 433 01cc 03       		.byte	0x3
- 434 01cd 00000000 		.4byte	PS2_counter_trigger
- 435 01d1 0D       		.uleb128 0xd
- 436 01d2 22020000 		.4byte	.LASF21
- 437 01d6 01       		.byte	0x1
- 438 01d7 10       		.byte	0x10
- 439 01d8 6B000000 		.4byte	0x6b
- 440 01dc 05       		.uleb128 0x5
- 441 01dd 03       		.byte	0x3
-ARM GAS  C:\Users\addis\AppData\Local\Temp\ccmHqk3Q.s 			page 10
+ 823              		.comm	PS2_timer_reps,2,2
+ 824 002e 00BF     		.text
+ 825              	.Letext0:
+ 826              		.file 2 ".\\Generated_Source\\PSoC5\\cytypes.h"
+ 827              		.file 3 ".\\Generated_Source\\PSoC5\\PS2_Timer.h"
+ 828              		.file 4 ".\\Generated_Source\\PSoC5\\PS2_Timer_ISR.h"
+ 829              		.file 5 ".\\Generated_Source\\PSoC5\\PS2_controlReg.h"
+ 830              		.file 6 ".\\Generated_Source\\PSoC5\\PS2_stateReg.h"
+ 831              		.file 7 ".\\Generated_Source\\PSoC5\\PS2_dataIn.h"
+ 832              		.file 8 ".\\Generated_Source\\PSoC5\\PS2_statusReg.h"
+ 833              		.file 9 ".\\Generated_Source\\PSoC5\\PS2_dataOut.h"
+ 834              		.file 10 ".\\Generated_Source\\PSoC5\\CyLib.h"
+ 835              		.section	.debug_info,"",%progbits
+ 836              	.Ldebug_info0:
+ 837 0000 C4070000 		.4byte	0x7c4
+ 838 0004 0400     		.2byte	0x4
+ 839 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 840 000a 04       		.byte	0x4
+ 841 000b 01       		.uleb128 0x1
+ 842 000c 96010000 		.4byte	.LASF43
+ 843 0010 01       		.byte	0x1
+ 844 0011 8D000000 		.4byte	.LASF44
+ 845 0015 00000000 		.4byte	.LASF45
+ 846 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 847 001d 00000000 		.4byte	0
+ 848 0021 00000000 		.4byte	.Ldebug_line0
+ 849 0025 02       		.uleb128 0x2
+ 850 0026 01       		.byte	0x1
+ 851 0027 06       		.byte	0x6
+ 852 0028 1B030000 		.4byte	.LASF0
+ 853 002c 02       		.uleb128 0x2
+ 854 002d 01       		.byte	0x1
+ 855 002e 08       		.byte	0x8
+ 856 002f F0000000 		.4byte	.LASF1
+ 857 0033 02       		.uleb128 0x2
+ 858 0034 02       		.byte	0x2
+ 859 0035 05       		.byte	0x5
+ 860 0036 F0020000 		.4byte	.LASF2
+ 861 003a 02       		.uleb128 0x2
+ 862 003b 02       		.byte	0x2
+ 863 003c 07       		.byte	0x7
+ 864 003d 7A000000 		.4byte	.LASF3
+ 865 0041 02       		.uleb128 0x2
+ 866 0042 04       		.byte	0x4
+ 867 0043 05       		.byte	0x5
+ 868 0044 FA020000 		.4byte	.LASF4
+ 869 0048 02       		.uleb128 0x2
+ 870 0049 04       		.byte	0x4
+ 871 004a 07       		.byte	0x7
+ 872 004b 24020000 		.4byte	.LASF5
+ 873 004f 02       		.uleb128 0x2
+ 874 0050 08       		.byte	0x8
+ 875 0051 05       		.byte	0x5
+ 876 0052 A9020000 		.4byte	.LASF6
+ 877 0056 02       		.uleb128 0x2
+ 878 0057 08       		.byte	0x8
+ 879 0058 07       		.byte	0x7
+ARM GAS  C:\Users\addis\AppData\Local\Temp\cc7XYADp.s 			page 21
 
 
- 442 01de 00000000 		.4byte	PS2_initVar
- 443 01e2 0E       		.uleb128 0xe
- 444 01e3 44020000 		.4byte	.LASF22
- 445 01e7 03       		.byte	0x3
- 446 01e8 5B       		.byte	0x5b
- 447 01e9 0F       		.uleb128 0xf
- 448 01ea DF000000 		.4byte	.LASF24
- 449 01ee 04       		.byte	0x4
- 450 01ef 18       		.byte	0x18
- 451 01f0 FA010000 		.4byte	0x1fa
- 452 01f4 10       		.uleb128 0x10
- 453 01f5 A9000000 		.4byte	0xa9
- 454 01f9 00       		.byte	0
- 455 01fa 0E       		.uleb128 0xe
- 456 01fb 06010000 		.4byte	.LASF23
- 457 01ff 03       		.byte	0x3
- 458 0200 5A       		.byte	0x5a
- 459 0201 0F       		.uleb128 0xf
- 460 0202 7A000000 		.4byte	.LASF25
- 461 0206 03       		.byte	0x3
- 462 0207 68       		.byte	0x68
- 463 0208 12020000 		.4byte	0x212
- 464 020c 10       		.uleb128 0x10
- 465 020d 6B000000 		.4byte	0x6b
- 466 0211 00       		.byte	0
- 467 0212 11       		.uleb128 0x11
- 468 0213 E1010000 		.4byte	.LASF27
- 469 0217 05       		.byte	0x5
- 470 0218 28       		.byte	0x28
- 471 0219 6B000000 		.4byte	0x6b
- 472 021d 0F       		.uleb128 0xf
- 473 021e B3000000 		.4byte	.LASF26
- 474 0222 05       		.byte	0x5
- 475 0223 27       		.byte	0x27
- 476 0224 2E020000 		.4byte	0x22e
- 477 0228 10       		.uleb128 0x10
- 478 0229 6B000000 		.4byte	0x6b
- 479 022d 00       		.byte	0
- 480 022e 11       		.uleb128 0x11
- 481 022f 66020000 		.4byte	.LASF28
- 482 0233 06       		.byte	0x6
- 483 0234 28       		.byte	0x28
- 484 0235 6B000000 		.4byte	0x6b
- 485 0239 0F       		.uleb128 0xf
- 486 023a 99020000 		.4byte	.LASF29
- 487 023e 07       		.byte	0x7
- 488 023f 77       		.byte	0x77
- 489 0240 4A020000 		.4byte	0x24a
- 490 0244 10       		.uleb128 0x10
- 491 0245 77000000 		.4byte	0x77
- 492 0249 00       		.byte	0
- 493 024a 11       		.uleb128 0x11
- 494 024b 2E020000 		.4byte	.LASF30
- 495 024f 08       		.byte	0x8
- 496 0250 28       		.byte	0x28
- 497 0251 6B000000 		.4byte	0x6b
- 498 0255 00       		.byte	0
-ARM GAS  C:\Users\addis\AppData\Local\Temp\ccmHqk3Q.s 			page 11
+ 880 0059 43020000 		.4byte	.LASF7
+ 881 005d 03       		.uleb128 0x3
+ 882 005e 04       		.byte	0x4
+ 883 005f 05       		.byte	0x5
+ 884 0060 696E7400 		.ascii	"int\000"
+ 885 0064 02       		.uleb128 0x2
+ 886 0065 04       		.byte	0x4
+ 887 0066 07       		.byte	0x7
+ 888 0067 36020000 		.4byte	.LASF8
+ 889 006b 04       		.uleb128 0x4
+ 890 006c 2A010000 		.4byte	.LASF9
+ 891 0070 02       		.byte	0x2
+ 892 0071 3801     		.2byte	0x138
+ 893 0073 2C000000 		.4byte	0x2c
+ 894 0077 04       		.uleb128 0x4
+ 895 0078 78010000 		.4byte	.LASF10
+ 896 007c 02       		.byte	0x2
+ 897 007d 3901     		.2byte	0x139
+ 898 007f 3A000000 		.4byte	0x3a
+ 899 0083 04       		.uleb128 0x4
+ 900 0084 8F010000 		.4byte	.LASF11
+ 901 0088 02       		.byte	0x2
+ 902 0089 3A01     		.2byte	0x13a
+ 903 008b 48000000 		.4byte	0x48
+ 904 008f 02       		.uleb128 0x2
+ 905 0090 04       		.byte	0x4
+ 906 0091 04       		.byte	0x4
+ 907 0092 D0000000 		.4byte	.LASF12
+ 908 0096 02       		.uleb128 0x2
+ 909 0097 08       		.byte	0x8
+ 910 0098 04       		.byte	0x4
+ 911 0099 3A010000 		.4byte	.LASF13
+ 912 009d 02       		.uleb128 0x2
+ 913 009e 01       		.byte	0x1
+ 914 009f 08       		.byte	0x8
+ 915 00a0 03030000 		.4byte	.LASF14
+ 916 00a4 04       		.uleb128 0x4
+ 917 00a5 FE000000 		.4byte	.LASF15
+ 918 00a9 02       		.byte	0x2
+ 919 00aa E201     		.2byte	0x1e2
+ 920 00ac B0000000 		.4byte	0xb0
+ 921 00b0 05       		.uleb128 0x5
+ 922 00b1 6B000000 		.4byte	0x6b
+ 923 00b5 04       		.uleb128 0x4
+ 924 00b6 6E020000 		.4byte	.LASF16
+ 925 00ba 02       		.byte	0x2
+ 926 00bb F401     		.2byte	0x1f4
+ 927 00bd C1000000 		.4byte	0xc1
+ 928 00c1 06       		.uleb128 0x6
+ 929 00c2 04       		.byte	0x4
+ 930 00c3 C7000000 		.4byte	0xc7
+ 931 00c7 07       		.uleb128 0x7
+ 932 00c8 02       		.uleb128 0x2
+ 933 00c9 04       		.byte	0x4
+ 934 00ca 07       		.byte	0x7
+ 935 00cb 89020000 		.4byte	.LASF17
+ 936 00cf 08       		.uleb128 0x8
+ARM GAS  C:\Users\addis\AppData\Local\Temp\cc7XYADp.s 			page 22
 
 
- 499              		.section	.debug_abbrev,"",%progbits
- 500              	.Ldebug_abbrev0:
- 501 0000 01       		.uleb128 0x1
- 502 0001 11       		.uleb128 0x11
- 503 0002 01       		.byte	0x1
- 504 0003 25       		.uleb128 0x25
- 505 0004 0E       		.uleb128 0xe
- 506 0005 13       		.uleb128 0x13
- 507 0006 0B       		.uleb128 0xb
- 508 0007 03       		.uleb128 0x3
- 509 0008 0E       		.uleb128 0xe
- 510 0009 1B       		.uleb128 0x1b
- 511 000a 0E       		.uleb128 0xe
- 512 000b 55       		.uleb128 0x55
- 513 000c 17       		.uleb128 0x17
- 514 000d 11       		.uleb128 0x11
- 515 000e 01       		.uleb128 0x1
- 516 000f 10       		.uleb128 0x10
- 517 0010 17       		.uleb128 0x17
- 518 0011 00       		.byte	0
- 519 0012 00       		.byte	0
- 520 0013 02       		.uleb128 0x2
- 521 0014 24       		.uleb128 0x24
- 522 0015 00       		.byte	0
- 523 0016 0B       		.uleb128 0xb
- 524 0017 0B       		.uleb128 0xb
- 525 0018 3E       		.uleb128 0x3e
- 526 0019 0B       		.uleb128 0xb
- 527 001a 03       		.uleb128 0x3
- 528 001b 0E       		.uleb128 0xe
- 529 001c 00       		.byte	0
- 530 001d 00       		.byte	0
- 531 001e 03       		.uleb128 0x3
- 532 001f 24       		.uleb128 0x24
- 533 0020 00       		.byte	0
- 534 0021 0B       		.uleb128 0xb
- 535 0022 0B       		.uleb128 0xb
- 536 0023 3E       		.uleb128 0x3e
- 537 0024 0B       		.uleb128 0xb
- 538 0025 03       		.uleb128 0x3
- 539 0026 08       		.uleb128 0x8
- 540 0027 00       		.byte	0
- 541 0028 00       		.byte	0
- 542 0029 04       		.uleb128 0x4
- 543 002a 16       		.uleb128 0x16
- 544 002b 00       		.byte	0
- 545 002c 03       		.uleb128 0x3
- 546 002d 0E       		.uleb128 0xe
- 547 002e 3A       		.uleb128 0x3a
- 548 002f 0B       		.uleb128 0xb
- 549 0030 3B       		.uleb128 0x3b
- 550 0031 05       		.uleb128 0x5
- 551 0032 49       		.uleb128 0x49
- 552 0033 13       		.uleb128 0x13
- 553 0034 00       		.byte	0
- 554 0035 00       		.byte	0
- 555 0036 05       		.uleb128 0x5
-ARM GAS  C:\Users\addis\AppData\Local\Temp\ccmHqk3Q.s 			page 12
+ 937 00d0 30010000 		.4byte	.LASF46
+ 938 00d4 01       		.byte	0x1
+ 939 00d5 13       		.byte	0x13
+ 940 00d6 00000000 		.4byte	.LFB0
+ 941 00da 18000000 		.4byte	.LFE0-.LFB0
+ 942 00de 01       		.uleb128 0x1
+ 943 00df 9C       		.byte	0x9c
+ 944 00e0 09       		.uleb128 0x9
+ 945 00e1 92020000 		.4byte	.LASF18
+ 946 00e5 01       		.byte	0x1
+ 947 00e6 1E       		.byte	0x1e
+ 948 00e7 00000000 		.4byte	.LFB1
+ 949 00eb 6C000000 		.4byte	.LFE1-.LFB1
+ 950 00ef 01       		.uleb128 0x1
+ 951 00f0 9C       		.byte	0x9c
+ 952 00f1 79010000 		.4byte	0x179
+ 953 00f5 0A       		.uleb128 0xa
+ 954 00f6 12000000 		.4byte	.LVL0
+ 955 00fa 24070000 		.4byte	0x724
+ 956 00fe 0C010000 		.4byte	0x10c
+ 957 0102 0B       		.uleb128 0xb
+ 958 0103 01       		.uleb128 0x1
+ 959 0104 50       		.byte	0x50
+ 960 0105 05       		.uleb128 0x5
+ 961 0106 03       		.byte	0x3
+ 962 0107 00000000 		.4byte	PS2_TIMER
+ 963 010b 00       		.byte	0
+ 964 010c 0C       		.uleb128 0xc
+ 965 010d 16000000 		.4byte	.LVL1
+ 966 0111 35070000 		.4byte	0x735
+ 967 0115 0C       		.uleb128 0xc
+ 968 0116 1A000000 		.4byte	.LVL2
+ 969 011a 3C070000 		.4byte	0x73c
+ 970 011e 0C       		.uleb128 0xc
+ 971 011f 1E000000 		.4byte	.LVL3
+ 972 0123 43070000 		.4byte	0x743
+ 973 0127 0C       		.uleb128 0xc
+ 974 0128 28000000 		.4byte	.LVL4
+ 975 012c 4E070000 		.4byte	0x74e
+ 976 0130 0C       		.uleb128 0xc
+ 977 0131 2C000000 		.4byte	.LVL5
+ 978 0135 43070000 		.4byte	0x743
+ 979 0139 0C       		.uleb128 0xc
+ 980 013a 34000000 		.4byte	.LVL6
+ 981 013e 4E070000 		.4byte	0x74e
+ 982 0142 0C       		.uleb128 0xc
+ 983 0143 38000000 		.4byte	.LVL7
+ 984 0147 43070000 		.4byte	0x743
+ 985 014b 0C       		.uleb128 0xc
+ 986 014c 40000000 		.4byte	.LVL8
+ 987 0150 4E070000 		.4byte	0x74e
+ 988 0154 0C       		.uleb128 0xc
+ 989 0155 44000000 		.4byte	.LVL9
+ 990 0159 43070000 		.4byte	0x743
+ 991 015d 0C       		.uleb128 0xc
+ 992 015e 4E000000 		.4byte	.LVL10
+ 993 0162 4E070000 		.4byte	0x74e
+ARM GAS  C:\Users\addis\AppData\Local\Temp\cc7XYADp.s 			page 23
 
 
- 556 0037 35       		.uleb128 0x35
- 557 0038 00       		.byte	0
- 558 0039 49       		.uleb128 0x49
- 559 003a 13       		.uleb128 0x13
- 560 003b 00       		.byte	0
- 561 003c 00       		.byte	0
- 562 003d 06       		.uleb128 0x6
- 563 003e 0F       		.uleb128 0xf
- 564 003f 00       		.byte	0
- 565 0040 0B       		.uleb128 0xb
- 566 0041 0B       		.uleb128 0xb
- 567 0042 49       		.uleb128 0x49
- 568 0043 13       		.uleb128 0x13
- 569 0044 00       		.byte	0
- 570 0045 00       		.byte	0
- 571 0046 07       		.uleb128 0x7
- 572 0047 15       		.uleb128 0x15
- 573 0048 00       		.byte	0
- 574 0049 27       		.uleb128 0x27
- 575 004a 19       		.uleb128 0x19
- 576 004b 00       		.byte	0
- 577 004c 00       		.byte	0
- 578 004d 08       		.uleb128 0x8
- 579 004e 2E       		.uleb128 0x2e
- 580 004f 01       		.byte	0x1
- 581 0050 3F       		.uleb128 0x3f
- 582 0051 19       		.uleb128 0x19
- 583 0052 03       		.uleb128 0x3
- 584 0053 0E       		.uleb128 0xe
- 585 0054 3A       		.uleb128 0x3a
- 586 0055 0B       		.uleb128 0xb
- 587 0056 3B       		.uleb128 0x3b
- 588 0057 0B       		.uleb128 0xb
- 589 0058 27       		.uleb128 0x27
- 590 0059 19       		.uleb128 0x19
- 591 005a 11       		.uleb128 0x11
- 592 005b 01       		.uleb128 0x1
- 593 005c 12       		.uleb128 0x12
- 594 005d 06       		.uleb128 0x6
- 595 005e 40       		.uleb128 0x40
- 596 005f 18       		.uleb128 0x18
- 597 0060 9742     		.uleb128 0x2117
- 598 0062 19       		.uleb128 0x19
- 599 0063 01       		.uleb128 0x1
- 600 0064 13       		.uleb128 0x13
- 601 0065 00       		.byte	0
- 602 0066 00       		.byte	0
- 603 0067 09       		.uleb128 0x9
- 604 0068 898201   		.uleb128 0x4109
- 605 006b 00       		.byte	0
- 606 006c 11       		.uleb128 0x11
- 607 006d 01       		.uleb128 0x1
- 608 006e 31       		.uleb128 0x31
- 609 006f 13       		.uleb128 0x13
- 610 0070 00       		.byte	0
- 611 0071 00       		.byte	0
- 612 0072 0A       		.uleb128 0xa
-ARM GAS  C:\Users\addis\AppData\Local\Temp\ccmHqk3Q.s 			page 13
+ 994 0166 0C       		.uleb128 0xc
+ 995 0167 52000000 		.4byte	.LVL11
+ 996 016b 43070000 		.4byte	0x743
+ 997 016f 0C       		.uleb128 0xc
+ 998 0170 5C000000 		.4byte	.LVL12
+ 999 0174 4E070000 		.4byte	0x74e
+ 1000 0178 00       		.byte	0
+ 1001 0179 09       		.uleb128 0x9
+ 1002 017a C6000000 		.4byte	.LASF19
+ 1003 017e 01       		.byte	0x1
+ 1004 017f 2C       		.byte	0x2c
+ 1005 0180 00000000 		.4byte	.LFB2
+ 1006 0184 18000000 		.4byte	.LFE2-.LFB2
+ 1007 0188 01       		.uleb128 0x1
+ 1008 0189 9C       		.byte	0x9c
+ 1009 018a 98010000 		.4byte	0x198
+ 1010 018e 0C       		.uleb128 0xc
+ 1011 018f 0C000000 		.4byte	.LVL13
+ 1012 0193 E0000000 		.4byte	0xe0
+ 1013 0197 00       		.byte	0
+ 1014 0198 0D       		.uleb128 0xd
+ 1015 0199 9B020000 		.4byte	.LASF20
+ 1016 019d 01       		.byte	0x1
+ 1017 019e 60       		.byte	0x60
+ 1018 019f 6B000000 		.4byte	0x6b
+ 1019 01a3 00000000 		.4byte	.LFB4
+ 1020 01a7 B8010000 		.4byte	.LFE4-.LFB4
+ 1021 01ab 01       		.uleb128 0x1
+ 1022 01ac 9C       		.byte	0x9c
+ 1023 01ad 46040000 		.4byte	0x446
+ 1024 01b1 0E       		.uleb128 0xe
+ 1025 01b2 D6000000 		.4byte	.LASF22
+ 1026 01b6 01       		.byte	0x1
+ 1027 01b7 60       		.byte	0x60
+ 1028 01b8 6B000000 		.4byte	0x6b
+ 1029 01bc 00000000 		.4byte	.LLST0
+ 1030 01c0 0F       		.uleb128 0xf
+ 1031 01c1 BF000000 		.4byte	.LASF23
+ 1032 01c5 01       		.byte	0x1
+ 1033 01c6 62       		.byte	0x62
+ 1034 01c7 6B000000 		.4byte	0x6b
+ 1035 01cb 21000000 		.4byte	.LLST1
+ 1036 01cf 0C       		.uleb128 0xc
+ 1037 01d0 08000000 		.4byte	.LVL16
+ 1038 01d4 5F070000 		.4byte	0x75f
+ 1039 01d8 0A       		.uleb128 0xa
+ 1040 01d9 16000000 		.4byte	.LVL17
+ 1041 01dd 6A070000 		.4byte	0x76a
+ 1042 01e1 EC010000 		.4byte	0x1ec
+ 1043 01e5 0B       		.uleb128 0xb
+ 1044 01e6 01       		.uleb128 0x1
+ 1045 01e7 50       		.byte	0x50
+ 1046 01e8 02       		.uleb128 0x2
+ 1047 01e9 75       		.byte	0x75
+ 1048 01ea 00       		.sleb128 0
+ 1049 01eb 00       		.byte	0
+ 1050 01ec 0A       		.uleb128 0xa
+ARM GAS  C:\Users\addis\AppData\Local\Temp\cc7XYADp.s 			page 24
 
 
- 613 0073 898201   		.uleb128 0x4109
- 614 0076 01       		.byte	0x1
- 615 0077 11       		.uleb128 0x11
- 616 0078 01       		.uleb128 0x1
- 617 0079 31       		.uleb128 0x31
- 618 007a 13       		.uleb128 0x13
- 619 007b 01       		.uleb128 0x1
- 620 007c 13       		.uleb128 0x13
- 621 007d 00       		.byte	0
- 622 007e 00       		.byte	0
- 623 007f 0B       		.uleb128 0xb
- 624 0080 8A8201   		.uleb128 0x410a
- 625 0083 00       		.byte	0
- 626 0084 02       		.uleb128 0x2
- 627 0085 18       		.uleb128 0x18
- 628 0086 9142     		.uleb128 0x2111
- 629 0088 18       		.uleb128 0x18
- 630 0089 00       		.byte	0
- 631 008a 00       		.byte	0
- 632 008b 0C       		.uleb128 0xc
- 633 008c 2E       		.uleb128 0x2e
- 634 008d 01       		.byte	0x1
- 635 008e 3F       		.uleb128 0x3f
- 636 008f 19       		.uleb128 0x19
- 637 0090 03       		.uleb128 0x3
- 638 0091 0E       		.uleb128 0xe
- 639 0092 3A       		.uleb128 0x3a
- 640 0093 0B       		.uleb128 0xb
- 641 0094 3B       		.uleb128 0x3b
- 642 0095 0B       		.uleb128 0xb
- 643 0096 27       		.uleb128 0x27
- 644 0097 19       		.uleb128 0x19
- 645 0098 49       		.uleb128 0x49
- 646 0099 13       		.uleb128 0x13
- 647 009a 11       		.uleb128 0x11
- 648 009b 01       		.uleb128 0x1
- 649 009c 12       		.uleb128 0x12
- 650 009d 06       		.uleb128 0x6
- 651 009e 40       		.uleb128 0x40
- 652 009f 18       		.uleb128 0x18
- 653 00a0 9742     		.uleb128 0x2117
- 654 00a2 19       		.uleb128 0x19
- 655 00a3 01       		.uleb128 0x1
- 656 00a4 13       		.uleb128 0x13
- 657 00a5 00       		.byte	0
- 658 00a6 00       		.byte	0
- 659 00a7 0D       		.uleb128 0xd
- 660 00a8 34       		.uleb128 0x34
- 661 00a9 00       		.byte	0
- 662 00aa 03       		.uleb128 0x3
- 663 00ab 0E       		.uleb128 0xe
- 664 00ac 3A       		.uleb128 0x3a
- 665 00ad 0B       		.uleb128 0xb
- 666 00ae 3B       		.uleb128 0x3b
- 667 00af 0B       		.uleb128 0xb
- 668 00b0 49       		.uleb128 0x49
- 669 00b1 13       		.uleb128 0x13
-ARM GAS  C:\Users\addis\AppData\Local\Temp\ccmHqk3Q.s 			page 14
+ 1051 01ed 1C000000 		.4byte	.LVL18
+ 1052 01f1 7B070000 		.4byte	0x77b
+ 1053 01f5 00020000 		.4byte	0x200
+ 1054 01f9 0B       		.uleb128 0xb
+ 1055 01fa 01       		.uleb128 0x1
+ 1056 01fb 50       		.byte	0x50
+ 1057 01fc 02       		.uleb128 0x2
+ 1058 01fd 75       		.byte	0x75
+ 1059 01fe 00       		.sleb128 0
+ 1060 01ff 00       		.byte	0
+ 1061 0200 0C       		.uleb128 0xc
+ 1062 0201 20000000 		.4byte	.LVL19
+ 1063 0205 8C070000 		.4byte	0x78c
+ 1064 0209 0C       		.uleb128 0xc
+ 1065 020a 2C000000 		.4byte	.LVL20
+ 1066 020e 3C070000 		.4byte	0x73c
+ 1067 0212 0C       		.uleb128 0xc
+ 1068 0213 30000000 		.4byte	.LVL21
+ 1069 0217 43070000 		.4byte	0x743
+ 1070 021b 0C       		.uleb128 0xc
+ 1071 021c 3A000000 		.4byte	.LVL22
+ 1072 0220 4E070000 		.4byte	0x74e
+ 1073 0224 0C       		.uleb128 0xc
+ 1074 0225 3E000000 		.4byte	.LVL23
+ 1075 0229 43070000 		.4byte	0x743
+ 1076 022d 0C       		.uleb128 0xc
+ 1077 022e 46000000 		.4byte	.LVL24
+ 1078 0232 4E070000 		.4byte	0x74e
+ 1079 0236 0C       		.uleb128 0xc
+ 1080 0237 4A000000 		.4byte	.LVL25
+ 1081 023b 43070000 		.4byte	0x743
+ 1082 023f 0C       		.uleb128 0xc
+ 1083 0240 54000000 		.4byte	.LVL26
+ 1084 0244 4E070000 		.4byte	0x74e
+ 1085 0248 0C       		.uleb128 0xc
+ 1086 0249 58000000 		.4byte	.LVL27
+ 1087 024d 43070000 		.4byte	0x743
+ 1088 0251 0C       		.uleb128 0xc
+ 1089 0252 60000000 		.4byte	.LVL28
+ 1090 0256 4E070000 		.4byte	0x74e
+ 1091 025a 0A       		.uleb128 0xa
+ 1092 025b 6C000000 		.4byte	.LVL29
+ 1093 025f 6A070000 		.4byte	0x76a
+ 1094 0263 6D020000 		.4byte	0x26d
+ 1095 0267 0B       		.uleb128 0xb
+ 1096 0268 01       		.uleb128 0x1
+ 1097 0269 50       		.byte	0x50
+ 1098 026a 01       		.uleb128 0x1
+ 1099 026b 36       		.byte	0x36
+ 1100 026c 00       		.byte	0
+ 1101 026d 0A       		.uleb128 0xa
+ 1102 026e 72000000 		.4byte	.LVL30
+ 1103 0272 7B070000 		.4byte	0x77b
+ 1104 0276 80020000 		.4byte	0x280
+ 1105 027a 0B       		.uleb128 0xb
+ 1106 027b 01       		.uleb128 0x1
+ 1107 027c 50       		.byte	0x50
+ARM GAS  C:\Users\addis\AppData\Local\Temp\cc7XYADp.s 			page 25
 
 
- 670 00b2 3F       		.uleb128 0x3f
- 671 00b3 19       		.uleb128 0x19
- 672 00b4 02       		.uleb128 0x2
- 673 00b5 18       		.uleb128 0x18
- 674 00b6 00       		.byte	0
- 675 00b7 00       		.byte	0
- 676 00b8 0E       		.uleb128 0xe
- 677 00b9 2E       		.uleb128 0x2e
- 678 00ba 00       		.byte	0
- 679 00bb 3F       		.uleb128 0x3f
- 680 00bc 19       		.uleb128 0x19
- 681 00bd 03       		.uleb128 0x3
- 682 00be 0E       		.uleb128 0xe
- 683 00bf 3A       		.uleb128 0x3a
- 684 00c0 0B       		.uleb128 0xb
- 685 00c1 3B       		.uleb128 0x3b
- 686 00c2 0B       		.uleb128 0xb
- 687 00c3 27       		.uleb128 0x27
- 688 00c4 19       		.uleb128 0x19
- 689 00c5 3C       		.uleb128 0x3c
- 690 00c6 19       		.uleb128 0x19
- 691 00c7 00       		.byte	0
- 692 00c8 00       		.byte	0
- 693 00c9 0F       		.uleb128 0xf
- 694 00ca 2E       		.uleb128 0x2e
- 695 00cb 01       		.byte	0x1
- 696 00cc 3F       		.uleb128 0x3f
- 697 00cd 19       		.uleb128 0x19
- 698 00ce 03       		.uleb128 0x3
- 699 00cf 0E       		.uleb128 0xe
- 700 00d0 3A       		.uleb128 0x3a
- 701 00d1 0B       		.uleb128 0xb
- 702 00d2 3B       		.uleb128 0x3b
- 703 00d3 0B       		.uleb128 0xb
- 704 00d4 27       		.uleb128 0x27
- 705 00d5 19       		.uleb128 0x19
- 706 00d6 3C       		.uleb128 0x3c
- 707 00d7 19       		.uleb128 0x19
- 708 00d8 01       		.uleb128 0x1
- 709 00d9 13       		.uleb128 0x13
- 710 00da 00       		.byte	0
- 711 00db 00       		.byte	0
- 712 00dc 10       		.uleb128 0x10
- 713 00dd 05       		.uleb128 0x5
- 714 00de 00       		.byte	0
- 715 00df 49       		.uleb128 0x49
- 716 00e0 13       		.uleb128 0x13
- 717 00e1 00       		.byte	0
- 718 00e2 00       		.byte	0
- 719 00e3 11       		.uleb128 0x11
- 720 00e4 2E       		.uleb128 0x2e
- 721 00e5 00       		.byte	0
- 722 00e6 3F       		.uleb128 0x3f
- 723 00e7 19       		.uleb128 0x19
- 724 00e8 03       		.uleb128 0x3
- 725 00e9 0E       		.uleb128 0xe
- 726 00ea 3A       		.uleb128 0x3a
-ARM GAS  C:\Users\addis\AppData\Local\Temp\ccmHqk3Q.s 			page 15
+ 1108 027d 01       		.uleb128 0x1
+ 1109 027e 36       		.byte	0x36
+ 1110 027f 00       		.byte	0
+ 1111 0280 0C       		.uleb128 0xc
+ 1112 0281 76000000 		.4byte	.LVL31
+ 1113 0285 8C070000 		.4byte	0x78c
+ 1114 0289 0C       		.uleb128 0xc
+ 1115 028a 82000000 		.4byte	.LVL32
+ 1116 028e 3C070000 		.4byte	0x73c
+ 1117 0292 0C       		.uleb128 0xc
+ 1118 0293 86000000 		.4byte	.LVL33
+ 1119 0297 43070000 		.4byte	0x743
+ 1120 029b 0C       		.uleb128 0xc
+ 1121 029c 8E000000 		.4byte	.LVL34
+ 1122 02a0 4E070000 		.4byte	0x74e
+ 1123 02a4 0A       		.uleb128 0xa
+ 1124 02a5 9A000000 		.4byte	.LVL35
+ 1125 02a9 6A070000 		.4byte	0x76a
+ 1126 02ad B7020000 		.4byte	0x2b7
+ 1127 02b1 0B       		.uleb128 0xb
+ 1128 02b2 01       		.uleb128 0x1
+ 1129 02b3 50       		.byte	0x50
+ 1130 02b4 01       		.uleb128 0x1
+ 1131 02b5 35       		.byte	0x35
+ 1132 02b6 00       		.byte	0
+ 1133 02b7 0A       		.uleb128 0xa
+ 1134 02b8 A0000000 		.4byte	.LVL36
+ 1135 02bc 7B070000 		.4byte	0x77b
+ 1136 02c0 CA020000 		.4byte	0x2ca
+ 1137 02c4 0B       		.uleb128 0xb
+ 1138 02c5 01       		.uleb128 0x1
+ 1139 02c6 50       		.byte	0x50
+ 1140 02c7 01       		.uleb128 0x1
+ 1141 02c8 35       		.byte	0x35
+ 1142 02c9 00       		.byte	0
+ 1143 02ca 0C       		.uleb128 0xc
+ 1144 02cb A4000000 		.4byte	.LVL37
+ 1145 02cf 8C070000 		.4byte	0x78c
+ 1146 02d3 0C       		.uleb128 0xc
+ 1147 02d4 B0000000 		.4byte	.LVL38
+ 1148 02d8 3C070000 		.4byte	0x73c
+ 1149 02dc 0C       		.uleb128 0xc
+ 1150 02dd B4000000 		.4byte	.LVL39
+ 1151 02e1 43070000 		.4byte	0x743
+ 1152 02e5 0C       		.uleb128 0xc
+ 1153 02e6 BE000000 		.4byte	.LVL40
+ 1154 02ea 4E070000 		.4byte	0x74e
+ 1155 02ee 0A       		.uleb128 0xa
+ 1156 02ef C4000000 		.4byte	.LVL41
+ 1157 02f3 93070000 		.4byte	0x793
+ 1158 02f7 02030000 		.4byte	0x302
+ 1159 02fb 0B       		.uleb128 0xb
+ 1160 02fc 01       		.uleb128 0x1
+ 1161 02fd 50       		.byte	0x50
+ 1162 02fe 02       		.uleb128 0x2
+ 1163 02ff 74       		.byte	0x74
+ 1164 0300 00       		.sleb128 0
+ARM GAS  C:\Users\addis\AppData\Local\Temp\cc7XYADp.s 			page 26
 
 
- 727 00eb 0B       		.uleb128 0xb
- 728 00ec 3B       		.uleb128 0x3b
- 729 00ed 0B       		.uleb128 0xb
- 730 00ee 27       		.uleb128 0x27
- 731 00ef 19       		.uleb128 0x19
- 732 00f0 49       		.uleb128 0x49
- 733 00f1 13       		.uleb128 0x13
- 734 00f2 3C       		.uleb128 0x3c
- 735 00f3 19       		.uleb128 0x19
- 736 00f4 00       		.byte	0
- 737 00f5 00       		.byte	0
- 738 00f6 00       		.byte	0
- 739              		.section	.debug_aranges,"",%progbits
- 740 0000 34000000 		.4byte	0x34
- 741 0004 0200     		.2byte	0x2
- 742 0006 00000000 		.4byte	.Ldebug_info0
- 743 000a 04       		.byte	0x4
- 744 000b 00       		.byte	0
- 745 000c 0000     		.2byte	0
- 746 000e 0000     		.2byte	0
- 747 0010 00000000 		.4byte	.LFB0
- 748 0014 1C000000 		.4byte	.LFE0-.LFB0
- 749 0018 00000000 		.4byte	.LFB1
- 750 001c 20000000 		.4byte	.LFE1-.LFB1
- 751 0020 00000000 		.4byte	.LFB2
- 752 0024 18000000 		.4byte	.LFE2-.LFB2
- 753 0028 00000000 		.4byte	.LFB3
- 754 002c 60000000 		.4byte	.LFE3-.LFB3
- 755 0030 00000000 		.4byte	0
- 756 0034 00000000 		.4byte	0
- 757              		.section	.debug_ranges,"",%progbits
- 758              	.Ldebug_ranges0:
- 759 0000 00000000 		.4byte	.LFB0
- 760 0004 1C000000 		.4byte	.LFE0
- 761 0008 00000000 		.4byte	.LFB1
- 762 000c 20000000 		.4byte	.LFE1
- 763 0010 00000000 		.4byte	.LFB2
- 764 0014 18000000 		.4byte	.LFE2
- 765 0018 00000000 		.4byte	.LFB3
- 766 001c 60000000 		.4byte	.LFE3
- 767 0020 00000000 		.4byte	0
- 768 0024 00000000 		.4byte	0
- 769              		.section	.debug_line,"",%progbits
- 770              	.Ldebug_line0:
- 771 0000 13010000 		.section	.debug_str,"MS",%progbits,1
- 771      0200AB00 
- 771      00000201 
- 771      FB0E0D00 
- 771      01010101 
- 772              	.LASF33:
- 773 0000 433A5C55 		.ascii	"C:\\Users\\addis\\Documents\\PSoC Creator\\Workspac"
- 773      73657273 
- 773      5C616464 
- 773      69735C44 
- 773      6F63756D 
- 774 002e 6530325C 		.ascii	"e02\\PS2Keyboard.cydsn\000"
- 774      5053324B 
-ARM GAS  C:\Users\addis\AppData\Local\Temp\ccmHqk3Q.s 			page 16
+ 1165 0301 00       		.byte	0
+ 1166 0302 0C       		.uleb128 0xc
+ 1167 0303 C8000000 		.4byte	.LVL42
+ 1168 0307 43070000 		.4byte	0x743
+ 1169 030b 0C       		.uleb128 0xc
+ 1170 030c D2000000 		.4byte	.LVL43
+ 1171 0310 4E070000 		.4byte	0x74e
+ 1172 0314 0C       		.uleb128 0xc
+ 1173 0315 D6000000 		.4byte	.LVL44
+ 1174 0319 43070000 		.4byte	0x743
+ 1175 031d 0C       		.uleb128 0xc
+ 1176 031e E0000000 		.4byte	.LVL45
+ 1177 0322 4E070000 		.4byte	0x74e
+ 1178 0326 0A       		.uleb128 0xa
+ 1179 0327 EC000000 		.4byte	.LVL46
+ 1180 032b 6A070000 		.4byte	0x76a
+ 1181 032f 3A030000 		.4byte	0x33a
+ 1182 0333 0B       		.uleb128 0xb
+ 1183 0334 01       		.uleb128 0x1
+ 1184 0335 50       		.byte	0x50
+ 1185 0336 02       		.uleb128 0x2
+ 1186 0337 08       		.byte	0x8
+ 1187 0338 64       		.byte	0x64
+ 1188 0339 00       		.byte	0
+ 1189 033a 0A       		.uleb128 0xa
+ 1190 033b F2000000 		.4byte	.LVL47
+ 1191 033f 7B070000 		.4byte	0x77b
+ 1192 0343 4E030000 		.4byte	0x34e
+ 1193 0347 0B       		.uleb128 0xb
+ 1194 0348 01       		.uleb128 0x1
+ 1195 0349 50       		.byte	0x50
+ 1196 034a 02       		.uleb128 0x2
+ 1197 034b 08       		.byte	0x8
+ 1198 034c 64       		.byte	0x64
+ 1199 034d 00       		.byte	0
+ 1200 034e 0C       		.uleb128 0xc
+ 1201 034f F6000000 		.4byte	.LVL48
+ 1202 0353 8C070000 		.4byte	0x78c
+ 1203 0357 0C       		.uleb128 0xc
+ 1204 0358 FA000000 		.4byte	.LVL49
+ 1205 035c 5F070000 		.4byte	0x75f
+ 1206 0360 0C       		.uleb128 0xc
+ 1207 0361 0A010000 		.4byte	.LVL50
+ 1208 0365 3C070000 		.4byte	0x73c
+ 1209 0369 0C       		.uleb128 0xc
+ 1210 036a 0E010000 		.4byte	.LVL51
+ 1211 036e 5F070000 		.4byte	0x75f
+ 1212 0372 0C       		.uleb128 0xc
+ 1213 0373 16010000 		.4byte	.LVL52
+ 1214 0377 43070000 		.4byte	0x743
+ 1215 037b 0C       		.uleb128 0xc
+ 1216 037c 1E010000 		.4byte	.LVL53
+ 1217 0380 4E070000 		.4byte	0x74e
+ 1218 0384 0C       		.uleb128 0xc
+ 1219 0385 22010000 		.4byte	.LVL54
+ 1220 0389 43070000 		.4byte	0x743
+ 1221 038d 0C       		.uleb128 0xc
+ARM GAS  C:\Users\addis\AppData\Local\Temp\cc7XYADp.s 			page 27
 
 
- 774      6579626F 
- 774      6172642E 
- 774      63796473 
- 775              	.LASF3:
- 776 0044 73686F72 		.ascii	"short unsigned int\000"
- 776      7420756E 
- 776      7369676E 
- 776      65642069 
- 776      6E7400
- 777              	.LASF32:
- 778 0057 2E5C4765 		.ascii	".\\Generated_Source\\PSoC5\\PS2_ps2.c\000"
- 778      6E657261 
- 778      7465645F 
- 778      536F7572 
- 778      63655C50 
- 779              	.LASF25:
- 780 007a 5053325F 		.ascii	"PS2_Timer_WritePeriod\000"
- 780      54696D65 
- 780      725F5772 
- 780      69746550 
- 780      6572696F 
- 781              	.LASF19:
- 782 0090 5053325F 		.ascii	"PS2_Start\000"
- 782      53746172 
- 782      7400
- 783              	.LASF11:
- 784 009a 666C6F61 		.ascii	"float\000"
- 784      7400
- 785              	.LASF1:
- 786 00a0 756E7369 		.ascii	"unsigned char\000"
- 786      676E6564 
- 786      20636861 
- 786      7200
- 787              	.LASF14:
- 788 00ae 72656738 		.ascii	"reg8\000"
- 788      00
- 789              	.LASF26:
- 790 00b3 5053325F 		.ascii	"PS2_controlReg_Write\000"
- 790      636F6E74 
- 790      726F6C52 
- 790      65675F57 
- 790      72697465 
- 791              	.LASF9:
- 792 00c8 75696E74 		.ascii	"uint8\000"
- 792      3800
- 793              	.LASF17:
- 794 00ce 5053325F 		.ascii	"PS2_TIMER\000"
- 794      54494D45 
- 794      5200
- 795              	.LASF12:
- 796 00d8 646F7562 		.ascii	"double\000"
- 796      6C6500
- 797              	.LASF24:
- 798 00df 5053325F 		.ascii	"PS2_Timer_ISR_StartEx\000"
- 798      54696D65 
- 798      725F4953 
- 798      525F5374 
-ARM GAS  C:\Users\addis\AppData\Local\Temp\ccmHqk3Q.s 			page 17
+ 1222 038e 2C010000 		.4byte	.LVL55
+ 1223 0392 4E070000 		.4byte	0x74e
+ 1224 0396 0C       		.uleb128 0xc
+ 1225 0397 30010000 		.4byte	.LVL56
+ 1226 039b 43070000 		.4byte	0x743
+ 1227 039f 0C       		.uleb128 0xc
+ 1228 03a0 38010000 		.4byte	.LVL57
+ 1229 03a4 4E070000 		.4byte	0x74e
+ 1230 03a8 0A       		.uleb128 0xa
+ 1231 03a9 48010000 		.4byte	.LVL58
+ 1232 03ad 6A070000 		.4byte	0x76a
+ 1233 03b1 BC030000 		.4byte	0x3bc
+ 1234 03b5 0B       		.uleb128 0xb
+ 1235 03b6 01       		.uleb128 0x1
+ 1236 03b7 50       		.byte	0x50
+ 1237 03b8 02       		.uleb128 0x2
+ 1238 03b9 08       		.byte	0x8
+ 1239 03ba 64       		.byte	0x64
+ 1240 03bb 00       		.byte	0
+ 1241 03bc 0A       		.uleb128 0xa
+ 1242 03bd 4E010000 		.4byte	.LVL59
+ 1243 03c1 7B070000 		.4byte	0x77b
+ 1244 03c5 D0030000 		.4byte	0x3d0
+ 1245 03c9 0B       		.uleb128 0xb
+ 1246 03ca 01       		.uleb128 0x1
+ 1247 03cb 50       		.byte	0x50
+ 1248 03cc 02       		.uleb128 0x2
+ 1249 03cd 08       		.byte	0x8
+ 1250 03ce 64       		.byte	0x64
+ 1251 03cf 00       		.byte	0
+ 1252 03d0 0C       		.uleb128 0xc
+ 1253 03d1 52010000 		.4byte	.LVL60
+ 1254 03d5 8C070000 		.4byte	0x78c
+ 1255 03d9 0C       		.uleb128 0xc
+ 1256 03da 56010000 		.4byte	.LVL61
+ 1257 03de A4070000 		.4byte	0x7a4
+ 1258 03e2 0C       		.uleb128 0xc
+ 1259 03e3 64010000 		.4byte	.LVL62
+ 1260 03e7 3C070000 		.4byte	0x73c
+ 1261 03eb 0C       		.uleb128 0xc
+ 1262 03ec 68010000 		.4byte	.LVL63
+ 1263 03f0 A4070000 		.4byte	0x7a4
+ 1264 03f4 0C       		.uleb128 0xc
+ 1265 03f5 70010000 		.4byte	.LVL64
+ 1266 03f9 A4070000 		.4byte	0x7a4
+ 1267 03fd 0C       		.uleb128 0xc
+ 1268 03fe 82010000 		.4byte	.LVL66
+ 1269 0402 43070000 		.4byte	0x743
+ 1270 0406 0C       		.uleb128 0xc
+ 1271 0407 8A010000 		.4byte	.LVL67
+ 1272 040b 4E070000 		.4byte	0x74e
+ 1273 040f 0C       		.uleb128 0xc
+ 1274 0410 8E010000 		.4byte	.LVL68
+ 1275 0414 43070000 		.4byte	0x743
+ 1276 0418 0C       		.uleb128 0xc
+ 1277 0419 98010000 		.4byte	.LVL69
+ 1278 041d 4E070000 		.4byte	0x74e
+ARM GAS  C:\Users\addis\AppData\Local\Temp\cc7XYADp.s 			page 28
 
 
- 798      61727445 
- 799              	.LASF34:
- 800 00f5 5053325F 		.ascii	"PS2_DetectDevice\000"
- 800      44657465 
- 800      63744465 
- 800      76696365 
- 800      00
- 801              	.LASF23:
- 802 0106 5053325F 		.ascii	"PS2_Timer_Start\000"
- 802      54696D65 
- 802      725F5374 
- 802      61727400 
- 803              	.LASF10:
- 804 0116 75696E74 		.ascii	"uint32\000"
- 804      333200
- 805              	.LASF31:
- 806 011d 474E5520 		.ascii	"GNU C 4.9.3 20150303 (release) [ARM/embedded-4_9-br"
- 806      4320342E 
- 806      392E3320 
- 806      32303135 
- 806      30333033 
- 807 0150 616E6368 		.ascii	"anch revision 221220] -mcpu=cortex-m3 -mthumb -g -O"
- 807      20726576 
- 807      6973696F 
- 807      6E203232 
- 807      31323230 
- 808 0183 67202D66 		.ascii	"g -ffunction-sections -ffat-lto-objects\000"
- 808      66756E63 
- 808      74696F6E 
- 808      2D736563 
- 808      74696F6E 
- 809              	.LASF5:
- 810 01ab 6C6F6E67 		.ascii	"long unsigned int\000"
- 810      20756E73 
- 810      69676E65 
- 810      6420696E 
- 810      7400
- 811              	.LASF8:
- 812 01bd 756E7369 		.ascii	"unsigned int\000"
- 812      676E6564 
- 812      20696E74 
- 812      00
- 813              	.LASF7:
- 814 01ca 6C6F6E67 		.ascii	"long long unsigned int\000"
- 814      206C6F6E 
- 814      6720756E 
- 814      7369676E 
- 814      65642069 
- 815              	.LASF27:
- 816 01e1 5053325F 		.ascii	"PS2_controlReg_Read\000"
- 816      636F6E74 
- 816      726F6C52 
- 816      65675F52 
- 816      65616400 
- 817              	.LASF15:
- 818 01f5 63796973 		.ascii	"cyisraddress\000"
- 818      72616464 
-ARM GAS  C:\Users\addis\AppData\Local\Temp\ccmHqk3Q.s 			page 18
+ 1279 0421 0C       		.uleb128 0xc
+ 1280 0422 9C010000 		.4byte	.LVL70
+ 1281 0426 43070000 		.4byte	0x743
+ 1282 042a 0C       		.uleb128 0xc
+ 1283 042b A4010000 		.4byte	.LVL71
+ 1284 042f 4E070000 		.4byte	0x74e
+ 1285 0433 0C       		.uleb128 0xc
+ 1286 0434 A8010000 		.4byte	.LVL72
+ 1287 0438 43070000 		.4byte	0x743
+ 1288 043c 0C       		.uleb128 0xc
+ 1289 043d B0010000 		.4byte	.LVL73
+ 1290 0441 4E070000 		.4byte	0x74e
+ 1291 0445 00       		.byte	0
+ 1292 0446 0D       		.uleb128 0xd
+ 1293 0447 7F010000 		.4byte	.LASF21
+ 1294 044b 01       		.byte	0x1
+ 1295 044c A3       		.byte	0xa3
+ 1296 044d 6B000000 		.4byte	0x6b
+ 1297 0451 00000000 		.4byte	.LFB5
+ 1298 0455 E4000000 		.4byte	.LFE5-.LFB5
+ 1299 0459 01       		.uleb128 0x1
+ 1300 045a 9C       		.byte	0x9c
+ 1301 045b 80050000 		.4byte	0x580
+ 1302 045f 0E       		.uleb128 0xe
+ 1303 0460 D6000000 		.4byte	.LASF22
+ 1304 0464 01       		.byte	0x1
+ 1305 0465 A3       		.byte	0xa3
+ 1306 0466 6B000000 		.4byte	0x6b
+ 1307 046a 40000000 		.4byte	.LLST2
+ 1308 046e 0F       		.uleb128 0xf
+ 1309 046f 71000000 		.4byte	.LASF24
+ 1310 0473 01       		.byte	0x1
+ 1311 0474 A5       		.byte	0xa5
+ 1312 0475 6B000000 		.4byte	0x6b
+ 1313 0479 61000000 		.4byte	.LLST3
+ 1314 047d 0A       		.uleb128 0xa
+ 1315 047e 0A000000 		.4byte	.LVL77
+ 1316 0482 98010000 		.4byte	0x198
+ 1317 0486 91040000 		.4byte	0x491
+ 1318 048a 0B       		.uleb128 0xb
+ 1319 048b 01       		.uleb128 0x1
+ 1320 048c 50       		.byte	0x50
+ 1321 048d 02       		.uleb128 0x2
+ 1322 048e 74       		.byte	0x74
+ 1323 048f 00       		.sleb128 0
+ 1324 0490 00       		.byte	0
+ 1325 0491 0A       		.uleb128 0xa
+ 1326 0492 1A000000 		.4byte	.LVL79
+ 1327 0496 6A070000 		.4byte	0x76a
+ 1328 049a A5040000 		.4byte	0x4a5
+ 1329 049e 0B       		.uleb128 0xb
+ 1330 049f 01       		.uleb128 0x1
+ 1331 04a0 50       		.byte	0x50
+ 1332 04a1 02       		.uleb128 0x2
+ 1333 04a2 08       		.byte	0x8
+ 1334 04a3 64       		.byte	0x64
+ 1335 04a4 00       		.byte	0
+ARM GAS  C:\Users\addis\AppData\Local\Temp\cc7XYADp.s 			page 29
 
 
- 818      72657373 
- 818      00
- 819              	.LASF16:
- 820 0202 73697A65 		.ascii	"sizetype\000"
- 820      74797065 
- 820      00
- 821              	.LASF18:
- 822 020b 5053325F 		.ascii	"PS2_Init\000"
- 822      496E6974 
- 822      00
- 823              	.LASF6:
- 824 0214 6C6F6E67 		.ascii	"long long int\000"
- 824      206C6F6E 
- 824      6720696E 
- 824      7400
- 825              	.LASF21:
- 826 0222 5053325F 		.ascii	"PS2_initVar\000"
- 826      696E6974 
- 826      56617200 
- 827              	.LASF30:
- 828 022e 5053325F 		.ascii	"PS2_dataOut_Read\000"
- 828      64617461 
- 828      4F75745F 
- 828      52656164 
- 828      00
- 829              	.LASF13:
- 830 023f 63686172 		.ascii	"char\000"
- 830      00
- 831              	.LASF22:
- 832 0244 5053325F 		.ascii	"PS2_Timer_Stop\000"
- 832      54696D65 
- 832      725F5374 
- 832      6F7000
- 833              	.LASF2:
- 834 0253 73686F72 		.ascii	"short int\000"
- 834      7420696E 
- 834      7400
- 835              	.LASF4:
- 836 025d 6C6F6E67 		.ascii	"long int\000"
- 836      20696E74 
- 836      00
- 837              	.LASF28:
- 838 0266 5053325F 		.ascii	"PS2_statusReg_Read\000"
- 838      73746174 
- 838      75735265 
- 838      675F5265 
- 838      616400
- 839              	.LASF0:
- 840 0279 7369676E 		.ascii	"signed char\000"
- 840      65642063 
- 840      68617200 
- 841              	.LASF20:
- 842 0285 5053325F 		.ascii	"PS2_counter_trigger\000"
- 842      636F756E 
- 842      7465725F 
- 842      74726967 
- 842      67657200 
-ARM GAS  C:\Users\addis\AppData\Local\Temp\ccmHqk3Q.s 			page 19
+ 1336 04a5 0A       		.uleb128 0xa
+ 1337 04a6 20000000 		.4byte	.LVL80
+ 1338 04aa 7B070000 		.4byte	0x77b
+ 1339 04ae B9040000 		.4byte	0x4b9
+ 1340 04b2 0B       		.uleb128 0xb
+ 1341 04b3 01       		.uleb128 0x1
+ 1342 04b4 50       		.byte	0x50
+ 1343 04b5 02       		.uleb128 0x2
+ 1344 04b6 08       		.byte	0x8
+ 1345 04b7 64       		.byte	0x64
+ 1346 04b8 00       		.byte	0
+ 1347 04b9 0C       		.uleb128 0xc
+ 1348 04ba 24000000 		.4byte	.LVL81
+ 1349 04be 8C070000 		.4byte	0x78c
+ 1350 04c2 0C       		.uleb128 0xc
+ 1351 04c3 28000000 		.4byte	.LVL82
+ 1352 04c7 A4070000 		.4byte	0x7a4
+ 1353 04cb 0C       		.uleb128 0xc
+ 1354 04cc 36000000 		.4byte	.LVL83
+ 1355 04d0 3C070000 		.4byte	0x73c
+ 1356 04d4 0C       		.uleb128 0xc
+ 1357 04d5 3A000000 		.4byte	.LVL84
+ 1358 04d9 A4070000 		.4byte	0x7a4
+ 1359 04dd 0C       		.uleb128 0xc
+ 1360 04de 42000000 		.4byte	.LVL85
+ 1361 04e2 AF070000 		.4byte	0x7af
+ 1362 04e6 0C       		.uleb128 0xc
+ 1363 04e7 54000000 		.4byte	.LVL86
+ 1364 04eb 43070000 		.4byte	0x743
+ 1365 04ef 0C       		.uleb128 0xc
+ 1366 04f0 5E000000 		.4byte	.LVL87
+ 1367 04f4 4E070000 		.4byte	0x74e
+ 1368 04f8 0C       		.uleb128 0xc
+ 1369 04f9 62000000 		.4byte	.LVL88
+ 1370 04fd 43070000 		.4byte	0x743
+ 1371 0501 0C       		.uleb128 0xc
+ 1372 0502 6A000000 		.4byte	.LVL89
+ 1373 0506 4E070000 		.4byte	0x74e
+ 1374 050a 0C       		.uleb128 0xc
+ 1375 050b 72000000 		.4byte	.LVL90
+ 1376 050f 43070000 		.4byte	0x743
+ 1377 0513 0C       		.uleb128 0xc
+ 1378 0514 7C000000 		.4byte	.LVL91
+ 1379 0518 4E070000 		.4byte	0x74e
+ 1380 051c 0C       		.uleb128 0xc
+ 1381 051d 80000000 		.4byte	.LVL92
+ 1382 0521 43070000 		.4byte	0x743
+ 1383 0525 0C       		.uleb128 0xc
+ 1384 0526 88000000 		.4byte	.LVL93
+ 1385 052a 4E070000 		.4byte	0x74e
+ 1386 052e 0C       		.uleb128 0xc
+ 1387 052f 8E000000 		.4byte	.LVL94
+ 1388 0533 43070000 		.4byte	0x743
+ 1389 0537 0C       		.uleb128 0xc
+ 1390 0538 98000000 		.4byte	.LVL95
+ 1391 053c 4E070000 		.4byte	0x74e
+ 1392 0540 0C       		.uleb128 0xc
+ARM GAS  C:\Users\addis\AppData\Local\Temp\cc7XYADp.s 			page 30
 
 
- 843              	.LASF29:
- 844 0299 43794465 		.ascii	"CyDelay\000"
- 844      6C617900 
- 845              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 4.9.3 20150303 (release) [ARM/embedded-4_9-br
+ 1393 0541 9C000000 		.4byte	.LVL96
+ 1394 0545 43070000 		.4byte	0x743
+ 1395 0549 0C       		.uleb128 0xc
+ 1396 054a A4000000 		.4byte	.LVL97
+ 1397 054e 4E070000 		.4byte	0x74e
+ 1398 0552 0C       		.uleb128 0xc
+ 1399 0553 B0000000 		.4byte	.LVL98
+ 1400 0557 43070000 		.4byte	0x743
+ 1401 055b 0C       		.uleb128 0xc
+ 1402 055c BA000000 		.4byte	.LVL99
+ 1403 0560 4E070000 		.4byte	0x74e
+ 1404 0564 0C       		.uleb128 0xc
+ 1405 0565 BE000000 		.4byte	.LVL100
+ 1406 0569 43070000 		.4byte	0x743
+ 1407 056d 0C       		.uleb128 0xc
+ 1408 056e C6000000 		.4byte	.LVL101
+ 1409 0572 4E070000 		.4byte	0x74e
+ 1410 0576 0C       		.uleb128 0xc
+ 1411 0577 CE000000 		.4byte	.LVL102
+ 1412 057b A4070000 		.4byte	0x7a4
+ 1413 057f 00       		.byte	0
+ 1414 0580 0D       		.uleb128 0xd
+ 1415 0581 57010000 		.4byte	.LASF25
+ 1416 0585 01       		.byte	0x1
+ 1417 0586 35       		.byte	0x35
+ 1418 0587 6B000000 		.4byte	0x6b
+ 1419 058b 00000000 		.4byte	.LFB3
+ 1420 058f A4000000 		.4byte	.LFE3-.LFB3
+ 1421 0593 01       		.uleb128 0x1
+ 1422 0594 9C       		.byte	0x9c
+ 1423 0595 51060000 		.4byte	0x651
+ 1424 0599 0F       		.uleb128 0xf
+ 1425 059a BF000000 		.4byte	.LASF23
+ 1426 059e 01       		.byte	0x1
+ 1427 059f 37       		.byte	0x37
+ 1428 05a0 6B000000 		.4byte	0x6b
+ 1429 05a4 74000000 		.4byte	.LLST4
+ 1430 05a8 0A       		.uleb128 0xa
+ 1431 05a9 0E000000 		.4byte	.LVL103
+ 1432 05ad 46040000 		.4byte	0x446
+ 1433 05b1 BC050000 		.4byte	0x5bc
+ 1434 05b5 0B       		.uleb128 0xb
+ 1435 05b6 01       		.uleb128 0x1
+ 1436 05b7 50       		.byte	0x50
+ 1437 05b8 02       		.uleb128 0x2
+ 1438 05b9 09       		.byte	0x9
+ 1439 05ba FF       		.byte	0xff
+ 1440 05bb 00       		.byte	0
+ 1441 05bc 0A       		.uleb128 0xa
+ 1442 05bd 1C000000 		.4byte	.LVL104
+ 1443 05c1 6A070000 		.4byte	0x76a
+ 1444 05c5 D0050000 		.4byte	0x5d0
+ 1445 05c9 0B       		.uleb128 0xb
+ 1446 05ca 01       		.uleb128 0x1
+ 1447 05cb 50       		.byte	0x50
+ 1448 05cc 02       		.uleb128 0x2
+ 1449 05cd 09       		.byte	0x9
+ARM GAS  C:\Users\addis\AppData\Local\Temp\cc7XYADp.s 			page 31
+
+
+ 1450 05ce C8       		.byte	0xc8
+ 1451 05cf 00       		.byte	0
+ 1452 05d0 0A       		.uleb128 0xa
+ 1453 05d1 22000000 		.4byte	.LVL105
+ 1454 05d5 7B070000 		.4byte	0x77b
+ 1455 05d9 E4050000 		.4byte	0x5e4
+ 1456 05dd 0B       		.uleb128 0xb
+ 1457 05de 01       		.uleb128 0x1
+ 1458 05df 50       		.byte	0x50
+ 1459 05e0 02       		.uleb128 0x2
+ 1460 05e1 09       		.byte	0x9
+ 1461 05e2 C8       		.byte	0xc8
+ 1462 05e3 00       		.byte	0
+ 1463 05e4 0C       		.uleb128 0xc
+ 1464 05e5 26000000 		.4byte	.LVL106
+ 1465 05e9 8C070000 		.4byte	0x78c
+ 1466 05ed 0C       		.uleb128 0xc
+ 1467 05ee 2A000000 		.4byte	.LVL107
+ 1468 05f2 43070000 		.4byte	0x743
+ 1469 05f6 0C       		.uleb128 0xc
+ 1470 05f7 32000000 		.4byte	.LVL108
+ 1471 05fb 4E070000 		.4byte	0x74e
+ 1472 05ff 0C       		.uleb128 0xc
+ 1473 0600 36000000 		.4byte	.LVL109
+ 1474 0604 A4070000 		.4byte	0x7a4
+ 1475 0608 0C       		.uleb128 0xc
+ 1476 0609 44000000 		.4byte	.LVL110
+ 1477 060d A4070000 		.4byte	0x7a4
+ 1478 0611 0C       		.uleb128 0xc
+ 1479 0612 4C000000 		.4byte	.LVL111
+ 1480 0616 BA070000 		.4byte	0x7ba
+ 1481 061a 0C       		.uleb128 0xc
+ 1482 061b 50000000 		.4byte	.LVL112
+ 1483 061f AF070000 		.4byte	0x7af
+ 1484 0623 0C       		.uleb128 0xc
+ 1485 0624 66000000 		.4byte	.LVL115
+ 1486 0628 A4070000 		.4byte	0x7a4
+ 1487 062c 0C       		.uleb128 0xc
+ 1488 062d 80000000 		.4byte	.LVL120
+ 1489 0631 43070000 		.4byte	0x743
+ 1490 0635 0C       		.uleb128 0xc
+ 1491 0636 8A000000 		.4byte	.LVL121
+ 1492 063a 4E070000 		.4byte	0x74e
+ 1493 063e 0C       		.uleb128 0xc
+ 1494 063f 8E000000 		.4byte	.LVL122
+ 1495 0643 43070000 		.4byte	0x743
+ 1496 0647 0C       		.uleb128 0xc
+ 1497 0648 96000000 		.4byte	.LVL123
+ 1498 064c 4E070000 		.4byte	0x74e
+ 1499 0650 00       		.byte	0
+ 1500 0651 0D       		.uleb128 0xd
+ 1501 0652 D4020000 		.4byte	.LASF26
+ 1502 0656 01       		.byte	0x1
+ 1503 0657 DE       		.byte	0xde
+ 1504 0658 6B000000 		.4byte	0x6b
+ 1505 065c 00000000 		.4byte	.LFB6
+ 1506 0660 2A000000 		.4byte	.LFE6-.LFB6
+ARM GAS  C:\Users\addis\AppData\Local\Temp\cc7XYADp.s 			page 32
+
+
+ 1507 0664 01       		.uleb128 0x1
+ 1508 0665 9C       		.byte	0x9c
+ 1509 0666 A1060000 		.4byte	0x6a1
+ 1510 066a 0C       		.uleb128 0xc
+ 1511 066b 06000000 		.4byte	.LVL125
+ 1512 066f A4070000 		.4byte	0x7a4
+ 1513 0673 0C       		.uleb128 0xc
+ 1514 0674 0E000000 		.4byte	.LVL126
+ 1515 0678 43070000 		.4byte	0x743
+ 1516 067c 0C       		.uleb128 0xc
+ 1517 067d 18000000 		.4byte	.LVL127
+ 1518 0681 4E070000 		.4byte	0x74e
+ 1519 0685 0C       		.uleb128 0xc
+ 1520 0686 1C000000 		.4byte	.LVL128
+ 1521 068a 43070000 		.4byte	0x743
+ 1522 068e 0C       		.uleb128 0xc
+ 1523 068f 24000000 		.4byte	.LVL129
+ 1524 0693 4E070000 		.4byte	0x74e
+ 1525 0697 0C       		.uleb128 0xc
+ 1526 0698 28000000 		.4byte	.LVL130
+ 1527 069c AF070000 		.4byte	0x7af
+ 1528 06a0 00       		.byte	0
+ 1529 06a1 0D       		.uleb128 0xd
+ 1530 06a2 7B020000 		.4byte	.LASF27
+ 1531 06a6 01       		.byte	0x1
+ 1532 06a7 E7       		.byte	0xe7
+ 1533 06a8 6B000000 		.4byte	0x6b
+ 1534 06ac 00000000 		.4byte	.LFB7
+ 1535 06b0 2E000000 		.4byte	.LFE7-.LFB7
+ 1536 06b4 01       		.uleb128 0x1
+ 1537 06b5 9C       		.byte	0x9c
+ 1538 06b6 F1060000 		.4byte	0x6f1
+ 1539 06ba 0C       		.uleb128 0xc
+ 1540 06bb 06000000 		.4byte	.LVL131
+ 1541 06bf A4070000 		.4byte	0x7a4
+ 1542 06c3 0C       		.uleb128 0xc
+ 1543 06c4 0E000000 		.4byte	.LVL132
+ 1544 06c8 43070000 		.4byte	0x743
+ 1545 06cc 0C       		.uleb128 0xc
+ 1546 06cd 18000000 		.4byte	.LVL133
+ 1547 06d1 4E070000 		.4byte	0x74e
+ 1548 06d5 0C       		.uleb128 0xc
+ 1549 06d6 1C000000 		.4byte	.LVL134
+ 1550 06da 43070000 		.4byte	0x743
+ 1551 06de 0C       		.uleb128 0xc
+ 1552 06df 24000000 		.4byte	.LVL135
+ 1553 06e3 4E070000 		.4byte	0x74e
+ 1554 06e7 0C       		.uleb128 0xc
+ 1555 06e8 28000000 		.4byte	.LVL136
+ 1556 06ec AF070000 		.4byte	0x7af
+ 1557 06f0 00       		.byte	0
+ 1558 06f1 10       		.uleb128 0x10
+ 1559 06f2 B0000000 		.4byte	.LASF28
+ 1560 06f6 01       		.byte	0x1
+ 1561 06f7 0F       		.byte	0xf
+ 1562 06f8 77000000 		.4byte	0x77
+ 1563 06fc 05       		.uleb128 0x5
+ARM GAS  C:\Users\addis\AppData\Local\Temp\cc7XYADp.s 			page 33
+
+
+ 1564 06fd 03       		.byte	0x3
+ 1565 06fe 00000000 		.4byte	PS2_timer_reps
+ 1566 0702 10       		.uleb128 0x10
+ 1567 0703 B7020000 		.4byte	.LASF29
+ 1568 0707 01       		.byte	0x1
+ 1569 0708 10       		.byte	0x10
+ 1570 0709 6B000000 		.4byte	0x6b
+ 1571 070d 05       		.uleb128 0x5
+ 1572 070e 03       		.byte	0x3
+ 1573 070f 00000000 		.4byte	PS2_initVar
+ 1574 0713 10       		.uleb128 0x10
+ 1575 0714 DB000000 		.4byte	.LASF30
+ 1576 0718 01       		.byte	0x1
+ 1577 0719 11       		.byte	0x11
+ 1578 071a 6B000000 		.4byte	0x6b
+ 1579 071e 05       		.uleb128 0x5
+ 1580 071f 03       		.byte	0x3
+ 1581 0720 00000000 		.4byte	PS2_deviceDetectFail
+ 1582 0724 11       		.uleb128 0x11
+ 1583 0725 41010000 		.4byte	.LASF33
+ 1584 0729 04       		.byte	0x4
+ 1585 072a 18       		.byte	0x18
+ 1586 072b 35070000 		.4byte	0x735
+ 1587 072f 12       		.uleb128 0x12
+ 1588 0730 B5000000 		.4byte	0xb5
+ 1589 0734 00       		.byte	0
+ 1590 0735 13       		.uleb128 0x13
+ 1591 0736 68010000 		.4byte	.LASF31
+ 1592 073a 03       		.byte	0x3
+ 1593 073b 5A       		.byte	0x5a
+ 1594 073c 13       		.uleb128 0x13
+ 1595 073d E1020000 		.4byte	.LASF32
+ 1596 0741 03       		.byte	0x3
+ 1597 0742 5B       		.byte	0x5b
+ 1598 0743 14       		.uleb128 0x14
+ 1599 0744 5A020000 		.4byte	.LASF35
+ 1600 0748 05       		.byte	0x5
+ 1601 0749 28       		.byte	0x28
+ 1602 074a 6B000000 		.4byte	0x6b
+ 1603 074e 11       		.uleb128 0x11
+ 1604 074f 03010000 		.4byte	.LASF34
+ 1605 0753 05       		.byte	0x5
+ 1606 0754 27       		.byte	0x27
+ 1607 0755 5F070000 		.4byte	0x75f
+ 1608 0759 12       		.uleb128 0x12
+ 1609 075a 6B000000 		.4byte	0x6b
+ 1610 075e 00       		.byte	0
+ 1611 075f 14       		.uleb128 0x14
+ 1612 0760 18010000 		.4byte	.LASF36
+ 1613 0764 06       		.byte	0x6
+ 1614 0765 28       		.byte	0x28
+ 1615 0766 6B000000 		.4byte	0x6b
+ 1616 076a 11       		.uleb128 0x11
+ 1617 076b 5A000000 		.4byte	.LASF37
+ 1618 076f 03       		.byte	0x3
+ 1619 0770 6A       		.byte	0x6a
+ 1620 0771 7B070000 		.4byte	0x77b
+ARM GAS  C:\Users\addis\AppData\Local\Temp\cc7XYADp.s 			page 34
+
+
+ 1621 0775 12       		.uleb128 0x12
+ 1622 0776 6B000000 		.4byte	0x6b
+ 1623 077a 00       		.byte	0
+ 1624 077b 11       		.uleb128 0x11
+ 1625 077c 44000000 		.4byte	.LASF38
+ 1626 0780 03       		.byte	0x3
+ 1627 0781 68       		.byte	0x68
+ 1628 0782 8C070000 		.4byte	0x78c
+ 1629 0786 12       		.uleb128 0x12
+ 1630 0787 6B000000 		.4byte	0x6b
+ 1631 078b 00       		.byte	0
+ 1632 078c 13       		.uleb128 0x13
+ 1633 078d 27030000 		.4byte	.LASF39
+ 1634 0791 03       		.byte	0x3
+ 1635 0792 8B       		.byte	0x8b
+ 1636 0793 11       		.uleb128 0x11
+ 1637 0794 38030000 		.4byte	.LASF40
+ 1638 0798 07       		.byte	0x7
+ 1639 0799 27       		.byte	0x27
+ 1640 079a A4070000 		.4byte	0x7a4
+ 1641 079e 12       		.uleb128 0x12
+ 1642 079f 6B000000 		.4byte	0x6b
+ 1643 07a3 00       		.byte	0
+ 1644 07a4 14       		.uleb128 0x14
+ 1645 07a5 08030000 		.4byte	.LASF41
+ 1646 07a9 08       		.byte	0x8
+ 1647 07aa 28       		.byte	0x28
+ 1648 07ab 6B000000 		.4byte	0x6b
+ 1649 07af 14       		.uleb128 0x14
+ 1650 07b0 C3020000 		.4byte	.LASF42
+ 1651 07b4 09       		.byte	0x9
+ 1652 07b5 28       		.byte	0x28
+ 1653 07b6 6B000000 		.4byte	0x6b
+ 1654 07ba 15       		.uleb128 0x15
+ 1655 07bb 49030000 		.4byte	.LASF47
+ 1656 07bf 0A       		.byte	0xa
+ 1657 07c0 77       		.byte	0x77
+ 1658 07c1 12       		.uleb128 0x12
+ 1659 07c2 83000000 		.4byte	0x83
+ 1660 07c6 00       		.byte	0
+ 1661 07c7 00       		.byte	0
+ 1662              		.section	.debug_abbrev,"",%progbits
+ 1663              	.Ldebug_abbrev0:
+ 1664 0000 01       		.uleb128 0x1
+ 1665 0001 11       		.uleb128 0x11
+ 1666 0002 01       		.byte	0x1
+ 1667 0003 25       		.uleb128 0x25
+ 1668 0004 0E       		.uleb128 0xe
+ 1669 0005 13       		.uleb128 0x13
+ 1670 0006 0B       		.uleb128 0xb
+ 1671 0007 03       		.uleb128 0x3
+ 1672 0008 0E       		.uleb128 0xe
+ 1673 0009 1B       		.uleb128 0x1b
+ 1674 000a 0E       		.uleb128 0xe
+ 1675 000b 55       		.uleb128 0x55
+ 1676 000c 17       		.uleb128 0x17
+ 1677 000d 11       		.uleb128 0x11
+ARM GAS  C:\Users\addis\AppData\Local\Temp\cc7XYADp.s 			page 35
+
+
+ 1678 000e 01       		.uleb128 0x1
+ 1679 000f 10       		.uleb128 0x10
+ 1680 0010 17       		.uleb128 0x17
+ 1681 0011 00       		.byte	0
+ 1682 0012 00       		.byte	0
+ 1683 0013 02       		.uleb128 0x2
+ 1684 0014 24       		.uleb128 0x24
+ 1685 0015 00       		.byte	0
+ 1686 0016 0B       		.uleb128 0xb
+ 1687 0017 0B       		.uleb128 0xb
+ 1688 0018 3E       		.uleb128 0x3e
+ 1689 0019 0B       		.uleb128 0xb
+ 1690 001a 03       		.uleb128 0x3
+ 1691 001b 0E       		.uleb128 0xe
+ 1692 001c 00       		.byte	0
+ 1693 001d 00       		.byte	0
+ 1694 001e 03       		.uleb128 0x3
+ 1695 001f 24       		.uleb128 0x24
+ 1696 0020 00       		.byte	0
+ 1697 0021 0B       		.uleb128 0xb
+ 1698 0022 0B       		.uleb128 0xb
+ 1699 0023 3E       		.uleb128 0x3e
+ 1700 0024 0B       		.uleb128 0xb
+ 1701 0025 03       		.uleb128 0x3
+ 1702 0026 08       		.uleb128 0x8
+ 1703 0027 00       		.byte	0
+ 1704 0028 00       		.byte	0
+ 1705 0029 04       		.uleb128 0x4
+ 1706 002a 16       		.uleb128 0x16
+ 1707 002b 00       		.byte	0
+ 1708 002c 03       		.uleb128 0x3
+ 1709 002d 0E       		.uleb128 0xe
+ 1710 002e 3A       		.uleb128 0x3a
+ 1711 002f 0B       		.uleb128 0xb
+ 1712 0030 3B       		.uleb128 0x3b
+ 1713 0031 05       		.uleb128 0x5
+ 1714 0032 49       		.uleb128 0x49
+ 1715 0033 13       		.uleb128 0x13
+ 1716 0034 00       		.byte	0
+ 1717 0035 00       		.byte	0
+ 1718 0036 05       		.uleb128 0x5
+ 1719 0037 35       		.uleb128 0x35
+ 1720 0038 00       		.byte	0
+ 1721 0039 49       		.uleb128 0x49
+ 1722 003a 13       		.uleb128 0x13
+ 1723 003b 00       		.byte	0
+ 1724 003c 00       		.byte	0
+ 1725 003d 06       		.uleb128 0x6
+ 1726 003e 0F       		.uleb128 0xf
+ 1727 003f 00       		.byte	0
+ 1728 0040 0B       		.uleb128 0xb
+ 1729 0041 0B       		.uleb128 0xb
+ 1730 0042 49       		.uleb128 0x49
+ 1731 0043 13       		.uleb128 0x13
+ 1732 0044 00       		.byte	0
+ 1733 0045 00       		.byte	0
+ 1734 0046 07       		.uleb128 0x7
+ARM GAS  C:\Users\addis\AppData\Local\Temp\cc7XYADp.s 			page 36
+
+
+ 1735 0047 15       		.uleb128 0x15
+ 1736 0048 00       		.byte	0
+ 1737 0049 27       		.uleb128 0x27
+ 1738 004a 19       		.uleb128 0x19
+ 1739 004b 00       		.byte	0
+ 1740 004c 00       		.byte	0
+ 1741 004d 08       		.uleb128 0x8
+ 1742 004e 2E       		.uleb128 0x2e
+ 1743 004f 00       		.byte	0
+ 1744 0050 3F       		.uleb128 0x3f
+ 1745 0051 19       		.uleb128 0x19
+ 1746 0052 03       		.uleb128 0x3
+ 1747 0053 0E       		.uleb128 0xe
+ 1748 0054 3A       		.uleb128 0x3a
+ 1749 0055 0B       		.uleb128 0xb
+ 1750 0056 3B       		.uleb128 0x3b
+ 1751 0057 0B       		.uleb128 0xb
+ 1752 0058 27       		.uleb128 0x27
+ 1753 0059 19       		.uleb128 0x19
+ 1754 005a 11       		.uleb128 0x11
+ 1755 005b 01       		.uleb128 0x1
+ 1756 005c 12       		.uleb128 0x12
+ 1757 005d 06       		.uleb128 0x6
+ 1758 005e 40       		.uleb128 0x40
+ 1759 005f 18       		.uleb128 0x18
+ 1760 0060 9742     		.uleb128 0x2117
+ 1761 0062 19       		.uleb128 0x19
+ 1762 0063 00       		.byte	0
+ 1763 0064 00       		.byte	0
+ 1764 0065 09       		.uleb128 0x9
+ 1765 0066 2E       		.uleb128 0x2e
+ 1766 0067 01       		.byte	0x1
+ 1767 0068 3F       		.uleb128 0x3f
+ 1768 0069 19       		.uleb128 0x19
+ 1769 006a 03       		.uleb128 0x3
+ 1770 006b 0E       		.uleb128 0xe
+ 1771 006c 3A       		.uleb128 0x3a
+ 1772 006d 0B       		.uleb128 0xb
+ 1773 006e 3B       		.uleb128 0x3b
+ 1774 006f 0B       		.uleb128 0xb
+ 1775 0070 27       		.uleb128 0x27
+ 1776 0071 19       		.uleb128 0x19
+ 1777 0072 11       		.uleb128 0x11
+ 1778 0073 01       		.uleb128 0x1
+ 1779 0074 12       		.uleb128 0x12
+ 1780 0075 06       		.uleb128 0x6
+ 1781 0076 40       		.uleb128 0x40
+ 1782 0077 18       		.uleb128 0x18
+ 1783 0078 9742     		.uleb128 0x2117
+ 1784 007a 19       		.uleb128 0x19
+ 1785 007b 01       		.uleb128 0x1
+ 1786 007c 13       		.uleb128 0x13
+ 1787 007d 00       		.byte	0
+ 1788 007e 00       		.byte	0
+ 1789 007f 0A       		.uleb128 0xa
+ 1790 0080 898201   		.uleb128 0x4109
+ 1791 0083 01       		.byte	0x1
+ARM GAS  C:\Users\addis\AppData\Local\Temp\cc7XYADp.s 			page 37
+
+
+ 1792 0084 11       		.uleb128 0x11
+ 1793 0085 01       		.uleb128 0x1
+ 1794 0086 31       		.uleb128 0x31
+ 1795 0087 13       		.uleb128 0x13
+ 1796 0088 01       		.uleb128 0x1
+ 1797 0089 13       		.uleb128 0x13
+ 1798 008a 00       		.byte	0
+ 1799 008b 00       		.byte	0
+ 1800 008c 0B       		.uleb128 0xb
+ 1801 008d 8A8201   		.uleb128 0x410a
+ 1802 0090 00       		.byte	0
+ 1803 0091 02       		.uleb128 0x2
+ 1804 0092 18       		.uleb128 0x18
+ 1805 0093 9142     		.uleb128 0x2111
+ 1806 0095 18       		.uleb128 0x18
+ 1807 0096 00       		.byte	0
+ 1808 0097 00       		.byte	0
+ 1809 0098 0C       		.uleb128 0xc
+ 1810 0099 898201   		.uleb128 0x4109
+ 1811 009c 00       		.byte	0
+ 1812 009d 11       		.uleb128 0x11
+ 1813 009e 01       		.uleb128 0x1
+ 1814 009f 31       		.uleb128 0x31
+ 1815 00a0 13       		.uleb128 0x13
+ 1816 00a1 00       		.byte	0
+ 1817 00a2 00       		.byte	0
+ 1818 00a3 0D       		.uleb128 0xd
+ 1819 00a4 2E       		.uleb128 0x2e
+ 1820 00a5 01       		.byte	0x1
+ 1821 00a6 3F       		.uleb128 0x3f
+ 1822 00a7 19       		.uleb128 0x19
+ 1823 00a8 03       		.uleb128 0x3
+ 1824 00a9 0E       		.uleb128 0xe
+ 1825 00aa 3A       		.uleb128 0x3a
+ 1826 00ab 0B       		.uleb128 0xb
+ 1827 00ac 3B       		.uleb128 0x3b
+ 1828 00ad 0B       		.uleb128 0xb
+ 1829 00ae 27       		.uleb128 0x27
+ 1830 00af 19       		.uleb128 0x19
+ 1831 00b0 49       		.uleb128 0x49
+ 1832 00b1 13       		.uleb128 0x13
+ 1833 00b2 11       		.uleb128 0x11
+ 1834 00b3 01       		.uleb128 0x1
+ 1835 00b4 12       		.uleb128 0x12
+ 1836 00b5 06       		.uleb128 0x6
+ 1837 00b6 40       		.uleb128 0x40
+ 1838 00b7 18       		.uleb128 0x18
+ 1839 00b8 9742     		.uleb128 0x2117
+ 1840 00ba 19       		.uleb128 0x19
+ 1841 00bb 01       		.uleb128 0x1
+ 1842 00bc 13       		.uleb128 0x13
+ 1843 00bd 00       		.byte	0
+ 1844 00be 00       		.byte	0
+ 1845 00bf 0E       		.uleb128 0xe
+ 1846 00c0 05       		.uleb128 0x5
+ 1847 00c1 00       		.byte	0
+ 1848 00c2 03       		.uleb128 0x3
+ARM GAS  C:\Users\addis\AppData\Local\Temp\cc7XYADp.s 			page 38
+
+
+ 1849 00c3 0E       		.uleb128 0xe
+ 1850 00c4 3A       		.uleb128 0x3a
+ 1851 00c5 0B       		.uleb128 0xb
+ 1852 00c6 3B       		.uleb128 0x3b
+ 1853 00c7 0B       		.uleb128 0xb
+ 1854 00c8 49       		.uleb128 0x49
+ 1855 00c9 13       		.uleb128 0x13
+ 1856 00ca 02       		.uleb128 0x2
+ 1857 00cb 17       		.uleb128 0x17
+ 1858 00cc 00       		.byte	0
+ 1859 00cd 00       		.byte	0
+ 1860 00ce 0F       		.uleb128 0xf
+ 1861 00cf 34       		.uleb128 0x34
+ 1862 00d0 00       		.byte	0
+ 1863 00d1 03       		.uleb128 0x3
+ 1864 00d2 0E       		.uleb128 0xe
+ 1865 00d3 3A       		.uleb128 0x3a
+ 1866 00d4 0B       		.uleb128 0xb
+ 1867 00d5 3B       		.uleb128 0x3b
+ 1868 00d6 0B       		.uleb128 0xb
+ 1869 00d7 49       		.uleb128 0x49
+ 1870 00d8 13       		.uleb128 0x13
+ 1871 00d9 02       		.uleb128 0x2
+ 1872 00da 17       		.uleb128 0x17
+ 1873 00db 00       		.byte	0
+ 1874 00dc 00       		.byte	0
+ 1875 00dd 10       		.uleb128 0x10
+ 1876 00de 34       		.uleb128 0x34
+ 1877 00df 00       		.byte	0
+ 1878 00e0 03       		.uleb128 0x3
+ 1879 00e1 0E       		.uleb128 0xe
+ 1880 00e2 3A       		.uleb128 0x3a
+ 1881 00e3 0B       		.uleb128 0xb
+ 1882 00e4 3B       		.uleb128 0x3b
+ 1883 00e5 0B       		.uleb128 0xb
+ 1884 00e6 49       		.uleb128 0x49
+ 1885 00e7 13       		.uleb128 0x13
+ 1886 00e8 3F       		.uleb128 0x3f
+ 1887 00e9 19       		.uleb128 0x19
+ 1888 00ea 02       		.uleb128 0x2
+ 1889 00eb 18       		.uleb128 0x18
+ 1890 00ec 00       		.byte	0
+ 1891 00ed 00       		.byte	0
+ 1892 00ee 11       		.uleb128 0x11
+ 1893 00ef 2E       		.uleb128 0x2e
+ 1894 00f0 01       		.byte	0x1
+ 1895 00f1 3F       		.uleb128 0x3f
+ 1896 00f2 19       		.uleb128 0x19
+ 1897 00f3 03       		.uleb128 0x3
+ 1898 00f4 0E       		.uleb128 0xe
+ 1899 00f5 3A       		.uleb128 0x3a
+ 1900 00f6 0B       		.uleb128 0xb
+ 1901 00f7 3B       		.uleb128 0x3b
+ 1902 00f8 0B       		.uleb128 0xb
+ 1903 00f9 27       		.uleb128 0x27
+ 1904 00fa 19       		.uleb128 0x19
+ 1905 00fb 3C       		.uleb128 0x3c
+ARM GAS  C:\Users\addis\AppData\Local\Temp\cc7XYADp.s 			page 39
+
+
+ 1906 00fc 19       		.uleb128 0x19
+ 1907 00fd 01       		.uleb128 0x1
+ 1908 00fe 13       		.uleb128 0x13
+ 1909 00ff 00       		.byte	0
+ 1910 0100 00       		.byte	0
+ 1911 0101 12       		.uleb128 0x12
+ 1912 0102 05       		.uleb128 0x5
+ 1913 0103 00       		.byte	0
+ 1914 0104 49       		.uleb128 0x49
+ 1915 0105 13       		.uleb128 0x13
+ 1916 0106 00       		.byte	0
+ 1917 0107 00       		.byte	0
+ 1918 0108 13       		.uleb128 0x13
+ 1919 0109 2E       		.uleb128 0x2e
+ 1920 010a 00       		.byte	0
+ 1921 010b 3F       		.uleb128 0x3f
+ 1922 010c 19       		.uleb128 0x19
+ 1923 010d 03       		.uleb128 0x3
+ 1924 010e 0E       		.uleb128 0xe
+ 1925 010f 3A       		.uleb128 0x3a
+ 1926 0110 0B       		.uleb128 0xb
+ 1927 0111 3B       		.uleb128 0x3b
+ 1928 0112 0B       		.uleb128 0xb
+ 1929 0113 27       		.uleb128 0x27
+ 1930 0114 19       		.uleb128 0x19
+ 1931 0115 3C       		.uleb128 0x3c
+ 1932 0116 19       		.uleb128 0x19
+ 1933 0117 00       		.byte	0
+ 1934 0118 00       		.byte	0
+ 1935 0119 14       		.uleb128 0x14
+ 1936 011a 2E       		.uleb128 0x2e
+ 1937 011b 00       		.byte	0
+ 1938 011c 3F       		.uleb128 0x3f
+ 1939 011d 19       		.uleb128 0x19
+ 1940 011e 03       		.uleb128 0x3
+ 1941 011f 0E       		.uleb128 0xe
+ 1942 0120 3A       		.uleb128 0x3a
+ 1943 0121 0B       		.uleb128 0xb
+ 1944 0122 3B       		.uleb128 0x3b
+ 1945 0123 0B       		.uleb128 0xb
+ 1946 0124 27       		.uleb128 0x27
+ 1947 0125 19       		.uleb128 0x19
+ 1948 0126 49       		.uleb128 0x49
+ 1949 0127 13       		.uleb128 0x13
+ 1950 0128 3C       		.uleb128 0x3c
+ 1951 0129 19       		.uleb128 0x19
+ 1952 012a 00       		.byte	0
+ 1953 012b 00       		.byte	0
+ 1954 012c 15       		.uleb128 0x15
+ 1955 012d 2E       		.uleb128 0x2e
+ 1956 012e 01       		.byte	0x1
+ 1957 012f 3F       		.uleb128 0x3f
+ 1958 0130 19       		.uleb128 0x19
+ 1959 0131 03       		.uleb128 0x3
+ 1960 0132 0E       		.uleb128 0xe
+ 1961 0133 3A       		.uleb128 0x3a
+ 1962 0134 0B       		.uleb128 0xb
+ARM GAS  C:\Users\addis\AppData\Local\Temp\cc7XYADp.s 			page 40
+
+
+ 1963 0135 3B       		.uleb128 0x3b
+ 1964 0136 0B       		.uleb128 0xb
+ 1965 0137 27       		.uleb128 0x27
+ 1966 0138 19       		.uleb128 0x19
+ 1967 0139 3C       		.uleb128 0x3c
+ 1968 013a 19       		.uleb128 0x19
+ 1969 013b 00       		.byte	0
+ 1970 013c 00       		.byte	0
+ 1971 013d 00       		.byte	0
+ 1972              		.section	.debug_loc,"",%progbits
+ 1973              	.Ldebug_loc0:
+ 1974              	.LLST0:
+ 1975 0000 00000000 		.4byte	.LVL14
+ 1976 0004 07000000 		.4byte	.LVL16-1
+ 1977 0008 0100     		.2byte	0x1
+ 1978 000a 50       		.byte	0x50
+ 1979 000b 07000000 		.4byte	.LVL16-1
+ 1980 000f B8010000 		.4byte	.LFE4
+ 1981 0013 0400     		.2byte	0x4
+ 1982 0015 F3       		.byte	0xf3
+ 1983 0016 01       		.uleb128 0x1
+ 1984 0017 50       		.byte	0x50
+ 1985 0018 9F       		.byte	0x9f
+ 1986 0019 00000000 		.4byte	0
+ 1987 001d 00000000 		.4byte	0
+ 1988              	.LLST1:
+ 1989 0021 04000000 		.4byte	.LVL15
+ 1990 0025 7E010000 		.4byte	.LVL65
+ 1991 0029 0200     		.2byte	0x2
+ 1992 002b 30       		.byte	0x30
+ 1993 002c 9F       		.byte	0x9f
+ 1994 002d 7E010000 		.4byte	.LVL65
+ 1995 0031 B4010000 		.4byte	.LVL74
+ 1996 0035 0100     		.2byte	0x1
+ 1997 0037 54       		.byte	0x54
+ 1998 0038 00000000 		.4byte	0
+ 1999 003c 00000000 		.4byte	0
+ 2000              	.LLST2:
+ 2001 0040 00000000 		.4byte	.LVL75
+ 2002 0044 04000000 		.4byte	.LVL76
+ 2003 0048 0100     		.2byte	0x1
+ 2004 004a 50       		.byte	0x50
+ 2005 004b 04000000 		.4byte	.LVL76
+ 2006 004f E4000000 		.4byte	.LFE5
+ 2007 0053 0400     		.2byte	0x4
+ 2008 0055 F3       		.byte	0xf3
+ 2009 0056 01       		.uleb128 0x1
+ 2010 0057 50       		.byte	0x50
+ 2011 0058 9F       		.byte	0x9f
+ 2012 0059 00000000 		.4byte	0
+ 2013 005d 00000000 		.4byte	0
+ 2014              	.LLST3:
+ 2015 0061 0A000000 		.4byte	.LVL77
+ 2016 0065 16000000 		.4byte	.LVL78
+ 2017 0069 0100     		.2byte	0x1
+ 2018 006b 50       		.byte	0x50
+ 2019 006c 00000000 		.4byte	0
+ARM GAS  C:\Users\addis\AppData\Local\Temp\cc7XYADp.s 			page 41
+
+
+ 2020 0070 00000000 		.4byte	0
+ 2021              	.LLST4:
+ 2022 0074 5A000000 		.4byte	.LVL113
+ 2023 0078 62000000 		.4byte	.LVL114
+ 2024 007c 0100     		.2byte	0x1
+ 2025 007e 54       		.byte	0x54
+ 2026 007f 70000000 		.4byte	.LVL116
+ 2027 0083 74000000 		.4byte	.LVL117
+ 2028 0087 0200     		.2byte	0x2
+ 2029 0089 33       		.byte	0x33
+ 2030 008a 9F       		.byte	0x9f
+ 2031 008b 7A000000 		.4byte	.LVL118
+ 2032 008f 7C000000 		.4byte	.LVL119
+ 2033 0093 0200     		.2byte	0x2
+ 2034 0095 32       		.byte	0x32
+ 2035 0096 9F       		.byte	0x9f
+ 2036 0097 7C000000 		.4byte	.LVL119
+ 2037 009b 9A000000 		.4byte	.LVL124
+ 2038 009f 0100     		.2byte	0x1
+ 2039 00a1 54       		.byte	0x54
+ 2040 00a2 00000000 		.4byte	0
+ 2041 00a6 00000000 		.4byte	0
+ 2042              		.section	.debug_aranges,"",%progbits
+ 2043 0000 54000000 		.4byte	0x54
+ 2044 0004 0200     		.2byte	0x2
+ 2045 0006 00000000 		.4byte	.Ldebug_info0
+ 2046 000a 04       		.byte	0x4
+ 2047 000b 00       		.byte	0
+ 2048 000c 0000     		.2byte	0
+ 2049 000e 0000     		.2byte	0
+ 2050 0010 00000000 		.4byte	.LFB0
+ 2051 0014 18000000 		.4byte	.LFE0-.LFB0
+ 2052 0018 00000000 		.4byte	.LFB1
+ 2053 001c 6C000000 		.4byte	.LFE1-.LFB1
+ 2054 0020 00000000 		.4byte	.LFB2
+ 2055 0024 18000000 		.4byte	.LFE2-.LFB2
+ 2056 0028 00000000 		.4byte	.LFB4
+ 2057 002c B8010000 		.4byte	.LFE4-.LFB4
+ 2058 0030 00000000 		.4byte	.LFB5
+ 2059 0034 E4000000 		.4byte	.LFE5-.LFB5
+ 2060 0038 00000000 		.4byte	.LFB3
+ 2061 003c A4000000 		.4byte	.LFE3-.LFB3
+ 2062 0040 00000000 		.4byte	.LFB6
+ 2063 0044 2A000000 		.4byte	.LFE6-.LFB6
+ 2064 0048 00000000 		.4byte	.LFB7
+ 2065 004c 2E000000 		.4byte	.LFE7-.LFB7
+ 2066 0050 00000000 		.4byte	0
+ 2067 0054 00000000 		.4byte	0
+ 2068              		.section	.debug_ranges,"",%progbits
+ 2069              	.Ldebug_ranges0:
+ 2070 0000 00000000 		.4byte	.LFB0
+ 2071 0004 18000000 		.4byte	.LFE0
+ 2072 0008 00000000 		.4byte	.LFB1
+ 2073 000c 6C000000 		.4byte	.LFE1
+ 2074 0010 00000000 		.4byte	.LFB2
+ 2075 0014 18000000 		.4byte	.LFE2
+ 2076 0018 00000000 		.4byte	.LFB4
+ARM GAS  C:\Users\addis\AppData\Local\Temp\cc7XYADp.s 			page 42
+
+
+ 2077 001c B8010000 		.4byte	.LFE4
+ 2078 0020 00000000 		.4byte	.LFB5
+ 2079 0024 E4000000 		.4byte	.LFE5
+ 2080 0028 00000000 		.4byte	.LFB3
+ 2081 002c A4000000 		.4byte	.LFE3
+ 2082 0030 00000000 		.4byte	.LFB6
+ 2083 0034 2A000000 		.4byte	.LFE6
+ 2084 0038 00000000 		.4byte	.LFB7
+ 2085 003c 2E000000 		.4byte	.LFE7
+ 2086 0040 00000000 		.4byte	0
+ 2087 0044 00000000 		.4byte	0
+ 2088              		.section	.debug_line,"",%progbits
+ 2089              	.Ldebug_line0:
+ 2090 0000 F3010000 		.section	.debug_str,"MS",%progbits,1
+ 2090      0200CD00 
+ 2090      00000201 
+ 2090      FB0E0D00 
+ 2090      01010101 
+ 2091              	.LASF45:
+ 2092 0000 433A5C55 		.ascii	"C:\\Users\\addis\\Documents\\PSoC Creator\\Workspac"
+ 2092      73657273 
+ 2092      5C616464 
+ 2092      69735C44 
+ 2092      6F63756D 
+ 2093 002e 6530325C 		.ascii	"e02\\PS2Keyboard.cydsn\000"
+ 2093      5053324B 
+ 2093      6579626F 
+ 2093      6172642E 
+ 2093      63796473 
+ 2094              	.LASF38:
+ 2095 0044 5053325F 		.ascii	"PS2_Timer_WritePeriod\000"
+ 2095      54696D65 
+ 2095      725F5772 
+ 2095      69746550 
+ 2095      6572696F 
+ 2096              	.LASF37:
+ 2097 005a 5053325F 		.ascii	"PS2_Timer_WriteCounter\000"
+ 2097      54696D65 
+ 2097      725F5772 
+ 2097      69746543 
+ 2097      6F756E74 
+ 2098              	.LASF24:
+ 2099 0071 74785374 		.ascii	"txStatus\000"
+ 2099      61747573 
+ 2099      00
+ 2100              	.LASF3:
+ 2101 007a 73686F72 		.ascii	"short unsigned int\000"
+ 2101      7420756E 
+ 2101      7369676E 
+ 2101      65642069 
+ 2101      6E7400
+ 2102              	.LASF44:
+ 2103 008d 2E5C4765 		.ascii	".\\Generated_Source\\PSoC5\\PS2_ps2.c\000"
+ 2103      6E657261 
+ 2103      7465645F 
+ 2103      536F7572 
+ 2103      63655C50 
+ARM GAS  C:\Users\addis\AppData\Local\Temp\cc7XYADp.s 			page 43
+
+
+ 2104              	.LASF28:
+ 2105 00b0 5053325F 		.ascii	"PS2_timer_reps\000"
+ 2105      74696D65 
+ 2105      725F7265 
+ 2105      707300
+ 2106              	.LASF23:
+ 2107 00bf 73746174 		.ascii	"status\000"
+ 2107      757300
+ 2108              	.LASF19:
+ 2109 00c6 5053325F 		.ascii	"PS2_Start\000"
+ 2109      53746172 
+ 2109      7400
+ 2110              	.LASF12:
+ 2111 00d0 666C6F61 		.ascii	"float\000"
+ 2111      7400
+ 2112              	.LASF22:
+ 2113 00d6 64617461 		.ascii	"data\000"
+ 2113      00
+ 2114              	.LASF30:
+ 2115 00db 5053325F 		.ascii	"PS2_deviceDetectFail\000"
+ 2115      64657669 
+ 2115      63654465 
+ 2115      74656374 
+ 2115      4661696C 
+ 2116              	.LASF1:
+ 2117 00f0 756E7369 		.ascii	"unsigned char\000"
+ 2117      676E6564 
+ 2117      20636861 
+ 2117      7200
+ 2118              	.LASF15:
+ 2119 00fe 72656738 		.ascii	"reg8\000"
+ 2119      00
+ 2120              	.LASF34:
+ 2121 0103 5053325F 		.ascii	"PS2_controlReg_Write\000"
+ 2121      636F6E74 
+ 2121      726F6C52 
+ 2121      65675F57 
+ 2121      72697465 
+ 2122              	.LASF36:
+ 2123 0118 5053325F 		.ascii	"PS2_stateReg_Read\000"
+ 2123      73746174 
+ 2123      65526567 
+ 2123      5F526561 
+ 2123      6400
+ 2124              	.LASF9:
+ 2125 012a 75696E74 		.ascii	"uint8\000"
+ 2125      3800
+ 2126              	.LASF46:
+ 2127 0130 5053325F 		.ascii	"PS2_TIMER\000"
+ 2127      54494D45 
+ 2127      5200
+ 2128              	.LASF13:
+ 2129 013a 646F7562 		.ascii	"double\000"
+ 2129      6C6500
+ 2130              	.LASF33:
+ 2131 0141 5053325F 		.ascii	"PS2_Timer_ISR_StartEx\000"
+ 2131      54696D65 
+ARM GAS  C:\Users\addis\AppData\Local\Temp\cc7XYADp.s 			page 44
+
+
+ 2131      725F4953 
+ 2131      525F5374 
+ 2131      61727445 
+ 2132              	.LASF25:
+ 2133 0157 5053325F 		.ascii	"PS2_DetectDevice\000"
+ 2133      44657465 
+ 2133      63744465 
+ 2133      76696365 
+ 2133      00
+ 2134              	.LASF31:
+ 2135 0168 5053325F 		.ascii	"PS2_Timer_Start\000"
+ 2135      54696D65 
+ 2135      725F5374 
+ 2135      61727400 
+ 2136              	.LASF10:
+ 2137 0178 75696E74 		.ascii	"uint16\000"
+ 2137      313600
+ 2138              	.LASF21:
+ 2139 017f 5053325F 		.ascii	"PS2_SendCommand\000"
+ 2139      53656E64 
+ 2139      436F6D6D 
+ 2139      616E6400 
+ 2140              	.LASF11:
+ 2141 018f 75696E74 		.ascii	"uint32\000"
+ 2141      333200
+ 2142              	.LASF43:
+ 2143 0196 474E5520 		.ascii	"GNU C 4.9.3 20150303 (release) [ARM/embedded-4_9-br"
+ 2143      4320342E 
+ 2143      392E3320 
+ 2143      32303135 
+ 2143      30333033 
+ 2144 01c9 616E6368 		.ascii	"anch revision 221220] -mcpu=cortex-m3 -mthumb -g -O"
+ 2144      20726576 
+ 2144      6973696F 
+ 2144      6E203232 
+ 2144      31323230 
+ 2145 01fc 67202D66 		.ascii	"g -ffunction-sections -ffat-lto-objects\000"
+ 2145      66756E63 
+ 2145      74696F6E 
+ 2145      2D736563 
+ 2145      74696F6E 
+ 2146              	.LASF5:
+ 2147 0224 6C6F6E67 		.ascii	"long unsigned int\000"
+ 2147      20756E73 
+ 2147      69676E65 
+ 2147      6420696E 
+ 2147      7400
+ 2148              	.LASF8:
+ 2149 0236 756E7369 		.ascii	"unsigned int\000"
+ 2149      676E6564 
+ 2149      20696E74 
+ 2149      00
+ 2150              	.LASF7:
+ 2151 0243 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 2151      206C6F6E 
+ 2151      6720756E 
+ 2151      7369676E 
+ARM GAS  C:\Users\addis\AppData\Local\Temp\cc7XYADp.s 			page 45
+
+
+ 2151      65642069 
+ 2152              	.LASF35:
+ 2153 025a 5053325F 		.ascii	"PS2_controlReg_Read\000"
+ 2153      636F6E74 
+ 2153      726F6C52 
+ 2153      65675F52 
+ 2153      65616400 
+ 2154              	.LASF16:
+ 2155 026e 63796973 		.ascii	"cyisraddress\000"
+ 2155      72616464 
+ 2155      72657373 
+ 2155      00
+ 2156              	.LASF27:
+ 2157 027b 5053325F 		.ascii	"PS2_cReadByte\000"
+ 2157      63526561 
+ 2157      64427974 
+ 2157      6500
+ 2158              	.LASF17:
+ 2159 0289 73697A65 		.ascii	"sizetype\000"
+ 2159      74797065 
+ 2159      00
+ 2160              	.LASF18:
+ 2161 0292 5053325F 		.ascii	"PS2_Init\000"
+ 2161      496E6974 
+ 2161      00
+ 2162              	.LASF20:
+ 2163 029b 5053325F 		.ascii	"PS2_WriteByte\000"
+ 2163      57726974 
+ 2163      65427974 
+ 2163      6500
+ 2164              	.LASF6:
+ 2165 02a9 6C6F6E67 		.ascii	"long long int\000"
+ 2165      206C6F6E 
+ 2165      6720696E 
+ 2165      7400
+ 2166              	.LASF29:
+ 2167 02b7 5053325F 		.ascii	"PS2_initVar\000"
+ 2167      696E6974 
+ 2167      56617200 
+ 2168              	.LASF42:
+ 2169 02c3 5053325F 		.ascii	"PS2_dataOut_Read\000"
+ 2169      64617461 
+ 2169      4F75745F 
+ 2169      52656164 
+ 2169      00
+ 2170              	.LASF26:
+ 2171 02d4 5053325F 		.ascii	"PS2_ReadByte\000"
+ 2171      52656164 
+ 2171      42797465 
+ 2171      00
+ 2172              	.LASF32:
+ 2173 02e1 5053325F 		.ascii	"PS2_Timer_Stop\000"
+ 2173      54696D65 
+ 2173      725F5374 
+ 2173      6F7000
+ 2174              	.LASF2:
+ 2175 02f0 73686F72 		.ascii	"short int\000"
+ARM GAS  C:\Users\addis\AppData\Local\Temp\cc7XYADp.s 			page 46
+
+
+ 2175      7420696E 
+ 2175      7400
+ 2176              	.LASF4:
+ 2177 02fa 6C6F6E67 		.ascii	"long int\000"
+ 2177      20696E74 
+ 2177      00
+ 2178              	.LASF14:
+ 2179 0303 63686172 		.ascii	"char\000"
+ 2179      00
+ 2180              	.LASF41:
+ 2181 0308 5053325F 		.ascii	"PS2_statusReg_Read\000"
+ 2181      73746174 
+ 2181      75735265 
+ 2181      675F5265 
+ 2181      616400
+ 2182              	.LASF0:
+ 2183 031b 7369676E 		.ascii	"signed char\000"
+ 2183      65642063 
+ 2183      68617200 
+ 2184              	.LASF39:
+ 2185 0327 5053325F 		.ascii	"PS2_Timer_Enable\000"
+ 2185      54696D65 
+ 2185      725F456E 
+ 2185      61626C65 
+ 2185      00
+ 2186              	.LASF40:
+ 2187 0338 5053325F 		.ascii	"PS2_dataIn_Write\000"
+ 2187      64617461 
+ 2187      496E5F57 
+ 2187      72697465 
+ 2187      00
+ 2188              	.LASF47:
+ 2189 0349 43794465 		.ascii	"CyDelay\000"
+ 2189      6C617900 
+ 2190              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 4.9.3 20150303 (release) [ARM/embedded-4_9-br

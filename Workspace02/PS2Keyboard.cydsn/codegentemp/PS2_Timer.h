@@ -37,14 +37,14 @@ extern uint8 PS2_Timer_initVar;
 **************************************/
 
 #define PS2_Timer_Resolution                 8u
-#define PS2_Timer_UsingFixedFunction         1u
+#define PS2_Timer_UsingFixedFunction         0u
 #define PS2_Timer_UsingHWCaptureCounter      0u
 #define PS2_Timer_SoftwareCaptureMode        0u
 #define PS2_Timer_SoftwareTriggerMode        0u
 #define PS2_Timer_UsingHWEnable              0u
 #define PS2_Timer_EnableTriggerMode          0u
 #define PS2_Timer_InterruptOnCaptureCount    0u
-#define PS2_Timer_RunModeUsed                1u
+#define PS2_Timer_RunModeUsed                0u
 #define PS2_Timer_ControlRegRemoved          0u
 
 #if defined(PS2_Timer_TimerUDB_sCTRLReg_SyncCtl_ctrlreg__CONTROL_REG)
@@ -168,7 +168,7 @@ void PS2_Timer_Wakeup(void)        ;
 *    Initialial Parameter Constants
 ***************************************/
 
-#define PS2_Timer_INIT_PERIOD             255u
+#define PS2_Timer_INIT_PERIOD             199u
 #define PS2_Timer_INIT_CAPTURE_MODE       ((uint8)((uint8)0u << PS2_Timer_CTRL_CAP_MODE_SHIFT))
 #define PS2_Timer_INIT_TRIGGER_MODE       ((uint8)((uint8)0u << PS2_Timer_CTRL_TRIG_MODE_SHIFT))
 #if (PS2_Timer_UsingFixedFunction)
