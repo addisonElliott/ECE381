@@ -1,0 +1,1311 @@
+Archive member included because of file (symbol)
+
+.\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(cyfitter_cfg.o)
+                              .\CortexM3\ARM_GCC_493\Debug\Cm3Start.o (cyfitter_cfg)
+.\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS.o)
+                              .\CortexM3\ARM_GCC_493\Debug\main.o (USBFS_Start)
+.\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_drv.o)
+                              .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS.o) (USBFS_lastPacketSize)
+.\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_episr.o)
+                              .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS.o) (USBFS_EP_1_ISR)
+.\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_hid.o)
+                              .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS.o) (USBFS_hidProtocol)
+.\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_pm.o)
+                              .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS.o) (USBFS_DP_ISR)
+.\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_std.o)
+                              .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_pm.o) (USBFS_ConfigReg)
+.\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_vnd.o)
+                              .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_drv.o) (USBFS_HandleVendorRqst)
+.\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_Dp.o)
+                              .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_pm.o) (USBFS_Dp_ClearInterrupt)
+.\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(CyBootAsmGnu.o)
+                              .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(cyfitter_cfg.o) (CyDelayCycles)
+.\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(CyLib.o)
+                              .\CortexM3\ARM_GCC_493\Debug\Cm3Start.o (CyHalt)
+.\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(cyPm.o)
+                              .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(CyLib.o) (CyPmReadStatus)
+.\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_cls.o)
+                              .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_drv.o) (USBFS_DispatchClassRqst)
+.\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_descr.o)
+                              .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_std.o) (USBFS_TABLE)
+.\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(CyFlash.o)
+                              .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(cyPm.o) (CyFlash_SetWaitCycles)
+.\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(CySpc.o)
+                              .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(CyFlash.o) (CySpcStart)
+c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-errno.o)
+                              .\CortexM3\ARM_GCC_493\Debug\Cm3Start.o (__errno)
+c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-exit.o)
+                              c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m/crt0.o (exit)
+c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-impure.o)
+                              c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-exit.o) (_global_impure_ptr)
+c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-init.o)
+                              c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m/crt0.o (__libc_init_array)
+c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-memcpy.o)
+                              .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(cyfitter_cfg.o) (memcpy)
+c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-memset.o)
+                              c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m/crt0.o (memset)
+
+Allocating common symbols
+Common symbol       size              file
+
+USBFS_deviceAddress
+                    0x1               .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_drv.o)
+USBFS_ep0Mode       0x1               .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_drv.o)
+USBFS_interfaceSetting
+                    0x1               .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_drv.o)
+USBFS_DEVICE0_CONFIGURATION0_INTERFACE0_ALTERNATE0_HID_IN_RPT_SCB
+                    0x4               .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_descr.o)
+USBFS_hidIdleRate   0x1               .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_hid.o)
+USBFS_currentTD     0xc               .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_drv.o)
+USBFS_device        0x1               .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_drv.o)
+USBFS_interfaceNumber
+                    0x1               .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_drv.o)
+USBFS_ep0Toggle     0x1               .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_drv.o)
+USBFS_deviceStatus  0x1               .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_drv.o)
+USBFS_DEVICE0_CONFIGURATION0_INTERFACE0_ALTERNATE0_HID_FEATURE_BUF
+                    0x2               .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_descr.o)
+USBFS_DEVICE0_CONFIGURATION0_INTERFACE0_ALTERNATE0_HID_IN_BUF
+                    0x9               .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_descr.o)
+USBFS_configurationChanged
+                    0x1               .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_drv.o)
+USBFS_configuration
+                    0x1               .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_drv.o)
+USBFS_transferState
+                    0x1               .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_drv.o)
+USBFS_interfaceStatus
+                    0x1               .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_drv.o)
+USBFS_interfaceClass
+                    0x4               .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_drv.o)
+USBFS_EP            0x6c              .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_drv.o)
+USBFS_hidIdleTimer  0x1               .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_hid.o)
+USBFS_lastPacketSize
+                    0x1               .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_drv.o)
+USBFS_hidProtocol   0x1               .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_hid.o)
+USBFS_DEVICE0_CONFIGURATION0_INTERFACE0_ALTERNATE0_HID_FEATURE_RPT_SCB
+                    0x4               .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_descr.o)
+dieTemperature      0x2               .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(CyFlash.o)
+USBFS_ep0Count      0x1               .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_drv.o)
+USBFS_interfaceSettingLast
+                    0x1               .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_drv.o)
+USBFS_transferByteCount
+                    0x2               .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_drv.o)
+
+Discarded input sections
+
+ .text          0x00000000        0x0 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/armv7-m/crti.o
+ .data          0x00000000        0x0 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/armv7-m/crti.o
+ .bss           0x00000000        0x0 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/armv7-m/crti.o
+ .data          0x00000000        0x4 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/armv7-m/crtbegin.o
+ .text          0x00000000       0x74 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m/crt0.o
+ .data          0x00000000        0x0 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m/crt0.o
+ .bss           0x00000000        0x0 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m/crt0.o
+ .ARM.extab     0x00000000        0x0 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m/crt0.o
+ .ARM.exidx     0x00000000        0x8 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m/crt0.o
+ .text          0x00000000        0x0 .\CortexM3\ARM_GCC_493\Debug\main.o
+ .bss           0x00000000        0x0 .\CortexM3\ARM_GCC_493\Debug\main.o
+ .text          0x00000000        0x0 .\CortexM3\ARM_GCC_493\Debug\cymetadata.o
+ .data          0x00000000        0x0 .\CortexM3\ARM_GCC_493\Debug\cymetadata.o
+ .bss           0x00000000        0x0 .\CortexM3\ARM_GCC_493\Debug\cymetadata.o
+ .text          0x00000000        0x0 .\CortexM3\ARM_GCC_493\Debug\Cm3Start.o
+ .data          0x00000000        0x4 .\CortexM3\ARM_GCC_493\Debug\Cm3Start.o
+ .bss           0x00000000        0x0 .\CortexM3\ARM_GCC_493\Debug\Cm3Start.o
+ .text._exit    0x00000000        0xc .\CortexM3\ARM_GCC_493\Debug\Cm3Start.o
+ .text._sbrk    0x00000000       0x30 .\CortexM3\ARM_GCC_493\Debug\Cm3Start.o
+ .text          0x00000000        0x0 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(cyfitter_cfg.o)
+ .data          0x00000000        0x0 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(cyfitter_cfg.o)
+ .bss           0x00000000        0x0 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(cyfitter_cfg.o)
+ .text.SetAnalogRoutingPumps
+                0x00000000       0x10 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(cyfitter_cfg.o)
+ .text          0x00000000        0x0 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS.o)
+ .data          0x00000000        0x0 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS.o)
+ .text.USBFS_Stop
+                0x00000000       0x84 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS.o)
+ .text.USBFS_CheckActivity
+                0x00000000       0x20 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS.o)
+ .text.USBFS_IsConfigurationChanged
+                0x00000000       0x20 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS.o)
+ .text.USBFS_GetInterfaceSetting
+                0x00000000        0xc .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS.o)
+ .text.USBFS_GetEPState
+                0x00000000       0x14 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS.o)
+ .text.USBFS_GetEPCount
+                0x00000000       0x28 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS.o)
+ .text.USBFS_EnableOutEP
+                0x00000000       0x2c .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS.o)
+ .text.USBFS_ReadOutEP
+                0x00000000       0x50 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS.o)
+ .text.USBFS_DisableOutEP
+                0x00000000       0x18 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS.o)
+ .text.USBFS_Force
+                0x00000000        0xc .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS.o)
+ .text.USBFS_SetPowerStatus
+                0x00000000       0x20 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS.o)
+ .text.USBFS_RWUEnabled
+                0x00000000       0x18 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS.o)
+ .text.USBFS_GetDeviceAddress
+                0x00000000       0x10 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS.o)
+ .text.USBFS_EnableSofInt
+                0x00000000        0x4 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS.o)
+ .text.USBFS_DisableSofInt
+                0x00000000        0x4 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS.o)
+ .text          0x00000000        0x0 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_drv.o)
+ .data          0x00000000        0x0 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_drv.o)
+ .bss           0x00000000        0x0 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_drv.o)
+ .text          0x00000000        0x0 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_episr.o)
+ .data          0x00000000        0x0 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_episr.o)
+ .bss           0x00000000        0x0 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_episr.o)
+ .text          0x00000000        0x0 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_hid.o)
+ .data          0x00000000        0x0 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_hid.o)
+ .bss           0x00000000        0x0 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_hid.o)
+ .text.USBFS_UpdateHIDTimer
+                0x00000000       0x3c .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_hid.o)
+ .text.USBFS_GetProtocol
+                0x00000000        0xc .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_hid.o)
+ .text          0x00000000        0x0 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_pm.o)
+ .data          0x00000000        0x0 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_pm.o)
+ .bss           0x00000000        0x4 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_pm.o)
+ .text.USBFS_SaveConfig
+                0x00000000        0x4 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_pm.o)
+ .text.USBFS_RestoreConfig
+                0x00000000       0x1c .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_pm.o)
+ .text.USBFS_Suspend
+                0x00000000       0xc8 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_pm.o)
+ .text.USBFS_Resume
+                0x00000000       0xbc .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_pm.o)
+ .text          0x00000000        0x0 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_std.o)
+ .data          0x00000000        0x0 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_std.o)
+ .text.USBFS_EpStateInit
+                0x00000000       0x40 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_std.o)
+ .text.USBFS_TerminateEP
+                0x00000000       0x4c .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_std.o)
+ .text          0x00000000        0x0 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_vnd.o)
+ .data          0x00000000        0x0 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_vnd.o)
+ .bss           0x00000000        0x0 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_vnd.o)
+ .text          0x00000000        0x0 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_Dp.o)
+ .data          0x00000000        0x0 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_Dp.o)
+ .bss           0x00000000        0x0 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_Dp.o)
+ .text.USBFS_Dp_Write
+                0x00000000       0x18 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_Dp.o)
+ .text.USBFS_Dp_SetDriveMode
+                0x00000000       0x18 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_Dp.o)
+ .text.USBFS_Dp_Read
+                0x00000000       0x10 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_Dp.o)
+ .text.USBFS_Dp_ReadDataReg
+                0x00000000       0x10 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_Dp.o)
+ .text.USBFS_Dp_SetInterruptMode
+                0x00000000       0x14 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_Dp.o)
+ .data          0x00000000        0x0 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(CyBootAsmGnu.o)
+ .bss           0x00000000        0x0 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(CyBootAsmGnu.o)
+ .text          0x00000000        0x0 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(CyLib.o)
+ .bss           0x00000000       0x1c .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(CyLib.o)
+ .text.CyUSB_PowerOnCheck
+                0x00000000       0x48 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(CyLib.o)
+ .text.CyBusClk_Internal_SetDivider
+                0x00000000       0x48 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(CyLib.o)
+ .text.CyPLL_OUT_Stop
+                0x00000000       0x10 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(CyLib.o)
+ .text.CyIMO_Stop
+                0x00000000       0x1c .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(CyLib.o)
+ .text.CyIMO_EnableDoubler
+                0x00000000       0x10 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(CyLib.o)
+ .text.CyIMO_DisableDoubler
+                0x00000000       0x10 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(CyLib.o)
+ .text.CyMasterClk_SetSource
+                0x00000000       0x18 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(CyLib.o)
+ .text.CyMasterClk_SetDivider
+                0x00000000        0xc .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(CyLib.o)
+ .text.CyBusClk_SetDivider
+                0x00000000       0x70 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(CyLib.o)
+ .text.CyUsbClk_SetSource
+                0x00000000       0x18 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(CyLib.o)
+ .text.CyILO_Start1K
+                0x00000000       0x10 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(CyLib.o)
+ .text.CyILO_Stop1K
+                0x00000000       0x10 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(CyLib.o)
+ .text.CyILO_Start100K
+                0x00000000       0x10 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(CyLib.o)
+ .text.CyILO_Stop100K
+                0x00000000       0x10 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(CyLib.o)
+ .text.CyPLL_OUT_Start
+                0x00000000       0x78 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(CyLib.o)
+ .text.CyIMO_Start
+                0x00000000       0x60 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(CyLib.o)
+ .text.CyILO_Enable33K
+                0x00000000       0x10 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(CyLib.o)
+ .text.CyILO_Disable33K
+                0x00000000       0x10 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(CyLib.o)
+ .text.CyILO_SetSource
+                0x00000000       0x18 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(CyLib.o)
+ .text.CyILO_SetPowerMode
+                0x00000000       0x24 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(CyLib.o)
+ .text.CyXTAL_32KHZ_Stop
+                0x00000000       0x30 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(CyLib.o)
+ .text.CyXTAL_32KHZ_ReadStatus
+                0x00000000       0x10 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(CyLib.o)
+ .text.CyXTAL_Start
+                0x00000000       0xac .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(CyLib.o)
+ .text.CyXTAL_Stop
+                0x00000000       0x10 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(CyLib.o)
+ .text.CyXTAL_EnableErrStatus
+                0x00000000       0x10 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(CyLib.o)
+ .text.CyXTAL_DisableErrStatus
+                0x00000000       0x10 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(CyLib.o)
+ .text.CyXTAL_ReadStatus
+                0x00000000       0x18 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(CyLib.o)
+ .text.CyXTAL_EnableFaultRecovery
+                0x00000000       0x10 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(CyLib.o)
+ .text.CyXTAL_DisableFaultRecovery
+                0x00000000       0x10 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(CyLib.o)
+ .text.CyXTAL_SetStartup
+                0x00000000       0x18 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(CyLib.o)
+ .text.CyXTAL_SetFbVoltage
+                0x00000000       0x18 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(CyLib.o)
+ .text.CyXTAL_SetWdVoltage
+                0x00000000       0x18 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(CyLib.o)
+ .text.CyPLL_OUT_SetPQ
+                0x00000000       0x60 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(CyLib.o)
+ .text.CyPLL_OUT_SetSource
+                0x00000000       0x34 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(CyLib.o)
+ .text.CyIMO_SetTrimValue
+                0x00000000       0xcc .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(CyLib.o)
+ .text.CyIMO_SetFreq
+                0x00000000       0xf4 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(CyLib.o)
+ .text.CyIMO_SetSource
+                0x00000000       0x58 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(CyLib.o)
+ .text.CySoftwareReset
+                0x00000000       0x10 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(CyLib.o)
+ .text.CyXTAL_32KHZ_SetPowerMode
+                0x00000000       0x84 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(CyLib.o)
+ .text.CyXTAL_32KHZ_Start
+                0x00000000       0x70 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(CyLib.o)
+ .text.CyDelayFreq
+                0x00000000       0x4c .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(CyLib.o)
+ .text.CyWdtStart
+                0x00000000       0x40 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(CyLib.o)
+ .text.CyWdtClear
+                0x00000000        0xc .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(CyLib.o)
+ .text.CyVdStickyStatus
+                0x00000000       0x2c .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(CyLib.o)
+ .text.CyVdLvDigitEnable
+                0x00000000       0x84 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(CyLib.o)
+ .text.CyVdLvAnalogEnable
+                0x00000000       0x80 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(CyLib.o)
+ .text.CyVdLvDigitDisable
+                0x00000000       0x30 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(CyLib.o)
+ .text.CyVdLvAnalogDisable
+                0x00000000       0x28 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(CyLib.o)
+ .text.CyVdHvAnalogEnable
+                0x00000000       0x54 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(CyLib.o)
+ .text.CyVdHvAnalogDisable
+                0x00000000       0x20 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(CyLib.o)
+ .text.CyVdRealTimeStatus
+                0x00000000       0x1c .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(CyLib.o)
+ .text.CyDisableInts
+                0x00000000       0x1c .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(CyLib.o)
+ .text.CyEnableInts
+                0x00000000       0x18 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(CyLib.o)
+ .text.CyFlushCache
+                0x00000000       0x44 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(CyLib.o)
+ .text.CyIntSetSysVector
+                0x00000000       0x28 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(CyLib.o)
+ .text.CyIntGetSysVector
+                0x00000000       0x20 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(CyLib.o)
+ .text.CyIntGetVector
+                0x00000000       0x24 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(CyLib.o)
+ .text.CyIntGetPriority
+                0x00000000       0x20 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(CyLib.o)
+ .text.CyIntGetState
+                0x00000000       0x24 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(CyLib.o)
+ .text.CySysTickStop
+                0x00000000       0x10 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(CyLib.o)
+ .text.CySysTickEnableInterrupt
+                0x00000000       0x10 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(CyLib.o)
+ .text.CySysTickEnable
+                0x00000000       0x18 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(CyLib.o)
+ .text.CySysTickDisableInterrupt
+                0x00000000       0x10 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(CyLib.o)
+ .text.CySysTickSetReload
+                0x00000000       0x10 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(CyLib.o)
+ .text.CySysTickGetReload
+                0x00000000       0x10 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(CyLib.o)
+ .text.CySysTickGetValue
+                0x00000000       0x10 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(CyLib.o)
+ .text.CySysTickSetClockSource
+                0x00000000       0x20 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(CyLib.o)
+ .text.CySysTickGetCountFlag
+                0x00000000       0x10 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(CyLib.o)
+ .text.CySysTickServiceCallbacks
+                0x00000000       0x28 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(CyLib.o)
+ .text.CySysTickClear
+                0x00000000        0xc .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(CyLib.o)
+ .text.CySysTickInit
+                0x00000000       0x58 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(CyLib.o)
+ .text.CySysTickStart
+                0x00000000       0x1c .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(CyLib.o)
+ .text.CySysTickSetCallback
+                0x00000000       0x10 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(CyLib.o)
+ .text.CySysTickGetCallback
+                0x00000000       0x10 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(CyLib.o)
+ .text.CyGetUniqueId
+                0x00000000       0x70 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(CyLib.o)
+ .text          0x00000000        0x0 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(cyPm.o)
+ .data          0x00000000        0x0 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(cyPm.o)
+ .bss           0x00000000       0x44 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(cyPm.o)
+ .text.CyPmHibSlpSaveSet
+                0x00000000      0x1dc .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(cyPm.o)
+ .text.CyPmHibSlpRestore
+                0x00000000       0xd4 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(cyPm.o)
+ .text.CyPmHviLviSaveDisable
+                0x00000000       0xa0 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(cyPm.o)
+ .text.CyPmHibSaveSet
+                0x00000000       0x8c .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(cyPm.o)
+ .text.CyPmHviLviRestore
+                0x00000000       0x48 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(cyPm.o)
+ .text.CyPmHibRestore
+                0x00000000       0x58 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(cyPm.o)
+ .text.CyPmSaveClocks
+                0x00000000      0x218 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(cyPm.o)
+ .text.CyPmRestoreClocks
+                0x00000000      0x24c .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(cyPm.o)
+ .text.CyPmAltAct
+                0x00000000       0x6c .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(cyPm.o)
+ .text.CyPmSleep
+                0x00000000       0xf4 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(cyPm.o)
+ .text.CyPmHibernateEx
+                0x00000000       0xf4 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(cyPm.o)
+ .text.CyPmHibernate
+                0x00000000        0xc .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(cyPm.o)
+ .text.CyPmReadStatus
+                0x00000000       0x30 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(cyPm.o)
+ .text.CyPmCtwSetInterval
+                0x00000000       0x5c .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(cyPm.o)
+ .text.CyPmOppsSet
+                0x00000000       0x2c .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(cyPm.o)
+ .text.CyPmFtwSetInterval
+                0x00000000       0x5c .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(cyPm.o)
+ .rodata        0x00000000       0x10 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(cyPm.o)
+ .text          0x00000000        0x0 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_cls.o)
+ .data          0x00000000        0x0 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_cls.o)
+ .bss           0x00000000        0x0 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_cls.o)
+ .text          0x00000000        0x0 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_descr.o)
+ .data          0x00000000        0x0 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_descr.o)
+ .bss           0x00000000        0x0 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_descr.o)
+ .text          0x00000000        0x0 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(CyFlash.o)
+ .data          0x00000000        0x0 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(CyFlash.o)
+ .bss           0x00000000        0x4 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(CyFlash.o)
+ .text.CyFlashGetSpcAlgorithm
+                0x00000000       0x4c .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(CyFlash.o)
+ .text.CySetTempInt
+                0x00000000       0x60 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(CyFlash.o)
+ .text.CyFlash_Start
+                0x00000000       0x54 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(CyFlash.o)
+ .text.CyFlash_Stop
+                0x00000000       0x24 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(CyFlash.o)
+ .text.CySetTemp
+                0x00000000       0x14 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(CyFlash.o)
+ .text.CySetFlashEEBuffer
+                0x00000000       0x28 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(CyFlash.o)
+ .text.CyWriteRowFull
+                0x00000000       0xf8 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(CyFlash.o)
+ .text.CyWriteRowData
+                0x00000000       0x14 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(CyFlash.o)
+ .text.CyFlash_SetWaitCycles
+                0x00000000       0x7c .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(CyFlash.o)
+ .text.CyEEPROM_Start
+                0x00000000       0x54 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(CyFlash.o)
+ .text.CyEEPROM_Stop
+                0x00000000       0x24 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(CyFlash.o)
+ .text.CyEEPROM_ReadReserve
+                0x00000000       0x1c .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(CyFlash.o)
+ .text.CyEEPROM_ReadRelease
+                0x00000000       0x10 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(CyFlash.o)
+ COMMON         0x00000000        0x2 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(CyFlash.o)
+ .text          0x00000000        0x0 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(CySpc.o)
+ .data          0x00000000        0x0 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(CySpc.o)
+ .bss           0x00000000        0x8 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(CySpc.o)
+ .text.CySpcStart
+                0x00000000       0x24 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(CySpc.o)
+ .text.CySpcStop
+                0x00000000       0x24 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(CySpc.o)
+ .text.CySpcReadData
+                0x00000000       0x34 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(CySpc.o)
+ .text.CySpcLoadMultiByte
+                0x00000000       0x78 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(CySpc.o)
+ .text.CySpcLoadRow
+                0x00000000       0x54 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(CySpc.o)
+ .text.CySpcLoadRowFull
+                0x00000000       0x80 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(CySpc.o)
+ .text.CySpcWriteRow
+                0x00000000       0x4c .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(CySpc.o)
+ .text.CySpcEraseSector
+                0x00000000       0x3c .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(CySpc.o)
+ .text.CySpcGetTemp
+                0x00000000       0x3c .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(CySpc.o)
+ .text.CySpcLock
+                0x00000000       0x4c .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(CySpc.o)
+ .text.CySpcUnlock
+                0x00000000       0x38 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(CySpc.o)
+ .text.CySpcGetAlgorithm
+                0x00000000       0x28 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(CySpc.o)
+ .text          0x00000000        0x0 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-errno.o)
+ .data          0x00000000        0x0 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-errno.o)
+ .bss           0x00000000        0x0 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-errno.o)
+ .text.__errno  0x00000000        0xc c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-errno.o)
+ .text          0x00000000        0x0 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-exit.o)
+ .data          0x00000000        0x0 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-exit.o)
+ .bss           0x00000000        0x0 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-exit.o)
+ .text.exit     0x00000000       0x28 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-exit.o)
+ .text          0x00000000        0x0 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-impure.o)
+ .data          0x00000000        0x0 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-impure.o)
+ .bss           0x00000000        0x0 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-impure.o)
+ .data.impure_data
+                0x00000000       0x60 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-impure.o)
+ .data._impure_ptr
+                0x00000000        0x4 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-impure.o)
+ .rodata.str1.1
+                0x00000000        0x2 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-impure.o)
+ .rodata._global_impure_ptr
+                0x00000000        0x4 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-impure.o)
+ .text          0x00000000        0x0 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-init.o)
+ .data          0x00000000        0x0 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-init.o)
+ .bss           0x00000000        0x0 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-init.o)
+ .text          0x00000000        0x0 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-memcpy.o)
+ .data          0x00000000        0x0 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-memcpy.o)
+ .bss           0x00000000        0x0 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-memcpy.o)
+ .text          0x00000000        0x0 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-memset.o)
+ .data          0x00000000        0x0 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-memset.o)
+ .bss           0x00000000        0x0 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-memset.o)
+ .text          0x00000000        0x0 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/armv7-m/crtend.o
+ .data          0x00000000        0x0 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/armv7-m/crtend.o
+ .bss           0x00000000        0x0 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/armv7-m/crtend.o
+ .text          0x00000000        0x0 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/armv7-m/crtn.o
+ .data          0x00000000        0x0 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/armv7-m/crtn.o
+ .bss           0x00000000        0x0 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/armv7-m/crtn.o
+
+Memory Configuration
+
+Name             Origin             Length             Attributes
+rom              0x00000000         0x00040000         xr
+ram              0x1fff8000         0x00010000         xrw
+*default*        0x00000000         0xffffffff
+
+Linker script and memory map
+
+LOAD c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/armv7-m/crti.o
+LOAD c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/armv7-m/crtbegin.o
+LOAD c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m/crt0.o
+START GROUP
+LOAD .\CortexM3\ARM_GCC_493\Debug\main.o
+LOAD .\CortexM3\ARM_GCC_493\Debug\cymetadata.o
+LOAD .\CortexM3\ARM_GCC_493\Debug\Cm3Start.o
+LOAD .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a
+LOAD C:\Program Files (x86)\Cypress\PSoC Creator\3.3\PSoC Creator\psoc\content\cycomponentlibrary\CyComponentLibrary.cylib\CortexM3\ARM_GCC_493\Debug\CyComponentLibrary.a
+END GROUP
+START GROUP
+LOAD c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/armv7-m\libgcc.a
+LOAD c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a
+LOAD c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m\libc_nano.a
+END GROUP
+START GROUP
+LOAD c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/armv7-m\libgcc.a
+LOAD c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m\libc_nano.a
+END GROUP
+LOAD c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/armv7-m/crtend.o
+LOAD c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/armv7-m/crtn.o
+START GROUP
+LOAD c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/armv7-m\libgcc.a
+LOAD c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m\libc.a
+LOAD c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m\libnosys.a
+END GROUP
+                0x00000000                CY_APPL_ORIGIN = 0x0
+                0x00000100                CY_FLASH_ROW_SIZE = 0x100
+                0x00000020                CY_ECC_ROW_SIZE = 0x20
+                0x00000000                CY_EE_IN_BTLDR = 0x0
+                0x00000000                CY_APPL_LOADABLE = 0x0
+                0x00000800                CY_EE_SIZE = 0x800
+                0x00000001                CY_APPL_NUM = 0x1
+                0x00000001                CY_APPL_MAX = 0x1
+                0x00000040                CY_METADATA_SIZE = 0x40
+                0x00000000                CY_APPL_LOADABLE = 0x0
+                0x00000000                CY_CHECKSUM_EXCLUDE_SIZE = ALIGN (0x0, CY_FLASH_ROW_SIZE)
+                0x1fff8208                PROVIDE (__cy_heap_start, _end)
+                0x00000001                PROVIDE (__cy_region_num, ((__cy_regions_end - __cy_regions) / 0x10))
+                0x20008000                PROVIDE (__cy_stack, (ORIGIN (ram) + 0x10000))
+                0x20007800                PROVIDE (__cy_heap_end, (__cy_stack - 0x800))
+
+.cybootloader   0x00000000        0x0
+ *(.cybootloader)
+                0x00000000                appl1_start = CY_APPL_ORIGIN?CY_APPL_ORIGIN:ALIGN (CY_FLASH_ROW_SIZE)
+                0x0001ff00                appl2_start = (appl1_start + ALIGN ((((0x40000 - appl1_start) - (0x2 * CY_FLASH_ROW_SIZE)) / 0x2), CY_FLASH_ROW_SIZE))
+                0x00000000                appl_start = (CY_APPL_NUM == 0x1)?appl1_start:appl2_start
+                0x00000000                ecc_offset = ((appl_start / CY_FLASH_ROW_SIZE) * CY_ECC_ROW_SIZE)
+                0x00000000                ee_offset = (CY_APPL_LOADABLE && ! (CY_EE_IN_BTLDR))?((CY_EE_SIZE / CY_APPL_MAX) * (CY_APPL_NUM - 0x1)):0x0
+                0x00000800                ee_size = (CY_APPL_LOADABLE && ! (CY_EE_IN_BTLDR))?(CY_EE_SIZE / CY_APPL_MAX):CY_EE_SIZE
+                0x00000000                PROVIDE (CY_ECC_OFFSET, ecc_offset)
+
+.text           0x00000000     0x179e
+ CREATE_OBJECT_SYMBOLS
+                0x00000000                PROVIDE (__cy_interrupt_vector, RomVectors)
+ *(.romvectors)
+ .romvectors    0x00000000       0x10 .\CortexM3\ARM_GCC_493\Debug\Cm3Start.o
+                0x00000000                RomVectors
+                0x00000001                ASSERT ((. != __cy_interrupt_vector), No interrupt vector)
+                0x00000001                ASSERT (CY_APPL_ORIGIN?(SIZEOF (.cybootloader) <= CY_APPL_ORIGIN):0x1, Wrong image location)
+                0x00000010                PROVIDE (__cy_reset, Reset)
+ *(.text.Reset)
+ .text.Reset    0x00000010       0x18 .\CortexM3\ARM_GCC_493\Debug\Cm3Start.o
+                0x00000010                Reset
+                0x00000001                ASSERT ((. != __cy_reset), No reset code)
+ *(.dma_init)
+                0x00000001                ASSERT ((((appl_start + .) <= 0x10000) || 0x1), DMA Init must be within the first 64k of flash)
+ *(.text .text.* .gnu.linkonce.t.*)
+ .text          0x00000028       0x5c c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/armv7-m/crtbegin.o
+ .text.main     0x00000084       0x38 .\CortexM3\ARM_GCC_493\Debug\main.o
+                0x00000084                main
+ .text.IntDefaultHandler
+                0x000000bc        0x4 .\CortexM3\ARM_GCC_493\Debug\Cm3Start.o
+                0x000000bc                IntDefaultHandler
+ .text.Start_c  0x000000c0       0x4c .\CortexM3\ARM_GCC_493\Debug\Cm3Start.o
+                0x000000c0                Start_c
+ .text.initialize_psoc
+                0x0000010c       0x74 .\CortexM3\ARM_GCC_493\Debug\Cm3Start.o
+                0x0000010c                initialize_psoc
+ .text.CyClockStartupError
+                0x00000180        0x4 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(cyfitter_cfg.o)
+ .text.cfg_write_bytes32
+                0x00000184       0x34 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(cyfitter_cfg.o)
+ .text.AnalogSetDefault
+                0x000001b8       0x28 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(cyfitter_cfg.o)
+ .text.CYMEMZERO
+                0x000001e0        0xc .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(cyfitter_cfg.o)
+ .text.ClockSetup
+                0x000001ec       0xa0 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(cyfitter_cfg.o)
+ .text.CYCONFIGCPY
+                0x0000028c        0x8 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(cyfitter_cfg.o)
+ .text.cyfitter_cfg
+                0x00000294       0xc0 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(cyfitter_cfg.o)
+                0x00000294                cyfitter_cfg
+ .text.USBFS_Init
+                0x00000354      0x104 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS.o)
+                0x00000354                USBFS_Init
+ .text.USBFS_InitComponent
+                0x00000458       0xc0 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS.o)
+                0x00000458                USBFS_InitComponent
+ .text.USBFS_Start
+                0x00000518       0x24 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS.o)
+                0x00000518                USBFS_Start
+ .text.USBFS_ReInitComponent
+                0x0000053c       0x64 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS.o)
+                0x0000053c                USBFS_ReInitComponent
+ .text.USBFS_GetConfiguration
+                0x000005a0        0xc .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS.o)
+                0x000005a0                USBFS_GetConfiguration
+ .text.USBFS_LoadInEP
+                0x000005ac       0x94 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS.o)
+                0x000005ac                USBFS_LoadInEP
+ .text.USBFS_GetEPAckState
+                0x00000640       0x20 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS.o)
+                0x00000640                USBFS_GetEPAckState
+ .text.USBFS_LoadEP0
+                0x00000660       0x94 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_drv.o)
+                0x00000660                USBFS_LoadEP0
+ .text.USBFS_InitZeroLengthControlTransfer
+                0x000006f4       0x34 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_drv.o)
+                0x000006f4                USBFS_InitZeroLengthControlTransfer
+ .text.USBFS_ControlReadDataStage
+                0x00000728        0x8 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_drv.o)
+                0x00000728                USBFS_ControlReadDataStage
+ .text.USBFS_ControlWriteDataStage
+                0x00000730       0x80 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_drv.o)
+                0x00000730                USBFS_ControlWriteDataStage
+ .text.USBFS_InitNoDataControlTransfer
+                0x000007b0       0x2c .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_drv.o)
+                0x000007b0                USBFS_InitNoDataControlTransfer
+ .text.USBFS_UpdateStatusBlock
+                0x000007dc       0x24 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_drv.o)
+                0x000007dc                USBFS_UpdateStatusBlock
+ .text.USBFS_HandleSetup
+                0x00000800       0x5c .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_drv.o)
+                0x00000800                USBFS_HandleSetup
+ .text.USBFS_ControlReadStatusStage
+                0x0000085c       0x34 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_drv.o)
+                0x0000085c                USBFS_ControlReadStatusStage
+ .text.USBFS_HandleOUT
+                0x00000890       0x38 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_drv.o)
+                0x00000890                USBFS_HandleOUT
+ .text.USBFS_ControlWriteStatusStage
+                0x000008c8       0x20 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_drv.o)
+                0x000008c8                USBFS_ControlWriteStatusStage
+ .text.USBFS_NoDataControlStatusStage
+                0x000008e8       0x40 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_drv.o)
+                0x000008e8                USBFS_NoDataControlStatusStage
+ .text.USBFS_HandleIN
+                0x00000928       0x2c .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_drv.o)
+                0x00000928                USBFS_HandleIN
+ .text.USBFS_EP_0_ISR
+                0x00000954       0xb8 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_drv.o)
+                0x00000954                USBFS_EP_0_ISR
+ .text.USBFS_InitializeStatusBlock
+                0x00000a0c       0x24 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_drv.o)
+                0x00000a0c                USBFS_InitializeStatusBlock
+ .text.USBFS_InitControlRead
+                0x00000a30       0x50 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_drv.o)
+                0x00000a30                USBFS_InitControlRead
+ .text.USBFS_InitControlWrite
+                0x00000a80       0x48 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_drv.o)
+                0x00000a80                USBFS_InitControlWrite
+ .text.USBFS_EP_1_ISR
+                0x00000ac8       0x38 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_episr.o)
+                0x00000ac8                USBFS_EP_1_ISR
+ .text.USBFS_BUS_RESET_ISR
+                0x00000b00        0x8 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_episr.o)
+                0x00000b00                USBFS_BUS_RESET_ISR
+ .text.USBFS_FindHidClassDecriptor
+                0x00000b08       0x40 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_hid.o)
+                0x00000b08                USBFS_FindHidClassDecriptor
+ .text.USBFS_FindReportDescriptor
+                0x00000b48       0x48 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_hid.o)
+                0x00000b48                USBFS_FindReportDescriptor
+ .text.USBFS_FindReport
+                0x00000b90       0x7c .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_hid.o)
+                0x00000b90                USBFS_FindReport
+ .text.USBFS_DispatchHIDClassRqst
+                0x00000c0c      0x180 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_hid.o)
+                0x00000c0c                USBFS_DispatchHIDClassRqst
+ .text.USBFS_DP_ISR
+                0x00000d8c        0x8 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_pm.o)
+                0x00000d8c                USBFS_DP_ISR
+ .text.USBFS_ConfigReg
+                0x00000d94       0xa4 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_std.o)
+                0x00000d94                USBFS_ConfigReg
+ .text.USBFS_GetConfigTablePtr
+                0x00000e38       0x28 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_std.o)
+                0x00000e38                USBFS_GetConfigTablePtr
+ .text.USBFS_ConfigAltChanged
+                0x00000e60      0x11c .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_std.o)
+                0x00000e60                USBFS_ConfigAltChanged
+ .text.USBFS_GetDeviceTablePtr
+                0x00000f7c       0x18 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_std.o)
+                0x00000f7c                USBFS_GetDeviceTablePtr
+ .text.USBFS_GetInterfaceClassTablePtr
+                0x00000f94       0x24 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_std.o)
+                0x00000f94                USBFS_GetInterfaceClassTablePtr
+ .text.USBFS_Config
+                0x00000fb8      0x1b8 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_std.o)
+                0x00000fb8                USBFS_Config
+ .text.USBFS_SetEndpointHalt
+                0x00001170       0x64 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_std.o)
+                0x00001170                USBFS_SetEndpointHalt
+ .text.USBFS_ClearEndpointHalt
+                0x000011d4       0xa8 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_std.o)
+                0x000011d4                USBFS_ClearEndpointHalt
+ .text.USBFS_ValidateAlternateSetting
+                0x0000127c       0x4c .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_std.o)
+                0x0000127c                USBFS_ValidateAlternateSetting
+ .text.USBFS_HandleStandardRqst
+                0x000012c8      0x324 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_std.o)
+                0x000012c8                USBFS_HandleStandardRqst
+ .text.USBFS_HandleVendorRqst
+                0x000015ec       0x18 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_vnd.o)
+                0x000015ec                USBFS_HandleVendorRqst
+ .text.USBFS_Dp_ClearInterrupt
+                0x00001604       0x10 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_Dp.o)
+                0x00001604                USBFS_Dp_ClearInterrupt
+ *fill*         0x00001614        0x4 
+ .text          0x00001618       0x20 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(CyBootAsmGnu.o)
+                0x00001618                CyDelayCycles
+                0x00001628                CyEnterCriticalSection
+                0x00001630                CyExitCriticalSection
+ .text.CyHalt   0x00001638        0x4 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(CyLib.o)
+                0x00001638                CyHalt
+ .text.CyDelay  0x0000163c       0x2c .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(CyLib.o)
+                0x0000163c                CyDelay
+ .text.CyDelayUs
+                0x00001668       0x14 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(CyLib.o)
+                0x00001668                CyDelayUs
+ .text.CyIntSetVector
+                0x0000167c       0x28 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(CyLib.o)
+                0x0000167c                CyIntSetVector
+ .text.CyIntSetPriority
+                0x000016a4       0x30 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(CyLib.o)
+                0x000016a4                CyIntSetPriority
+ .text.USBFS_DispatchClassRqst
+                0x000016d4       0x58 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_cls.o)
+                0x000016d4                USBFS_DispatchClassRqst
+ .text.__libc_init_array
+                0x0000172c       0x4c c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-init.o)
+                0x0000172c                __libc_init_array
+ .text.memcpy   0x00001778       0x16 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-memcpy.o)
+                0x00001778                memcpy
+ .text.memset   0x0000178e       0x10 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-memset.o)
+                0x0000178e                memset
+ *(.plt)
+ *(.gnu.warning)
+ *(.glue_7t)
+ .glue_7t       0x00000000        0x0 linker stubs
+ *(.glue_7)
+ .glue_7        0x00000000        0x0 linker stubs
+ *(.vfp11_veneer)
+ .vfp11_veneer  0x00000000        0x0 linker stubs
+ *(.bootloader)
+ *(.ARM.extab* .gnu.linkonce.armextab.*)
+ *(.gcc_except_table)
+
+.v4_bx          0x000017a0        0x0
+ .v4_bx         0x00000000        0x0 linker stubs
+
+.iplt           0x000017a0        0x0
+ .iplt          0x00000000        0x0 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/armv7-m/crtbegin.o
+
+.eh_frame_hdr
+ *(.eh_frame_hdr)
+
+.eh_frame       0x000017a0        0x4
+ *(.eh_frame)
+ .eh_frame      0x000017a0        0x0 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/armv7-m/crtbegin.o
+ .eh_frame      0x000017a0        0x4 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/armv7-m/crtend.o
+                0x000017a4                PROVIDE (__exidx_start, .)
+
+.ARM.exidx
+ *(.ARM.exidx* .gnu.linkonce.armexidx.*)
+                0x000017a4                __exidx_end = .
+
+.rodata         0x000017a4      0x22c
+ *(.rodata .rodata.* .gnu.linkonce.r.*)
+ .rodata        0x000017a4       0x2c .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(cyfitter_cfg.o)
+ .rodata        0x000017d0      0x1cc .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_descr.o)
+                0x000017d0                USBFS_TABLE
+                0x000017d8                USBFS_DEVICE0_TABLE
+                0x000017f0                USBFS_DEVICE0_CONFIGURATION0_TABLE
+                0x00001810                USBFS_DEVICE0_CONFIGURATION0_INTERFACE_CLASS
+                0x00001814                USBFS_DEVICE0_CONFIGURATION0_EP_SETTINGS_TABLE
+                0x0000181c                USBFS_DEVICE0_CONFIGURATION0_INTERFACE0_TABLE
+                0x00001824                USBFS_DEVICE0_CONFIGURATION0_INTERFACE0_ALTERNATE0_HID_TABLE
+                0x0000184c                USBFS_DEVICE0_CONFIGURATION0_INTERFACE0_ALTERNATE0_HID_FEATURE_RPT_TABLE
+                0x00001858                USBFS_DEVICE0_CONFIGURATION0_INTERFACE0_ALTERNATE0_HID_IN_RPT_TABLE
+                0x00001864                USBFS_HIDREPORT_DESCRIPTOR1
+                0x000018a8                USBFS_STRING_DESCRIPTORS
+                0x00001964                USBFS_DEVICE0_CONFIGURATION0_DESCR
+                0x00001988                USBFS_DEVICE0_DESCR
+                0x0000199c                . = ALIGN (0x4)
+ *(.init)
+ .init          0x0000199c        0x4 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/armv7-m/crti.o
+                0x0000199c                _init
+ .init          0x000019a0        0x8 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/armv7-m/crtn.o
+                0x000019a8                . = ALIGN (0x4)
+                0x000019a8                __preinit_array_start = .
+ *(.preinit_array)
+                0x000019a8                __preinit_array_end = .
+                0x000019a8                . = ALIGN (0x4)
+                0x000019a8                __init_array_start = .
+ *(SORT(.init_array.*))
+ *(.init_array)
+ .init_array    0x000019a8        0x4 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/armv7-m/crtbegin.o
+ .init_array    0x000019ac        0x4 .\CortexM3\ARM_GCC_493\Debug\Cm3Start.o
+                0x000019b0                __init_array_end = .
+                0x000019b0                . = ALIGN (0x4)
+ *(.fini)
+ .fini          0x000019b0        0x4 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/armv7-m/crti.o
+                0x000019b0                _fini
+ .fini          0x000019b4        0x8 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/armv7-m/crtn.o
+                0x000019bc                . = ALIGN (0x4)
+                0x000019bc                __fini_array_start = .
+ *(.fini_array)
+ .fini_array    0x000019bc        0x4 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/armv7-m/crtbegin.o
+ *(SORT(.fini_array.*))
+                0x000019c0                __fini_array_end = .
+                0x000019c0                . = ALIGN (0x4)
+ *crtbegin.o(.ctors)
+ *(EXCLUDE_FILE(*crtend.o) .ctors)
+ *(SORT(.ctors.*))
+ *crtend.o(.ctors)
+                0x000019c0                . = ALIGN (0x4)
+ *crtbegin.o(.dtors)
+ *(EXCLUDE_FILE(*crtend.o) .dtors)
+ *(SORT(.dtors.*))
+ *crtend.o(.dtors)
+                0x000019c0                . = ALIGN (0x4)
+                0x000019c0                __cy_regions = .
+                0x000019c0        0x4 LONG 0x19d0 __cy_region_init_ram
+                0x000019c4        0x4 LONG 0x1fff8108 __cy_region_start_data
+                0x000019c8        0x4 LONG 0x20 __cy_region_init_size_ram
+                0x000019cc        0x4 LONG 0xe0 __cy_region_zero_size_ram
+                0x000019d0                __cy_regions_end = .
+                0x000019d0                . = ALIGN (0x8)
+                0x000019d0                _etext = .
+
+.cy_checksum_exclude
+                0x000019d0        0x0
+ *(.cy_checksum_exclude)
+
+.ramvectors     0x1fff8000      0x100
+                0x1fff8000                __cy_region_start_ram = .
+ *(.ramvectors)
+ .ramvectors    0x1fff8000      0x100 .\CortexM3\ARM_GCC_493\Debug\Cm3Start.o
+                0x1fff8000                CyRamVectors
+
+.noinit         0x1fff8100        0x5
+ *(.noinit)
+ .noinit        0x1fff8100        0x4 .\CortexM3\ARM_GCC_493\Debug\Cm3Start.o
+ .noinit        0x1fff8104        0x1 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(CyLib.o)
+                0x1fff8104                CyResetStatus
+
+.data           0x1fff8108       0x20 load address 0x000019d0
+                0x1fff8108                __cy_region_start_data = .
+ *(.jcr)
+ .jcr           0x1fff8108        0x0 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/armv7-m/crtbegin.o
+ .jcr           0x1fff8108        0x4 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/armv7-m/crtend.o
+ *(.got.plt)
+ *(.got)
+ *(.shdata)
+ *(.data .data.* .gnu.linkonce.d.*)
+ .data          0x1fff810c        0x8 .\CortexM3\ARM_GCC_493\Debug\main.o
+                0x1fff810c                keyboardPacket
+ .data          0x1fff8114       0x10 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(CyLib.o)
+                0x1fff8114                cydelay_32k_ms
+                0x1fff8118                cydelay_freq_khz
+                0x1fff811c                cydelay_freq_mhz
+                0x1fff8120                cydelay_freq_hz
+                0x1fff8128                . = ALIGN (0x8)
+ *fill*         0x1fff8124        0x4 
+ *(.ram)
+                0x1fff8128                _edata = .
+
+.igot.plt       0x1fff8128        0x0 load address 0x000019f0
+ .igot.plt      0x00000000        0x0 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/armv7-m/crtbegin.o
+
+.bss            0x1fff8128       0xe0 load address 0x000019f0
+                0x1fff8128                PROVIDE (__bss_start__, .)
+ *(.shbss)
+ *(.bss .bss.* .gnu.linkonce.b.*)
+ .bss           0x1fff8128       0x1c c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/armv7-m/crtbegin.o
+ .bss           0x1fff8144        0x1 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS.o)
+                0x1fff8144                USBFS_initVar
+ *fill*         0x1fff8145        0x3 
+ .bss           0x1fff8148        0x4 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_std.o)
+ *(COMMON)
+ COMMON         0x1fff814c       0x98 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_drv.o)
+                0x1fff814c                USBFS_deviceAddress
+                0x1fff814d                USBFS_ep0Mode
+                0x1fff8150                USBFS_interfaceSetting
+                0x1fff8154                USBFS_currentTD
+                0x1fff8160                USBFS_device
+                0x1fff8161                USBFS_interfaceNumber
+                0x1fff8162                USBFS_ep0Toggle
+                0x1fff8163                USBFS_deviceStatus
+                0x1fff8164                USBFS_configurationChanged
+                0x1fff8165                USBFS_configuration
+                0x1fff8166                USBFS_transferState
+                0x1fff8168                USBFS_interfaceStatus
+                0x1fff816c                USBFS_interfaceClass
+                0x1fff8170                USBFS_EP
+                0x1fff81dc                USBFS_lastPacketSize
+                0x1fff81dd                USBFS_ep0Count
+                0x1fff81e0                USBFS_interfaceSettingLast
+                0x1fff81e2                USBFS_transferByteCount
+ COMMON         0x1fff81e4        0x9 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_hid.o)
+                0x1fff81e4                USBFS_hidIdleRate
+                0x1fff81e8                USBFS_hidIdleTimer
+                0x1fff81ec                USBFS_hidProtocol
+ *fill*         0x1fff81ed        0x3 
+ COMMON         0x1fff81f0       0x18 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_descr.o)
+                0x1fff81f0                USBFS_DEVICE0_CONFIGURATION0_INTERFACE0_ALTERNATE0_HID_IN_RPT_SCB
+                0x1fff81f4                USBFS_DEVICE0_CONFIGURATION0_INTERFACE0_ALTERNATE0_HID_FEATURE_BUF
+                0x1fff81f8                USBFS_DEVICE0_CONFIGURATION0_INTERFACE0_ALTERNATE0_HID_IN_BUF
+                0x1fff8204                USBFS_DEVICE0_CONFIGURATION0_INTERFACE0_ALTERNATE0_HID_FEATURE_RPT_SCB
+                0x1fff8208                . = ALIGN (0x8)
+ *(.ram.b)
+                0x1fff8208                _end = .
+                0x1fff8208                __end = .
+                0x1fff8208                PROVIDE (end, .)
+                0x1fff8208                PROVIDE (__bss_end__, .)
+                0x000019d0                __cy_region_init_ram = LOADADDR (.data)
+                0x00000020                __cy_region_init_size_ram = (_edata - ADDR (.data))
+                0x000000e0                __cy_region_zero_size_ram = (_end - _edata)
+
+.heap           0x1fff8208       0x80 load address 0x000019f0
+                0x1fff8208                . = _end
+                0x1fff8288                . = (. + 0x80)
+ *fill*         0x1fff8208       0x80 
+                0x1fff8288                __cy_heap_limit = .
+
+.stack          0x20007800      0x800
+                0x20007800                __cy_stack_limit = .
+                0x20008000                . = (. + 0x800)
+ *fill*         0x20007800      0x800 
+                0x00000001                ASSERT ((__cy_stack_limit >= __cy_heap_limit), region RAM overflowed with stack)
+                0x00000000                cy_checksum_exclude_size = (CY_APPL_LOADABLE == 0x1)?SIZEOF (.cy_checksum_exclude):0x0
+                0x00000001                ASSERT ((cy_checksum_exclude_size <= CY_CHECKSUM_EXCLUDE_SIZE), CY_BOOT: Section .cy_checksum_exclude size exceedes specified limit.)
+
+.cyloadermeta
+ *(.cyloadermeta)
+
+.cyloadablemeta
+ *(.cyloadablemeta)
+
+.cyconfigecc    0x80000000       0x5c
+ *(.cyconfigecc)
+ .cyconfigecc   0x80000000       0x5c .\CortexM3\ARM_GCC_493\Debug\cymetadata.o
+                0x80000000                cy_meta_configecc
+
+.cycustnvl      0x90000000        0x4
+ *(.cycustnvl)
+ .cycustnvl     0x90000000        0x4 .\CortexM3\ARM_GCC_493\Debug\cymetadata.o
+                0x90000000                cy_meta_custnvl
+
+.cywolatch      0x90100000        0x4
+ *(.cywolatch)
+ .cywolatch     0x90100000        0x4 .\CortexM3\ARM_GCC_493\Debug\cymetadata.o
+                0x90100000                cy_meta_wonvl
+
+.cyeeprom       0x90200000        0x0
+ *(.cyeeprom)
+                0x00000001                ASSERT ((. <= ((0x90200000 + ee_offset) + ee_size)), .cyeeprom data will not fit in EEPROM)
+
+.cyflashprotect
+                0x90400000      0x100
+ *(.cyflashprotect)
+ .cyflashprotect
+                0x90400000      0x100 .\CortexM3\ARM_GCC_493\Debug\cymetadata.o
+                0x90400000                cy_meta_flashprotect
+
+.cymeta         0x90500000        0xc
+ *(.cymeta)
+ .cymeta        0x90500000        0xc .\CortexM3\ARM_GCC_493\Debug\cymetadata.o
+                0x90500000                cy_metadata
+
+.rel.dyn        0x000019f0        0x0 load address 0x9050000c
+ .rel.iplt      0x00000000        0x0 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/armv7-m/crtbegin.o
+
+.stab
+ *(.stab)
+
+.stabstr
+ *(.stabstr)
+
+.debug
+ *(.debug)
+
+.line
+ *(.line)
+
+.debug_srcinfo
+ *(.debug_srcinfo)
+
+.debug_sfnames
+ *(.debug_sfnames)
+
+.debug_aranges  0x00000000      0x848
+ *(.debug_aranges)
+ .debug_aranges
+                0x00000000       0x20 .\CortexM3\ARM_GCC_493\Debug\main.o
+ .debug_aranges
+                0x00000020       0x18 .\CortexM3\ARM_GCC_493\Debug\cymetadata.o
+ .debug_aranges
+                0x00000038       0x48 .\CortexM3\ARM_GCC_493\Debug\Cm3Start.o
+ .debug_aranges
+                0x00000080       0x58 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(cyfitter_cfg.o)
+ .debug_aranges
+                0x000000d8       0xc8 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS.o)
+ .debug_aranges
+                0x000001a0       0x98 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_drv.o)
+ .debug_aranges
+                0x00000238       0x28 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_episr.o)
+ .debug_aranges
+                0x00000260       0x48 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_hid.o)
+ .debug_aranges
+                0x000002a8       0x40 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_pm.o)
+ .debug_aranges
+                0x000002e8       0x78 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_std.o)
+ .debug_aranges
+                0x00000360       0x20 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_vnd.o)
+ .debug_aranges
+                0x00000380       0x48 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_Dp.o)
+ .debug_aranges
+                0x000003c8       0x20 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(CyBootAsmGnu.o)
+ .debug_aranges
+                0x000003e8      0x298 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(CyLib.o)
+ .debug_aranges
+                0x00000680       0x98 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(cyPm.o)
+ .debug_aranges
+                0x00000718       0x20 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_cls.o)
+ .debug_aranges
+                0x00000738       0x18 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_descr.o)
+ .debug_aranges
+                0x00000750       0x80 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(CyFlash.o)
+ .debug_aranges
+                0x000007d0       0x78 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(CySpc.o)
+
+.debug_pubnames
+ *(.debug_pubnames)
+
+.debug_info     0x00000000     0x5f5f
+ *(.debug_info .gnu.linkonce.wi.*)
+ .debug_info    0x00000000      0x1e1 .\CortexM3\ARM_GCC_493\Debug\main.o
+ .debug_info    0x000001e1      0x13a .\CortexM3\ARM_GCC_493\Debug\cymetadata.o
+ .debug_info    0x0000031b      0x3a5 .\CortexM3\ARM_GCC_493\Debug\Cm3Start.o
+ .debug_info    0x000006c0      0x487 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(cyfitter_cfg.o)
+ .debug_info    0x00000b47      0x95d .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS.o)
+ .debug_info    0x000014a4      0x649 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_drv.o)
+ .debug_info    0x00001aed      0x210 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_episr.o)
+ .debug_info    0x00001cfd      0x43e .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_hid.o)
+ .debug_info    0x0000213b      0x2ef .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_pm.o)
+ .debug_info    0x0000242a      0x9e1 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_std.o)
+ .debug_info    0x00002e0b       0xe6 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_vnd.o)
+ .debug_info    0x00002ef1      0x174 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_Dp.o)
+ .debug_info    0x00003065       0x94 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(CyBootAsmGnu.o)
+ .debug_info    0x000030f9     0x1371 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(CyLib.o)
+ .debug_info    0x0000446a      0xa58 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(cyPm.o)
+ .debug_info    0x00004ec2      0x1d2 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_cls.o)
+ .debug_info    0x00005094      0x3d1 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_descr.o)
+ .debug_info    0x00005465      0x60a .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(CyFlash.o)
+ .debug_info    0x00005a6f      0x4f0 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(CySpc.o)
+
+.debug_abbrev   0x00000000     0x19fe
+ *(.debug_abbrev)
+ .debug_abbrev  0x00000000      0x12b .\CortexM3\ARM_GCC_493\Debug\main.o
+ .debug_abbrev  0x0000012b       0x5d .\CortexM3\ARM_GCC_493\Debug\cymetadata.o
+ .debug_abbrev  0x00000188      0x20f .\CortexM3\ARM_GCC_493\Debug\Cm3Start.o
+ .debug_abbrev  0x00000397      0x1dc .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(cyfitter_cfg.o)
+ .debug_abbrev  0x00000573      0x25e .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS.o)
+ .debug_abbrev  0x000007d1      0x18b .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_drv.o)
+ .debug_abbrev  0x0000095c      0x103 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_episr.o)
+ .debug_abbrev  0x00000a5f      0x18b .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_hid.o)
+ .debug_abbrev  0x00000bea      0x146 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_pm.o)
+ .debug_abbrev  0x00000d30      0x1dc .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_std.o)
+ .debug_abbrev  0x00000f0c       0x9b .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_vnd.o)
+ .debug_abbrev  0x00000fa7       0x90 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_Dp.o)
+ .debug_abbrev  0x00001037       0x14 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(CyBootAsmGnu.o)
+ .debug_abbrev  0x0000104b      0x296 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(CyLib.o)
+ .debug_abbrev  0x000012e1      0x1ed .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(cyPm.o)
+ .debug_abbrev  0x000014ce       0xe3 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_cls.o)
+ .debug_abbrev  0x000015b1       0xbb .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_descr.o)
+ .debug_abbrev  0x0000166c      0x1d1 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(CyFlash.o)
+ .debug_abbrev  0x0000183d      0x1c1 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(CySpc.o)
+
+.debug_line     0x00000000     0x235c
+ *(.debug_line)
+ .debug_line    0x00000000      0x187 .\CortexM3\ARM_GCC_493\Debug\main.o
+ .debug_line    0x00000187       0x53 .\CortexM3\ARM_GCC_493\Debug\cymetadata.o
+ .debug_line    0x000001da      0x249 .\CortexM3\ARM_GCC_493\Debug\Cm3Start.o
+ .debug_line    0x00000423      0x1d8 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(cyfitter_cfg.o)
+ .debug_line    0x000005fb      0x2d8 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS.o)
+ .debug_line    0x000008d3      0x21d .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_drv.o)
+ .debug_line    0x00000af0       0x9b .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_episr.o)
+ .debug_line    0x00000b8b      0x14b .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_hid.o)
+ .debug_line    0x00000cd6      0x108 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_pm.o)
+ .debug_line    0x00000dde      0x369 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_std.o)
+ .debug_line    0x00001147       0x71 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_vnd.o)
+ .debug_line    0x000011b8       0xbb .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_Dp.o)
+ .debug_line    0x00001273       0x68 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(CyBootAsmGnu.o)
+ .debug_line    0x000012db      0x806 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(CyLib.o)
+ .debug_line    0x00001ae1      0x366 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(cyPm.o)
+ .debug_line    0x00001e47       0x8c .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_cls.o)
+ .debug_line    0x00001ed3       0x5f .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_descr.o)
+ .debug_line    0x00001f32      0x1ec .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(CyFlash.o)
+ .debug_line    0x0000211e      0x23e .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(CySpc.o)
+
+.debug_frame    0x00000000     0x1564
+ *(.debug_frame)
+ .debug_frame   0x00000000       0x2c .\CortexM3\ARM_GCC_493\Debug\main.o
+ .debug_frame   0x0000002c       0xac .\CortexM3\ARM_GCC_493\Debug\Cm3Start.o
+ .debug_frame   0x000000d8       0xe4 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(cyfitter_cfg.o)
+ .debug_frame   0x000001bc      0x1dc .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS.o)
+ .debug_frame   0x00000398      0x194 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_drv.o)
+ .debug_frame   0x0000052c       0x3c .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_episr.o)
+ .debug_frame   0x00000568       0xa0 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_hid.o)
+ .debug_frame   0x00000608       0xa0 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_pm.o)
+ .debug_frame   0x000006a8      0x150 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_std.o)
+ .debug_frame   0x000007f8       0x20 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_vnd.o)
+ .debug_frame   0x00000818       0x70 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_Dp.o)
+ .debug_frame   0x00000888      0x728 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(CyLib.o)
+ .debug_frame   0x00000fb0      0x1f8 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(cyPm.o)
+ .debug_frame   0x000011a8       0x2c .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_cls.o)
+ .debug_frame   0x000011d4      0x174 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(CyFlash.o)
+ .debug_frame   0x00001348      0x160 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(CySpc.o)
+ .debug_frame   0x000014a8       0x20 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-errno.o)
+ .debug_frame   0x000014c8       0x28 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-exit.o)
+ .debug_frame   0x000014f0       0x2c c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-init.o)
+ .debug_frame   0x0000151c       0x28 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-memcpy.o)
+ .debug_frame   0x00001544       0x20 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-memset.o)
+
+.debug_str      0x00000000     0x21d5
+ *(.debug_str)
+ .debug_str     0x00000000      0x1ce .\CortexM3\ARM_GCC_493\Debug\main.o
+                                0x20f (size before relaxing)
+ .debug_str     0x000001ce       0x77 .\CortexM3\ARM_GCC_493\Debug\cymetadata.o
+                                0x1ee (size before relaxing)
+ .debug_str     0x00000245      0x165 .\CortexM3\ARM_GCC_493\Debug\Cm3Start.o
+                                0x302 (size before relaxing)
+ .debug_str     0x000003aa      0x156 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(cyfitter_cfg.o)
+                                0x307 (size before relaxing)
+ .debug_str     0x00000500      0x40b .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS.o)
+                                0x619 (size before relaxing)
+ .debug_str     0x0000090b      0x31e .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_drv.o)
+                                0x5ec (size before relaxing)
+ .debug_str     0x00000c29       0x4a .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_episr.o)
+                                0x295 (size before relaxing)
+ .debug_str     0x00000c73      0x126 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_hid.o)
+                                0x3d0 (size before relaxing)
+ .debug_str     0x00000d99       0xd8 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_pm.o)
+                                0x2d7 (size before relaxing)
+ .debug_str     0x00000e71      0x1f0 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_std.o)
+                                0x6c6 (size before relaxing)
+ .debug_str     0x00001061       0x25 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_vnd.o)
+                                0x1df (size before relaxing)
+ .debug_str     0x00001086       0x9a .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_Dp.o)
+                                0x237 (size before relaxing)
+ .debug_str     0x00001120      0x7da .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(CyLib.o)
+                                0xa27 (size before relaxing)
+ .debug_str     0x000018fa      0x35b .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(cyPm.o)
+                                0x71f (size before relaxing)
+ .debug_str     0x00001c55       0x25 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_cls.o)
+                                0x296 (size before relaxing)
+ .debug_str     0x00001c7a      0x30f .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_descr.o)
+                                0x561 (size before relaxing)
+ .debug_str     0x00001f89      0x19e .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(CyFlash.o)
+                                0x399 (size before relaxing)
+ .debug_str     0x00002127       0xae .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(CySpc.o)
+                                0x322 (size before relaxing)
+
+.debug_loc      0x00000000     0x2b19
+ *(.debug_loc)
+ .debug_loc     0x00000000      0x144 .\CortexM3\ARM_GCC_493\Debug\Cm3Start.o
+ .debug_loc     0x00000144      0x1d7 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(cyfitter_cfg.o)
+ .debug_loc     0x0000031b      0x435 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS.o)
+ .debug_loc     0x00000750      0x171 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_drv.o)
+ .debug_loc     0x000008c1      0x3a8 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_hid.o)
+ .debug_loc     0x00000c69       0x26 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_pm.o)
+ .debug_loc     0x00000c8f      0x87d .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_std.o)
+ .debug_loc     0x0000150c       0x84 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_Dp.o)
+ .debug_loc     0x00001590      0xa11 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(CyLib.o)
+ .debug_loc     0x00001fa1      0x1e4 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(cyPm.o)
+ .debug_loc     0x00002185       0x47 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_cls.o)
+ .debug_loc     0x000021cc      0x300 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(CyFlash.o)
+ .debug_loc     0x000024cc      0x64d .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(CySpc.o)
+
+.debug_macinfo
+ *(.debug_macinfo)
+
+.debug_ranges   0x00000000      0x710
+ *(.debug_ranges)
+ .debug_ranges  0x00000000       0x10 .\CortexM3\ARM_GCC_493\Debug\main.o
+ .debug_ranges  0x00000010       0x38 .\CortexM3\ARM_GCC_493\Debug\Cm3Start.o
+ .debug_ranges  0x00000048       0x48 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(cyfitter_cfg.o)
+ .debug_ranges  0x00000090       0xd0 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS.o)
+ .debug_ranges  0x00000160       0x88 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_drv.o)
+ .debug_ranges  0x000001e8       0x18 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_episr.o)
+ .debug_ranges  0x00000200       0x38 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_hid.o)
+ .debug_ranges  0x00000238       0x30 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_pm.o)
+ .debug_ranges  0x00000268       0x68 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_std.o)
+ .debug_ranges  0x000002d0       0x10 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_vnd.o)
+ .debug_ranges  0x000002e0       0x38 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_Dp.o)
+ .debug_ranges  0x00000318      0x288 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(CyLib.o)
+ .debug_ranges  0x000005a0       0x88 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(cyPm.o)
+ .debug_ranges  0x00000628       0x10 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_cls.o)
+ .debug_ranges  0x00000638       0x70 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(CyFlash.o)
+ .debug_ranges  0x000006a8       0x68 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(CySpc.o)
+
+.comment        0x00000000       0x70
+ .comment       0x00000000       0x70 .\CortexM3\ARM_GCC_493\Debug\main.o
+                                 0x71 (size before relaxing)
+ .comment       0x00000000       0x71 .\CortexM3\ARM_GCC_493\Debug\cymetadata.o
+ .comment       0x00000000       0x71 .\CortexM3\ARM_GCC_493\Debug\Cm3Start.o
+ .comment       0x00000000       0x71 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(cyfitter_cfg.o)
+ .comment       0x00000000       0x71 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS.o)
+ .comment       0x00000000       0x71 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_drv.o)
+ .comment       0x00000000       0x71 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_episr.o)
+ .comment       0x00000000       0x71 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_hid.o)
+ .comment       0x00000000       0x71 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_pm.o)
+ .comment       0x00000000       0x71 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_std.o)
+ .comment       0x00000000       0x71 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_vnd.o)
+ .comment       0x00000000       0x71 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_Dp.o)
+ .comment       0x00000000       0x71 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(CyLib.o)
+ .comment       0x00000000       0x71 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(cyPm.o)
+ .comment       0x00000000       0x71 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_cls.o)
+ .comment       0x00000000       0x71 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_descr.o)
+ .comment       0x00000000       0x71 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(CyFlash.o)
+ .comment       0x00000000       0x71 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(CySpc.o)
+
+.debug_weaknames
+ *(.debug_weaknames)
+
+.debug_funcnames
+ *(.debug_funcnames)
+
+.debug_typenames
+ *(.debug_typenames)
+
+.debug_varnames
+ *(.debug_varnames)
+
+.note.gnu.arm.ident
+ *(.note.gnu.arm.ident)
+
+.ARM.attributes
+                0x00000000       0x29
+ *(.ARM.attributes)
+ .ARM.attributes
+                0x00000000       0x1d c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/armv7-m/crti.o
+ .ARM.attributes
+                0x0000001d       0x2d c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/armv7-m/crtbegin.o
+ .ARM.attributes
+                0x0000004a       0x1b c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m/crt0.o
+ .ARM.attributes
+                0x00000065       0x33 .\CortexM3\ARM_GCC_493\Debug\main.o
+ .ARM.attributes
+                0x00000098       0x33 .\CortexM3\ARM_GCC_493\Debug\cymetadata.o
+ .ARM.attributes
+                0x000000cb       0x33 .\CortexM3\ARM_GCC_493\Debug\Cm3Start.o
+ .ARM.attributes
+                0x000000fe       0x33 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(cyfitter_cfg.o)
+ .ARM.attributes
+                0x00000131       0x33 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS.o)
+ .ARM.attributes
+                0x00000164       0x33 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_drv.o)
+ .ARM.attributes
+                0x00000197       0x33 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_episr.o)
+ .ARM.attributes
+                0x000001ca       0x33 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_hid.o)
+ .ARM.attributes
+                0x000001fd       0x33 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_pm.o)
+ .ARM.attributes
+                0x00000230       0x33 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_std.o)
+ .ARM.attributes
+                0x00000263       0x33 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_vnd.o)
+ .ARM.attributes
+                0x00000296       0x33 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_Dp.o)
+ .ARM.attributes
+                0x000002c9       0x21 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(CyBootAsmGnu.o)
+ .ARM.attributes
+                0x000002ea       0x33 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(CyLib.o)
+ .ARM.attributes
+                0x0000031d       0x33 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(cyPm.o)
+ .ARM.attributes
+                0x00000350       0x33 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_cls.o)
+ .ARM.attributes
+                0x00000383       0x33 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(USBFS_descr.o)
+ .ARM.attributes
+                0x000003b6       0x33 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(CyFlash.o)
+ .ARM.attributes
+                0x000003e9       0x33 .\CortexM3\ARM_GCC_493\Debug\USBKeyboard.a(CySpc.o)
+ .ARM.attributes
+                0x0000041c       0x2d c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-errno.o)
+ .ARM.attributes
+                0x00000449       0x2d c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-exit.o)
+ .ARM.attributes
+                0x00000476       0x2d c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-impure.o)
+ .ARM.attributes
+                0x000004a3       0x2d c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-init.o)
+ .ARM.attributes
+                0x000004d0       0x2d c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-memcpy.o)
+ .ARM.attributes
+                0x000004fd       0x2d c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-memset.o)
+ .ARM.attributes
+                0x0000052a       0x2d c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/armv7-m/crtend.o
+ .ARM.attributes
+                0x00000557       0x1d c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/armv7-m/crtn.o
+
+/DISCARD/
+ *(.note.GNU-stack)
+OUTPUT(.\CortexM3\ARM_GCC_493\Debug\USBKeyboard.elf elf32-littlearm)

@@ -8,6 +8,7 @@
 <files />
 <projects>
 <v>.\PS2Keyboard.cydsn\PS2Keyboard.cyprj</v>
+<v>.\USBKeyboard.cydsn\USBKeyboard.cyprj</v>
 </projects>
 <workspace_id v="48663c85-b998-4824-9f65-29baa4a7f344" />
 <WriteAppVersionLastSavedWith v="3.3.0.7343" />

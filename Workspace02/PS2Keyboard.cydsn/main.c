@@ -1,6 +1,6 @@
 /* ========================================
  *
- * Copyright YOUR COMPANY, THE YEAR
+ * Copyright Addison Elliott, 2016
  * All Rights Reserved
  * UNPUBLISHED, LICENSED SOFTWARE.
  *
@@ -11,17 +11,25 @@
 */
 #include <project.h>
 #include <stdlib.h>
+#include "keyboard.h"
+
+uint8 NumLock = 0; // 0-NumLock is off, 1-NumLock is on
+uint8 CapsLock = 0; // 0-CapsLock is off, 1-CapsLock is on
+uint8 ScrollLock = 0; // 0-ScrollLock is off, 1-ScrollLock is on
+uint8 ShiftDown = 0; // 0-No Shift keys are pressed, 1-At least one Shift key is pressed
+uint8 CtrlDown = 0; // 0-No Ctrl keys are pressed, 1-At least one Ctrl key is pressed
+uint8 AltDown = 0; // 0-No Alt keys are pressed, 1-At least one Alt key is pressed
+uint8 PianoMode = 0; // 0-The keyboard is in regular mode, 1-The keyboard is in piano mode
 
 int main()
 {
     uint8 status;
-	uint8 byte;
-	char test[10];
-	uint8 cont;
+	uint8 scancode;
+	uint8 codetype;
+	char c;
 	
     CyGlobalIntEnable; /* Enable global interrupts. */
-
-    /* Place your initialization/startup code here (e.g. MyInst_Start()) */
+	
     UART_Start();
     PS2_Start();
 	
@@ -54,14 +62,33 @@ int main()
 			PS2_WriteByte(0xFE); // 0xFE is a RESEND command
 		}
 		
-		if ((byte = PS2_cReadByte()))
+		if ((scancode = PS2_cReadByte()))
 		{
-			// Useful stuff
-			itoa(byte, test, 10);
-			UART_PutString("Byte: ");
-			UART_PutString(test);
-			UART_PutString("\r\n");
+			if (scancode == 0xAA) 
+				continue;
+			
+			if (scancode == 0xFE) 
+				continue;
+			
+			codetype = KeyboardDecodeData(scancode);
+			KeyboardAction(scancode, codetype);
+			c = KeyboardToASCII(scancode, codetype);
+			if (c)
+			{
+				if (c == 0x0d)
+					UART_PutString("\r\n");
+				else if (c == 0x08)
+				{
+					// Send rubout
+					UART_PutChar(0x08);
+					UART_PutChar(' ');
+					UART_PutChar(0x08);
+				}
+				else
+					UART_PutChar(c);
+			}
 		}
+		
     }
 }
 

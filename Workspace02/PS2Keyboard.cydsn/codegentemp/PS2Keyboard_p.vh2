@@ -1,5 +1,5 @@
 -- Project:   PS2Keyboard
--- Generated: 04/27/2016 02:08:19
+-- Generated: 04/27/2016 20:49:20
 -- PSoC Creator  3.3 SP1
 
 ENTITY PS2Keyboard IS
@@ -7,8 +7,7 @@ ENTITY PS2Keyboard IS
         Tx(0)_PAD : OUT std_ulogic;
         Rx(0)_PAD : IN std_ulogic;
         ps2_data(0)_PAD : INOUT std_ulogic;
-        ps2_clock(0)_PAD : INOUT std_ulogic;
-        Pin_1(0)_PAD : OUT std_ulogic);
+        ps2_clock(0)_PAD : INOUT std_ulogic);
     ATTRIBUTE voltage_VDDABUF OF __DEFAULT__ : ENTITY IS 5e0;
     ATTRIBUTE voltage_VDDA OF __DEFAULT__ : ENTITY IS 5e0;
     ATTRIBUTE voltage_VUSB OF __DEFAULT__ : ENTITY IS 5e0;
@@ -37,11 +36,10 @@ ARCHITECTURE __DEFAULT__ OF PS2Keyboard IS
     ATTRIBUTE udbclken_assigned OF Net_1900 : SIGNAL IS "True";
     ATTRIBUTE global_signal OF Net_1900 : SIGNAL IS true;
     SIGNAL Net_1900_local : bit;
-    SIGNAL Net_1908 : bit;
-    ATTRIBUTE global_signal OF Net_1908 : SIGNAL IS true;
-    SIGNAL Net_1908_local : bit;
+    SIGNAL Net_2830 : bit;
+    ATTRIBUTE global_signal OF Net_2830 : SIGNAL IS true;
+    SIGNAL Net_2830_local : bit;
     SIGNAL Net_970 : bit;
-    SIGNAL Pin_1(0)__PA : bit;
     SIGNAL Rx(0)__PA : bit;
     SIGNAL Tx(0)__PA : bit;
     SIGNAL \PS2:Net_1284\ : bit;
@@ -171,8 +169,6 @@ ARCHITECTURE __DEFAULT__ OF PS2Keyboard IS
     ATTRIBUTE Location OF ps2_data(0) : LABEL IS "P2[3]";
     ATTRIBUTE lib_model OF ps2_clock(0) : LABEL IS "iocell4";
     ATTRIBUTE Location OF ps2_clock(0) : LABEL IS "P1[4]";
-    ATTRIBUTE lib_model OF Pin_1(0) : LABEL IS "iocell5";
-    ATTRIBUTE Location OF Pin_1(0) : LABEL IS "P2[0]";
     ATTRIBUTE lib_model OF Net_1876 : LABEL IS "macrocell2";
     ATTRIBUTE lib_model OF \UART:BUART:counter_load_not\ : LABEL IS "macrocell3";
     ATTRIBUTE lib_model OF \UART:BUART:tx_status_0\ : LABEL IS "macrocell4";
@@ -622,8 +618,8 @@ BEGIN
             clk_bus => ClockBlock_BUS_CLK_local,
             dsi_clkin_div => open,
             dsi_glb_div => open,
-            dclk_glb_0 => Net_1908,
-            dclk_0 => Net_1908_local,
+            dclk_glb_0 => Net_2830,
+            dclk_0 => Net_2830_local,
             dclk_glb_1 => Net_1900,
             dclk_1 => Net_1900_local,
             dclk_glb_2 => \UART:Net_9\,
@@ -992,98 +988,6 @@ BEGIN
             pin_input => \PS2:ps2_clock_out\,
             pad_out => ps2_clock(0)_PAD,
             pad_in => ps2_clock(0)_PAD,
-            in_clock => open,
-            in_clock_en => '1',
-            in_reset => '0',
-            out_clock => open,
-            out_clock_en => '1',
-            out_reset => '0');
-
-    Pin_1:logicalport
-        GENERIC MAP(
-            drive_mode => "110",
-            ibuf_enabled => "1",
-            id => "e851a3b9-efb8-48be-bbb8-b303b216c393",
-            init_dr_st => "0",
-            input_buffer_sel => "00",
-            input_clk_en => 0,
-            input_sync => "1",
-            input_sync_mode => "0",
-            intr_mode => "00",
-            invert_in_clock => 0,
-            invert_in_clock_en => 0,
-            invert_in_reset => 0,
-            invert_out_clock => 0,
-            invert_out_clock_en => 0,
-            invert_out_reset => 0,
-            io_voltage => "",
-            layout_mode => "CONTIGUOUS",
-            oe_conn => "0",
-            oe_reset => 0,
-            oe_sync => "0",
-            output_clk_en => 0,
-            output_clock_mode => "0",
-            output_conn => "1",
-            output_mode => "0",
-            output_reset => 0,
-            output_sync => "0",
-            ovt_hyst_trim => "0",
-            ovt_needed => "0",
-            ovt_slew_control => "00",
-            pa_in_clock => -1,
-            pa_in_clock_en => -1,
-            pa_in_reset => -1,
-            pa_out_clock => -1,
-            pa_out_clock_en => -1,
-            pa_out_reset => -1,
-            pin_aliases => "",
-            pin_mode => "O",
-            por_state => 4,
-            port_alias_group => "",
-            port_alias_required => 0,
-            sio_group_cnt => 0,
-            sio_hifreq => "00000000",
-            sio_hyst => "1",
-            sio_ibuf => "00000000",
-            sio_info => "00",
-            sio_obuf => "00000000",
-            sio_refsel => "00000000",
-            sio_vohsel => "00000000",
-            sio_vtrip => "00000000",
-            slew_rate => "0",
-            spanning => 0,
-            sw_only => 0,
-            use_annotation => "0",
-            vtrip => "10",
-            width => 1,
-            in_clk_inv => 0,
-            in_clken_inv => 0,
-            in_clken_mode => 1,
-            in_rst_inv => 0,
-            out_clk_inv => 0,
-            out_clken_inv => 0,
-            out_clken_mode => 1,
-            out_rst_inv => 0)
-        PORT MAP(
-            in_clock_en => open,
-            in_reset => open,
-            out_clock_en => open,
-            out_reset => open);
-
-    Pin_1(0):iocell
-        GENERIC MAP(
-            in_sync_mode => 0,
-            out_sync_mode => 0,
-            oe_sync_mode => 0,
-            logicalport => "Pin_1",
-            logicalport_pin_id => 0,
-            io_capabilities => "0000000000000000000000000000000000000000000000000000000000000101")
-        PORT MAP(
-            pa_out => Pin_1(0)__PA,
-            oe => open,
-            pin_input => Net_1900_local,
-            pad_out => Pin_1(0)_PAD,
-            pad_in => Pin_1(0)_PAD,
             in_clock => open,
             in_clock_en => '1',
             in_reset => '0',
@@ -1978,7 +1882,7 @@ BEGIN
             clken_mode => 1)
         PORT MAP(
             q => \PS2:PS2_Core:ps2_clock_neg_edge\,
-            clock_0 => Net_1908,
+            clock_0 => Net_2830,
             main_0 => \PS2:PS2_Core:last_ps2_clock\,
             main_1 => \PS2:ps2_clock_in\);
 
@@ -1989,7 +1893,7 @@ BEGIN
             clken_mode => 1)
         PORT MAP(
             q => \PS2:PS2_Core:last_ps2_clock\,
-            clock_0 => Net_1908,
+            clock_0 => Net_2830,
             main_0 => \PS2:ps2_clock_in\);
 
     \PS2:Net_1448_7\:macrocell
@@ -1999,7 +1903,7 @@ BEGIN
             clken_mode => 1)
         PORT MAP(
             q => \PS2:Net_1448_7\,
-            clock_0 => Net_1908,
+            clock_0 => Net_2830,
             main_0 => \PS2:Net_1448_7\,
             main_1 => \PS2:Net_1414\);
 
@@ -2010,7 +1914,7 @@ BEGIN
             clken_mode => 1)
         PORT MAP(
             q => \PS2:Net_1448_6\,
-            clock_0 => Net_1908,
+            clock_0 => Net_2830,
             main_0 => \PS2:Net_1414\,
             main_1 => \PS2:Net_1448_6\);
 
@@ -2021,7 +1925,7 @@ BEGIN
             clken_mode => 1)
         PORT MAP(
             q => \PS2:Net_1448_5\,
-            clock_0 => Net_1908,
+            clock_0 => Net_2830,
             main_0 => \PS2:Net_1414\,
             main_1 => \PS2:Net_1448_5\);
 
@@ -2032,7 +1936,7 @@ BEGIN
             clken_mode => 1)
         PORT MAP(
             q => \PS2:Net_1448_4\,
-            clock_0 => Net_1908,
+            clock_0 => Net_2830,
             main_0 => \PS2:PS2_Core:ps2_clock_neg_edge\,
             main_1 => \PS2:Net_1448_7\,
             main_2 => \PS2:Net_1414\,
@@ -2053,7 +1957,7 @@ BEGIN
             clken_mode => 1)
         PORT MAP(
             q => \PS2:Net_1448_3\,
-            clock_0 => Net_1908,
+            clock_0 => Net_2830,
             main_0 => \PS2:PS2_Core:ps2_clock_neg_edge\,
             main_1 => \PS2:Net_1448_7\,
             main_2 => \PS2:Net_1414\,
@@ -2073,7 +1977,7 @@ BEGIN
             clken_mode => 1)
         PORT MAP(
             q => \PS2:Net_1448_2\,
-            clock_0 => Net_1908,
+            clock_0 => Net_2830,
             main_0 => \PS2:PS2_Core:ps2_clock_neg_edge\,
             main_1 => \PS2:Net_1448_7\,
             main_2 => \PS2:Net_1414\,
@@ -2094,7 +1998,7 @@ BEGIN
             clken_mode => 1)
         PORT MAP(
             q => \PS2:Net_1448_1\,
-            clock_0 => Net_1908,
+            clock_0 => Net_2830,
             main_0 => \PS2:PS2_Core:ps2_clock_neg_edge\,
             main_1 => \PS2:Net_1448_7\,
             main_2 => \PS2:Net_1414\,
@@ -2115,7 +2019,7 @@ BEGIN
             clken_mode => 1)
         PORT MAP(
             q => \PS2:Net_1448_0\,
-            clock_0 => Net_1908,
+            clock_0 => Net_2830,
             main_0 => \PS2:Net_1414\,
             main_1 => \PS2:Net_1448_0\,
             main_2 => \PS2:Net_1448_0_split\);
@@ -2127,7 +2031,7 @@ BEGIN
             clken_mode => 1)
         PORT MAP(
             q => \PS2:PS2_Core:parity\,
-            clock_0 => Net_1908,
+            clock_0 => Net_2830,
             main_0 => \PS2:PS2_Core:parity_split\,
             main_1 => \PS2:PS2_Core:parity_split_1\,
             main_2 => \PS2:PS2_Core:parity_split_4\,
@@ -2141,7 +2045,7 @@ BEGIN
             clken_mode => 1)
         PORT MAP(
             q => \PS2:Net_1387\,
-            clock_0 => Net_1908,
+            clock_0 => Net_2830,
             main_0 => \PS2:Net_1414\,
             main_1 => \PS2:Net_1387\,
             main_2 => \PS2:Net_1387_split\);
@@ -2153,7 +2057,7 @@ BEGIN
             clken_mode => 1)
         PORT MAP(
             q => \PS2:Net_1382\,
-            clock_0 => Net_1908,
+            clock_0 => Net_2830,
             main_0 => \PS2:Net_1382_split\,
             main_1 => \PS2:Net_1382_split_1\);
 
@@ -2164,7 +2068,7 @@ BEGIN
             clken_mode => 1)
         PORT MAP(
             q => \PS2:ps2_data_hw\,
-            clock_0 => Net_1908,
+            clock_0 => Net_2830,
             main_0 => \PS2:PS2_Core:ps2_clock_neg_edge\,
             main_1 => \PS2:Net_1448_7\,
             main_2 => \PS2:Net_1414\,
@@ -2182,7 +2086,7 @@ BEGIN
             clken_mode => 1)
         PORT MAP(
             q => \PS2:Net_1316_0\,
-            clock_0 => Net_1908,
+            clock_0 => Net_2830,
             main_0 => \PS2:PS2_Core:ps2_clock_neg_edge\,
             main_1 => \PS2:Net_1448_7\,
             main_2 => \PS2:Net_1414\,
@@ -2203,7 +2107,7 @@ BEGIN
             clken_mode => 1)
         PORT MAP(
             q => \PS2:Net_1316_1\,
-            clock_0 => Net_1908,
+            clock_0 => Net_2830,
             main_0 => \PS2:PS2_Core:ps2_clock_neg_edge\,
             main_1 => \PS2:Net_1448_7\,
             main_2 => \PS2:Net_1414\,
@@ -2224,7 +2128,7 @@ BEGIN
             clken_mode => 1)
         PORT MAP(
             q => \PS2:Net_1316_2\,
-            clock_0 => Net_1908,
+            clock_0 => Net_2830,
             main_0 => \PS2:PS2_Core:ps2_clock_neg_edge\,
             main_1 => \PS2:Net_1448_7\,
             main_2 => \PS2:Net_1414\,
@@ -2245,7 +2149,7 @@ BEGIN
             clken_mode => 1)
         PORT MAP(
             q => \PS2:Net_1316_3\,
-            clock_0 => Net_1908,
+            clock_0 => Net_2830,
             main_0 => \PS2:PS2_Core:ps2_clock_neg_edge\,
             main_1 => \PS2:Net_1448_7\,
             main_2 => \PS2:Net_1414\,
@@ -2266,7 +2170,7 @@ BEGIN
             clken_mode => 1)
         PORT MAP(
             q => \PS2:Net_1316_4\,
-            clock_0 => Net_1908,
+            clock_0 => Net_2830,
             main_0 => \PS2:PS2_Core:ps2_clock_neg_edge\,
             main_1 => \PS2:Net_1448_7\,
             main_2 => \PS2:Net_1414\,
@@ -2287,7 +2191,7 @@ BEGIN
             clken_mode => 1)
         PORT MAP(
             q => \PS2:Net_1316_5\,
-            clock_0 => Net_1908,
+            clock_0 => Net_2830,
             main_0 => \PS2:PS2_Core:ps2_clock_neg_edge\,
             main_1 => \PS2:Net_1448_7\,
             main_2 => \PS2:Net_1414\,
@@ -2308,7 +2212,7 @@ BEGIN
             clken_mode => 1)
         PORT MAP(
             q => \PS2:Net_1316_6\,
-            clock_0 => Net_1908,
+            clock_0 => Net_2830,
             main_0 => \PS2:PS2_Core:ps2_clock_neg_edge\,
             main_1 => \PS2:Net_1448_7\,
             main_2 => \PS2:Net_1414\,
@@ -2329,7 +2233,7 @@ BEGIN
             clken_mode => 1)
         PORT MAP(
             q => \PS2:Net_1316_7\,
-            clock_0 => Net_1908,
+            clock_0 => Net_2830,
             main_0 => \PS2:PS2_Core:ps2_clock_neg_edge\,
             main_1 => \PS2:Net_1448_7\,
             main_2 => \PS2:Net_1414\,

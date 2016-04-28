@@ -1,6 +1,6 @@
 /* ========================================
  *
- * Copyright YOUR COMPANY, THE YEAR
+ * Copyright Addison Elliott, 2016
  * All Rights Reserved
  * UNPUBLISHED, LICENSED SOFTWARE.
  *
@@ -10,7 +10,7 @@
  * ========================================
 */
 
-#include "`$INSTANCE_NAME`_ps2.h"
+#include "`$INSTANCE_NAME`.h"
 
 uint16 `$INSTANCE_NAME`_timer_reps;
 uint8 `$INSTANCE_NAME`_initVar;
@@ -18,13 +18,10 @@ uint8 `$INSTANCE_NAME`_deviceDetectFail;
 
 CY_ISR(`$INSTANCE_NAME`_TIMER)
 {
-	`$INSTANCE_NAME`_Timer_STATUS; // Resets the xxx bit
-	
-	/* If the timer_reps is greater than zero, decrement it. If the decremented value is equal to zero, stop the timer */
-	//if (`$INSTANCE_NAME`_timer_reps > 0 && --`$INSTANCE_NAME`_timer_reps == 0)
-	//	`$INSTANCE_NAME`_Timer_Stop();
+	// Resets the terminal count bit, it is sticky so it stays high even after the counter is reloaded
+	`$INSTANCE_NAME`_Timer_STATUS;
+
 	--`$INSTANCE_NAME`_timer_reps;
-	//`$INSTANCE_NAME`_Timer_Stop();
 }
 
 void `$INSTANCE_NAME`_Init(void) `=ReentrantKeil($INSTANCE_NAME . "_Init")`
@@ -46,7 +43,7 @@ void `$INSTANCE_NAME`_Start(void) `=ReentrantKeil($INSTANCE_NAME . "_Start")`
     if (0u == `$INSTANCE_NAME`_initVar)
     {
         `$INSTANCE_NAME`_Init();
-        `$INSTANCE_NAME`_initVar = 1u; /* Component initialized */
+        `$INSTANCE_NAME`_initVar = 1u; // Component initialized
     }
 }
 
@@ -58,14 +55,13 @@ uint8 `$INSTANCE_NAME`_DetectDevice(void) `=ReentrantKeil($INSTANCE_NAME . "_Ini
 	// This is to notify the device to stop doing everything, and send a BAT test
     if (`$INSTANCE_NAME`_deviceDetectFail)
 		`$INSTANCE_NAME`_SendCommand(0xFF);
-    
-    `$INSTANCE_NAME`_TIMER_START(200, 500); // Set a timer for (10uS * 200 * 500) = 1000ms
+		
     `$INSTANCE_NAME`_READ; // Make sure the state machine knows to read
-    
-    while (`$INSTANCE_NAME`_STATUS == `$INSTANCE_NAME`_STATUS_PENDING && `$INSTANCE_NAME`_timer_reps); // Wait until timeout or something received
-    if (`$INSTANCE_NAME`_STATUS == `$INSTANCE_NAME`_STATUS_DONE)
+
+	`$INSTANCE_NAME`_TIMER_WAIT_UNTIL(200, 500, `$INSTANCE_NAME`_STATUS == `$INSTANCE_NAME`_STATUS_PENDING);
+	if (`$INSTANCE_NAME`_STATUS == `$INSTANCE_NAME`_STATUS_DONE)
     {
-        CyDelay(1); // Delay one millisecond to give the status register time to update
+        //CyDelay(1); // Delay one millisecond to give the status register time to update
         if (`$INSTANCE_NAME`_BYTE_R == 0xAA)
         {
             // XXX: Mess with getting mouse to work with PS/2
@@ -101,27 +97,22 @@ uint8 `$INSTANCE_NAME`_WriteByte(uint8 data) `=ReentrantKeil($INSTANCE_NAME . "_
 	// then it will have to be resent once the transmission is over. The device handles
 	// this though
     if (`$INSTANCE_NAME`_STATE != `$INSTANCE_NAME`_IDLE)
-	{
-	    `$INSTANCE_NAME`_TIMER_START(1, 1); // Set a timer for (10uS * 1 * 1) = 10us
-	    while (`$INSTANCE_NAME`_timer_reps); // Wait 10us
-		`$INSTANCE_NAME`_Timer_Stop();
-		
+	{		
+		`$INSTANCE_NAME`_TIMER_WAIT(1, 1);	
 		`$INSTANCE_NAME`_RESET; // Reset the state machine once the wait is done
 	}
+	else
+		`$INSTANCE_NAME`_TIMER_WAIT(100, 1);	
 	
     `$INSTANCE_NAME`_WRITE; // Tell state machine we are writing
-	
 	`$INSTANCE_NAME`_CLOCK_LOW; // Set clock line to low
-    `$INSTANCE_NAME`_TIMER_START(6, 1); // Set a timer for (10uS * 10 * 1) = 60us
-    while (`$INSTANCE_NAME`_timer_reps); // Wait 100us
-	`$INSTANCE_NAME`_Timer_Stop();
+	
+	`$INSTANCE_NAME`_TIMER_WAIT(6, 1); // Wait (10uS * 10 * 1) = 60us
 	
 	`$INSTANCE_NAME`_DATA_LOW; // Pull data line low
 
-    `$INSTANCE_NAME`_TIMER_START(5, 1); // Set a timer for (10uS * 3 * 1) = 30us
-    while (`$INSTANCE_NAME`_timer_reps); // Wait 30us
-	`$INSTANCE_NAME`_Timer_Stop();
-
+	`$INSTANCE_NAME`_TIMER_WAIT(3, 1); // Wait (10uS * 3 * 1) = 30uS
+	
 	`$INSTANCE_NAME`_CLOCK_HIGH; // Bring the clock high again, the device should start generating clock signals
 	
 	`$INSTANCE_NAME`_DATA_WRITE(data);
@@ -130,9 +121,7 @@ uint8 `$INSTANCE_NAME`_WriteByte(uint8 data) `=ReentrantKeil($INSTANCE_NAME . "_
 	
     // Per Adam Chapweske: Wait here for 15 ms or until we've transitioned
     // out of the start bit state. If this time is exceeded, it's a timeout
-    `$INSTANCE_NAME`_TIMER_START(100, 15); // Set a timer for (10uS * 100 * 15) = 15ms
-    while (`$INSTANCE_NAME`_STATE == `$INSTANCE_NAME`_WRITE_BIT_1 && `$INSTANCE_NAME`_timer_reps); // Wait 15ms
-	`$INSTANCE_NAME`_Timer_Stop();
+	`$INSTANCE_NAME`_TIMER_WAIT_UNTIL(100, 15, `$INSTANCE_NAME`_STATE == `$INSTANCE_NAME`_WRITE_BIT_1);
 	
     if (`$INSTANCE_NAME`_STATE == `$INSTANCE_NAME`_WRITE_BIT_1)
     {
@@ -143,9 +132,7 @@ uint8 `$INSTANCE_NAME`_WriteByte(uint8 data) `=ReentrantKeil($INSTANCE_NAME . "_
     }
 
     // Per Adam Chapweske: The time it takes for the packet to be sent must be no greater than 2ms.
-    PS2_TIMER_START(100, 2); // Set a timer for (10uS * 100 * 2) = 2ms
-    while (`$INSTANCE_NAME`_STATUS == `$INSTANCE_NAME`_STATUS_PENDING && `$INSTANCE_NAME`_timer_reps); // Wait 2ms
-    `$INSTANCE_NAME`_Timer_Stop();
+	`$INSTANCE_NAME`_TIMER_WAIT_UNTIL(100, 2, `$INSTANCE_NAME`_STATUS == `$INSTANCE_NAME`_STATUS_PENDING);
 	
     if (`$INSTANCE_NAME`_STATUS == `$INSTANCE_NAME`_STATUS_DONE)
         status = `$INSTANCE_NAME`_SUCCESS;
@@ -174,10 +161,7 @@ uint8 `$INSTANCE_NAME`_SendCommand(uint8 data) `=ReentrantKeil($INSTANCE_NAME . 
 			return txStatus;
 
 		// The device should respond within 20ms of the time of sending
-	    PS2_TIMER_START(100, 20); // Set a timer for (10uS * 100 * 20) = 20ms
-	    while (`$INSTANCE_NAME`_STATUS == `$INSTANCE_NAME`_STATUS_PENDING && `$INSTANCE_NAME`_timer_reps);
-		`$INSTANCE_NAME`_Timer_Stop();
-		
+		`$INSTANCE_NAME`_TIMER_WAIT_UNTIL(100, 20, `$INSTANCE_NAME`_STATUS == `$INSTANCE_NAME`_STATUS_PENDING);
 		if (`$INSTANCE_NAME`_STATUS == `$INSTANCE_NAME`_STATUS_DONE)
 		{
 			switch (`$INSTANCE_NAME`_BYTE_R)
@@ -211,7 +195,7 @@ uint8 `$INSTANCE_NAME`_SendCommand(uint8 data) `=ReentrantKeil($INSTANCE_NAME . 
 			break;	
 		}
 		else
-			return 0x10; // Device timed out
+			return `$INSTANCE_NAME`_TIMEOUT; // Device timed out
 	}
 	
 	// The code should never reach here, but we return something to shut the compiler up

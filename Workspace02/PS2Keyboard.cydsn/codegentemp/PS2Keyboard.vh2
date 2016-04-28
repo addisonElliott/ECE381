@@ -2,7 +2,7 @@
 --	Conversion of PS2Keyboard.v to vh2:
 --
 --	Cypress Semiconductor - WARP Version 6.3 IR 41
---	Wed Apr 27 02:08:18 2016
+--	Wed Apr 27 20:49:19 2016
 --
 
 USE cypress.cypress.all;
@@ -20,7 +20,7 @@ TERMINAL tmpSIOVREF__Tx_net_0 : bit;
 SIGNAL zero : bit;
 SIGNAL one : bit;
 SIGNAL tmpINTERRUPT_0__Tx_net_0 : bit;
-SIGNAL Net_1908 : bit;
+SIGNAL Net_2830 : bit;
 SIGNAL \UART:Net_9\ : bit;
 SIGNAL \UART:Net_61\ : bit;
 SIGNAL \UART:BUART:clock_op\ : bit;
@@ -593,11 +593,6 @@ SIGNAL tmpOE__ps2_clock_net_0 : bit;
 SIGNAL tmpFB_0__ps2_clock_net_0 : bit;
 TERMINAL tmpSIOVREF__ps2_clock_net_0 : bit;
 SIGNAL tmpINTERRUPT_0__ps2_clock_net_0 : bit;
-SIGNAL tmpOE__Pin_1_net_0 : bit;
-SIGNAL tmpFB_0__Pin_1_net_0 : bit;
-SIGNAL tmpIO_0__Pin_1_net_0 : bit;
-TERMINAL tmpSIOVREF__Pin_1_net_0 : bit;
-SIGNAL tmpINTERRUPT_0__Pin_1_net_0 : bit;
 SIGNAL \UART:BUART:reset_reg\\D\ : bit;
 SIGNAL \UART:BUART:txn\\D\ : bit;
 SIGNAL \UART:BUART:tx_state_1\\D\ : bit;
@@ -1058,7 +1053,7 @@ Tx:cy_psoc3_pins_v1_10
 		out_clock_en=>tmpOE__Tx_net_0,
 		out_reset=>zero,
 		interrupt=>tmpINTERRUPT_0__Tx_net_0);
-Clock_2:cy_clock_v1_0
+mainClock:cy_clock_v1_0
 	GENERIC MAP(cy_registers=>"",
 		id=>"4e63f461-9292-4a06-a0df-34ecf78aceb0",
 		source_clock_id=>"CEF43CFB-0213-49b9-B980-2FFAB81C5B47",
@@ -1066,7 +1061,7 @@ Clock_2:cy_clock_v1_0
 		period=>"0",
 		is_direct=>'0',
 		is_digital=>'1')
-	PORT MAP(clock_out=>Net_1908,
+	PORT MAP(clock_out=>Net_2830,
 		dig_domain_out=>open);
 \UART:IntClock\:cy_clock_v1_0
 	GENERIC MAP(cy_registers=>"",
@@ -1575,14 +1570,14 @@ Rx:cy_psoc3_pins_v1_10
 	GENERIC MAP(cy_force_order=>'1',
 		cy_md_select=>"00000000")
 	PORT MAP(reset=>zero,
-		clock=>Net_1908,
+		clock=>Net_2830,
 		status=>(zero, zero, zero, zero,
 			zero, zero, \PS2:Net_1382\, \PS2:Net_1387\));
 \PS2:stateReg:sts:sts_reg\:cy_psoc3_status
 	GENERIC MAP(cy_force_order=>'1',
 		cy_md_select=>"00000000")
 	PORT MAP(reset=>zero,
-		clock=>Net_1908,
+		clock=>Net_2830,
 		status=>(\PS2:Net_1448_7\, \PS2:Net_1448_6\, \PS2:Net_1448_5\, \PS2:Net_1448_4\,
 			\PS2:Net_1448_3\, \PS2:Net_1448_2\, \PS2:Net_1448_1\, \PS2:Net_1448_0\));
 \PS2:dataIn:Sync:ctrl_reg\:cy_psoc3_control
@@ -1599,7 +1594,7 @@ Rx:cy_psoc3_pins_v1_10
 	GENERIC MAP(cy_force_order=>'1',
 		cy_md_select=>"00000000")
 	PORT MAP(reset=>zero,
-		clock=>Net_1908,
+		clock=>Net_2830,
 		status=>(\PS2:Net_1316_7\, \PS2:Net_1316_6\, \PS2:Net_1316_5\, \PS2:Net_1316_4\,
 			\PS2:Net_1316_3\, \PS2:Net_1316_2\, \PS2:Net_1316_1\, \PS2:Net_1316_0\));
 \PS2:bufoe_1\:cy_bufoe
@@ -1612,7 +1607,7 @@ Rx:cy_psoc3_pins_v1_10
 		oe=>tmpOE__Tx_net_0,
 		y=>Net_2689,
 		yfb=>\PS2:ps2_clock_in\);
-Clock_1:cy_clock_v1_0
+clock10us:cy_clock_v1_0
 	GENERIC MAP(cy_registers=>"",
 		id=>"94c5795b-28ed-45e9-86aa-8f8651a702b8",
 		source_clock_id=>"315365C3-2E3E-4f04-84A2-BB564A173261",
@@ -1762,76 +1757,6 @@ ps2_clock:cy_psoc3_pins_v1_10
 		out_clock_en=>tmpOE__Tx_net_0,
 		out_reset=>zero,
 		interrupt=>tmpINTERRUPT_0__ps2_clock_net_0);
-Pin_1:cy_psoc3_pins_v1_10
-	GENERIC MAP(id=>"e851a3b9-efb8-48be-bbb8-b303b216c393",
-		drive_mode=>"110",
-		ibuf_enabled=>"1",
-		init_dr_st=>"0",
-		input_sync=>"1",
-		input_clk_en=>'0',
-		input_sync_mode=>"0",
-		intr_mode=>"00",
-		invert_in_clock=>'0',
-		invert_in_clock_en=>'0',
-		invert_in_reset=>'0',
-		invert_out_clock=>'0',
-		invert_out_clock_en=>'0',
-		invert_out_reset=>'0',
-		io_voltage=>"",
-		layout_mode=>"CONTIGUOUS",
-		output_conn=>"1",
-		output_sync=>"0",
-		output_clk_en=>'0',
-		output_mode=>"0",
-		output_reset=>'0',
-		output_clock_mode=>"0",
-		oe_sync=>"0",
-		oe_conn=>"0",
-		oe_reset=>'0',
-		pin_aliases=>"",
-		pin_mode=>"O",
-		por_state=>4,
-		sio_group_cnt=>0,
-		sio_hifreq=>"00000000",
-		sio_hyst=>"1",
-		sio_ibuf=>"00000000",
-		sio_info=>"00",
-		sio_obuf=>"00000000",
-		sio_refsel=>"00000000",
-		sio_vtrip=>"00000000",
-		sio_vohsel=>"00000000",
-		slew_rate=>"0",
-		spanning=>'0',
-		sw_only=>'0',
-		vtrip=>"10",
-		width=>1,
-		port_alias_required=>'0',
-		port_alias_group=>"",
-		use_annotation=>"0",
-		pa_in_clock=>-1,
-		pa_in_clock_en=>-1,
-		pa_in_reset=>-1,
-		pa_out_clock=>-1,
-		pa_out_clock_en=>-1,
-		pa_out_reset=>-1,
-		ovt_needed=>"0",
-		ovt_slew_control=>"00",
-		ovt_hyst_trim=>"0",
-		input_buffer_sel=>"00")
-	PORT MAP(oe=>(tmpOE__Tx_net_0),
-		y=>Net_1900,
-		fb=>(tmpFB_0__Pin_1_net_0),
-		analog=>(open),
-		io=>(tmpIO_0__Pin_1_net_0),
-		siovref=>(tmpSIOVREF__Pin_1_net_0),
-		annotation=>(open),
-		in_clock=>zero,
-		in_clock_en=>tmpOE__Tx_net_0,
-		in_reset=>zero,
-		out_clock=>zero,
-		out_clock_en=>tmpOE__Tx_net_0,
-		out_reset=>zero,
-		interrupt=>tmpINTERRUPT_0__Pin_1_net_0);
 \UART:BUART:reset_reg\:cy_dff
 	PORT MAP(d=>zero,
 		clk=>\UART:BUART:clock_op\,
@@ -1950,91 +1875,91 @@ Net_1889:cy_dff
 		q=>\UART:BUART:rx_parity_bit\);
 \PS2:PS2_Core:ps2_clock_neg_edge\:cy_dff
 	PORT MAP(d=>\PS2:PS2_Core:ps2_clock_neg_edge\\D\,
-		clk=>Net_1908,
+		clk=>Net_2830,
 		q=>\PS2:PS2_Core:ps2_clock_neg_edge\);
 \PS2:PS2_Core:last_ps2_clock\:cy_dff
 	PORT MAP(d=>\PS2:ps2_clock_in\,
-		clk=>Net_1908,
+		clk=>Net_2830,
 		q=>\PS2:PS2_Core:last_ps2_clock\);
 \PS2:Net_1448_7\:cy_dff
 	PORT MAP(d=>\PS2:Net_1448_7\\D\,
-		clk=>Net_1908,
+		clk=>Net_2830,
 		q=>\PS2:Net_1448_7\);
 \PS2:Net_1448_6\:cy_dff
 	PORT MAP(d=>\PS2:Net_1448_6\\D\,
-		clk=>Net_1908,
+		clk=>Net_2830,
 		q=>\PS2:Net_1448_6\);
 \PS2:Net_1448_5\:cy_dff
 	PORT MAP(d=>\PS2:Net_1448_5\\D\,
-		clk=>Net_1908,
+		clk=>Net_2830,
 		q=>\PS2:Net_1448_5\);
 \PS2:Net_1448_4\:cy_dff
 	PORT MAP(d=>\PS2:Net_1448_4\\D\,
-		clk=>Net_1908,
+		clk=>Net_2830,
 		q=>\PS2:Net_1448_4\);
 \PS2:Net_1448_3\:cy_dff
 	PORT MAP(d=>\PS2:Net_1448_3\\D\,
-		clk=>Net_1908,
+		clk=>Net_2830,
 		q=>\PS2:Net_1448_3\);
 \PS2:Net_1448_2\:cy_dff
 	PORT MAP(d=>\PS2:Net_1448_2\\D\,
-		clk=>Net_1908,
+		clk=>Net_2830,
 		q=>\PS2:Net_1448_2\);
 \PS2:Net_1448_1\:cy_dff
 	PORT MAP(d=>\PS2:Net_1448_1\\D\,
-		clk=>Net_1908,
+		clk=>Net_2830,
 		q=>\PS2:Net_1448_1\);
 \PS2:Net_1448_0\:cy_dff
 	PORT MAP(d=>\PS2:Net_1448_0\\D\,
-		clk=>Net_1908,
+		clk=>Net_2830,
 		q=>\PS2:Net_1448_0\);
 \PS2:PS2_Core:parity\:cy_dff
 	PORT MAP(d=>\PS2:PS2_Core:parity\\D\,
-		clk=>Net_1908,
+		clk=>Net_2830,
 		q=>\PS2:PS2_Core:parity\);
 \PS2:Net_1387\:cy_dff
 	PORT MAP(d=>\PS2:Net_1387\\D\,
-		clk=>Net_1908,
+		clk=>Net_2830,
 		q=>\PS2:Net_1387\);
 \PS2:Net_1382\:cy_dff
 	PORT MAP(d=>\PS2:Net_1382\\D\,
-		clk=>Net_1908,
+		clk=>Net_2830,
 		q=>\PS2:Net_1382\);
 \PS2:ps2_data_hw\:cy_dff
 	PORT MAP(d=>\PS2:ps2_data_hw\\D\,
-		clk=>Net_1908,
+		clk=>Net_2830,
 		q=>\PS2:ps2_data_hw\);
 \PS2:Net_1316_0\:cy_dff
 	PORT MAP(d=>\PS2:Net_1316_0\\D\,
-		clk=>Net_1908,
+		clk=>Net_2830,
 		q=>\PS2:Net_1316_0\);
 \PS2:Net_1316_1\:cy_dff
 	PORT MAP(d=>\PS2:Net_1316_1\\D\,
-		clk=>Net_1908,
+		clk=>Net_2830,
 		q=>\PS2:Net_1316_1\);
 \PS2:Net_1316_2\:cy_dff
 	PORT MAP(d=>\PS2:Net_1316_2\\D\,
-		clk=>Net_1908,
+		clk=>Net_2830,
 		q=>\PS2:Net_1316_2\);
 \PS2:Net_1316_3\:cy_dff
 	PORT MAP(d=>\PS2:Net_1316_3\\D\,
-		clk=>Net_1908,
+		clk=>Net_2830,
 		q=>\PS2:Net_1316_3\);
 \PS2:Net_1316_4\:cy_dff
 	PORT MAP(d=>\PS2:Net_1316_4\\D\,
-		clk=>Net_1908,
+		clk=>Net_2830,
 		q=>\PS2:Net_1316_4\);
 \PS2:Net_1316_5\:cy_dff
 	PORT MAP(d=>\PS2:Net_1316_5\\D\,
-		clk=>Net_1908,
+		clk=>Net_2830,
 		q=>\PS2:Net_1316_5\);
 \PS2:Net_1316_6\:cy_dff
 	PORT MAP(d=>\PS2:Net_1316_6\\D\,
-		clk=>Net_1908,
+		clk=>Net_2830,
 		q=>\PS2:Net_1316_6\);
 \PS2:Net_1316_7\:cy_dff
 	PORT MAP(d=>\PS2:Net_1316_7\\D\,
-		clk=>Net_1908,
+		clk=>Net_2830,
 		q=>\PS2:Net_1316_7\);
 \PS2:Timer:TimerUDB:capture_last\:cy_dff
 	PORT MAP(d=>zero,

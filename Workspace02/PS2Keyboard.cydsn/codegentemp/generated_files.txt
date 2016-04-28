@@ -20,26 +20,23 @@
   <file name="C:\Users\addis\Documents\PSoC Creator\Workspace02\PS2Keyboard.cydsn\codegentemp\cyfitteriar.inc" value="NONE;" />
   <file name="C:\Users\addis\Documents\PSoC Creator\Workspace02\PS2Keyboard.cydsn\codegentemp\cyfitter.h" value="NONE;" />
   <file name="C:\Users\addis\Documents\PSoC Creator\Workspace02\PS2Keyboard.cydsn\codegentemp\cydisabledsheets.h" value="NONE;" />
-  <file name="C:\Users\addis\Documents\PSoC Creator\Workspace02\PS2Keyboard.cydsn\codegentemp\Clock_2.c" value="ARM_C_FILE;Clock_2" />
-  <file name="C:\Users\addis\Documents\PSoC Creator\Workspace02\PS2Keyboard.cydsn\codegentemp\Clock_2.h" value="NONE;Clock_2" />
+  <file name="C:\Users\addis\Documents\PSoC Creator\Workspace02\PS2Keyboard.cydsn\codegentemp\mainClock.c" value="ARM_C_FILE;mainClock" />
+  <file name="C:\Users\addis\Documents\PSoC Creator\Workspace02\PS2Keyboard.cydsn\codegentemp\mainClock.h" value="NONE;mainClock" />
   <file name="C:\Users\addis\Documents\PSoC Creator\Workspace02\PS2Keyboard.cydsn\codegentemp\UART.c" value="ARM_C_FILE;UART" />
   <file name="C:\Users\addis\Documents\PSoC Creator\Workspace02\PS2Keyboard.cydsn\codegentemp\UART.h" value="NONE;UART" />
   <file name="C:\Users\addis\Documents\PSoC Creator\Workspace02\PS2Keyboard.cydsn\codegentemp\UART_PM.c" value="ARM_C_FILE;UART" />
   <file name="C:\Users\addis\Documents\PSoC Creator\Workspace02\PS2Keyboard.cydsn\codegentemp\UART_INT.c" value="ARM_C_FILE;UART" />
   <file name="C:\Users\addis\Documents\PSoC Creator\Workspace02\PS2Keyboard.cydsn\codegentemp\UART_BOOT.c" value="ARM_C_FILE;UART" />
-  <file name="C:\Users\addis\Documents\PSoC Creator\Workspace02\PS2Keyboard.cydsn\codegentemp\PS2_ps2.c" value="ARM_C_FILE;PS2" />
-  <file name="C:\Users\addis\Documents\PSoC Creator\Workspace02\PS2Keyboard.cydsn\codegentemp\PS2_ps2.h" value="NONE;PS2" />
-  <file name="C:\Users\addis\Documents\PSoC Creator\Workspace02\PS2Keyboard.cydsn\codegentemp\Clock_1.c" value="ARM_C_FILE;Clock_1" />
-  <file name="C:\Users\addis\Documents\PSoC Creator\Workspace02\PS2Keyboard.cydsn\codegentemp\Clock_1.h" value="NONE;Clock_1" />
+  <file name="C:\Users\addis\Documents\PSoC Creator\Workspace02\PS2Keyboard.cydsn\codegentemp\PS2.c" value="ARM_C_FILE;PS2" />
+  <file name="C:\Users\addis\Documents\PSoC Creator\Workspace02\PS2Keyboard.cydsn\codegentemp\PS2.h" value="NONE;PS2" />
+  <file name="C:\Users\addis\Documents\PSoC Creator\Workspace02\PS2Keyboard.cydsn\codegentemp\clock10us.c" value="ARM_C_FILE;clock10us" />
+  <file name="C:\Users\addis\Documents\PSoC Creator\Workspace02\PS2Keyboard.cydsn\codegentemp\clock10us.h" value="NONE;clock10us" />
   <file name="C:\Users\addis\Documents\PSoC Creator\Workspace02\PS2Keyboard.cydsn\codegentemp\ps2_data_aliases.h" value="NONE;ps2_data" />
   <file name="C:\Users\addis\Documents\PSoC Creator\Workspace02\PS2Keyboard.cydsn\codegentemp\ps2_data.c" value="ARM_C_FILE;ps2_data" />
   <file name="C:\Users\addis\Documents\PSoC Creator\Workspace02\PS2Keyboard.cydsn\codegentemp\ps2_data.h" value="NONE;ps2_data" />
   <file name="C:\Users\addis\Documents\PSoC Creator\Workspace02\PS2Keyboard.cydsn\codegentemp\ps2_clock_aliases.h" value="NONE;ps2_clock" />
   <file name="C:\Users\addis\Documents\PSoC Creator\Workspace02\PS2Keyboard.cydsn\codegentemp\ps2_clock.c" value="ARM_C_FILE;ps2_clock" />
   <file name="C:\Users\addis\Documents\PSoC Creator\Workspace02\PS2Keyboard.cydsn\codegentemp\ps2_clock.h" value="NONE;ps2_clock" />
-  <file name="C:\Users\addis\Documents\PSoC Creator\Workspace02\PS2Keyboard.cydsn\codegentemp\Pin_1_aliases.h" value="NONE;Pin_1" />
-  <file name="C:\Users\addis\Documents\PSoC Creator\Workspace02\PS2Keyboard.cydsn\codegentemp\Pin_1.c" value="ARM_C_FILE;Pin_1" />
-  <file name="C:\Users\addis\Documents\PSoC Creator\Workspace02\PS2Keyboard.cydsn\codegentemp\Pin_1.h" value="NONE;Pin_1" />
   <file name="C:\Users\addis\Documents\PSoC Creator\Workspace02\PS2Keyboard.cydsn\codegentemp\UART_IntClock.c" value="ARM_C_FILE;UART_IntClock" />
   <file name="C:\Users\addis\Documents\PSoC Creator\Workspace02\PS2Keyboard.cydsn\codegentemp\UART_IntClock.h" value="NONE;UART_IntClock" />
   <file name="C:\Users\addis\Documents\PSoC Creator\Workspace02\PS2Keyboard.cydsn\codegentemp\PS2_Timer_ISR.c" value="ARM_C_FILE;PS2_Timer_ISR" />

@@ -1,0 +1,4239 @@
+ARM GAS  C:\Users\addis\AppData\Local\Temp\ccSizEqd.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m3
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.file	"keyboard.c"
+  15              		.text
+  16              	.Ltext0:
+  17              		.cfi_sections	.debug_frame
+  18              		.section	.text.KeyboardDecodeData,"ax",%progbits
+  19              		.align	2
+  20              		.global	KeyboardDecodeData
+  21              		.thumb
+  22              		.thumb_func
+  23              		.type	KeyboardDecodeData, %function
+  24              	KeyboardDecodeData:
+  25              	.LFB0:
+  26              		.file 1 ".\\keyboard.c"
+   1:.\keyboard.c  **** /* ========================================
+   2:.\keyboard.c  ****  *
+   3:.\keyboard.c  ****  * Copyright YOUR COMPANY, THE YEAR
+   4:.\keyboard.c  ****  * All Rights Reserved
+   5:.\keyboard.c  ****  * UNPUBLISHED, LICENSED SOFTWARE.
+   6:.\keyboard.c  ****  *
+   7:.\keyboard.c  ****  * CONFIDENTIAL AND PROPRIETARY INFORMATION
+   8:.\keyboard.c  ****  * WHICH IS THE PROPERTY OF your company.
+   9:.\keyboard.c  ****  *
+  10:.\keyboard.c  ****  * ========================================
+  11:.\keyboard.c  **** */
+  12:.\keyboard.c  **** #include "Keyboard.h"
+  13:.\keyboard.c  **** 
+  14:.\keyboard.c  **** //// State names used in the KeyboardDecodeData() function
+  15:.\keyboard.c  **** #define KBD_START_SEQ	0
+  16:.\keyboard.c  **** #define KBD_BREAK_SEQ	1
+  17:.\keyboard.c  **** #define KBD_E0_SEQ		2
+  18:.\keyboard.c  **** #define	KBD_E0_F0_SEQ	3
+  19:.\keyboard.c  **** #define KBD_PAUSE_A		4
+  20:.\keyboard.c  **** #define KBD_PAUSE_B		5
+  21:.\keyboard.c  **** #define	KBD_PAUSE_C		6
+  22:.\keyboard.c  **** #define KBD_PAUSE_D		7
+  23:.\keyboard.c  **** 
+  24:.\keyboard.c  **** //// All external global variables (identified by names in LeadingCaps)
+  25:.\keyboard.c  **** extern uint8 NumLock;
+  26:.\keyboard.c  **** extern uint8 CapsLock;
+  27:.\keyboard.c  **** extern uint8 ScrollLock;
+  28:.\keyboard.c  **** extern uint8 ShiftDown;
+  29:.\keyboard.c  **** extern uint8 CtrlDown;
+  30:.\keyboard.c  **** extern uint8 AltDown;
+  31:.\keyboard.c  **** extern uint8 PianoMode;
+ARM GAS  C:\Users\addis\AppData\Local\Temp\ccSizEqd.s 			page 2
+
+
+  32:.\keyboard.c  **** 
+  33:.\keyboard.c  **** //----------------------------------------------------------------------------
+  34:.\keyboard.c  **** // Scan Code to printable ASCII mapping
+  35:.\keyboard.c  **** //
+  36:.\keyboard.c  **** // Defines an array variable that maps all single-byte scan codes to their
+  37:.\keyboard.c  **** // respective ASCII values.
+  38:.\keyboard.c  **** //
+  39:.\keyboard.c  **** // The 1st column is the the scan code value.
+  40:.\keyboard.c  **** // The 2nd column gives the ASCII scan code value with Shift pressed.
+  41:.\keyboard.c  **** // The 3rd column gives the ASCII scan code value without Shift pressed.
+  42:.\keyboard.c  **** //----------------------------------------------------------------------------
+  43:.\keyboard.c  **** unsigned char const ShiftableScancode[ ][3] = {
+  44:.\keyboard.c  **** 	'`',	'~',	0x0E,
+  45:.\keyboard.c  **** 	'1',	'!',	0x16,
+  46:.\keyboard.c  **** 	'2',	'@',	0x1E,
+  47:.\keyboard.c  **** 	'3',	'#',	0x26,
+  48:.\keyboard.c  **** 	'4',	'$',	0x25,
+  49:.\keyboard.c  **** 	'5',	'%',	0x2E,
+  50:.\keyboard.c  **** 	'6',	'^',	0x36,
+  51:.\keyboard.c  **** 	'7',	'&',	0x3D,
+  52:.\keyboard.c  **** 	'8',	'*',	0x3E,
+  53:.\keyboard.c  **** 	'9',	'(',	0x46,
+  54:.\keyboard.c  **** 	'0',	')',	0x45,
+  55:.\keyboard.c  **** 	'-',	'_',	0x4E,
+  56:.\keyboard.c  **** 	'=',	'+',	0X55,
+  57:.\keyboard.c  **** 	'[',	'{',	0x54,
+  58:.\keyboard.c  **** 	']',	'}',	0x5B,
+  59:.\keyboard.c  **** 	'\\',	'|',	0x5D,
+  60:.\keyboard.c  **** 	';',	':',	0x4C,
+  61:.\keyboard.c  **** 	'\'',	'\"',	0x52,
+  62:.\keyboard.c  **** 	',',	'<',	0x41,
+  63:.\keyboard.c  **** 	'.',	'>',	0x49,
+  64:.\keyboard.c  **** 	'/',	'?',	0x4A,
+  65:.\keyboard.c  **** 	' ',	' ',	0x29, // Space
+  66:.\keyboard.c  **** 	0x09,	0x09,	0x0D, // Tab
+  67:.\keyboard.c  **** 	0x00,	0x00,	0x00  // Indicates end of this array while searching
+  68:.\keyboard.c  **** };
+  69:.\keyboard.c  **** 
+  70:.\keyboard.c  **** //----------------------------------------------------------------------------
+  71:.\keyboard.c  **** // Scan Code to printable alphabet ASCII mapping
+  72:.\keyboard.c  **** //
+  73:.\keyboard.c  **** // Defines an array variable that maps all single-byte scan codes to their
+  74:.\keyboard.c  **** // respective ASCII values.
+  75:.\keyboard.c  **** //
+  76:.\keyboard.c  **** // The 1st column is the the scan code value.
+  77:.\keyboard.c  **** // The 2nd column gives the ASCII scan code value with Shift pressed.
+  78:.\keyboard.c  **** // The 3rd column gives the ASCII scan code value without Shift pressed.
+  79:.\keyboard.c  **** //----------------------------------------------------------------------------
+  80:.\keyboard.c  **** unsigned char const AlphabetScancode[ ][3] = {
+  81:.\keyboard.c  **** 	'a',	'A',	0x1C,
+  82:.\keyboard.c  **** 	'b',	'B',	0x32,
+  83:.\keyboard.c  **** 	'c',	'C',	0x21,
+  84:.\keyboard.c  **** 	'd',	'D',	0x23,
+  85:.\keyboard.c  **** 	'e',	'E',	0x24,
+  86:.\keyboard.c  **** 	'f',	'F',	0x2B,
+  87:.\keyboard.c  **** 	'g',	'G',	0x34,
+  88:.\keyboard.c  **** 	'h',	'H',	0x33,
+ARM GAS  C:\Users\addis\AppData\Local\Temp\ccSizEqd.s 			page 3
+
+
+  89:.\keyboard.c  **** 	'i',	'I',	0x43,
+  90:.\keyboard.c  **** 	'j',	'J',	0x3B,
+  91:.\keyboard.c  **** 	'k',	'K',	0x42,
+  92:.\keyboard.c  **** 	'l',	'L',	0x4B,
+  93:.\keyboard.c  **** 	'm',	'M',	0x3A,
+  94:.\keyboard.c  **** 	'n',	'N',	0x31,
+  95:.\keyboard.c  **** 	'o',	'O',	0x44,
+  96:.\keyboard.c  **** 	'p',	'P',	0x4D,
+  97:.\keyboard.c  **** 	'q',	'Q',	0x15,
+  98:.\keyboard.c  **** 	'r',	'R',	0x2D,
+  99:.\keyboard.c  **** 	's',	'S',	0x1B,
+ 100:.\keyboard.c  **** 	't',	'T',	0x2C,
+ 101:.\keyboard.c  **** 	'u',	'U',	0x3C,
+ 102:.\keyboard.c  **** 	'v',	'V',	0x2A,
+ 103:.\keyboard.c  **** 	'w',	'W',	0x1D,
+ 104:.\keyboard.c  **** 	'x',	'X',	0x22,
+ 105:.\keyboard.c  **** 	'y',	'Y',	0x35,
+ 106:.\keyboard.c  **** 	'z',	'Z',	0x1A,
+ 107:.\keyboard.c  **** 	0x00,	0x00,	0x00  // Indicates end of this array while searching
+ 108:.\keyboard.c  **** };
+ 109:.\keyboard.c  **** 
+ 110:.\keyboard.c  **** //----------------------------------------------------------------------------
+ 111:.\keyboard.c  **** // Scan Code to control character ASCII mapping
+ 112:.\keyboard.c  **** //
+ 113:.\keyboard.c  **** // Defines an array variable that maps all single-byte scan codes to their
+ 114:.\keyboard.c  **** // respective ASCII values.
+ 115:.\keyboard.c  **** //
+ 116:.\keyboard.c  **** // The 1st column is the the scan code value.
+ 117:.\keyboard.c  **** // The 2nd column gives the ASCII scan code value with Shift pressed.
+ 118:.\keyboard.c  **** // The 3rd column gives the ASCII scan code value without Shift pressed.
+ 119:.\keyboard.c  **** //----------------------------------------------------------------------------
+ 120:.\keyboard.c  **** unsigned char const ControlScancode[ ][2] = {
+ 121:.\keyboard.c  **** 	0x01,	0x1C, // ^A, SOH
+ 122:.\keyboard.c  **** 	0x02,	0x32, // ^B, STX
+ 123:.\keyboard.c  **** 	0x03,	0x21, // ^C, ETX
+ 124:.\keyboard.c  **** 	0x04,	0x23, // ^D, EOT
+ 125:.\keyboard.c  **** 	0x05,	0x24, // ^E, ENQ
+ 126:.\keyboard.c  **** 	0x06,	0x2B, // ^F, ACK
+ 127:.\keyboard.c  **** 	0x07,	0x34, // ^G, BEL
+ 128:.\keyboard.c  **** 	0x08,	0x33, // ^H, BS
+ 129:.\keyboard.c  **** 	0x09,	0x43, // ^I, HT
+ 130:.\keyboard.c  **** 	0x0A,	0x3B, // ^J, NL
+ 131:.\keyboard.c  **** 	0x0B,	0x42, // ^K, VT
+ 132:.\keyboard.c  **** 	0x0C,	0x4B, // ^L, NP
+ 133:.\keyboard.c  **** 	0x0D,	0x3A, // ^M, CR
+ 134:.\keyboard.c  **** 	0x0E,	0x31, // ^N, SO
+ 135:.\keyboard.c  **** 	0x0F,	0x44, // ^O, SI
+ 136:.\keyboard.c  **** 	0x10,	0x4D, // ^P, DLE
+ 137:.\keyboard.c  **** 	0x11,	0x15, // ^Q, DC1
+ 138:.\keyboard.c  **** 	0x12,	0x2D, // ^R, DC2
+ 139:.\keyboard.c  **** 	0x13,	0x1B, // ^S, DC3
+ 140:.\keyboard.c  **** 	0x14,	0x2C, // ^T, DC4
+ 141:.\keyboard.c  **** 	0x15,	0x3C, // ^U, NAK
+ 142:.\keyboard.c  **** 	0x16,	0x2A, // ^V, SYN
+ 143:.\keyboard.c  **** 	0x17,	0x1D, // ^W, ETB
+ 144:.\keyboard.c  **** 	0x18,	0x22, // ^X, CAN
+ 145:.\keyboard.c  **** 	0x19,	0x35, // ^Y, EM
+ARM GAS  C:\Users\addis\AppData\Local\Temp\ccSizEqd.s 			page 4
+
+
+ 146:.\keyboard.c  **** 	0x1A,	0x1A, // ^Z, SUB
+ 147:.\keyboard.c  **** 	0x1B,	0x54, // ^[, ESC
+ 148:.\keyboard.c  **** 	0x1C,	0x5D, // ^\, FS
+ 149:.\keyboard.c  **** 	0x1D,	0x5B, // ^], GS
+ 150:.\keyboard.c  **** 	0x1E,	0x36, // ^^, RS
+ 151:.\keyboard.c  **** 	0x1F,	0x4E, // ^_, US
+ 152:.\keyboard.c  **** 	0x00,	0x00  // Indicates end of this array while searching
+ 153:.\keyboard.c  **** };
+ 154:.\keyboard.c  **** 
+ 155:.\keyboard.c  **** //----------------------------------------------------------------------------
+ 156:.\keyboard.c  **** // Scan Code to control character ASCII mapping
+ 157:.\keyboard.c  **** //
+ 158:.\keyboard.c  **** // Defines an array variable that maps all single-byte scan codes to their
+ 159:.\keyboard.c  **** // respective ASCII values.
+ 160:.\keyboard.c  **** //
+ 161:.\keyboard.c  **** // The 1st column is the the scan code value.
+ 162:.\keyboard.c  **** // The 2nd column gives the ASCII scan code value with Shift pressed.
+ 163:.\keyboard.c  **** //----------------------------------------------------------------------------
+ 164:.\keyboard.c  **** unsigned char const KeypadScancode[ ][2] = {
+ 165:.\keyboard.c  **** 	'0',	0x70,
+ 166:.\keyboard.c  **** 	'1',	0x69,
+ 167:.\keyboard.c  **** 	'2',	0x72,
+ 168:.\keyboard.c  **** 	'3',	0x7A,
+ 169:.\keyboard.c  **** 	'4',	0x6B,
+ 170:.\keyboard.c  **** 	'5',	0x73,
+ 171:.\keyboard.c  **** 	'6',	0x74,
+ 172:.\keyboard.c  **** 	'7',	0x6C,
+ 173:.\keyboard.c  **** 	'8',	0x75,
+ 174:.\keyboard.c  **** 	'9',	0x7D,
+ 175:.\keyboard.c  **** 	'.',	0x71,
+ 176:.\keyboard.c  **** 	0x00,	0x00  // Indicates end of this array while searching
+ 177:.\keyboard.c  **** };
+ 178:.\keyboard.c  **** 
+ 179:.\keyboard.c  **** //----------------------------------------------------------------------------
+ 180:.\keyboard.c  **** // Scan Code to 3-octave diatonic musical scale.
+ 181:.\keyboard.c  **** //
+ 182:.\keyboard.c  **** // Defines an array variable that maps all single-byte scan codes to their
+ 183:.\keyboard.c  **** // respective period and pulse widths for a 16-bit PWM User Module utilizing
+ 184:.\keyboard.c  **** // an 8MHz clock .
+ 185:.\keyboard.c  **** //
+ 186:.\keyboard.c  **** // The 1st column is the the scan code value.
+ 187:.\keyboard.c  **** // The 2nd column gives the 16-bit PWM Period.
+ 188:.\keyboard.c  **** // The 3rd column gives the 16-bit PWM Pulse Width.
+ 189:.\keyboard.c  **** //----------------------------------------------------------------------------
+ 190:.\keyboard.c  **** unsigned int const PianoScancode[ ][3] = {
+ 191:.\keyboard.c  **** 	//// Lower Octave
+ 192:.\keyboard.c  **** 	0x1A,	61155,	30577,	// 'z' C3 Low C
+ 193:.\keyboard.c  **** 	0x22,	54483,	27241,	// 'x' D3
+ 194:.\keyboard.c  **** 	0x21,	48539,	24269,	// 'c' E3
+ 195:.\keyboard.c  **** 	0x2A,	45814,	22907,	// 'v' F3
+ 196:.\keyboard.c  **** 	0x32,	40816,	20407,	// 'b' G3
+ 197:.\keyboard.c  **** 	0x31,	36363,	18181,	// 'n' A3
+ 198:.\keyboard.c  **** 	0x3A,	32395,	16197,	// 'm' B3
+ 199:.\keyboard.c  **** 	0x41,	30577,	15288,	// ',' C4 Middle C
+ 200:.\keyboard.c  **** 	//// Middle Octave
+ 201:.\keyboard.c  **** 	0x1C,	30577,	15288,	// 'a' C4 Middle C
+ 202:.\keyboard.c  **** 	0x1B,	27241,	13620,	// 's' D4
+ARM GAS  C:\Users\addis\AppData\Local\Temp\ccSizEqd.s 			page 5
+
+
+ 203:.\keyboard.c  **** 	0x23,	24269,	12134,	// 'd' E4
+ 204:.\keyboard.c  **** 	0x2B,	22907,	11453,	// 'f' F4
+ 205:.\keyboard.c  **** 	0x34,	20407,	10203,	// 'g' G4
+ 206:.\keyboard.c  **** 	0x33,	18181,	9090,	// 'h' A4
+ 207:.\keyboard.c  **** 	0x3B,	16197,	8098,	// 'j' B4
+ 208:.\keyboard.c  **** 	0x42,	15288,	7644,	// 'k' C5 Tenor C
+ 209:.\keyboard.c  **** 	//// Tenor Octave
+ 210:.\keyboard.c  **** 	0x15,	15288,	7644,	// 'q' C5 Tenor C
+ 211:.\keyboard.c  **** 	0x1D,	13620,	6809,	// 'w' D5
+ 212:.\keyboard.c  **** 	0x24,	12134,	6066,	// 'e' E5
+ 213:.\keyboard.c  **** 	0x2D,	11453,	5726,	// 'r' F5
+ 214:.\keyboard.c  **** 	0x2C,	10203,	5101,	// 't' G5
+ 215:.\keyboard.c  **** 	0x35,	9090,	4544,	// 'y' A5
+ 216:.\keyboard.c  **** 	0x3C,	8098,	4049,	// 'u' B5
+ 217:.\keyboard.c  **** 	0x43,	7644,	3821,	// 'i' C6 Soprano C
+ 218:.\keyboard.c  **** 	//// End of array
+ 219:.\keyboard.c  **** 	0x00,	0x00,	0x00	// Indicates end of this array while searching
+ 220:.\keyboard.c  **** };
+ 221:.\keyboard.c  **** 
+ 222:.\keyboard.c  **** uint8 KeyboardDecodeData(uint8 data)
+ 223:.\keyboard.c  **** {
+  27              		.loc 1 223 0
+  28              		.cfi_startproc
+  29              		@ args = 0, pretend = 0, frame = 0
+  30              		@ frame_needed = 0, uses_anonymous_args = 0
+  31              		@ link register save eliminated.
+  32              	.LVL0:
+ 224:.\keyboard.c  **** 	static uint8 state = KBD_START_SEQ;
+ 225:.\keyboard.c  **** 	uint8 codetype = KEY_NO_ACTION;
+ 226:.\keyboard.c  **** 	
+ 227:.\keyboard.c  **** 	switch(state) 
+  33              		.loc 1 227 0
+  34 0000 434B     		ldr	r3, .L28
+  35 0002 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+  36 0004 072B     		cmp	r3, #7
+  37 0006 74D8     		bhi	.L21
+  38 0008 DFE803F0 		tbb	[pc, r3]
+  39              	.L4:
+  40 000c 04       		.byte	(.L3-.L4)/2
+  41 000d 19       		.byte	(.L5-.L4)/2
+  42 000e 1E       		.byte	(.L6-.L4)/2
+  43 000f 2E       		.byte	(.L7-.L4)/2
+  44 0010 37       		.byte	(.L8-.L4)/2
+  45 0011 49       		.byte	(.L9-.L4)/2
+  46 0012 5B       		.byte	(.L10-.L4)/2
+  47 0013 66       		.byte	(.L11-.L4)/2
+  48              		.p2align 1
+  49              	.L3:
+ 228:.\keyboard.c  **** 	{
+ 229:.\keyboard.c  **** 		case KBD_START_SEQ:
+ 230:.\keyboard.c  **** 			if (data == 0xF0)
+  50              		.loc 1 230 0
+  51 0014 F028     		cmp	r0, #240
+  52 0016 04D1     		bne	.L12
+ 231:.\keyboard.c  **** 				state = KBD_BREAK_SEQ;
+  53              		.loc 1 231 0
+  54 0018 0122     		movs	r2, #1
+ARM GAS  C:\Users\addis\AppData\Local\Temp\ccSizEqd.s 			page 6
+
+
+  55 001a 3D4B     		ldr	r3, .L28
+  56 001c 1A70     		strb	r2, [r3]
+ 225:.\keyboard.c  **** 	
+  57              		.loc 1 225 0
+  58 001e 0020     		movs	r0, #0
+  59              	.LVL1:
+  60 0020 7047     		bx	lr
+  61              	.LVL2:
+  62              	.L12:
+ 232:.\keyboard.c  **** 			else if (data == 0xE0)
+  63              		.loc 1 232 0
+  64 0022 E028     		cmp	r0, #224
+  65 0024 04D1     		bne	.L13
+ 233:.\keyboard.c  **** 				state = KBD_E0_SEQ;
+  66              		.loc 1 233 0
+  67 0026 0222     		movs	r2, #2
+  68 0028 394B     		ldr	r3, .L28
+  69 002a 1A70     		strb	r2, [r3]
+ 225:.\keyboard.c  **** 	
+  70              		.loc 1 225 0
+  71 002c 0020     		movs	r0, #0
+  72              	.LVL3:
+  73 002e 7047     		bx	lr
+  74              	.LVL4:
+  75              	.L13:
+ 234:.\keyboard.c  **** 			else if (data == 0xE1)
+  76              		.loc 1 234 0
+  77 0030 E128     		cmp	r0, #225
+  78 0032 60D1     		bne	.L22
+ 235:.\keyboard.c  **** 				state = KBD_PAUSE_A;
+  79              		.loc 1 235 0
+  80 0034 0422     		movs	r2, #4
+  81 0036 364B     		ldr	r3, .L28
+  82 0038 1A70     		strb	r2, [r3]
+ 225:.\keyboard.c  **** 	
+  83              		.loc 1 225 0
+  84 003a 0020     		movs	r0, #0
+  85              	.LVL5:
+  86 003c 7047     		bx	lr
+  87              	.LVL6:
+  88              	.L5:
+ 236:.\keyboard.c  **** 			else
+ 237:.\keyboard.c  **** 				codetype = KEY_MAKE;
+ 238:.\keyboard.c  **** 			break;
+ 239:.\keyboard.c  **** 	
+ 240:.\keyboard.c  **** 		case KBD_BREAK_SEQ:
+ 241:.\keyboard.c  **** 			state = KBD_START_SEQ;
+  89              		.loc 1 241 0
+  90 003e 0022     		movs	r2, #0
+  91 0040 334B     		ldr	r3, .L28
+  92 0042 1A70     		strb	r2, [r3]
+  93              	.LVL7:
+ 242:.\keyboard.c  **** 			codetype = KEY_BREAK;
+  94              		.loc 1 242 0
+  95 0044 0220     		movs	r0, #2
+  96              	.LVL8:
+ 243:.\keyboard.c  **** 			break;
+ARM GAS  C:\Users\addis\AppData\Local\Temp\ccSizEqd.s 			page 7
+
+
+  97              		.loc 1 243 0
+  98 0046 7047     		bx	lr
+  99              	.LVL9:
+ 100              	.L6:
+ 244:.\keyboard.c  **** 			
+ 245:.\keyboard.c  **** 		case KBD_E0_SEQ:
+ 246:.\keyboard.c  **** 			if (data == 0xF0)
+ 101              		.loc 1 246 0
+ 102 0048 F028     		cmp	r0, #240
+ 103 004a 04D1     		bne	.L14
+ 247:.\keyboard.c  **** 				state = KBD_E0_F0_SEQ;
+ 104              		.loc 1 247 0
+ 105 004c 0322     		movs	r2, #3
+ 106 004e 304B     		ldr	r3, .L28
+ 107 0050 1A70     		strb	r2, [r3]
+ 225:.\keyboard.c  **** 	
+ 108              		.loc 1 225 0
+ 109 0052 0020     		movs	r0, #0
+ 110              	.LVL10:
+ 111 0054 7047     		bx	lr
+ 112              	.LVL11:
+ 113              	.L14:
+ 248:.\keyboard.c  **** 			else
+ 249:.\keyboard.c  **** 			{
+ 250:.\keyboard.c  **** 				state = KBD_START_SEQ;
+ 114              		.loc 1 250 0
+ 115 0056 0022     		movs	r2, #0
+ 116 0058 2D4B     		ldr	r3, .L28
+ 117 005a 1A70     		strb	r2, [r3]
+ 251:.\keyboard.c  **** 			
+ 252:.\keyboard.c  **** 				// See if this is a fake-shift MAKE.
+ 253:.\keyboard.c  **** 				if (data == 0x12 || data == 0x59) 
+ 118              		.loc 1 253 0
+ 119 005c 1228     		cmp	r0, #18
+ 120 005e 4CD0     		beq	.L23
+ 121              		.loc 1 253 0 is_stmt 0 discriminator 1
+ 122 0060 5928     		cmp	r0, #89
+ 123 0062 4CD1     		bne	.L24
+ 254:.\keyboard.c  **** 					codetype = KEY_FAKE_SHIFT | KEY_MAKE;
+ 124              		.loc 1 254 0 is_stmt 1
+ 125 0064 1120     		movs	r0, #17
+ 126              	.LVL12:
+ 127 0066 7047     		bx	lr
+ 128              	.LVL13:
+ 129              	.L7:
+ 255:.\keyboard.c  **** 				else
+ 256:.\keyboard.c  **** 					codetype = KEY_E0 | KEY_MAKE;
+ 257:.\keyboard.c  **** 			}
+ 258:.\keyboard.c  **** 			break;
+ 259:.\keyboard.c  **** 			
+ 260:.\keyboard.c  **** 		case KBD_E0_F0_SEQ:
+ 261:.\keyboard.c  **** 			state = KBD_START_SEQ;
+ 130              		.loc 1 261 0
+ 131 0068 0022     		movs	r2, #0
+ 132 006a 294B     		ldr	r3, .L28
+ 133 006c 1A70     		strb	r2, [r3]
+ 262:.\keyboard.c  **** 			
+ARM GAS  C:\Users\addis\AppData\Local\Temp\ccSizEqd.s 			page 8
+
+
+ 263:.\keyboard.c  **** 			// See if this is a fake-shift BREAK.
+ 264:.\keyboard.c  **** 			if (data == 0x12 || data == 0x59)
+ 134              		.loc 1 264 0
+ 135 006e 1228     		cmp	r0, #18
+ 136 0070 47D0     		beq	.L25
+ 137              		.loc 1 264 0 is_stmt 0 discriminator 1
+ 138 0072 5928     		cmp	r0, #89
+ 139 0074 47D1     		bne	.L26
+ 265:.\keyboard.c  **** 				codetype = KEY_FAKE_SHIFT | KEY_BREAK;
+ 140              		.loc 1 265 0 is_stmt 1
+ 141 0076 1220     		movs	r0, #18
+ 142              	.LVL14:
+ 143 0078 7047     		bx	lr
+ 144              	.LVL15:
+ 145              	.L8:
+ 266:.\keyboard.c  **** 			else
+ 267:.\keyboard.c  **** 				codetype = KEY_E0 | KEY_BREAK;
+ 268:.\keyboard.c  **** 			break;
+ 269:.\keyboard.c  **** 			
+ 270:.\keyboard.c  **** 		case KBD_PAUSE_A:
+ 271:.\keyboard.c  **** 			if (data == 0x14)
+ 146              		.loc 1 271 0
+ 147 007a 1428     		cmp	r0, #20
+ 148 007c 04D1     		bne	.L15
+ 272:.\keyboard.c  **** 				state = KBD_PAUSE_B;
+ 149              		.loc 1 272 0
+ 150 007e 0522     		movs	r2, #5
+ 151 0080 234B     		ldr	r3, .L28
+ 152 0082 1A70     		strb	r2, [r3]
+ 225:.\keyboard.c  **** 	
+ 153              		.loc 1 225 0
+ 154 0084 0020     		movs	r0, #0
+ 155              	.LVL16:
+ 156 0086 7047     		bx	lr
+ 157              	.LVL17:
+ 158              	.L15:
+ 273:.\keyboard.c  **** 			else if (data == 0xF0)
+ 159              		.loc 1 273 0
+ 160 0088 F028     		cmp	r0, #240
+ 161 008a 04D1     		bne	.L16
+ 274:.\keyboard.c  **** 				state = KBD_PAUSE_D;
+ 162              		.loc 1 274 0
+ 163 008c 0722     		movs	r2, #7
+ 164 008e 204B     		ldr	r3, .L28
+ 165 0090 1A70     		strb	r2, [r3]
+ 225:.\keyboard.c  **** 	
+ 166              		.loc 1 225 0
+ 167 0092 0020     		movs	r0, #0
+ 168              	.LVL18:
+ 169 0094 7047     		bx	lr
+ 170              	.LVL19:
+ 171              	.L16:
+ 275:.\keyboard.c  **** 			else
+ 276:.\keyboard.c  **** 				state = KBD_START_SEQ;
+ 172              		.loc 1 276 0
+ 173 0096 0020     		movs	r0, #0
+ 174              	.LVL20:
+ARM GAS  C:\Users\addis\AppData\Local\Temp\ccSizEqd.s 			page 9
+
+
+ 175 0098 1D4B     		ldr	r3, .L28
+ 176 009a 1870     		strb	r0, [r3]
+ 177 009c 7047     		bx	lr
+ 178              	.LVL21:
+ 179              	.L9:
+ 277:.\keyboard.c  **** 			break;
+ 278:.\keyboard.c  **** 			
+ 279:.\keyboard.c  **** 		case KBD_PAUSE_B:
+ 280:.\keyboard.c  **** 			if (data == 0x77)
+ 180              		.loc 1 280 0
+ 181 009e 7728     		cmp	r0, #119
+ 182 00a0 04D1     		bne	.L17
+ 281:.\keyboard.c  **** 				state = KBD_PAUSE_C;
+ 183              		.loc 1 281 0
+ 184 00a2 0622     		movs	r2, #6
+ 185 00a4 1A4B     		ldr	r3, .L28
+ 186 00a6 1A70     		strb	r2, [r3]
+ 225:.\keyboard.c  **** 	
+ 187              		.loc 1 225 0
+ 188 00a8 0020     		movs	r0, #0
+ 189              	.LVL22:
+ 190 00aa 7047     		bx	lr
+ 191              	.LVL23:
+ 192              	.L17:
+ 282:.\keyboard.c  **** 			else if (data == 0xF0)
+ 193              		.loc 1 282 0
+ 194 00ac F028     		cmp	r0, #240
+ 195 00ae 04D1     		bne	.L18
+ 283:.\keyboard.c  **** 				state = KBD_PAUSE_D;
+ 196              		.loc 1 283 0
+ 197 00b0 0722     		movs	r2, #7
+ 198 00b2 174B     		ldr	r3, .L28
+ 199 00b4 1A70     		strb	r2, [r3]
+ 225:.\keyboard.c  **** 	
+ 200              		.loc 1 225 0
+ 201 00b6 0020     		movs	r0, #0
+ 202              	.LVL24:
+ 203 00b8 7047     		bx	lr
+ 204              	.LVL25:
+ 205              	.L18:
+ 284:.\keyboard.c  **** 			else
+ 285:.\keyboard.c  **** 				state = KBD_START_SEQ;
+ 206              		.loc 1 285 0
+ 207 00ba 0020     		movs	r0, #0
+ 208              	.LVL26:
+ 209 00bc 144B     		ldr	r3, .L28
+ 210 00be 1870     		strb	r0, [r3]
+ 211 00c0 7047     		bx	lr
+ 212              	.LVL27:
+ 213              	.L10:
+ 286:.\keyboard.c  **** 			break;
+ 287:.\keyboard.c  **** 			
+ 288:.\keyboard.c  **** 		case KBD_PAUSE_C:
+ 289:.\keyboard.c  **** 			if (data == 0xE1)
+ 214              		.loc 1 289 0
+ 215 00c2 E128     		cmp	r0, #225
+ 216 00c4 04D1     		bne	.L19
+ARM GAS  C:\Users\addis\AppData\Local\Temp\ccSizEqd.s 			page 10
+
+
+ 290:.\keyboard.c  **** 				state = KBD_PAUSE_A;
+ 217              		.loc 1 290 0
+ 218 00c6 0422     		movs	r2, #4
+ 219 00c8 114B     		ldr	r3, .L28
+ 220 00ca 1A70     		strb	r2, [r3]
+ 225:.\keyboard.c  **** 	
+ 221              		.loc 1 225 0
+ 222 00cc 0020     		movs	r0, #0
+ 223              	.LVL28:
+ 224 00ce 7047     		bx	lr
+ 225              	.LVL29:
+ 226              	.L19:
+ 291:.\keyboard.c  **** 			else
+ 292:.\keyboard.c  **** 				state = KBD_START_SEQ;
+ 227              		.loc 1 292 0
+ 228 00d0 0020     		movs	r0, #0
+ 229              	.LVL30:
+ 230 00d2 0F4B     		ldr	r3, .L28
+ 231 00d4 1870     		strb	r0, [r3]
+ 232 00d6 7047     		bx	lr
+ 233              	.LVL31:
+ 234              	.L11:
+ 293:.\keyboard.c  **** 			break;
+ 294:.\keyboard.c  **** 			
+ 295:.\keyboard.c  **** 		case KBD_PAUSE_D:
+ 296:.\keyboard.c  **** 			if (data == 0x14)
+ 235              		.loc 1 296 0
+ 236 00d8 1428     		cmp	r0, #20
+ 237 00da 04D1     		bne	.L20
+ 297:.\keyboard.c  **** 				state = KBD_PAUSE_B;
+ 238              		.loc 1 297 0
+ 239 00dc 0522     		movs	r2, #5
+ 240 00de 0C4B     		ldr	r3, .L28
+ 241 00e0 1A70     		strb	r2, [r3]
+ 225:.\keyboard.c  **** 	
+ 242              		.loc 1 225 0
+ 243 00e2 0020     		movs	r0, #0
+ 244              	.LVL32:
+ 245 00e4 7047     		bx	lr
+ 246              	.LVL33:
+ 247              	.L20:
+ 298:.\keyboard.c  **** 			else if (data == 0x77)
+ 248              		.loc 1 298 0
+ 249 00e6 7728     		cmp	r0, #119
+ 250 00e8 0FD0     		beq	.L27
+ 299:.\keyboard.c  **** 				codetype = KEY_PAUSE;
+ 300:.\keyboard.c  **** 			else
+ 301:.\keyboard.c  **** 				state = KBD_START_SEQ;
+ 251              		.loc 1 301 0
+ 252 00ea 0020     		movs	r0, #0
+ 253              	.LVL34:
+ 254 00ec 084B     		ldr	r3, .L28
+ 255 00ee 1870     		strb	r0, [r3]
+ 256 00f0 7047     		bx	lr
+ 257              	.LVL35:
+ 258              	.L21:
+ 225:.\keyboard.c  **** 	
+ARM GAS  C:\Users\addis\AppData\Local\Temp\ccSizEqd.s 			page 11
+
+
+ 259              		.loc 1 225 0
+ 260 00f2 0020     		movs	r0, #0
+ 261              	.LVL36:
+ 262 00f4 7047     		bx	lr
+ 263              	.LVL37:
+ 264              	.L22:
+ 237:.\keyboard.c  **** 			break;
+ 265              		.loc 1 237 0
+ 266 00f6 0120     		movs	r0, #1
+ 267              	.LVL38:
+ 268 00f8 7047     		bx	lr
+ 269              	.LVL39:
+ 270              	.L23:
+ 254:.\keyboard.c  **** 				else
+ 271              		.loc 1 254 0
+ 272 00fa 1120     		movs	r0, #17
+ 273              	.LVL40:
+ 274 00fc 7047     		bx	lr
+ 275              	.LVL41:
+ 276              	.L24:
+ 256:.\keyboard.c  **** 			}
+ 277              		.loc 1 256 0
+ 278 00fe 0520     		movs	r0, #5
+ 279              	.LVL42:
+ 280 0100 7047     		bx	lr
+ 281              	.LVL43:
+ 282              	.L25:
+ 265:.\keyboard.c  **** 			else
+ 283              		.loc 1 265 0
+ 284 0102 1220     		movs	r0, #18
+ 285              	.LVL44:
+ 286 0104 7047     		bx	lr
+ 287              	.LVL45:
+ 288              	.L26:
+ 267:.\keyboard.c  **** 			break;
+ 289              		.loc 1 267 0
+ 290 0106 0620     		movs	r0, #6
+ 291              	.LVL46:
+ 292 0108 7047     		bx	lr
+ 293              	.LVL47:
+ 294              	.L27:
+ 299:.\keyboard.c  **** 			else
+ 295              		.loc 1 299 0
+ 296 010a 0820     		movs	r0, #8
+ 297              	.LVL48:
+ 302:.\keyboard.c  **** 			break;
+ 303:.\keyboard.c  **** 	}
+ 304:.\keyboard.c  **** 	
+ 305:.\keyboard.c  **** 	return codetype;
+ 306:.\keyboard.c  **** }
+ 298              		.loc 1 306 0
+ 299 010c 7047     		bx	lr
+ 300              	.L29:
+ 301 010e 00BF     		.align	2
+ 302              	.L28:
+ 303 0110 00000000 		.word	.LANCHOR0
+ 304              		.cfi_endproc
+ARM GAS  C:\Users\addis\AppData\Local\Temp\ccSizEqd.s 			page 12
+
+
+ 305              	.LFE0:
+ 306              		.size	KeyboardDecodeData, .-KeyboardDecodeData
+ 307              		.section	.text.KeyboardToASCII,"ax",%progbits
+ 308              		.align	2
+ 309              		.global	KeyboardToASCII
+ 310              		.thumb
+ 311              		.thumb_func
+ 312              		.type	KeyboardToASCII, %function
+ 313              	KeyboardToASCII:
+ 314              	.LFB1:
+ 307:.\keyboard.c  **** 
+ 308:.\keyboard.c  **** char KeyboardToASCII(uint8 scancode, uint8 codetype)
+ 309:.\keyboard.c  **** {	
+ 315              		.loc 1 309 0
+ 316              		.cfi_startproc
+ 317              		@ args = 0, pretend = 0, frame = 0
+ 318              		@ frame_needed = 0, uses_anonymous_args = 0
+ 319              		@ link register save eliminated.
+ 320              	.LVL49:
+ 321 0000 10B4     		push	{r4}
+ 322              		.cfi_def_cfa_offset 4
+ 323              		.cfi_offset 4, -4
+ 310:.\keyboard.c  **** 	uint8 i;
+ 311:.\keyboard.c  **** 	
+ 312:.\keyboard.c  **** 	//// Ignore fake-shifts
+ 313:.\keyboard.c  **** 	if (codetype & KEY_FAKE_SHIFT)
+ 324              		.loc 1 313 0
+ 325 0002 11F0100F 		tst	r1, #16
+ 326 0006 40F09480 		bne	.L49
+ 314:.\keyboard.c  **** 		return 0;
+ 315:.\keyboard.c  **** 	
+ 316:.\keyboard.c  **** 	if (codetype & KEY_MAKE)
+ 327              		.loc 1 316 0
+ 328 000a 11F0010F 		tst	r1, #1
+ 329 000e 00F09280 		beq	.L50
+ 317:.\keyboard.c  **** 	{
+ 318:.\keyboard.c  **** 		//// Convert any two byte (E0) scancodetypes to their ASCII equivalent
+ 319:.\keyboard.c  **** 		if (codetype & KEY_E0) 
+ 330              		.loc 1 319 0
+ 331 0012 11F0040F 		tst	r1, #4
+ 332 0016 0FD0     		beq	.L32
+ 320:.\keyboard.c  **** 		{
+ 321:.\keyboard.c  **** 			if (scancode == 0x71) return(0x08);	// Delete (return backspace)
+ 333              		.loc 1 321 0
+ 334 0018 7128     		cmp	r0, #113
+ 335 001a 00F08E80 		beq	.L51
+ 322:.\keyboard.c  **** 			if (scancode == 0x4A) return('/');	// Keypad /
+ 336              		.loc 1 322 0
+ 337 001e 4A28     		cmp	r0, #74
+ 338 0020 00F08D80 		beq	.L52
+ 323:.\keyboard.c  **** 			if (scancode == 0x5A) { // Keypad Enter
+ 339              		.loc 1 323 0
+ 340 0024 5A28     		cmp	r0, #90
+ 341 0026 40F08C80 		bne	.L53
+ 324:.\keyboard.c  **** 				if (CtrlDown) return(0x0A);	// ^Enter (return line-feed)
+ 342              		.loc 1 324 0
+ 343 002a 514B     		ldr	r3, .L69
+ARM GAS  C:\Users\addis\AppData\Local\Temp\ccSizEqd.s 			page 13
+
+
+ 344 002c 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 345 002e 002B     		cmp	r3, #0
+ 346 0030 00F08980 		beq	.L54
+ 347 0034 0A20     		movs	r0, #10
+ 348              	.LVL50:
+ 349 0036 97E0     		b	.L31
+ 350              	.LVL51:
+ 351              	.L32:
+ 325:.\keyboard.c  **** 				else return(0x0D); // (return carriage-return)
+ 326:.\keyboard.c  **** 			}
+ 327:.\keyboard.c  **** 		}
+ 328:.\keyboard.c  **** 		//// Convert any single byte scancodes to their ASCII equivalent
+ 329:.\keyboard.c  **** 		else {
+ 330:.\keyboard.c  **** 			//// Check for special case keys
+ 331:.\keyboard.c  **** 			if (scancode == 0x5A) { // Enter
+ 352              		.loc 1 331 0
+ 353 0038 5A28     		cmp	r0, #90
+ 354 003a 06D1     		bne	.L33
+ 332:.\keyboard.c  **** 				if (CtrlDown) return(0x0A);	// ^Enter (return line-feed)
+ 355              		.loc 1 332 0
+ 356 003c 4C4B     		ldr	r3, .L69
+ 357 003e 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 358 0040 002B     		cmp	r3, #0
+ 359 0042 00F08280 		beq	.L55
+ 360 0046 0A20     		movs	r0, #10
+ 361              	.LVL52:
+ 362 0048 8EE0     		b	.L31
+ 363              	.LVL53:
+ 364              	.L33:
+ 333:.\keyboard.c  **** 				else return(0x0D); // (return carriage-return)
+ 334:.\keyboard.c  **** 			}
+ 335:.\keyboard.c  **** 			if (scancode == 0x76) return(0x1B);	// ESC key returns ASCII ESC
+ 365              		.loc 1 335 0
+ 366 004a 7628     		cmp	r0, #118
+ 367 004c 7FD0     		beq	.L56
+ 336:.\keyboard.c  **** 			if (scancode == 0x7C) return('*');	// KP *
+ 368              		.loc 1 336 0
+ 369 004e 7C28     		cmp	r0, #124
+ 370 0050 7FD0     		beq	.L57
+ 337:.\keyboard.c  **** 			if (scancode == 0x7B) return('-');	// KP -
+ 371              		.loc 1 337 0
+ 372 0052 7B28     		cmp	r0, #123
+ 373 0054 7FD0     		beq	.L58
+ 338:.\keyboard.c  **** 			if (scancode == 0x79) return('+');	// KP +
+ 374              		.loc 1 338 0
+ 375 0056 7928     		cmp	r0, #121
+ 376 0058 7FD0     		beq	.L59
+ 339:.\keyboard.c  **** 			if (scancode == 0x66) return (0x08); // BkSP
+ 377              		.loc 1 339 0
+ 378 005a 6628     		cmp	r0, #102
+ 379 005c 7FD0     		beq	.L60
+ 340:.\keyboard.c  **** 			//// If one of the Control keys is down, return their ASCII value
+ 341:.\keyboard.c  **** 			if (CtrlDown) 
+ 380              		.loc 1 341 0
+ 381 005e 444B     		ldr	r3, .L69
+ 382 0060 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 383 0062 1BB9     		cbnz	r3, .L61
+ARM GAS  C:\Users\addis\AppData\Local\Temp\ccSizEqd.s 			page 14
+
+
+ 384 0064 11E0     		b	.L35
+ 385              	.LVL54:
+ 386              	.L37:
+ 342:.\keyboard.c  **** 			{
+ 343:.\keyboard.c  **** 				i = 0;
+ 344:.\keyboard.c  **** 				while((ControlScancode[i][1] != scancode) && (ControlScancode[i][1] != 0)) {
+ 345:.\keyboard.c  **** 					i++;
+ 387              		.loc 1 345 0
+ 388 0066 0133     		adds	r3, r3, #1
+ 389              	.LVL55:
+ 390 0068 DBB2     		uxtb	r3, r3
+ 391              	.LVL56:
+ 392 006a 00E0     		b	.L34
+ 393              	.LVL57:
+ 394              	.L61:
+ 395 006c 0023     		movs	r3, #0
+ 396              	.LVL58:
+ 397              	.L34:
+ 344:.\keyboard.c  **** 					i++;
+ 398              		.loc 1 344 0
+ 399 006e 1946     		mov	r1, r3
+ 400 0070 404A     		ldr	r2, .L69+4
+ 401 0072 02EB4302 		add	r2, r2, r3, lsl #1
+ 402 0076 5278     		ldrb	r2, [r2, #1]	@ zero_extendqisi2
+ 403 0078 8242     		cmp	r2, r0
+ 404 007a 01D0     		beq	.L36
+ 344:.\keyboard.c  **** 					i++;
+ 405              		.loc 1 344 0 is_stmt 0 discriminator 1
+ 406 007c 002A     		cmp	r2, #0
+ 407 007e F2D1     		bne	.L37
+ 408              	.L36:
+ 346:.\keyboard.c  **** 				}
+ 347:.\keyboard.c  **** 				if (ControlScancode[i][1] > 0) {
+ 409              		.loc 1 347 0 is_stmt 1
+ 410 0080 1AB1     		cbz	r2, .L35
+ 348:.\keyboard.c  **** 					return(ControlScancode[i][0]);
+ 411              		.loc 1 348 0
+ 412 0082 3C4B     		ldr	r3, .L69+4
+ 413              	.LVL59:
+ 414 0084 13F81100 		ldrb	r0, [r3, r1, lsl #1]	@ zero_extendqisi2
+ 415              	.LVL60:
+ 416 0088 6EE0     		b	.L31
+ 417              	.LVL61:
+ 418              	.L35:
+ 349:.\keyboard.c  **** 				}
+ 350:.\keyboard.c  **** 			}
+ 351:.\keyboard.c  **** 			//// If NumLock is on, return any appropriate key pad ASCII values
+ 352:.\keyboard.c  **** 			if (NumLock) {
+ 419              		.loc 1 352 0
+ 420 008a 3B4B     		ldr	r3, .L69+8
+ 421 008c 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 422 008e 1BB9     		cbnz	r3, .L62
+ 423 0090 14E0     		b	.L67
+ 424              	.LVL62:
+ 425              	.L41:
+ 353:.\keyboard.c  **** 				i = 0;
+ 354:.\keyboard.c  **** 				while((KeypadScancode[i][1] != scancode) && (KeypadScancode[i][1] != 0)) {
+ARM GAS  C:\Users\addis\AppData\Local\Temp\ccSizEqd.s 			page 15
+
+
+ 355:.\keyboard.c  **** 					i++;
+ 426              		.loc 1 355 0
+ 427 0092 0133     		adds	r3, r3, #1
+ 428              	.LVL63:
+ 429 0094 DBB2     		uxtb	r3, r3
+ 430              	.LVL64:
+ 431 0096 00E0     		b	.L38
+ 432              	.LVL65:
+ 433              	.L62:
+ 434 0098 0023     		movs	r3, #0
+ 435              	.L38:
+ 436              	.LVL66:
+ 354:.\keyboard.c  **** 					i++;
+ 437              		.loc 1 354 0
+ 438 009a 1946     		mov	r1, r3
+ 439 009c 354A     		ldr	r2, .L69+4
+ 440 009e 02EB4302 		add	r2, r2, r3, lsl #1
+ 441 00a2 92F84120 		ldrb	r2, [r2, #65]	@ zero_extendqisi2
+ 442 00a6 8242     		cmp	r2, r0
+ 443 00a8 01D0     		beq	.L40
+ 354:.\keyboard.c  **** 					i++;
+ 444              		.loc 1 354 0 is_stmt 0 discriminator 1
+ 445 00aa 002A     		cmp	r2, #0
+ 446 00ac F1D1     		bne	.L41
+ 447              	.L40:
+ 356:.\keyboard.c  **** 				}
+ 357:.\keyboard.c  **** 				if (KeypadScancode[i][1] > 0) {
+ 448              		.loc 1 357 0 is_stmt 1
+ 449 00ae 4AB1     		cbz	r2, .L63
+ 358:.\keyboard.c  **** 					return(KeypadScancode[i][0]);
+ 450              		.loc 1 358 0
+ 451 00b0 304B     		ldr	r3, .L69+4
+ 452              	.LVL67:
+ 453 00b2 03EB4101 		add	r1, r3, r1, lsl #1
+ 454 00b6 91F84000 		ldrb	r0, [r1, #64]	@ zero_extendqisi2
+ 455              	.LVL68:
+ 456 00ba 55E0     		b	.L31
+ 457              	.LVL69:
+ 458              	.L67:
+ 359:.\keyboard.c  **** 				}
+ 360:.\keyboard.c  **** 			}
+ 361:.\keyboard.c  **** 			//// Keypad ./DEL returns backspace if NumLock is off
+ 362:.\keyboard.c  **** 			else {
+ 363:.\keyboard.c  **** 				if (scancode == 0x71) return(0x08);	// KP ./Del (return backspace)
+ 459              		.loc 1 363 0
+ 460 00bc 7128     		cmp	r0, #113
+ 461 00be 50D0     		beq	.L64
+ 462 00c0 0023     		movs	r3, #0
+ 463 00c2 03E0     		b	.L43
+ 464              	.LVL70:
+ 465              	.L63:
+ 466 00c4 0023     		movs	r3, #0
+ 467              	.LVL71:
+ 468 00c6 01E0     		b	.L43
+ 469              	.LVL72:
+ 470              	.L45:
+ 364:.\keyboard.c  **** 			}
+ARM GAS  C:\Users\addis\AppData\Local\Temp\ccSizEqd.s 			page 16
+
+
+ 365:.\keyboard.c  **** 			//// Search for all others in their shifted or CapsLock form
+ 366:.\keyboard.c  **** 			i = 0;
+ 367:.\keyboard.c  **** 			while((AlphabetScancode[i][2] != scancode) && (AlphabetScancode[i][2] != 0)) {
+ 368:.\keyboard.c  **** 				i++;
+ 471              		.loc 1 368 0
+ 472 00c8 0133     		adds	r3, r3, #1
+ 473              	.LVL73:
+ 474 00ca DBB2     		uxtb	r3, r3
+ 475              	.LVL74:
+ 476              	.L43:
+ 367:.\keyboard.c  **** 				i++;
+ 477              		.loc 1 367 0
+ 478 00cc 1C46     		mov	r4, r3
+ 479 00ce 03EB4302 		add	r2, r3, r3, lsl #1
+ 480 00d2 2849     		ldr	r1, .L69+4
+ 481 00d4 0A44     		add	r2, r2, r1
+ 482 00d6 92F85A20 		ldrb	r2, [r2, #90]	@ zero_extendqisi2
+ 483 00da 8242     		cmp	r2, r0
+ 484 00dc 01D0     		beq	.L44
+ 367:.\keyboard.c  **** 				i++;
+ 485              		.loc 1 367 0 is_stmt 0 discriminator 1
+ 486 00de 002A     		cmp	r2, #0
+ 487 00e0 F2D1     		bne	.L45
+ 488              	.L44:
+ 369:.\keyboard.c  **** 			}
+ 370:.\keyboard.c  **** 			if (AlphabetScancode[i][2] > 0) {
+ 489              		.loc 1 370 0 is_stmt 1
+ 490 00e2 7AB1     		cbz	r2, .L65
+ 371:.\keyboard.c  **** 				return(AlphabetScancode[i][ShiftDown^CapsLock]);
+ 491              		.loc 1 371 0
+ 492 00e4 254B     		ldr	r3, .L69+12
+ 493              	.LVL75:
+ 494 00e6 1A78     		ldrb	r2, [r3]	@ zero_extendqisi2
+ 495 00e8 254B     		ldr	r3, .L69+16
+ 496 00ea 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 497 00ec 5A40     		eors	r2, r2, r3
+ 498 00ee 04EB4404 		add	r4, r4, r4, lsl #1
+ 499 00f2 204B     		ldr	r3, .L69+4
+ 500 00f4 2344     		add	r3, r3, r4
+ 501 00f6 1344     		add	r3, r3, r2
+ 502 00f8 93F85800 		ldrb	r0, [r3, #88]	@ zero_extendqisi2
+ 503              	.LVL76:
+ 504 00fc 34E0     		b	.L31
+ 505              	.LVL77:
+ 506              	.L48:
+ 372:.\keyboard.c  **** 			}
+ 373:.\keyboard.c  **** 			else {
+ 374:.\keyboard.c  **** 				i = 0;
+ 375:.\keyboard.c  **** 				while((ShiftableScancode[i][2] != scancode) && (ShiftableScancode[i][2] != 0)) {
+ 376:.\keyboard.c  **** 					i++;
+ 507              		.loc 1 376 0
+ 508 00fe 0133     		adds	r3, r3, #1
+ 509              	.LVL78:
+ 510 0100 DBB2     		uxtb	r3, r3
+ 511              	.LVL79:
+ 512 0102 00E0     		b	.L46
+ 513              	.L65:
+ARM GAS  C:\Users\addis\AppData\Local\Temp\ccSizEqd.s 			page 17
+
+
+ 514 0104 0023     		movs	r3, #0
+ 515              	.LVL80:
+ 516              	.L46:
+ 375:.\keyboard.c  **** 					i++;
+ 517              		.loc 1 375 0
+ 518 0106 1C46     		mov	r4, r3
+ 519 0108 03EB4302 		add	r2, r3, r3, lsl #1
+ 520 010c 1949     		ldr	r1, .L69+4
+ 521 010e 0A44     		add	r2, r2, r1
+ 522 0110 92F8AE20 		ldrb	r2, [r2, #174]	@ zero_extendqisi2
+ 523 0114 8242     		cmp	r2, r0
+ 524 0116 01D0     		beq	.L47
+ 375:.\keyboard.c  **** 					i++;
+ 525              		.loc 1 375 0 is_stmt 0 discriminator 1
+ 526 0118 002A     		cmp	r2, #0
+ 527 011a F0D1     		bne	.L48
+ 528              	.L47:
+ 377:.\keyboard.c  **** 				}
+ 378:.\keyboard.c  **** 				if (ShiftableScancode[i][2] > 0) {
+ 529              		.loc 1 378 0 is_stmt 1
+ 530 011c 1AB3     		cbz	r2, .L66
+ 379:.\keyboard.c  **** 					return(ShiftableScancode[i][ShiftDown]);
+ 531              		.loc 1 379 0
+ 532 011e 174B     		ldr	r3, .L69+12
+ 533              	.LVL81:
+ 534 0120 1A78     		ldrb	r2, [r3]	@ zero_extendqisi2
+ 535 0122 04EB4404 		add	r4, r4, r4, lsl #1
+ 536 0126 134B     		ldr	r3, .L69+4
+ 537 0128 2344     		add	r3, r3, r4
+ 538 012a 1344     		add	r3, r3, r2
+ 539 012c 93F8AC00 		ldrb	r0, [r3, #172]	@ zero_extendqisi2
+ 540              	.LVL82:
+ 541 0130 1AE0     		b	.L31
+ 542              	.LVL83:
+ 543              	.L49:
+ 314:.\keyboard.c  **** 	
+ 544              		.loc 1 314 0
+ 545 0132 0020     		movs	r0, #0
+ 546              	.LVL84:
+ 547 0134 18E0     		b	.L31
+ 548              	.LVL85:
+ 549              	.L50:
+ 380:.\keyboard.c  **** 				}
+ 381:.\keyboard.c  **** 			}
+ 382:.\keyboard.c  **** 		}
+ 383:.\keyboard.c  **** 	}
+ 384:.\keyboard.c  **** 	
+ 385:.\keyboard.c  **** 	//// No ASCII match returns zero
+ 386:.\keyboard.c  **** 	return 0;
+ 550              		.loc 1 386 0
+ 551 0136 0020     		movs	r0, #0
+ 552              	.LVL86:
+ 553 0138 16E0     		b	.L31
+ 554              	.LVL87:
+ 555              	.L51:
+ 321:.\keyboard.c  **** 			if (scancode == 0x4A) return('/');	// Keypad /
+ 556              		.loc 1 321 0
+ARM GAS  C:\Users\addis\AppData\Local\Temp\ccSizEqd.s 			page 18
+
+
+ 557 013a 0820     		movs	r0, #8
+ 558              	.LVL88:
+ 559 013c 14E0     		b	.L31
+ 560              	.LVL89:
+ 561              	.L52:
+ 322:.\keyboard.c  **** 			if (scancode == 0x5A) { // Keypad Enter
+ 562              		.loc 1 322 0
+ 563 013e 2F20     		movs	r0, #47
+ 564              	.LVL90:
+ 565 0140 12E0     		b	.L31
+ 566              	.LVL91:
+ 567              	.L53:
+ 568              		.loc 1 386 0
+ 569 0142 0020     		movs	r0, #0
+ 570              	.LVL92:
+ 571 0144 10E0     		b	.L31
+ 572              	.LVL93:
+ 573              	.L54:
+ 325:.\keyboard.c  **** 			}
+ 574              		.loc 1 325 0
+ 575 0146 0D20     		movs	r0, #13
+ 576              	.LVL94:
+ 577 0148 0EE0     		b	.L31
+ 578              	.LVL95:
+ 579              	.L55:
+ 333:.\keyboard.c  **** 			}
+ 580              		.loc 1 333 0
+ 581 014a 0D20     		movs	r0, #13
+ 582              	.LVL96:
+ 583 014c 0CE0     		b	.L31
+ 584              	.LVL97:
+ 585              	.L56:
+ 335:.\keyboard.c  **** 			if (scancode == 0x7C) return('*');	// KP *
+ 586              		.loc 1 335 0
+ 587 014e 1B20     		movs	r0, #27
+ 588              	.LVL98:
+ 589 0150 0AE0     		b	.L31
+ 590              	.LVL99:
+ 591              	.L57:
+ 336:.\keyboard.c  **** 			if (scancode == 0x7B) return('-');	// KP -
+ 592              		.loc 1 336 0
+ 593 0152 2A20     		movs	r0, #42
+ 594              	.LVL100:
+ 595 0154 08E0     		b	.L31
+ 596              	.LVL101:
+ 597              	.L58:
+ 337:.\keyboard.c  **** 			if (scancode == 0x79) return('+');	// KP +
+ 598              		.loc 1 337 0
+ 599 0156 2D20     		movs	r0, #45
+ 600              	.LVL102:
+ 601 0158 06E0     		b	.L31
+ 602              	.LVL103:
+ 603              	.L59:
+ 338:.\keyboard.c  **** 			if (scancode == 0x66) return (0x08); // BkSP
+ 604              		.loc 1 338 0
+ 605 015a 2B20     		movs	r0, #43
+ 606              	.LVL104:
+ARM GAS  C:\Users\addis\AppData\Local\Temp\ccSizEqd.s 			page 19
+
+
+ 607 015c 04E0     		b	.L31
+ 608              	.LVL105:
+ 609              	.L60:
+ 339:.\keyboard.c  **** 			//// If one of the Control keys is down, return their ASCII value
+ 610              		.loc 1 339 0
+ 611 015e 0820     		movs	r0, #8
+ 612              	.LVL106:
+ 613 0160 02E0     		b	.L31
+ 614              	.LVL107:
+ 615              	.L64:
+ 363:.\keyboard.c  **** 			}
+ 616              		.loc 1 363 0
+ 617 0162 0820     		movs	r0, #8
+ 618              	.LVL108:
+ 619 0164 00E0     		b	.L31
+ 620              	.LVL109:
+ 621              	.L66:
+ 622              		.loc 1 386 0
+ 623 0166 0020     		movs	r0, #0
+ 624              	.LVL110:
+ 625              	.L31:
+ 387:.\keyboard.c  **** }
+ 626              		.loc 1 387 0
+ 627 0168 5DF8044B 		ldr	r4, [sp], #4
+ 628              		.cfi_restore 4
+ 629              		.cfi_def_cfa_offset 0
+ 630 016c 7047     		bx	lr
+ 631              	.L70:
+ 632 016e 00BF     		.align	2
+ 633              	.L69:
+ 634 0170 00000000 		.word	CtrlDown
+ 635 0174 00000000 		.word	.LANCHOR1
+ 636 0178 00000000 		.word	NumLock
+ 637 017c 00000000 		.word	ShiftDown
+ 638 0180 00000000 		.word	CapsLock
+ 639              		.cfi_endproc
+ 640              	.LFE1:
+ 641              		.size	KeyboardToASCII, .-KeyboardToASCII
+ 642              		.section	.text.KeyboardAction,"ax",%progbits
+ 643              		.align	2
+ 644              		.global	KeyboardAction
+ 645              		.thumb
+ 646              		.thumb_func
+ 647              		.type	KeyboardAction, %function
+ 648              	KeyboardAction:
+ 649              	.LFB2:
+ 388:.\keyboard.c  **** 
+ 389:.\keyboard.c  **** void KeyboardAction(uint8 scancode, uint8 codetype)
+ 390:.\keyboard.c  **** {
+ 650              		.loc 1 390 0
+ 651              		.cfi_startproc
+ 652              		@ args = 0, pretend = 0, frame = 0
+ 653              		@ frame_needed = 0, uses_anonymous_args = 0
+ 654              	.LVL111:
+ 391:.\keyboard.c  **** 	//// Keyboard variables below
+ 392:.\keyboard.c  **** 	uint8 status;
+ 393:.\keyboard.c  **** 	int i;
+ARM GAS  C:\Users\addis\AppData\Local\Temp\ccSizEqd.s 			page 20
+
+
+ 394:.\keyboard.c  **** 	static uint8 brightindex = 127;	// PWM LED brightness index
+ 395:.\keyboard.c  **** 	static uint8 pwm_on = 1;		// PWM User Module on or off
+ 396:.\keyboard.c  **** 	static uint8 statusLEDs=0;
+ 397:.\keyboard.c  **** 	static uint8 shiftstatus = 0;
+ 398:.\keyboard.c  **** 	static uint8 ctrlstatus = 0;
+ 399:.\keyboard.c  **** 	static uint8 altstatus = 0;
+ 400:.\keyboard.c  **** 	static uint8 altStr[12];
+ 401:.\keyboard.c  **** 	static uint8 altIndex = 0;
+ 402:.\keyboard.c  **** 	
+ 403:.\keyboard.c  **** 	//// Ignore fake-shifts (unless you care about them)
+ 404:.\keyboard.c  **** 	if (codetype & KEY_FAKE_SHIFT || !codetype)
+ 655              		.loc 1 404 0
+ 656 0000 11F0100F 		tst	r1, #16
+ 657 0004 40F02181 		bne	.L98
+ 658              		.loc 1 404 0 is_stmt 0 discriminator 1
+ 659 0008 0029     		cmp	r1, #0
+ 660 000a 00F01E81 		beq	.L98
+ 405:.\keyboard.c  **** 		return;
+ 406:.\keyboard.c  **** 	
+ 407:.\keyboard.c  **** 	if (codetype) {
+ 661              		.loc 1 407 0 is_stmt 1
+ 662 000e 0029     		cmp	r1, #0
+ 663 0010 00F01B81 		beq	.L98
+ 390:.\keyboard.c  **** 	//// Keyboard variables below
+ 664              		.loc 1 390 0
+ 665 0014 08B5     		push	{r3, lr}
+ 666              		.cfi_def_cfa_offset 8
+ 667              		.cfi_offset 3, -8
+ 668              		.cfi_offset 14, -4
+ 408:.\keyboard.c  **** 		//// Things to do when one of the E0 keys is pressed
+ 409:.\keyboard.c  **** 		if ((codetype & KEY_E0)&&(codetype & KEY_MAKE)) {
+ 669              		.loc 1 409 0
+ 670 0016 01F00503 		and	r3, r1, #5
+ 671 001a 052B     		cmp	r3, #5
+ 672 001c 23D1     		bne	.L73
+ 410:.\keyboard.c  **** 			switch(scancode) {
+ 673              		.loc 1 410 0
+ 674 001e 1428     		cmp	r0, #20
+ 675 0020 0FD0     		beq	.L74
+ 676 0022 7C28     		cmp	r0, #124
+ 677 0024 03D0     		beq	.L75
+ 678 0026 1128     		cmp	r0, #17
+ 679 0028 40F00E81 		bne	.L71
+ 680 002c 12E0     		b	.L76
+ 681              	.L75:
+ 411:.\keyboard.c  **** 			case 0x7C:	// E0 7C - PRNT SCRN
+ 412:.\keyboard.c  **** 				// If we successfully send and receive an echo, output to UART
+ 413:.\keyboard.c  **** 				if (!PS2_SendCommand(0xEE))
+ 682              		.loc 1 413 0
+ 683 002e EE20     		movs	r0, #238
+ 684              	.LVL112:
+ 685 0030 FFF7FEFF 		bl	PS2_SendCommand
+ 686              	.LVL113:
+ 687 0034 0028     		cmp	r0, #0
+ 688 0036 40F00781 		bne	.L71
+ 414:.\keyboard.c  **** 					UART_PutString("Echo Success!\r\n");
+ 689              		.loc 1 414 0
+ARM GAS  C:\Users\addis\AppData\Local\Temp\ccSizEqd.s 			page 21
+
+
+ 690 003a 8448     		ldr	r0, .L99
+ 691 003c FFF7FEFF 		bl	UART_PutString
+ 692              	.LVL114:
+ 693 0040 08BD     		pop	{r3, pc}
+ 694              	.LVL115:
+ 695              	.L74:
+ 415:.\keyboard.c  **** 				break;
+ 416:.\keyboard.c  **** 					
+ 417:.\keyboard.c  **** 			case 0x14:	// E0 14 - Right Control
+ 418:.\keyboard.c  **** 				ctrlstatus |= 0x01;
+ 696              		.loc 1 418 0
+ 697 0042 834A     		ldr	r2, .L99+4
+ 698 0044 5378     		ldrb	r3, [r2, #1]	@ zero_extendqisi2
+ 699 0046 43F00103 		orr	r3, r3, #1
+ 700 004a 5370     		strb	r3, [r2, #1]
+ 419:.\keyboard.c  **** 				CtrlDown = 1;
+ 701              		.loc 1 419 0
+ 702 004c 0122     		movs	r2, #1
+ 703 004e 814B     		ldr	r3, .L99+8
+ 704 0050 1A70     		strb	r2, [r3]
+ 420:.\keyboard.c  **** 				break;
+ 705              		.loc 1 420 0
+ 706 0052 08BD     		pop	{r3, pc}
+ 707              	.L76:
+ 421:.\keyboard.c  **** 					
+ 422:.\keyboard.c  **** 			case 0x11:	// E0 11 - Right Alt
+ 423:.\keyboard.c  **** 				altstatus |= 0x01;
+ 708              		.loc 1 423 0
+ 709 0054 7E4A     		ldr	r2, .L99+4
+ 710 0056 9378     		ldrb	r3, [r2, #2]	@ zero_extendqisi2
+ 711 0058 43F00103 		orr	r3, r3, #1
+ 712 005c 9370     		strb	r3, [r2, #2]
+ 424:.\keyboard.c  **** 				AltDown = 1;
+ 713              		.loc 1 424 0
+ 714 005e 0122     		movs	r2, #1
+ 715 0060 7D4B     		ldr	r3, .L99+12
+ 716 0062 1A70     		strb	r2, [r3]
+ 425:.\keyboard.c  **** 				break;
+ 717              		.loc 1 425 0
+ 718 0064 08BD     		pop	{r3, pc}
+ 719              	.L73:
+ 426:.\keyboard.c  **** 					
+ 427:.\keyboard.c  **** 			//// Any scan codes not handled specially in the above case statements are
+ 428:.\keyboard.c  **** 			//// handled here:
+ 429:.\keyboard.c  **** 			default:
+ 430:.\keyboard.c  **** 				break;
+ 431:.\keyboard.c  **** 			}
+ 432:.\keyboard.c  **** 			return;
+ 433:.\keyboard.c  **** 		}
+ 434:.\keyboard.c  **** 		//
+ 435:.\keyboard.c  **** 		//// Things to do when one of the E0 keys is released
+ 436:.\keyboard.c  **** 		if ((codetype & KEY_E0) && (codetype & KEY_BREAK)) 
+ 720              		.loc 1 436 0
+ 721 0066 01F00603 		and	r3, r1, #6
+ 722 006a 062B     		cmp	r3, #6
+ 723 006c 1DD1     		bne	.L77
+ 437:.\keyboard.c  **** 		{
+ARM GAS  C:\Users\addis\AppData\Local\Temp\ccSizEqd.s 			page 22
+
+
+ 438:.\keyboard.c  **** 			switch(scancode) 
+ 724              		.loc 1 438 0
+ 725 006e 1128     		cmp	r0, #17
+ 726 0070 0ED0     		beq	.L78
+ 727 0072 1428     		cmp	r0, #20
+ 728 0074 40F0E880 		bne	.L71
+ 439:.\keyboard.c  **** 			{
+ 440:.\keyboard.c  **** 			case 0x7C:	// E0 F0 7C - PRNT SCRN
+ 441:.\keyboard.c  **** 				break;
+ 442:.\keyboard.c  **** 			case 0x14:	// E0 F0 14 - Right Control
+ 443:.\keyboard.c  **** 				ctrlstatus &= ~0x01;
+ 729              		.loc 1 443 0
+ 730 0078 754A     		ldr	r2, .L99+4
+ 731 007a 5378     		ldrb	r3, [r2, #1]	@ zero_extendqisi2
+ 732 007c 03F0FE03 		and	r3, r3, #254
+ 733 0080 5370     		strb	r3, [r2, #1]
+ 444:.\keyboard.c  **** 				if (!ctrlstatus) CtrlDown = 0;
+ 734              		.loc 1 444 0
+ 735 0082 002B     		cmp	r3, #0
+ 736 0084 40F0E080 		bne	.L71
+ 737              		.loc 1 444 0 is_stmt 0 discriminator 1
+ 738 0088 0022     		movs	r2, #0
+ 739 008a 724B     		ldr	r3, .L99+8
+ 740 008c 1A70     		strb	r2, [r3]
+ 741 008e 08BD     		pop	{r3, pc}
+ 742              	.L78:
+ 445:.\keyboard.c  **** 				break;
+ 446:.\keyboard.c  **** 			case 0x11:	// E0 F0 11 - Right Alt
+ 447:.\keyboard.c  **** 				altstatus &= ~0x01;
+ 743              		.loc 1 447 0 is_stmt 1
+ 744 0090 6F4A     		ldr	r2, .L99+4
+ 745 0092 9378     		ldrb	r3, [r2, #2]	@ zero_extendqisi2
+ 746 0094 03F0FE03 		and	r3, r3, #254
+ 747 0098 9370     		strb	r3, [r2, #2]
+ 448:.\keyboard.c  **** 				if (!altstatus)
+ 748              		.loc 1 448 0
+ 749 009a 002B     		cmp	r3, #0
+ 750 009c 40F0D480 		bne	.L71
+ 449:.\keyboard.c  **** 				{	
+ 450:.\keyboard.c  **** 					AltDown = 0;
+ 751              		.loc 1 450 0
+ 752 00a0 6D4A     		ldr	r2, .L99+12
+ 753 00a2 1370     		strb	r3, [r2]
+ 451:.\keyboard.c  **** 					altIndex = 0;
+ 754              		.loc 1 451 0
+ 755 00a4 6A4A     		ldr	r2, .L99+4
+ 756 00a6 D370     		strb	r3, [r2, #3]
+ 757 00a8 08BD     		pop	{r3, pc}
+ 758              	.L77:
+ 452:.\keyboard.c  **** 				}
+ 453:.\keyboard.c  **** 				break;
+ 454:.\keyboard.c  **** 			//// Any scan codes not handled specially in the above case statements are
+ 455:.\keyboard.c  **** 			//// handled here:
+ 456:.\keyboard.c  **** 			default:
+ 457:.\keyboard.c  **** 				break;
+ 458:.\keyboard.c  **** 			}
+ 459:.\keyboard.c  **** 			return;
+ARM GAS  C:\Users\addis\AppData\Local\Temp\ccSizEqd.s 			page 23
+
+
+ 460:.\keyboard.c  **** 		}
+ 461:.\keyboard.c  **** 		//
+ 462:.\keyboard.c  **** 		//// Things to do when one of the single byte "make" scan code keys is pressed
+ 463:.\keyboard.c  **** 		if (codetype & KEY_MAKE) {
+ 759              		.loc 1 463 0
+ 760 00aa 11F0010F 		tst	r1, #1
+ 761 00ae 00F09780 		beq	.L80
+ 464:.\keyboard.c  **** 			switch(scancode) {
+ 762              		.loc 1 464 0
+ 763 00b2 5828     		cmp	r0, #88
+ 764 00b4 54D0     		beq	.L81
+ 765 00b6 07D8     		bhi	.L82
+ 766 00b8 1228     		cmp	r0, #18
+ 767 00ba 15D0     		beq	.L83
+ 768 00bc 1428     		cmp	r0, #20
+ 769 00be 1CD0     		beq	.L84
+ 770 00c0 1128     		cmp	r0, #17
+ 771 00c2 40F0C180 		bne	.L71
+ 772 00c6 21E0     		b	.L85
+ 773              	.L82:
+ 774 00c8 7728     		cmp	r0, #119
+ 775 00ca 28D0     		beq	.L86
+ 776 00cc 7E28     		cmp	r0, #126
+ 777 00ce 67D0     		beq	.L87
+ 778 00d0 5928     		cmp	r0, #89
+ 779 00d2 40F0B980 		bne	.L71
+ 465:.\keyboard.c  **** 			case 0x59:	// Right Shift
+ 466:.\keyboard.c  **** 				shiftstatus |= 0x01;
+ 780              		.loc 1 466 0
+ 781 00d6 5E4A     		ldr	r2, .L99+4
+ 782 00d8 1379     		ldrb	r3, [r2, #4]	@ zero_extendqisi2
+ 783 00da 43F00103 		orr	r3, r3, #1
+ 784 00de 1371     		strb	r3, [r2, #4]
+ 467:.\keyboard.c  **** 				ShiftDown = 1;
+ 785              		.loc 1 467 0
+ 786 00e0 0122     		movs	r2, #1
+ 787 00e2 5E4B     		ldr	r3, .L99+16
+ 788 00e4 1A70     		strb	r2, [r3]
+ 468:.\keyboard.c  **** 				break;
+ 789              		.loc 1 468 0
+ 790 00e6 08BD     		pop	{r3, pc}
+ 791              	.L83:
+ 469:.\keyboard.c  **** 			case 0x12:	// Left Shift
+ 470:.\keyboard.c  **** 				shiftstatus |= 0x02;
+ 792              		.loc 1 470 0
+ 793 00e8 594A     		ldr	r2, .L99+4
+ 794 00ea 1379     		ldrb	r3, [r2, #4]	@ zero_extendqisi2
+ 795 00ec 43F00203 		orr	r3, r3, #2
+ 796 00f0 1371     		strb	r3, [r2, #4]
+ 471:.\keyboard.c  **** 				ShiftDown = 1;
+ 797              		.loc 1 471 0
+ 798 00f2 0122     		movs	r2, #1
+ 799 00f4 594B     		ldr	r3, .L99+16
+ 800 00f6 1A70     		strb	r2, [r3]
+ 472:.\keyboard.c  **** 				break;
+ 801              		.loc 1 472 0
+ 802 00f8 08BD     		pop	{r3, pc}
+ARM GAS  C:\Users\addis\AppData\Local\Temp\ccSizEqd.s 			page 24
+
+
+ 803              	.L84:
+ 473:.\keyboard.c  **** 			case 0x14:	// Left Control
+ 474:.\keyboard.c  **** 				ctrlstatus |= 0x02;
+ 804              		.loc 1 474 0
+ 805 00fa 554A     		ldr	r2, .L99+4
+ 806 00fc 5378     		ldrb	r3, [r2, #1]	@ zero_extendqisi2
+ 807 00fe 43F00203 		orr	r3, r3, #2
+ 808 0102 5370     		strb	r3, [r2, #1]
+ 475:.\keyboard.c  **** 				CtrlDown = 1;
+ 809              		.loc 1 475 0
+ 810 0104 0122     		movs	r2, #1
+ 811 0106 534B     		ldr	r3, .L99+8
+ 812 0108 1A70     		strb	r2, [r3]
+ 476:.\keyboard.c  **** 				break;
+ 813              		.loc 1 476 0
+ 814 010a 08BD     		pop	{r3, pc}
+ 815              	.L85:
+ 477:.\keyboard.c  **** 			case 0x11:	// Left Alt
+ 478:.\keyboard.c  **** 				altstatus |= 0x02;
+ 816              		.loc 1 478 0
+ 817 010c 504A     		ldr	r2, .L99+4
+ 818 010e 9378     		ldrb	r3, [r2, #2]	@ zero_extendqisi2
+ 819 0110 43F00203 		orr	r3, r3, #2
+ 820 0114 9370     		strb	r3, [r2, #2]
+ 479:.\keyboard.c  **** 				AltDown = 1;
+ 821              		.loc 1 479 0
+ 822 0116 0122     		movs	r2, #1
+ 823 0118 4F4B     		ldr	r3, .L99+12
+ 824 011a 1A70     		strb	r2, [r3]
+ 480:.\keyboard.c  **** 				break;
+ 825              		.loc 1 480 0
+ 826 011c 08BD     		pop	{r3, pc}
+ 827              	.L86:
+ 481:.\keyboard.c  **** 			case 0x77:	// Num Lock
+ 482:.\keyboard.c  **** 				NumLock ^= 0x01;
+ 828              		.loc 1 482 0
+ 829 011e 504A     		ldr	r2, .L99+20
+ 830 0120 1378     		ldrb	r3, [r2]	@ zero_extendqisi2
+ 831 0122 83F00103 		eor	r3, r3, #1
+ 832 0126 1370     		strb	r3, [r2]
+ 483:.\keyboard.c  **** 				if (NumLock) {
+ 833              		.loc 1 483 0
+ 834 0128 6BB1     		cbz	r3, .L89
+ 484:.\keyboard.c  **** 					status = PS2_SendCommand(0xED);
+ 835              		.loc 1 484 0
+ 836 012a ED20     		movs	r0, #237
+ 837              	.LVL116:
+ 838 012c FFF7FEFF 		bl	PS2_SendCommand
+ 839              	.LVL117:
+ 485:.\keyboard.c  **** 					if (!status) {
+ 840              		.loc 1 485 0
+ 841 0130 0028     		cmp	r0, #0
+ 842 0132 40F08980 		bne	.L71
+ 486:.\keyboard.c  **** 						statusLEDs |= 0x02;
+ 843              		.loc 1 486 0
+ 844 0136 464B     		ldr	r3, .L99+4
+ 845 0138 5879     		ldrb	r0, [r3, #5]	@ zero_extendqisi2
+ARM GAS  C:\Users\addis\AppData\Local\Temp\ccSizEqd.s 			page 25
+
+
+ 846              	.LVL118:
+ 847 013a 40F00200 		orr	r0, r0, #2
+ 848 013e 5871     		strb	r0, [r3, #5]
+ 487:.\keyboard.c  **** 						status = PS2_SendCommand(statusLEDs);
+ 849              		.loc 1 487 0
+ 850 0140 FFF7FEFF 		bl	PS2_SendCommand
+ 851              	.LVL119:
+ 852 0144 08BD     		pop	{r3, pc}
+ 853              	.LVL120:
+ 854              	.L89:
+ 488:.\keyboard.c  **** 					}
+ 489:.\keyboard.c  **** 				}
+ 490:.\keyboard.c  **** 				else {
+ 491:.\keyboard.c  **** 					status = PS2_SendCommand(0xED);
+ 855              		.loc 1 491 0
+ 856 0146 ED20     		movs	r0, #237
+ 857              	.LVL121:
+ 858 0148 FFF7FEFF 		bl	PS2_SendCommand
+ 859              	.LVL122:
+ 492:.\keyboard.c  **** 					if (!status) {
+ 860              		.loc 1 492 0
+ 861 014c 0028     		cmp	r0, #0
+ 862 014e 7BD1     		bne	.L71
+ 493:.\keyboard.c  **** 						statusLEDs &= ~0x02;
+ 863              		.loc 1 493 0
+ 864 0150 3F4B     		ldr	r3, .L99+4
+ 865 0152 5879     		ldrb	r0, [r3, #5]	@ zero_extendqisi2
+ 866              	.LVL123:
+ 867 0154 00F0FD00 		and	r0, r0, #253
+ 868 0158 5871     		strb	r0, [r3, #5]
+ 494:.\keyboard.c  **** 						status = PS2_SendCommand(statusLEDs);
+ 869              		.loc 1 494 0
+ 870 015a FFF7FEFF 		bl	PS2_SendCommand
+ 871              	.LVL124:
+ 872 015e 08BD     		pop	{r3, pc}
+ 873              	.LVL125:
+ 874              	.L81:
+ 495:.\keyboard.c  **** 					}
+ 496:.\keyboard.c  **** 				}
+ 497:.\keyboard.c  **** 				break;
+ 498:.\keyboard.c  **** 			case 0x58:	// Caps Lock
+ 499:.\keyboard.c  **** 				//// Send to the keyboard
+ 500:.\keyboard.c  **** 				CapsLock ^= 0x01;
+ 875              		.loc 1 500 0
+ 876 0160 404A     		ldr	r2, .L99+24
+ 877 0162 1378     		ldrb	r3, [r2]	@ zero_extendqisi2
+ 878 0164 83F00103 		eor	r3, r3, #1
+ 879 0168 1370     		strb	r3, [r2]
+ 501:.\keyboard.c  **** 				if (CapsLock) {
+ 880              		.loc 1 501 0
+ 881 016a 63B1     		cbz	r3, .L90
+ 502:.\keyboard.c  **** 					status = PS2_SendCommand(0xED);
+ 882              		.loc 1 502 0
+ 883 016c ED20     		movs	r0, #237
+ 884              	.LVL126:
+ 885 016e FFF7FEFF 		bl	PS2_SendCommand
+ 886              	.LVL127:
+ARM GAS  C:\Users\addis\AppData\Local\Temp\ccSizEqd.s 			page 26
+
+
+ 503:.\keyboard.c  **** 					if (!status) {
+ 887              		.loc 1 503 0
+ 888 0172 0028     		cmp	r0, #0
+ 889 0174 68D1     		bne	.L71
+ 504:.\keyboard.c  **** 						statusLEDs |= 0x04;
+ 890              		.loc 1 504 0
+ 891 0176 364B     		ldr	r3, .L99+4
+ 892 0178 5879     		ldrb	r0, [r3, #5]	@ zero_extendqisi2
+ 893              	.LVL128:
+ 894 017a 40F00400 		orr	r0, r0, #4
+ 895 017e 5871     		strb	r0, [r3, #5]
+ 505:.\keyboard.c  **** 						status = PS2_SendCommand(statusLEDs);
+ 896              		.loc 1 505 0
+ 897 0180 FFF7FEFF 		bl	PS2_SendCommand
+ 898              	.LVL129:
+ 899 0184 08BD     		pop	{r3, pc}
+ 900              	.LVL130:
+ 901              	.L90:
+ 506:.\keyboard.c  **** 					}
+ 507:.\keyboard.c  **** 				}
+ 508:.\keyboard.c  **** 				else {
+ 509:.\keyboard.c  **** 					status = PS2_SendCommand(0xED);
+ 902              		.loc 1 509 0
+ 903 0186 ED20     		movs	r0, #237
+ 904              	.LVL131:
+ 905 0188 FFF7FEFF 		bl	PS2_SendCommand
+ 906              	.LVL132:
+ 510:.\keyboard.c  **** 					if (!status) {
+ 907              		.loc 1 510 0
+ 908 018c 0028     		cmp	r0, #0
+ 909 018e 5BD1     		bne	.L71
+ 511:.\keyboard.c  **** 						statusLEDs &= ~0x04;
+ 910              		.loc 1 511 0
+ 911 0190 2F4B     		ldr	r3, .L99+4
+ 912 0192 5879     		ldrb	r0, [r3, #5]	@ zero_extendqisi2
+ 913              	.LVL133:
+ 914 0194 00F0FB00 		and	r0, r0, #251
+ 915 0198 5871     		strb	r0, [r3, #5]
+ 512:.\keyboard.c  **** 						status = PS2_SendCommand(statusLEDs);
+ 916              		.loc 1 512 0
+ 917 019a FFF7FEFF 		bl	PS2_SendCommand
+ 918              	.LVL134:
+ 919 019e 08BD     		pop	{r3, pc}
+ 920              	.LVL135:
+ 921              	.L87:
+ 513:.\keyboard.c  **** 					}
+ 514:.\keyboard.c  **** 				}
+ 515:.\keyboard.c  **** 				break;
+ 516:.\keyboard.c  **** 			case 0x7E:	// Scroll Lock
+ 517:.\keyboard.c  **** 				//// Send to the keyboard
+ 518:.\keyboard.c  **** 				ScrollLock ^= 0x01;
+ 922              		.loc 1 518 0
+ 923 01a0 314A     		ldr	r2, .L99+28
+ 924 01a2 1378     		ldrb	r3, [r2]	@ zero_extendqisi2
+ 925 01a4 83F00103 		eor	r3, r3, #1
+ 926 01a8 1370     		strb	r3, [r2]
+ 519:.\keyboard.c  **** 				if (ScrollLock) {
+ARM GAS  C:\Users\addis\AppData\Local\Temp\ccSizEqd.s 			page 27
+
+
+ 927              		.loc 1 519 0
+ 928 01aa 63B1     		cbz	r3, .L91
+ 520:.\keyboard.c  **** 					status = PS2_SendCommand(0xED);
+ 929              		.loc 1 520 0
+ 930 01ac ED20     		movs	r0, #237
+ 931              	.LVL136:
+ 932 01ae FFF7FEFF 		bl	PS2_SendCommand
+ 933              	.LVL137:
+ 521:.\keyboard.c  **** 					if (!status) {
+ 934              		.loc 1 521 0
+ 935 01b2 0028     		cmp	r0, #0
+ 936 01b4 48D1     		bne	.L71
+ 522:.\keyboard.c  **** 						statusLEDs |= 0x01;
+ 937              		.loc 1 522 0
+ 938 01b6 264B     		ldr	r3, .L99+4
+ 939 01b8 5879     		ldrb	r0, [r3, #5]	@ zero_extendqisi2
+ 940              	.LVL138:
+ 941 01ba 40F00100 		orr	r0, r0, #1
+ 942 01be 5871     		strb	r0, [r3, #5]
+ 523:.\keyboard.c  **** 						status = PS2_SendCommand(statusLEDs);
+ 943              		.loc 1 523 0
+ 944 01c0 FFF7FEFF 		bl	PS2_SendCommand
+ 945              	.LVL139:
+ 946 01c4 08BD     		pop	{r3, pc}
+ 947              	.LVL140:
+ 948              	.L91:
+ 524:.\keyboard.c  **** 					}
+ 525:.\keyboard.c  **** 				}
+ 526:.\keyboard.c  **** 				else {
+ 527:.\keyboard.c  **** 					status = PS2_SendCommand(0xED);
+ 949              		.loc 1 527 0
+ 950 01c6 ED20     		movs	r0, #237
+ 951              	.LVL141:
+ 952 01c8 FFF7FEFF 		bl	PS2_SendCommand
+ 953              	.LVL142:
+ 528:.\keyboard.c  **** 					if (!status) {
+ 954              		.loc 1 528 0
+ 955 01cc 0028     		cmp	r0, #0
+ 956 01ce 3BD1     		bne	.L71
+ 529:.\keyboard.c  **** 						statusLEDs &= ~0x01;
+ 957              		.loc 1 529 0
+ 958 01d0 1F4B     		ldr	r3, .L99+4
+ 959 01d2 5879     		ldrb	r0, [r3, #5]	@ zero_extendqisi2
+ 960              	.LVL143:
+ 961 01d4 00F0FE00 		and	r0, r0, #254
+ 962 01d8 5871     		strb	r0, [r3, #5]
+ 530:.\keyboard.c  **** 						status = PS2_SendCommand(statusLEDs);
+ 963              		.loc 1 530 0
+ 964 01da FFF7FEFF 		bl	PS2_SendCommand
+ 965              	.LVL144:
+ 966 01de 08BD     		pop	{r3, pc}
+ 967              	.LVL145:
+ 968              	.L80:
+ 531:.\keyboard.c  **** 					}
+ 532:.\keyboard.c  **** 				}
+ 533:.\keyboard.c  **** 				break;
+ 534:.\keyboard.c  **** 			
+ARM GAS  C:\Users\addis\AppData\Local\Temp\ccSizEqd.s 			page 28
+
+
+ 535:.\keyboard.c  **** 			//// Any single-byte scan codes not handled specially in the above switch statement
+ 536:.\keyboard.c  **** 			//// are handled here:
+ 537:.\keyboard.c  **** 			default:
+ 538:.\keyboard.c  **** 				break;			
+ 539:.\keyboard.c  **** 			}
+ 540:.\keyboard.c  **** 			return;
+ 541:.\keyboard.c  **** 		}
+ 542:.\keyboard.c  **** 		
+ 543:.\keyboard.c  **** 		//// Things to do when one of the single byte "make" scan code keys is released
+ 544:.\keyboard.c  **** 		if (codetype & KEY_BREAK) {
+ 969              		.loc 1 544 0
+ 970 01e0 11F0020F 		tst	r1, #2
+ 971 01e4 30D0     		beq	.L71
+ 545:.\keyboard.c  **** 			switch(scancode) {
+ 972              		.loc 1 545 0
+ 973 01e6 1228     		cmp	r0, #18
+ 974 01e8 11D0     		beq	.L92
+ 975 01ea 02D8     		bhi	.L93
+ 976 01ec 1128     		cmp	r0, #17
+ 977 01ee 21D0     		beq	.L94
+ 978 01f0 08BD     		pop	{r3, pc}
+ 979              	.L93:
+ 980 01f2 1428     		cmp	r0, #20
+ 981 01f4 14D0     		beq	.L95
+ 982 01f6 5928     		cmp	r0, #89
+ 983 01f8 26D1     		bne	.L71
+ 546:.\keyboard.c  **** 			case 0x59:	// Right Shift
+ 547:.\keyboard.c  **** 				shiftstatus &= ~0x01;
+ 984              		.loc 1 547 0
+ 985 01fa 154A     		ldr	r2, .L99+4
+ 986 01fc 1379     		ldrb	r3, [r2, #4]	@ zero_extendqisi2
+ 987 01fe 03F0FE03 		and	r3, r3, #254
+ 988 0202 1371     		strb	r3, [r2, #4]
+ 548:.\keyboard.c  **** 				if (!shiftstatus) ShiftDown = 0;
+ 989              		.loc 1 548 0
+ 990 0204 03BB     		cbnz	r3, .L71
+ 991              		.loc 1 548 0 is_stmt 0 discriminator 1
+ 992 0206 0022     		movs	r2, #0
+ 993 0208 144B     		ldr	r3, .L99+16
+ 994 020a 1A70     		strb	r2, [r3]
+ 995 020c 08BD     		pop	{r3, pc}
+ 996              	.L92:
+ 549:.\keyboard.c  **** 				break;
+ 550:.\keyboard.c  **** 			case 0x12:	// Left Shift
+ 551:.\keyboard.c  **** 				shiftstatus &= ~0x02;
+ 997              		.loc 1 551 0 is_stmt 1
+ 998 020e 104A     		ldr	r2, .L99+4
+ 999 0210 1379     		ldrb	r3, [r2, #4]	@ zero_extendqisi2
+ 1000 0212 03F0FD03 		and	r3, r3, #253
+ 1001 0216 1371     		strb	r3, [r2, #4]
+ 552:.\keyboard.c  **** 				if (!shiftstatus) ShiftDown = 0;
+ 1002              		.loc 1 552 0
+ 1003 0218 13B9     		cbnz	r3, .L95
+ 1004              		.loc 1 552 0 is_stmt 0 discriminator 1
+ 1005 021a 0022     		movs	r2, #0
+ 1006 021c 0F4B     		ldr	r3, .L99+16
+ 1007 021e 1A70     		strb	r2, [r3]
+ARM GAS  C:\Users\addis\AppData\Local\Temp\ccSizEqd.s 			page 29
+
+
+ 1008              	.L95:
+ 553:.\keyboard.c  **** 			case 0x14:	// Left Control
+ 554:.\keyboard.c  **** 				ctrlstatus &= ~0x02;
+ 1009              		.loc 1 554 0 is_stmt 1
+ 1010 0220 0B4A     		ldr	r2, .L99+4
+ 1011 0222 5378     		ldrb	r3, [r2, #1]	@ zero_extendqisi2
+ 1012 0224 03F0FD03 		and	r3, r3, #253
+ 1013 0228 5370     		strb	r3, [r2, #1]
+ 555:.\keyboard.c  **** 				if (!ctrlstatus) CtrlDown = 0;
+ 1014              		.loc 1 555 0
+ 1015 022a 6BB9     		cbnz	r3, .L71
+ 1016              		.loc 1 555 0 is_stmt 0 discriminator 1
+ 1017 022c 0022     		movs	r2, #0
+ 1018 022e 094B     		ldr	r3, .L99+8
+ 1019 0230 1A70     		strb	r2, [r3]
+ 1020 0232 08BD     		pop	{r3, pc}
+ 1021              	.L94:
+ 556:.\keyboard.c  **** 				break;
+ 557:.\keyboard.c  **** 			case 0x11:	// Left Alt
+ 558:.\keyboard.c  **** 				altstatus &= ~0x02;
+ 1022              		.loc 1 558 0 is_stmt 1
+ 1023 0234 064A     		ldr	r2, .L99+4
+ 1024 0236 9378     		ldrb	r3, [r2, #2]	@ zero_extendqisi2
+ 1025 0238 03F0FD03 		and	r3, r3, #253
+ 1026 023c 9370     		strb	r3, [r2, #2]
+ 559:.\keyboard.c  **** 				if (!altstatus) 
+ 1027              		.loc 1 559 0
+ 1028 023e 1BB9     		cbnz	r3, .L71
+ 560:.\keyboard.c  **** 				{	
+ 561:.\keyboard.c  **** 					AltDown = 0;
+ 1029              		.loc 1 561 0
+ 1030 0240 054A     		ldr	r2, .L99+12
+ 1031 0242 1370     		strb	r3, [r2]
+ 562:.\keyboard.c  **** 					altIndex = 0;
+ 1032              		.loc 1 562 0
+ 1033 0244 024A     		ldr	r2, .L99+4
+ 1034 0246 D370     		strb	r3, [r2, #3]
+ 1035              	.LVL146:
+ 1036              	.L71:
+ 1037 0248 08BD     		pop	{r3, pc}
+ 1038              	.LVL147:
+ 1039              	.L98:
+ 1040              		.cfi_def_cfa_offset 0
+ 1041              		.cfi_restore 3
+ 1042              		.cfi_restore 14
+ 1043 024a 7047     		bx	lr
+ 1044              	.L100:
+ 1045              		.align	2
+ 1046              	.L99:
+ 1047 024c 00000000 		.word	.LC0
+ 1048 0250 00000000 		.word	.LANCHOR0
+ 1049 0254 00000000 		.word	CtrlDown
+ 1050 0258 00000000 		.word	AltDown
+ 1051 025c 00000000 		.word	ShiftDown
+ 1052 0260 00000000 		.word	NumLock
+ 1053 0264 00000000 		.word	CapsLock
+ 1054 0268 00000000 		.word	ScrollLock
+ARM GAS  C:\Users\addis\AppData\Local\Temp\ccSizEqd.s 			page 30
+
+
+ 1055              		.cfi_endproc
+ 1056              	.LFE2:
+ 1057              		.size	KeyboardAction, .-KeyboardAction
+ 1058              		.global	PianoScancode
+ 1059              		.global	KeypadScancode
+ 1060              		.global	ControlScancode
+ 1061              		.global	AlphabetScancode
+ 1062              		.global	ShiftableScancode
+ 1063              		.section	.rodata
+ 1064              		.align	2
+ 1065              		.set	.LANCHOR1,. + 0
+ 1066              		.type	ControlScancode, %object
+ 1067              		.size	ControlScancode, 64
+ 1068              	ControlScancode:
+ 1069 0000 01       		.byte	1
+ 1070 0001 1C       		.byte	28
+ 1071 0002 02       		.byte	2
+ 1072 0003 32       		.byte	50
+ 1073 0004 03       		.byte	3
+ 1074 0005 21       		.byte	33
+ 1075 0006 04       		.byte	4
+ 1076 0007 23       		.byte	35
+ 1077 0008 05       		.byte	5
+ 1078 0009 24       		.byte	36
+ 1079 000a 06       		.byte	6
+ 1080 000b 2B       		.byte	43
+ 1081 000c 07       		.byte	7
+ 1082 000d 34       		.byte	52
+ 1083 000e 08       		.byte	8
+ 1084 000f 33       		.byte	51
+ 1085 0010 09       		.byte	9
+ 1086 0011 43       		.byte	67
+ 1087 0012 0A       		.byte	10
+ 1088 0013 3B       		.byte	59
+ 1089 0014 0B       		.byte	11
+ 1090 0015 42       		.byte	66
+ 1091 0016 0C       		.byte	12
+ 1092 0017 4B       		.byte	75
+ 1093 0018 0D       		.byte	13
+ 1094 0019 3A       		.byte	58
+ 1095 001a 0E       		.byte	14
+ 1096 001b 31       		.byte	49
+ 1097 001c 0F       		.byte	15
+ 1098 001d 44       		.byte	68
+ 1099 001e 10       		.byte	16
+ 1100 001f 4D       		.byte	77
+ 1101 0020 11       		.byte	17
+ 1102 0021 15       		.byte	21
+ 1103 0022 12       		.byte	18
+ 1104 0023 2D       		.byte	45
+ 1105 0024 13       		.byte	19
+ 1106 0025 1B       		.byte	27
+ 1107 0026 14       		.byte	20
+ 1108 0027 2C       		.byte	44
+ 1109 0028 15       		.byte	21
+ 1110 0029 3C       		.byte	60
+ 1111 002a 16       		.byte	22
+ARM GAS  C:\Users\addis\AppData\Local\Temp\ccSizEqd.s 			page 31
+
+
+ 1112 002b 2A       		.byte	42
+ 1113 002c 17       		.byte	23
+ 1114 002d 1D       		.byte	29
+ 1115 002e 18       		.byte	24
+ 1116 002f 22       		.byte	34
+ 1117 0030 19       		.byte	25
+ 1118 0031 35       		.byte	53
+ 1119 0032 1A       		.byte	26
+ 1120 0033 1A       		.byte	26
+ 1121 0034 1B       		.byte	27
+ 1122 0035 54       		.byte	84
+ 1123 0036 1C       		.byte	28
+ 1124 0037 5D       		.byte	93
+ 1125 0038 1D       		.byte	29
+ 1126 0039 5B       		.byte	91
+ 1127 003a 1E       		.byte	30
+ 1128 003b 36       		.byte	54
+ 1129 003c 1F       		.byte	31
+ 1130 003d 4E       		.byte	78
+ 1131 003e 00       		.byte	0
+ 1132 003f 00       		.byte	0
+ 1133              		.type	KeypadScancode, %object
+ 1134              		.size	KeypadScancode, 24
+ 1135              	KeypadScancode:
+ 1136 0040 30       		.byte	48
+ 1137 0041 70       		.byte	112
+ 1138 0042 31       		.byte	49
+ 1139 0043 69       		.byte	105
+ 1140 0044 32       		.byte	50
+ 1141 0045 72       		.byte	114
+ 1142 0046 33       		.byte	51
+ 1143 0047 7A       		.byte	122
+ 1144 0048 34       		.byte	52
+ 1145 0049 6B       		.byte	107
+ 1146 004a 35       		.byte	53
+ 1147 004b 73       		.byte	115
+ 1148 004c 36       		.byte	54
+ 1149 004d 74       		.byte	116
+ 1150 004e 37       		.byte	55
+ 1151 004f 6C       		.byte	108
+ 1152 0050 38       		.byte	56
+ 1153 0051 75       		.byte	117
+ 1154 0052 39       		.byte	57
+ 1155 0053 7D       		.byte	125
+ 1156 0054 2E       		.byte	46
+ 1157 0055 71       		.byte	113
+ 1158 0056 00       		.byte	0
+ 1159 0057 00       		.byte	0
+ 1160              		.type	AlphabetScancode, %object
+ 1161              		.size	AlphabetScancode, 81
+ 1162              	AlphabetScancode:
+ 1163 0058 61       		.byte	97
+ 1164 0059 41       		.byte	65
+ 1165 005a 1C       		.byte	28
+ 1166 005b 62       		.byte	98
+ 1167 005c 42       		.byte	66
+ 1168 005d 32       		.byte	50
+ARM GAS  C:\Users\addis\AppData\Local\Temp\ccSizEqd.s 			page 32
+
+
+ 1169 005e 63       		.byte	99
+ 1170 005f 43       		.byte	67
+ 1171 0060 21       		.byte	33
+ 1172 0061 64       		.byte	100
+ 1173 0062 44       		.byte	68
+ 1174 0063 23       		.byte	35
+ 1175 0064 65       		.byte	101
+ 1176 0065 45       		.byte	69
+ 1177 0066 24       		.byte	36
+ 1178 0067 66       		.byte	102
+ 1179 0068 46       		.byte	70
+ 1180 0069 2B       		.byte	43
+ 1181 006a 67       		.byte	103
+ 1182 006b 47       		.byte	71
+ 1183 006c 34       		.byte	52
+ 1184 006d 68       		.byte	104
+ 1185 006e 48       		.byte	72
+ 1186 006f 33       		.byte	51
+ 1187 0070 69       		.byte	105
+ 1188 0071 49       		.byte	73
+ 1189 0072 43       		.byte	67
+ 1190 0073 6A       		.byte	106
+ 1191 0074 4A       		.byte	74
+ 1192 0075 3B       		.byte	59
+ 1193 0076 6B       		.byte	107
+ 1194 0077 4B       		.byte	75
+ 1195 0078 42       		.byte	66
+ 1196 0079 6C       		.byte	108
+ 1197 007a 4C       		.byte	76
+ 1198 007b 4B       		.byte	75
+ 1199 007c 6D       		.byte	109
+ 1200 007d 4D       		.byte	77
+ 1201 007e 3A       		.byte	58
+ 1202 007f 6E       		.byte	110
+ 1203 0080 4E       		.byte	78
+ 1204 0081 31       		.byte	49
+ 1205 0082 6F       		.byte	111
+ 1206 0083 4F       		.byte	79
+ 1207 0084 44       		.byte	68
+ 1208 0085 70       		.byte	112
+ 1209 0086 50       		.byte	80
+ 1210 0087 4D       		.byte	77
+ 1211 0088 71       		.byte	113
+ 1212 0089 51       		.byte	81
+ 1213 008a 15       		.byte	21
+ 1214 008b 72       		.byte	114
+ 1215 008c 52       		.byte	82
+ 1216 008d 2D       		.byte	45
+ 1217 008e 73       		.byte	115
+ 1218 008f 53       		.byte	83
+ 1219 0090 1B       		.byte	27
+ 1220 0091 74       		.byte	116
+ 1221 0092 54       		.byte	84
+ 1222 0093 2C       		.byte	44
+ 1223 0094 75       		.byte	117
+ 1224 0095 55       		.byte	85
+ 1225 0096 3C       		.byte	60
+ARM GAS  C:\Users\addis\AppData\Local\Temp\ccSizEqd.s 			page 33
+
+
+ 1226 0097 76       		.byte	118
+ 1227 0098 56       		.byte	86
+ 1228 0099 2A       		.byte	42
+ 1229 009a 77       		.byte	119
+ 1230 009b 57       		.byte	87
+ 1231 009c 1D       		.byte	29
+ 1232 009d 78       		.byte	120
+ 1233 009e 58       		.byte	88
+ 1234 009f 22       		.byte	34
+ 1235 00a0 79       		.byte	121
+ 1236 00a1 59       		.byte	89
+ 1237 00a2 35       		.byte	53
+ 1238 00a3 7A       		.byte	122
+ 1239 00a4 5A       		.byte	90
+ 1240 00a5 1A       		.byte	26
+ 1241 00a6 00       		.byte	0
+ 1242 00a7 00       		.byte	0
+ 1243 00a8 00       		.byte	0
+ 1244 00a9 000000   		.space	3
+ 1245              		.type	ShiftableScancode, %object
+ 1246              		.size	ShiftableScancode, 72
+ 1247              	ShiftableScancode:
+ 1248 00ac 60       		.byte	96
+ 1249 00ad 7E       		.byte	126
+ 1250 00ae 0E       		.byte	14
+ 1251 00af 31       		.byte	49
+ 1252 00b0 21       		.byte	33
+ 1253 00b1 16       		.byte	22
+ 1254 00b2 32       		.byte	50
+ 1255 00b3 40       		.byte	64
+ 1256 00b4 1E       		.byte	30
+ 1257 00b5 33       		.byte	51
+ 1258 00b6 23       		.byte	35
+ 1259 00b7 26       		.byte	38
+ 1260 00b8 34       		.byte	52
+ 1261 00b9 24       		.byte	36
+ 1262 00ba 25       		.byte	37
+ 1263 00bb 35       		.byte	53
+ 1264 00bc 25       		.byte	37
+ 1265 00bd 2E       		.byte	46
+ 1266 00be 36       		.byte	54
+ 1267 00bf 5E       		.byte	94
+ 1268 00c0 36       		.byte	54
+ 1269 00c1 37       		.byte	55
+ 1270 00c2 26       		.byte	38
+ 1271 00c3 3D       		.byte	61
+ 1272 00c4 38       		.byte	56
+ 1273 00c5 2A       		.byte	42
+ 1274 00c6 3E       		.byte	62
+ 1275 00c7 39       		.byte	57
+ 1276 00c8 28       		.byte	40
+ 1277 00c9 46       		.byte	70
+ 1278 00ca 30       		.byte	48
+ 1279 00cb 29       		.byte	41
+ 1280 00cc 45       		.byte	69
+ 1281 00cd 2D       		.byte	45
+ 1282 00ce 5F       		.byte	95
+ARM GAS  C:\Users\addis\AppData\Local\Temp\ccSizEqd.s 			page 34
+
+
+ 1283 00cf 4E       		.byte	78
+ 1284 00d0 3D       		.byte	61
+ 1285 00d1 2B       		.byte	43
+ 1286 00d2 55       		.byte	85
+ 1287 00d3 5B       		.byte	91
+ 1288 00d4 7B       		.byte	123
+ 1289 00d5 54       		.byte	84
+ 1290 00d6 5D       		.byte	93
+ 1291 00d7 7D       		.byte	125
+ 1292 00d8 5B       		.byte	91
+ 1293 00d9 5C       		.byte	92
+ 1294 00da 7C       		.byte	124
+ 1295 00db 5D       		.byte	93
+ 1296 00dc 3B       		.byte	59
+ 1297 00dd 3A       		.byte	58
+ 1298 00de 4C       		.byte	76
+ 1299 00df 27       		.byte	39
+ 1300 00e0 22       		.byte	34
+ 1301 00e1 52       		.byte	82
+ 1302 00e2 2C       		.byte	44
+ 1303 00e3 3C       		.byte	60
+ 1304 00e4 41       		.byte	65
+ 1305 00e5 2E       		.byte	46
+ 1306 00e6 3E       		.byte	62
+ 1307 00e7 49       		.byte	73
+ 1308 00e8 2F       		.byte	47
+ 1309 00e9 3F       		.byte	63
+ 1310 00ea 4A       		.byte	74
+ 1311 00eb 20       		.byte	32
+ 1312 00ec 20       		.byte	32
+ 1313 00ed 29       		.byte	41
+ 1314 00ee 09       		.byte	9
+ 1315 00ef 09       		.byte	9
+ 1316 00f0 0D       		.byte	13
+ 1317 00f1 00       		.byte	0
+ 1318 00f2 00       		.byte	0
+ 1319 00f3 00       		.byte	0
+ 1320              		.type	PianoScancode, %object
+ 1321              		.size	PianoScancode, 300
+ 1322              	PianoScancode:
+ 1323 00f4 1A000000 		.word	26
+ 1324 00f8 E3EE0000 		.word	61155
+ 1325 00fc 71770000 		.word	30577
+ 1326 0100 22000000 		.word	34
+ 1327 0104 D3D40000 		.word	54483
+ 1328 0108 696A0000 		.word	27241
+ 1329 010c 21000000 		.word	33
+ 1330 0110 9BBD0000 		.word	48539
+ 1331 0114 CD5E0000 		.word	24269
+ 1332 0118 2A000000 		.word	42
+ 1333 011c F6B20000 		.word	45814
+ 1334 0120 7B590000 		.word	22907
+ 1335 0124 32000000 		.word	50
+ 1336 0128 709F0000 		.word	40816
+ 1337 012c B74F0000 		.word	20407
+ 1338 0130 31000000 		.word	49
+ 1339 0134 0B8E0000 		.word	36363
+ARM GAS  C:\Users\addis\AppData\Local\Temp\ccSizEqd.s 			page 35
+
+
+ 1340 0138 05470000 		.word	18181
+ 1341 013c 3A000000 		.word	58
+ 1342 0140 8B7E0000 		.word	32395
+ 1343 0144 453F0000 		.word	16197
+ 1344 0148 41000000 		.word	65
+ 1345 014c 71770000 		.word	30577
+ 1346 0150 B83B0000 		.word	15288
+ 1347 0154 1C000000 		.word	28
+ 1348 0158 71770000 		.word	30577
+ 1349 015c B83B0000 		.word	15288
+ 1350 0160 1B000000 		.word	27
+ 1351 0164 696A0000 		.word	27241
+ 1352 0168 34350000 		.word	13620
+ 1353 016c 23000000 		.word	35
+ 1354 0170 CD5E0000 		.word	24269
+ 1355 0174 662F0000 		.word	12134
+ 1356 0178 2B000000 		.word	43
+ 1357 017c 7B590000 		.word	22907
+ 1358 0180 BD2C0000 		.word	11453
+ 1359 0184 34000000 		.word	52
+ 1360 0188 B74F0000 		.word	20407
+ 1361 018c DB270000 		.word	10203
+ 1362 0190 33000000 		.word	51
+ 1363 0194 05470000 		.word	18181
+ 1364 0198 82230000 		.word	9090
+ 1365 019c 3B000000 		.word	59
+ 1366 01a0 453F0000 		.word	16197
+ 1367 01a4 A21F0000 		.word	8098
+ 1368 01a8 42000000 		.word	66
+ 1369 01ac B83B0000 		.word	15288
+ 1370 01b0 DC1D0000 		.word	7644
+ 1371 01b4 15000000 		.word	21
+ 1372 01b8 B83B0000 		.word	15288
+ 1373 01bc DC1D0000 		.word	7644
+ 1374 01c0 1D000000 		.word	29
+ 1375 01c4 34350000 		.word	13620
+ 1376 01c8 991A0000 		.word	6809
+ 1377 01cc 24000000 		.word	36
+ 1378 01d0 662F0000 		.word	12134
+ 1379 01d4 B2170000 		.word	6066
+ 1380 01d8 2D000000 		.word	45
+ 1381 01dc BD2C0000 		.word	11453
+ 1382 01e0 5E160000 		.word	5726
+ 1383 01e4 2C000000 		.word	44
+ 1384 01e8 DB270000 		.word	10203
+ 1385 01ec ED130000 		.word	5101
+ 1386 01f0 35000000 		.word	53
+ 1387 01f4 82230000 		.word	9090
+ 1388 01f8 C0110000 		.word	4544
+ 1389 01fc 3C000000 		.word	60
+ 1390 0200 A21F0000 		.word	8098
+ 1391 0204 D10F0000 		.word	4049
+ 1392 0208 43000000 		.word	67
+ 1393 020c DC1D0000 		.word	7644
+ 1394 0210 ED0E0000 		.word	3821
+ 1395 0214 00000000 		.word	0
+ 1396 0218 00000000 		.word	0
+ARM GAS  C:\Users\addis\AppData\Local\Temp\ccSizEqd.s 			page 36
+
+
+ 1397 021c 00000000 		.word	0
+ 1398              		.section	.rodata.str1.4,"aMS",%progbits,1
+ 1399              		.align	2
+ 1400              	.LC0:
+ 1401 0000 4563686F 		.ascii	"Echo Success!\015\012\000"
+ 1401      20537563 
+ 1401      63657373 
+ 1401      210D0A00 
+ 1402              		.bss
+ 1403              		.set	.LANCHOR0,. + 0
+ 1404              		.type	state.5046, %object
+ 1405              		.size	state.5046, 1
+ 1406              	state.5046:
+ 1407 0000 00       		.space	1
+ 1408              		.type	ctrlstatus.5084, %object
+ 1409              		.size	ctrlstatus.5084, 1
+ 1410              	ctrlstatus.5084:
+ 1411 0001 00       		.space	1
+ 1412              		.type	altstatus.5085, %object
+ 1413              		.size	altstatus.5085, 1
+ 1414              	altstatus.5085:
+ 1415 0002 00       		.space	1
+ 1416              		.type	altIndex.5087, %object
+ 1417              		.size	altIndex.5087, 1
+ 1418              	altIndex.5087:
+ 1419 0003 00       		.space	1
+ 1420              		.type	shiftstatus.5083, %object
+ 1421              		.size	shiftstatus.5083, 1
+ 1422              	shiftstatus.5083:
+ 1423 0004 00       		.space	1
+ 1424              		.type	statusLEDs.5082, %object
+ 1425              		.size	statusLEDs.5082, 1
+ 1426              	statusLEDs.5082:
+ 1427 0005 00       		.space	1
+ 1428              		.text
+ 1429              	.Letext0:
+ 1430              		.file 2 "Generated_Source\\PSoC5/cytypes.h"
+ 1431              		.file 3 "Generated_Source\\PSoC5/PS2.h"
+ 1432              		.file 4 "Generated_Source\\PSoC5/UART.h"
+ 1433              		.section	.debug_info,"",%progbits
+ 1434              	.Ldebug_info0:
+ 1435 0000 37040000 		.4byte	0x437
+ 1436 0004 0400     		.2byte	0x4
+ 1437 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 1438 000a 04       		.byte	0x4
+ 1439 000b 01       		.uleb128 0x1
+ 1440 000c 77010000 		.4byte	.LASF41
+ 1441 0010 01       		.byte	0x1
+ 1442 0011 0E000000 		.4byte	.LASF42
+ 1443 0015 1B000000 		.4byte	.LASF43
+ 1444 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 1445 001d 00000000 		.4byte	0
+ 1446 0021 00000000 		.4byte	.Ldebug_line0
+ 1447 0025 02       		.uleb128 0x2
+ 1448 0026 01       		.byte	0x1
+ 1449 0027 06       		.byte	0x6
+ 1450 0028 B2020000 		.4byte	.LASF0
+ARM GAS  C:\Users\addis\AppData\Local\Temp\ccSizEqd.s 			page 37
+
+
+ 1451 002c 02       		.uleb128 0x2
+ 1452 002d 01       		.byte	0x1
+ 1453 002e 08       		.byte	0x8
+ 1454 002f 03010000 		.4byte	.LASF1
+ 1455 0033 02       		.uleb128 0x2
+ 1456 0034 02       		.byte	0x2
+ 1457 0035 05       		.byte	0x5
+ 1458 0036 88020000 		.4byte	.LASF2
+ 1459 003a 02       		.uleb128 0x2
+ 1460 003b 02       		.byte	0x2
+ 1461 003c 07       		.byte	0x7
+ 1462 003d 97000000 		.4byte	.LASF3
+ 1463 0041 02       		.uleb128 0x2
+ 1464 0042 04       		.byte	0x4
+ 1465 0043 05       		.byte	0x5
+ 1466 0044 A4020000 		.4byte	.LASF4
+ 1467 0048 02       		.uleb128 0x2
+ 1468 0049 04       		.byte	0x4
+ 1469 004a 07       		.byte	0x7
+ 1470 004b 05020000 		.4byte	.LASF5
+ 1471 004f 02       		.uleb128 0x2
+ 1472 0050 08       		.byte	0x8
+ 1473 0051 05       		.byte	0x5
+ 1474 0052 00000000 		.4byte	.LASF6
+ 1475 0056 02       		.uleb128 0x2
+ 1476 0057 08       		.byte	0x8
+ 1477 0058 07       		.byte	0x7
+ 1478 0059 2E020000 		.4byte	.LASF7
+ 1479 005d 03       		.uleb128 0x3
+ 1480 005e 04       		.byte	0x4
+ 1481 005f 05       		.byte	0x5
+ 1482 0060 696E7400 		.ascii	"int\000"
+ 1483 0064 02       		.uleb128 0x2
+ 1484 0065 04       		.byte	0x4
+ 1485 0066 07       		.byte	0x7
+ 1486 0067 17020000 		.4byte	.LASF8
+ 1487 006b 04       		.uleb128 0x4
+ 1488 006c 27010000 		.4byte	.LASF11
+ 1489 0070 02       		.byte	0x2
+ 1490 0071 3801     		.2byte	0x138
+ 1491 0073 2C000000 		.4byte	0x2c
+ 1492 0077 02       		.uleb128 0x2
+ 1493 0078 04       		.byte	0x4
+ 1494 0079 04       		.byte	0x4
+ 1495 007a 79000000 		.4byte	.LASF9
+ 1496 007e 02       		.uleb128 0x2
+ 1497 007f 08       		.byte	0x8
+ 1498 0080 04       		.byte	0x4
+ 1499 0081 36010000 		.4byte	.LASF10
+ 1500 0085 04       		.uleb128 0x4
+ 1501 0086 11010000 		.4byte	.LASF12
+ 1502 008a 02       		.byte	0x2
+ 1503 008b 4901     		.2byte	0x149
+ 1504 008d 91000000 		.4byte	0x91
+ 1505 0091 02       		.uleb128 0x2
+ 1506 0092 01       		.byte	0x1
+ 1507 0093 08       		.byte	0x8
+ARM GAS  C:\Users\addis\AppData\Local\Temp\ccSizEqd.s 			page 38
+
+
+ 1508 0094 AD020000 		.4byte	.LASF13
+ 1509 0098 02       		.uleb128 0x2
+ 1510 0099 04       		.byte	0x4
+ 1511 009a 07       		.byte	0x7
+ 1512 009b 66020000 		.4byte	.LASF14
+ 1513 009f 05       		.uleb128 0x5
+ 1514 00a0 C3000000 		.4byte	.LASF17
+ 1515 00a4 01       		.byte	0x1
+ 1516 00a5 DE       		.byte	0xde
+ 1517 00a6 6B000000 		.4byte	0x6b
+ 1518 00aa 00000000 		.4byte	.LFB0
+ 1519 00ae 14010000 		.4byte	.LFE0-.LFB0
+ 1520 00b2 01       		.uleb128 0x1
+ 1521 00b3 9C       		.byte	0x9c
+ 1522 00b4 E8000000 		.4byte	0xe8
+ 1523 00b8 06       		.uleb128 0x6
+ 1524 00b9 FE000000 		.4byte	.LASF19
+ 1525 00bd 01       		.byte	0x1
+ 1526 00be DE       		.byte	0xde
+ 1527 00bf 6B000000 		.4byte	0x6b
+ 1528 00c3 00000000 		.4byte	.LLST0
+ 1529 00c7 07       		.uleb128 0x7
+ 1530 00c8 73000000 		.4byte	.LASF15
+ 1531 00cc 01       		.byte	0x1
+ 1532 00cd E0       		.byte	0xe0
+ 1533 00ce 6B000000 		.4byte	0x6b
+ 1534 00d2 05       		.uleb128 0x5
+ 1535 00d3 03       		.byte	0x3
+ 1536 00d4 00000000 		.4byte	state.5046
+ 1537 00d8 08       		.uleb128 0x8
+ 1538 00d9 DD000000 		.4byte	.LASF16
+ 1539 00dd 01       		.byte	0x1
+ 1540 00de E1       		.byte	0xe1
+ 1541 00df 6B000000 		.4byte	0x6b
+ 1542 00e3 60020000 		.4byte	.LLST1
+ 1543 00e7 00       		.byte	0
+ 1544 00e8 09       		.uleb128 0x9
+ 1545 00e9 17010000 		.4byte	.LASF18
+ 1546 00ed 01       		.byte	0x1
+ 1547 00ee 3401     		.2byte	0x134
+ 1548 00f0 91000000 		.4byte	0x91
+ 1549 00f4 00000000 		.4byte	.LFB1
+ 1550 00f8 84010000 		.4byte	.LFE1-.LFB1
+ 1551 00fc 01       		.uleb128 0x1
+ 1552 00fd 9C       		.byte	0x9c
+ 1553 00fe 31010000 		.4byte	0x131
+ 1554 0102 0A       		.uleb128 0xa
+ 1555 0103 44010000 		.4byte	.LASF20
+ 1556 0107 01       		.byte	0x1
+ 1557 0108 3401     		.2byte	0x134
+ 1558 010a 6B000000 		.4byte	0x6b
+ 1559 010e 97020000 		.4byte	.LLST2
+ 1560 0112 0A       		.uleb128 0xa
+ 1561 0113 DD000000 		.4byte	.LASF16
+ 1562 0117 01       		.byte	0x1
+ 1563 0118 3401     		.2byte	0x134
+ 1564 011a 6B000000 		.4byte	0x6b
+ARM GAS  C:\Users\addis\AppData\Local\Temp\ccSizEqd.s 			page 39
+
+
+ 1565 011e 93040000 		.4byte	.LLST3
+ 1566 0122 0B       		.uleb128 0xb
+ 1567 0123 6900     		.ascii	"i\000"
+ 1568 0125 01       		.byte	0x1
+ 1569 0126 3601     		.2byte	0x136
+ 1570 0128 6B000000 		.4byte	0x6b
+ 1571 012c E6040000 		.4byte	.LLST4
+ 1572 0130 00       		.byte	0
+ 1573 0131 0C       		.uleb128 0xc
+ 1574 0132 50020000 		.4byte	.LASF44
+ 1575 0136 01       		.byte	0x1
+ 1576 0137 8501     		.2byte	0x185
+ 1577 0139 00000000 		.4byte	.LFB2
+ 1578 013d 6C020000 		.4byte	.LFE2-.LFB2
+ 1579 0141 01       		.uleb128 0x1
+ 1580 0142 9C       		.byte	0x9c
+ 1581 0143 DB020000 		.4byte	0x2db
+ 1582 0147 0A       		.uleb128 0xa
+ 1583 0148 44010000 		.4byte	.LASF20
+ 1584 014c 01       		.byte	0x1
+ 1585 014d 8501     		.2byte	0x185
+ 1586 014f 6B000000 		.4byte	0x6b
+ 1587 0153 72050000 		.4byte	.LLST5
+ 1588 0157 0A       		.uleb128 0xa
+ 1589 0158 DD000000 		.4byte	.LASF16
+ 1590 015c 01       		.byte	0x1
+ 1591 015d 8501     		.2byte	0x185
+ 1592 015f 6B000000 		.4byte	0x6b
+ 1593 0163 4D060000 		.4byte	.LLST6
+ 1594 0167 0D       		.uleb128 0xd
+ 1595 0168 D6000000 		.4byte	.LASF21
+ 1596 016c 01       		.byte	0x1
+ 1597 016d 8801     		.2byte	0x188
+ 1598 016f 6B000000 		.4byte	0x6b
+ 1599 0173 28070000 		.4byte	.LLST7
+ 1600 0177 0E       		.uleb128 0xe
+ 1601 0178 6900     		.ascii	"i\000"
+ 1602 017a 01       		.byte	0x1
+ 1603 017b 8901     		.2byte	0x189
+ 1604 017d 5D000000 		.4byte	0x5d
+ 1605 0181 0F       		.uleb128 0xf
+ 1606 0182 7F000000 		.4byte	.LASF22
+ 1607 0186 01       		.byte	0x1
+ 1608 0187 8A01     		.2byte	0x18a
+ 1609 0189 6B000000 		.4byte	0x6b
+ 1610 018d 7F       		.byte	0x7f
+ 1611 018e 0F       		.uleb128 0xf
+ 1612 018f 3D010000 		.4byte	.LASF23
+ 1613 0193 01       		.byte	0x1
+ 1614 0194 8B01     		.2byte	0x18b
+ 1615 0196 6B000000 		.4byte	0x6b
+ 1616 019a 01       		.byte	0x1
+ 1617 019b 10       		.uleb128 0x10
+ 1618 019c 68000000 		.4byte	.LASF24
+ 1619 01a0 01       		.byte	0x1
+ 1620 01a1 8C01     		.2byte	0x18c
+ 1621 01a3 6B000000 		.4byte	0x6b
+ARM GAS  C:\Users\addis\AppData\Local\Temp\ccSizEqd.s 			page 40
+
+
+ 1622 01a7 05       		.uleb128 0x5
+ 1623 01a8 03       		.byte	0x3
+ 1624 01a9 05000000 		.4byte	statusLEDs.5082
+ 1625 01ad 10       		.uleb128 0x10
+ 1626 01ae 8B000000 		.4byte	.LASF25
+ 1627 01b2 01       		.byte	0x1
+ 1628 01b3 8D01     		.2byte	0x18d
+ 1629 01b5 6B000000 		.4byte	0x6b
+ 1630 01b9 05       		.uleb128 0x5
+ 1631 01ba 03       		.byte	0x3
+ 1632 01bb 04000000 		.4byte	shiftstatus.5083
+ 1633 01bf 10       		.uleb128 0x10
+ 1634 01c0 45020000 		.4byte	.LASF26
+ 1635 01c4 01       		.byte	0x1
+ 1636 01c5 8E01     		.2byte	0x18e
+ 1637 01c7 6B000000 		.4byte	0x6b
+ 1638 01cb 05       		.uleb128 0x5
+ 1639 01cc 03       		.byte	0x3
+ 1640 01cd 01000000 		.4byte	ctrlstatus.5084
+ 1641 01d1 10       		.uleb128 0x10
+ 1642 01d2 B9000000 		.4byte	.LASF27
+ 1643 01d6 01       		.byte	0x1
+ 1644 01d7 8F01     		.2byte	0x18f
+ 1645 01d9 6B000000 		.4byte	0x6b
+ 1646 01dd 05       		.uleb128 0x5
+ 1647 01de 03       		.byte	0x3
+ 1648 01df 02000000 		.4byte	altstatus.5085
+ 1649 01e3 11       		.uleb128 0x11
+ 1650 01e4 5F020000 		.4byte	.LASF28
+ 1651 01e8 01       		.byte	0x1
+ 1652 01e9 9001     		.2byte	0x190
+ 1653 01eb DB020000 		.4byte	0x2db
+ 1654 01ef 10       		.uleb128 0x10
+ 1655 01f0 2D010000 		.4byte	.LASF29
+ 1656 01f4 01       		.byte	0x1
+ 1657 01f5 9101     		.2byte	0x191
+ 1658 01f7 6B000000 		.4byte	0x6b
+ 1659 01fb 05       		.uleb128 0x5
+ 1660 01fc 03       		.byte	0x3
+ 1661 01fd 03000000 		.4byte	altIndex.5087
+ 1662 0201 12       		.uleb128 0x12
+ 1663 0202 34000000 		.4byte	.LVL113
+ 1664 0206 09040000 		.4byte	0x409
+ 1665 020a 15020000 		.4byte	0x215
+ 1666 020e 13       		.uleb128 0x13
+ 1667 020f 01       		.uleb128 0x1
+ 1668 0210 50       		.byte	0x50
+ 1669 0211 02       		.uleb128 0x2
+ 1670 0212 09       		.byte	0x9
+ 1671 0213 EE       		.byte	0xee
+ 1672 0214 00       		.byte	0
+ 1673 0215 12       		.uleb128 0x12
+ 1674 0216 40000000 		.4byte	.LVL114
+ 1675 021a 1E040000 		.4byte	0x41e
+ 1676 021e 2C020000 		.4byte	0x22c
+ 1677 0222 13       		.uleb128 0x13
+ 1678 0223 01       		.uleb128 0x1
+ARM GAS  C:\Users\addis\AppData\Local\Temp\ccSizEqd.s 			page 41
+
+
+ 1679 0224 50       		.byte	0x50
+ 1680 0225 05       		.uleb128 0x5
+ 1681 0226 03       		.byte	0x3
+ 1682 0227 00000000 		.4byte	.LC0
+ 1683 022b 00       		.byte	0
+ 1684 022c 12       		.uleb128 0x12
+ 1685 022d 30010000 		.4byte	.LVL117
+ 1686 0231 09040000 		.4byte	0x409
+ 1687 0235 40020000 		.4byte	0x240
+ 1688 0239 13       		.uleb128 0x13
+ 1689 023a 01       		.uleb128 0x1
+ 1690 023b 50       		.byte	0x50
+ 1691 023c 02       		.uleb128 0x2
+ 1692 023d 09       		.byte	0x9
+ 1693 023e ED       		.byte	0xed
+ 1694 023f 00       		.byte	0
+ 1695 0240 14       		.uleb128 0x14
+ 1696 0241 44010000 		.4byte	.LVL119
+ 1697 0245 09040000 		.4byte	0x409
+ 1698 0249 12       		.uleb128 0x12
+ 1699 024a 4C010000 		.4byte	.LVL122
+ 1700 024e 09040000 		.4byte	0x409
+ 1701 0252 5D020000 		.4byte	0x25d
+ 1702 0256 13       		.uleb128 0x13
+ 1703 0257 01       		.uleb128 0x1
+ 1704 0258 50       		.byte	0x50
+ 1705 0259 02       		.uleb128 0x2
+ 1706 025a 09       		.byte	0x9
+ 1707 025b ED       		.byte	0xed
+ 1708 025c 00       		.byte	0
+ 1709 025d 14       		.uleb128 0x14
+ 1710 025e 5E010000 		.4byte	.LVL124
+ 1711 0262 09040000 		.4byte	0x409
+ 1712 0266 12       		.uleb128 0x12
+ 1713 0267 72010000 		.4byte	.LVL127
+ 1714 026b 09040000 		.4byte	0x409
+ 1715 026f 7A020000 		.4byte	0x27a
+ 1716 0273 13       		.uleb128 0x13
+ 1717 0274 01       		.uleb128 0x1
+ 1718 0275 50       		.byte	0x50
+ 1719 0276 02       		.uleb128 0x2
+ 1720 0277 09       		.byte	0x9
+ 1721 0278 ED       		.byte	0xed
+ 1722 0279 00       		.byte	0
+ 1723 027a 14       		.uleb128 0x14
+ 1724 027b 84010000 		.4byte	.LVL129
+ 1725 027f 09040000 		.4byte	0x409
+ 1726 0283 12       		.uleb128 0x12
+ 1727 0284 8C010000 		.4byte	.LVL132
+ 1728 0288 09040000 		.4byte	0x409
+ 1729 028c 97020000 		.4byte	0x297
+ 1730 0290 13       		.uleb128 0x13
+ 1731 0291 01       		.uleb128 0x1
+ 1732 0292 50       		.byte	0x50
+ 1733 0293 02       		.uleb128 0x2
+ 1734 0294 09       		.byte	0x9
+ 1735 0295 ED       		.byte	0xed
+ARM GAS  C:\Users\addis\AppData\Local\Temp\ccSizEqd.s 			page 42
+
+
+ 1736 0296 00       		.byte	0
+ 1737 0297 14       		.uleb128 0x14
+ 1738 0298 9E010000 		.4byte	.LVL134
+ 1739 029c 09040000 		.4byte	0x409
+ 1740 02a0 12       		.uleb128 0x12
+ 1741 02a1 B2010000 		.4byte	.LVL137
+ 1742 02a5 09040000 		.4byte	0x409
+ 1743 02a9 B4020000 		.4byte	0x2b4
+ 1744 02ad 13       		.uleb128 0x13
+ 1745 02ae 01       		.uleb128 0x1
+ 1746 02af 50       		.byte	0x50
+ 1747 02b0 02       		.uleb128 0x2
+ 1748 02b1 09       		.byte	0x9
+ 1749 02b2 ED       		.byte	0xed
+ 1750 02b3 00       		.byte	0
+ 1751 02b4 14       		.uleb128 0x14
+ 1752 02b5 C4010000 		.4byte	.LVL139
+ 1753 02b9 09040000 		.4byte	0x409
+ 1754 02bd 12       		.uleb128 0x12
+ 1755 02be CC010000 		.4byte	.LVL142
+ 1756 02c2 09040000 		.4byte	0x409
+ 1757 02c6 D1020000 		.4byte	0x2d1
+ 1758 02ca 13       		.uleb128 0x13
+ 1759 02cb 01       		.uleb128 0x1
+ 1760 02cc 50       		.byte	0x50
+ 1761 02cd 02       		.uleb128 0x2
+ 1762 02ce 09       		.byte	0x9
+ 1763 02cf ED       		.byte	0xed
+ 1764 02d0 00       		.byte	0
+ 1765 02d1 14       		.uleb128 0x14
+ 1766 02d2 DE010000 		.4byte	.LVL144
+ 1767 02d6 09040000 		.4byte	0x409
+ 1768 02da 00       		.byte	0
+ 1769 02db 15       		.uleb128 0x15
+ 1770 02dc 6B000000 		.4byte	0x6b
+ 1771 02e0 EB020000 		.4byte	0x2eb
+ 1772 02e4 16       		.uleb128 0x16
+ 1773 02e5 98000000 		.4byte	0x98
+ 1774 02e9 0B       		.byte	0xb
+ 1775 02ea 00       		.byte	0
+ 1776 02eb 17       		.uleb128 0x17
+ 1777 02ec F6000000 		.4byte	.LASF30
+ 1778 02f0 01       		.byte	0x1
+ 1779 02f1 19       		.byte	0x19
+ 1780 02f2 6B000000 		.4byte	0x6b
+ 1781 02f6 17       		.uleb128 0x17
+ 1782 02f7 4D010000 		.4byte	.LASF31
+ 1783 02fb 01       		.byte	0x1
+ 1784 02fc 1A       		.byte	0x1a
+ 1785 02fd 6B000000 		.4byte	0x6b
+ 1786 0301 17       		.uleb128 0x17
+ 1787 0302 7D020000 		.4byte	.LASF32
+ 1788 0306 01       		.byte	0x1
+ 1789 0307 1B       		.byte	0x1b
+ 1790 0308 6B000000 		.4byte	0x6b
+ 1791 030c 17       		.uleb128 0x17
+ 1792 030d 24020000 		.4byte	.LASF33
+ARM GAS  C:\Users\addis\AppData\Local\Temp\ccSizEqd.s 			page 43
+
+
+ 1793 0311 01       		.byte	0x1
+ 1794 0312 1C       		.byte	0x1c
+ 1795 0313 6B000000 		.4byte	0x6b
+ 1796 0317 17       		.uleb128 0x17
+ 1797 0318 5F000000 		.4byte	.LASF34
+ 1798 031c 01       		.byte	0x1
+ 1799 031d 1D       		.byte	0x1d
+ 1800 031e 6B000000 		.4byte	0x6b
+ 1801 0322 17       		.uleb128 0x17
+ 1802 0323 CD020000 		.4byte	.LASF35
+ 1803 0327 01       		.byte	0x1
+ 1804 0328 1E       		.byte	0x1e
+ 1805 0329 6B000000 		.4byte	0x6b
+ 1806 032d 15       		.uleb128 0x15
+ 1807 032e 2C000000 		.4byte	0x2c
+ 1808 0332 43030000 		.4byte	0x343
+ 1809 0336 16       		.uleb128 0x16
+ 1810 0337 98000000 		.4byte	0x98
+ 1811 033b 17       		.byte	0x17
+ 1812 033c 16       		.uleb128 0x16
+ 1813 033d 98000000 		.4byte	0x98
+ 1814 0341 02       		.byte	0x2
+ 1815 0342 00       		.byte	0
+ 1816 0343 18       		.uleb128 0x18
+ 1817 0344 92020000 		.4byte	.LASF36
+ 1818 0348 01       		.byte	0x1
+ 1819 0349 2B       		.byte	0x2b
+ 1820 034a 54030000 		.4byte	0x354
+ 1821 034e 05       		.uleb128 0x5
+ 1822 034f 03       		.byte	0x3
+ 1823 0350 00000000 		.4byte	ShiftableScancode
+ 1824 0354 19       		.uleb128 0x19
+ 1825 0355 2D030000 		.4byte	0x32d
+ 1826 0359 15       		.uleb128 0x15
+ 1827 035a 2C000000 		.4byte	0x2c
+ 1828 035e 6F030000 		.4byte	0x36f
+ 1829 0362 16       		.uleb128 0x16
+ 1830 0363 98000000 		.4byte	0x98
+ 1831 0367 1A       		.byte	0x1a
+ 1832 0368 16       		.uleb128 0x16
+ 1833 0369 98000000 		.4byte	0x98
+ 1834 036d 02       		.byte	0x2
+ 1835 036e 00       		.byte	0
+ 1836 036f 18       		.uleb128 0x18
+ 1837 0370 56010000 		.4byte	.LASF37
+ 1838 0374 01       		.byte	0x1
+ 1839 0375 50       		.byte	0x50
+ 1840 0376 80030000 		.4byte	0x380
+ 1841 037a 05       		.uleb128 0x5
+ 1842 037b 03       		.byte	0x3
+ 1843 037c 00000000 		.4byte	AlphabetScancode
+ 1844 0380 19       		.uleb128 0x19
+ 1845 0381 59030000 		.4byte	0x359
+ 1846 0385 15       		.uleb128 0x15
+ 1847 0386 2C000000 		.4byte	0x2c
+ 1848 038a 9B030000 		.4byte	0x39b
+ 1849 038e 16       		.uleb128 0x16
+ARM GAS  C:\Users\addis\AppData\Local\Temp\ccSizEqd.s 			page 44
+
+
+ 1850 038f 98000000 		.4byte	0x98
+ 1851 0393 1F       		.byte	0x1f
+ 1852 0394 16       		.uleb128 0x16
+ 1853 0395 98000000 		.4byte	0x98
+ 1854 0399 01       		.byte	0x1
+ 1855 039a 00       		.byte	0
+ 1856 039b 18       		.uleb128 0x18
+ 1857 039c E6000000 		.4byte	.LASF38
+ 1858 03a0 01       		.byte	0x1
+ 1859 03a1 78       		.byte	0x78
+ 1860 03a2 AC030000 		.4byte	0x3ac
+ 1861 03a6 05       		.uleb128 0x5
+ 1862 03a7 03       		.byte	0x3
+ 1863 03a8 00000000 		.4byte	ControlScancode
+ 1864 03ac 19       		.uleb128 0x19
+ 1865 03ad 85030000 		.4byte	0x385
+ 1866 03b1 15       		.uleb128 0x15
+ 1867 03b2 2C000000 		.4byte	0x2c
+ 1868 03b6 C7030000 		.4byte	0x3c7
+ 1869 03ba 16       		.uleb128 0x16
+ 1870 03bb 98000000 		.4byte	0x98
+ 1871 03bf 0B       		.byte	0xb
+ 1872 03c0 16       		.uleb128 0x16
+ 1873 03c1 98000000 		.4byte	0x98
+ 1874 03c5 01       		.byte	0x1
+ 1875 03c6 00       		.byte	0
+ 1876 03c7 18       		.uleb128 0x18
+ 1877 03c8 AA000000 		.4byte	.LASF39
+ 1878 03cc 01       		.byte	0x1
+ 1879 03cd A4       		.byte	0xa4
+ 1880 03ce D8030000 		.4byte	0x3d8
+ 1881 03d2 05       		.uleb128 0x5
+ 1882 03d3 03       		.byte	0x3
+ 1883 03d4 00000000 		.4byte	KeypadScancode
+ 1884 03d8 19       		.uleb128 0x19
+ 1885 03d9 B1030000 		.4byte	0x3b1
+ 1886 03dd 15       		.uleb128 0x15
+ 1887 03de 64000000 		.4byte	0x64
+ 1888 03e2 F3030000 		.4byte	0x3f3
+ 1889 03e6 16       		.uleb128 0x16
+ 1890 03e7 98000000 		.4byte	0x98
+ 1891 03eb 18       		.byte	0x18
+ 1892 03ec 16       		.uleb128 0x16
+ 1893 03ed 98000000 		.4byte	0x98
+ 1894 03f1 02       		.byte	0x2
+ 1895 03f2 00       		.byte	0
+ 1896 03f3 18       		.uleb128 0x18
+ 1897 03f4 6F020000 		.4byte	.LASF40
+ 1898 03f8 01       		.byte	0x1
+ 1899 03f9 BE       		.byte	0xbe
+ 1900 03fa 04040000 		.4byte	0x404
+ 1901 03fe 05       		.uleb128 0x5
+ 1902 03ff 03       		.byte	0x3
+ 1903 0400 00000000 		.4byte	PianoScancode
+ 1904 0404 19       		.uleb128 0x19
+ 1905 0405 DD030000 		.4byte	0x3dd
+ 1906 0409 1A       		.uleb128 0x1a
+ARM GAS  C:\Users\addis\AppData\Local\Temp\ccSizEqd.s 			page 45
+
+
+ 1907 040a 67010000 		.4byte	.LASF45
+ 1908 040e 03       		.byte	0x3
+ 1909 040f 7E       		.byte	0x7e
+ 1910 0410 6B000000 		.4byte	0x6b
+ 1911 0414 1E040000 		.4byte	0x41e
+ 1912 0418 1B       		.uleb128 0x1b
+ 1913 0419 6B000000 		.4byte	0x6b
+ 1914 041d 00       		.byte	0
+ 1915 041e 1C       		.uleb128 0x1c
+ 1916 041f BE020000 		.4byte	.LASF46
+ 1917 0423 04       		.byte	0x4
+ 1918 0424 8B       		.byte	0x8b
+ 1919 0425 2F040000 		.4byte	0x42f
+ 1920 0429 1B       		.uleb128 0x1b
+ 1921 042a 2F040000 		.4byte	0x42f
+ 1922 042e 00       		.byte	0
+ 1923 042f 1D       		.uleb128 0x1d
+ 1924 0430 04       		.byte	0x4
+ 1925 0431 35040000 		.4byte	0x435
+ 1926 0435 19       		.uleb128 0x19
+ 1927 0436 85000000 		.4byte	0x85
+ 1928 043a 00       		.byte	0
+ 1929              		.section	.debug_abbrev,"",%progbits
+ 1930              	.Ldebug_abbrev0:
+ 1931 0000 01       		.uleb128 0x1
+ 1932 0001 11       		.uleb128 0x11
+ 1933 0002 01       		.byte	0x1
+ 1934 0003 25       		.uleb128 0x25
+ 1935 0004 0E       		.uleb128 0xe
+ 1936 0005 13       		.uleb128 0x13
+ 1937 0006 0B       		.uleb128 0xb
+ 1938 0007 03       		.uleb128 0x3
+ 1939 0008 0E       		.uleb128 0xe
+ 1940 0009 1B       		.uleb128 0x1b
+ 1941 000a 0E       		.uleb128 0xe
+ 1942 000b 55       		.uleb128 0x55
+ 1943 000c 17       		.uleb128 0x17
+ 1944 000d 11       		.uleb128 0x11
+ 1945 000e 01       		.uleb128 0x1
+ 1946 000f 10       		.uleb128 0x10
+ 1947 0010 17       		.uleb128 0x17
+ 1948 0011 00       		.byte	0
+ 1949 0012 00       		.byte	0
+ 1950 0013 02       		.uleb128 0x2
+ 1951 0014 24       		.uleb128 0x24
+ 1952 0015 00       		.byte	0
+ 1953 0016 0B       		.uleb128 0xb
+ 1954 0017 0B       		.uleb128 0xb
+ 1955 0018 3E       		.uleb128 0x3e
+ 1956 0019 0B       		.uleb128 0xb
+ 1957 001a 03       		.uleb128 0x3
+ 1958 001b 0E       		.uleb128 0xe
+ 1959 001c 00       		.byte	0
+ 1960 001d 00       		.byte	0
+ 1961 001e 03       		.uleb128 0x3
+ 1962 001f 24       		.uleb128 0x24
+ 1963 0020 00       		.byte	0
+ARM GAS  C:\Users\addis\AppData\Local\Temp\ccSizEqd.s 			page 46
+
+
+ 1964 0021 0B       		.uleb128 0xb
+ 1965 0022 0B       		.uleb128 0xb
+ 1966 0023 3E       		.uleb128 0x3e
+ 1967 0024 0B       		.uleb128 0xb
+ 1968 0025 03       		.uleb128 0x3
+ 1969 0026 08       		.uleb128 0x8
+ 1970 0027 00       		.byte	0
+ 1971 0028 00       		.byte	0
+ 1972 0029 04       		.uleb128 0x4
+ 1973 002a 16       		.uleb128 0x16
+ 1974 002b 00       		.byte	0
+ 1975 002c 03       		.uleb128 0x3
+ 1976 002d 0E       		.uleb128 0xe
+ 1977 002e 3A       		.uleb128 0x3a
+ 1978 002f 0B       		.uleb128 0xb
+ 1979 0030 3B       		.uleb128 0x3b
+ 1980 0031 05       		.uleb128 0x5
+ 1981 0032 49       		.uleb128 0x49
+ 1982 0033 13       		.uleb128 0x13
+ 1983 0034 00       		.byte	0
+ 1984 0035 00       		.byte	0
+ 1985 0036 05       		.uleb128 0x5
+ 1986 0037 2E       		.uleb128 0x2e
+ 1987 0038 01       		.byte	0x1
+ 1988 0039 3F       		.uleb128 0x3f
+ 1989 003a 19       		.uleb128 0x19
+ 1990 003b 03       		.uleb128 0x3
+ 1991 003c 0E       		.uleb128 0xe
+ 1992 003d 3A       		.uleb128 0x3a
+ 1993 003e 0B       		.uleb128 0xb
+ 1994 003f 3B       		.uleb128 0x3b
+ 1995 0040 0B       		.uleb128 0xb
+ 1996 0041 27       		.uleb128 0x27
+ 1997 0042 19       		.uleb128 0x19
+ 1998 0043 49       		.uleb128 0x49
+ 1999 0044 13       		.uleb128 0x13
+ 2000 0045 11       		.uleb128 0x11
+ 2001 0046 01       		.uleb128 0x1
+ 2002 0047 12       		.uleb128 0x12
+ 2003 0048 06       		.uleb128 0x6
+ 2004 0049 40       		.uleb128 0x40
+ 2005 004a 18       		.uleb128 0x18
+ 2006 004b 9742     		.uleb128 0x2117
+ 2007 004d 19       		.uleb128 0x19
+ 2008 004e 01       		.uleb128 0x1
+ 2009 004f 13       		.uleb128 0x13
+ 2010 0050 00       		.byte	0
+ 2011 0051 00       		.byte	0
+ 2012 0052 06       		.uleb128 0x6
+ 2013 0053 05       		.uleb128 0x5
+ 2014 0054 00       		.byte	0
+ 2015 0055 03       		.uleb128 0x3
+ 2016 0056 0E       		.uleb128 0xe
+ 2017 0057 3A       		.uleb128 0x3a
+ 2018 0058 0B       		.uleb128 0xb
+ 2019 0059 3B       		.uleb128 0x3b
+ 2020 005a 0B       		.uleb128 0xb
+ARM GAS  C:\Users\addis\AppData\Local\Temp\ccSizEqd.s 			page 47
+
+
+ 2021 005b 49       		.uleb128 0x49
+ 2022 005c 13       		.uleb128 0x13
+ 2023 005d 02       		.uleb128 0x2
+ 2024 005e 17       		.uleb128 0x17
+ 2025 005f 00       		.byte	0
+ 2026 0060 00       		.byte	0
+ 2027 0061 07       		.uleb128 0x7
+ 2028 0062 34       		.uleb128 0x34
+ 2029 0063 00       		.byte	0
+ 2030 0064 03       		.uleb128 0x3
+ 2031 0065 0E       		.uleb128 0xe
+ 2032 0066 3A       		.uleb128 0x3a
+ 2033 0067 0B       		.uleb128 0xb
+ 2034 0068 3B       		.uleb128 0x3b
+ 2035 0069 0B       		.uleb128 0xb
+ 2036 006a 49       		.uleb128 0x49
+ 2037 006b 13       		.uleb128 0x13
+ 2038 006c 02       		.uleb128 0x2
+ 2039 006d 18       		.uleb128 0x18
+ 2040 006e 00       		.byte	0
+ 2041 006f 00       		.byte	0
+ 2042 0070 08       		.uleb128 0x8
+ 2043 0071 34       		.uleb128 0x34
+ 2044 0072 00       		.byte	0
+ 2045 0073 03       		.uleb128 0x3
+ 2046 0074 0E       		.uleb128 0xe
+ 2047 0075 3A       		.uleb128 0x3a
+ 2048 0076 0B       		.uleb128 0xb
+ 2049 0077 3B       		.uleb128 0x3b
+ 2050 0078 0B       		.uleb128 0xb
+ 2051 0079 49       		.uleb128 0x49
+ 2052 007a 13       		.uleb128 0x13
+ 2053 007b 02       		.uleb128 0x2
+ 2054 007c 17       		.uleb128 0x17
+ 2055 007d 00       		.byte	0
+ 2056 007e 00       		.byte	0
+ 2057 007f 09       		.uleb128 0x9
+ 2058 0080 2E       		.uleb128 0x2e
+ 2059 0081 01       		.byte	0x1
+ 2060 0082 3F       		.uleb128 0x3f
+ 2061 0083 19       		.uleb128 0x19
+ 2062 0084 03       		.uleb128 0x3
+ 2063 0085 0E       		.uleb128 0xe
+ 2064 0086 3A       		.uleb128 0x3a
+ 2065 0087 0B       		.uleb128 0xb
+ 2066 0088 3B       		.uleb128 0x3b
+ 2067 0089 05       		.uleb128 0x5
+ 2068 008a 27       		.uleb128 0x27
+ 2069 008b 19       		.uleb128 0x19
+ 2070 008c 49       		.uleb128 0x49
+ 2071 008d 13       		.uleb128 0x13
+ 2072 008e 11       		.uleb128 0x11
+ 2073 008f 01       		.uleb128 0x1
+ 2074 0090 12       		.uleb128 0x12
+ 2075 0091 06       		.uleb128 0x6
+ 2076 0092 40       		.uleb128 0x40
+ 2077 0093 18       		.uleb128 0x18
+ARM GAS  C:\Users\addis\AppData\Local\Temp\ccSizEqd.s 			page 48
+
+
+ 2078 0094 9742     		.uleb128 0x2117
+ 2079 0096 19       		.uleb128 0x19
+ 2080 0097 01       		.uleb128 0x1
+ 2081 0098 13       		.uleb128 0x13
+ 2082 0099 00       		.byte	0
+ 2083 009a 00       		.byte	0
+ 2084 009b 0A       		.uleb128 0xa
+ 2085 009c 05       		.uleb128 0x5
+ 2086 009d 00       		.byte	0
+ 2087 009e 03       		.uleb128 0x3
+ 2088 009f 0E       		.uleb128 0xe
+ 2089 00a0 3A       		.uleb128 0x3a
+ 2090 00a1 0B       		.uleb128 0xb
+ 2091 00a2 3B       		.uleb128 0x3b
+ 2092 00a3 05       		.uleb128 0x5
+ 2093 00a4 49       		.uleb128 0x49
+ 2094 00a5 13       		.uleb128 0x13
+ 2095 00a6 02       		.uleb128 0x2
+ 2096 00a7 17       		.uleb128 0x17
+ 2097 00a8 00       		.byte	0
+ 2098 00a9 00       		.byte	0
+ 2099 00aa 0B       		.uleb128 0xb
+ 2100 00ab 34       		.uleb128 0x34
+ 2101 00ac 00       		.byte	0
+ 2102 00ad 03       		.uleb128 0x3
+ 2103 00ae 08       		.uleb128 0x8
+ 2104 00af 3A       		.uleb128 0x3a
+ 2105 00b0 0B       		.uleb128 0xb
+ 2106 00b1 3B       		.uleb128 0x3b
+ 2107 00b2 05       		.uleb128 0x5
+ 2108 00b3 49       		.uleb128 0x49
+ 2109 00b4 13       		.uleb128 0x13
+ 2110 00b5 02       		.uleb128 0x2
+ 2111 00b6 17       		.uleb128 0x17
+ 2112 00b7 00       		.byte	0
+ 2113 00b8 00       		.byte	0
+ 2114 00b9 0C       		.uleb128 0xc
+ 2115 00ba 2E       		.uleb128 0x2e
+ 2116 00bb 01       		.byte	0x1
+ 2117 00bc 3F       		.uleb128 0x3f
+ 2118 00bd 19       		.uleb128 0x19
+ 2119 00be 03       		.uleb128 0x3
+ 2120 00bf 0E       		.uleb128 0xe
+ 2121 00c0 3A       		.uleb128 0x3a
+ 2122 00c1 0B       		.uleb128 0xb
+ 2123 00c2 3B       		.uleb128 0x3b
+ 2124 00c3 05       		.uleb128 0x5
+ 2125 00c4 27       		.uleb128 0x27
+ 2126 00c5 19       		.uleb128 0x19
+ 2127 00c6 11       		.uleb128 0x11
+ 2128 00c7 01       		.uleb128 0x1
+ 2129 00c8 12       		.uleb128 0x12
+ 2130 00c9 06       		.uleb128 0x6
+ 2131 00ca 40       		.uleb128 0x40
+ 2132 00cb 18       		.uleb128 0x18
+ 2133 00cc 9742     		.uleb128 0x2117
+ 2134 00ce 19       		.uleb128 0x19
+ARM GAS  C:\Users\addis\AppData\Local\Temp\ccSizEqd.s 			page 49
+
+
+ 2135 00cf 01       		.uleb128 0x1
+ 2136 00d0 13       		.uleb128 0x13
+ 2137 00d1 00       		.byte	0
+ 2138 00d2 00       		.byte	0
+ 2139 00d3 0D       		.uleb128 0xd
+ 2140 00d4 34       		.uleb128 0x34
+ 2141 00d5 00       		.byte	0
+ 2142 00d6 03       		.uleb128 0x3
+ 2143 00d7 0E       		.uleb128 0xe
+ 2144 00d8 3A       		.uleb128 0x3a
+ 2145 00d9 0B       		.uleb128 0xb
+ 2146 00da 3B       		.uleb128 0x3b
+ 2147 00db 05       		.uleb128 0x5
+ 2148 00dc 49       		.uleb128 0x49
+ 2149 00dd 13       		.uleb128 0x13
+ 2150 00de 02       		.uleb128 0x2
+ 2151 00df 17       		.uleb128 0x17
+ 2152 00e0 00       		.byte	0
+ 2153 00e1 00       		.byte	0
+ 2154 00e2 0E       		.uleb128 0xe
+ 2155 00e3 34       		.uleb128 0x34
+ 2156 00e4 00       		.byte	0
+ 2157 00e5 03       		.uleb128 0x3
+ 2158 00e6 08       		.uleb128 0x8
+ 2159 00e7 3A       		.uleb128 0x3a
+ 2160 00e8 0B       		.uleb128 0xb
+ 2161 00e9 3B       		.uleb128 0x3b
+ 2162 00ea 05       		.uleb128 0x5
+ 2163 00eb 49       		.uleb128 0x49
+ 2164 00ec 13       		.uleb128 0x13
+ 2165 00ed 00       		.byte	0
+ 2166 00ee 00       		.byte	0
+ 2167 00ef 0F       		.uleb128 0xf
+ 2168 00f0 34       		.uleb128 0x34
+ 2169 00f1 00       		.byte	0
+ 2170 00f2 03       		.uleb128 0x3
+ 2171 00f3 0E       		.uleb128 0xe
+ 2172 00f4 3A       		.uleb128 0x3a
+ 2173 00f5 0B       		.uleb128 0xb
+ 2174 00f6 3B       		.uleb128 0x3b
+ 2175 00f7 05       		.uleb128 0x5
+ 2176 00f8 49       		.uleb128 0x49
+ 2177 00f9 13       		.uleb128 0x13
+ 2178 00fa 1C       		.uleb128 0x1c
+ 2179 00fb 0B       		.uleb128 0xb
+ 2180 00fc 00       		.byte	0
+ 2181 00fd 00       		.byte	0
+ 2182 00fe 10       		.uleb128 0x10
+ 2183 00ff 34       		.uleb128 0x34
+ 2184 0100 00       		.byte	0
+ 2185 0101 03       		.uleb128 0x3
+ 2186 0102 0E       		.uleb128 0xe
+ 2187 0103 3A       		.uleb128 0x3a
+ 2188 0104 0B       		.uleb128 0xb
+ 2189 0105 3B       		.uleb128 0x3b
+ 2190 0106 05       		.uleb128 0x5
+ 2191 0107 49       		.uleb128 0x49
+ARM GAS  C:\Users\addis\AppData\Local\Temp\ccSizEqd.s 			page 50
+
+
+ 2192 0108 13       		.uleb128 0x13
+ 2193 0109 02       		.uleb128 0x2
+ 2194 010a 18       		.uleb128 0x18
+ 2195 010b 00       		.byte	0
+ 2196 010c 00       		.byte	0
+ 2197 010d 11       		.uleb128 0x11
+ 2198 010e 34       		.uleb128 0x34
+ 2199 010f 00       		.byte	0
+ 2200 0110 03       		.uleb128 0x3
+ 2201 0111 0E       		.uleb128 0xe
+ 2202 0112 3A       		.uleb128 0x3a
+ 2203 0113 0B       		.uleb128 0xb
+ 2204 0114 3B       		.uleb128 0x3b
+ 2205 0115 05       		.uleb128 0x5
+ 2206 0116 49       		.uleb128 0x49
+ 2207 0117 13       		.uleb128 0x13
+ 2208 0118 00       		.byte	0
+ 2209 0119 00       		.byte	0
+ 2210 011a 12       		.uleb128 0x12
+ 2211 011b 898201   		.uleb128 0x4109
+ 2212 011e 01       		.byte	0x1
+ 2213 011f 11       		.uleb128 0x11
+ 2214 0120 01       		.uleb128 0x1
+ 2215 0121 31       		.uleb128 0x31
+ 2216 0122 13       		.uleb128 0x13
+ 2217 0123 01       		.uleb128 0x1
+ 2218 0124 13       		.uleb128 0x13
+ 2219 0125 00       		.byte	0
+ 2220 0126 00       		.byte	0
+ 2221 0127 13       		.uleb128 0x13
+ 2222 0128 8A8201   		.uleb128 0x410a
+ 2223 012b 00       		.byte	0
+ 2224 012c 02       		.uleb128 0x2
+ 2225 012d 18       		.uleb128 0x18
+ 2226 012e 9142     		.uleb128 0x2111
+ 2227 0130 18       		.uleb128 0x18
+ 2228 0131 00       		.byte	0
+ 2229 0132 00       		.byte	0
+ 2230 0133 14       		.uleb128 0x14
+ 2231 0134 898201   		.uleb128 0x4109
+ 2232 0137 00       		.byte	0
+ 2233 0138 11       		.uleb128 0x11
+ 2234 0139 01       		.uleb128 0x1
+ 2235 013a 31       		.uleb128 0x31
+ 2236 013b 13       		.uleb128 0x13
+ 2237 013c 00       		.byte	0
+ 2238 013d 00       		.byte	0
+ 2239 013e 15       		.uleb128 0x15
+ 2240 013f 01       		.uleb128 0x1
+ 2241 0140 01       		.byte	0x1
+ 2242 0141 49       		.uleb128 0x49
+ 2243 0142 13       		.uleb128 0x13
+ 2244 0143 01       		.uleb128 0x1
+ 2245 0144 13       		.uleb128 0x13
+ 2246 0145 00       		.byte	0
+ 2247 0146 00       		.byte	0
+ 2248 0147 16       		.uleb128 0x16
+ARM GAS  C:\Users\addis\AppData\Local\Temp\ccSizEqd.s 			page 51
+
+
+ 2249 0148 21       		.uleb128 0x21
+ 2250 0149 00       		.byte	0
+ 2251 014a 49       		.uleb128 0x49
+ 2252 014b 13       		.uleb128 0x13
+ 2253 014c 2F       		.uleb128 0x2f
+ 2254 014d 0B       		.uleb128 0xb
+ 2255 014e 00       		.byte	0
+ 2256 014f 00       		.byte	0
+ 2257 0150 17       		.uleb128 0x17
+ 2258 0151 34       		.uleb128 0x34
+ 2259 0152 00       		.byte	0
+ 2260 0153 03       		.uleb128 0x3
+ 2261 0154 0E       		.uleb128 0xe
+ 2262 0155 3A       		.uleb128 0x3a
+ 2263 0156 0B       		.uleb128 0xb
+ 2264 0157 3B       		.uleb128 0x3b
+ 2265 0158 0B       		.uleb128 0xb
+ 2266 0159 49       		.uleb128 0x49
+ 2267 015a 13       		.uleb128 0x13
+ 2268 015b 3F       		.uleb128 0x3f
+ 2269 015c 19       		.uleb128 0x19
+ 2270 015d 3C       		.uleb128 0x3c
+ 2271 015e 19       		.uleb128 0x19
+ 2272 015f 00       		.byte	0
+ 2273 0160 00       		.byte	0
+ 2274 0161 18       		.uleb128 0x18
+ 2275 0162 34       		.uleb128 0x34
+ 2276 0163 00       		.byte	0
+ 2277 0164 03       		.uleb128 0x3
+ 2278 0165 0E       		.uleb128 0xe
+ 2279 0166 3A       		.uleb128 0x3a
+ 2280 0167 0B       		.uleb128 0xb
+ 2281 0168 3B       		.uleb128 0x3b
+ 2282 0169 0B       		.uleb128 0xb
+ 2283 016a 49       		.uleb128 0x49
+ 2284 016b 13       		.uleb128 0x13
+ 2285 016c 3F       		.uleb128 0x3f
+ 2286 016d 19       		.uleb128 0x19
+ 2287 016e 02       		.uleb128 0x2
+ 2288 016f 18       		.uleb128 0x18
+ 2289 0170 00       		.byte	0
+ 2290 0171 00       		.byte	0
+ 2291 0172 19       		.uleb128 0x19
+ 2292 0173 26       		.uleb128 0x26
+ 2293 0174 00       		.byte	0
+ 2294 0175 49       		.uleb128 0x49
+ 2295 0176 13       		.uleb128 0x13
+ 2296 0177 00       		.byte	0
+ 2297 0178 00       		.byte	0
+ 2298 0179 1A       		.uleb128 0x1a
+ 2299 017a 2E       		.uleb128 0x2e
+ 2300 017b 01       		.byte	0x1
+ 2301 017c 3F       		.uleb128 0x3f
+ 2302 017d 19       		.uleb128 0x19
+ 2303 017e 03       		.uleb128 0x3
+ 2304 017f 0E       		.uleb128 0xe
+ 2305 0180 3A       		.uleb128 0x3a
+ARM GAS  C:\Users\addis\AppData\Local\Temp\ccSizEqd.s 			page 52
+
+
+ 2306 0181 0B       		.uleb128 0xb
+ 2307 0182 3B       		.uleb128 0x3b
+ 2308 0183 0B       		.uleb128 0xb
+ 2309 0184 27       		.uleb128 0x27
+ 2310 0185 19       		.uleb128 0x19
+ 2311 0186 49       		.uleb128 0x49
+ 2312 0187 13       		.uleb128 0x13
+ 2313 0188 3C       		.uleb128 0x3c
+ 2314 0189 19       		.uleb128 0x19
+ 2315 018a 01       		.uleb128 0x1
+ 2316 018b 13       		.uleb128 0x13
+ 2317 018c 00       		.byte	0
+ 2318 018d 00       		.byte	0
+ 2319 018e 1B       		.uleb128 0x1b
+ 2320 018f 05       		.uleb128 0x5
+ 2321 0190 00       		.byte	0
+ 2322 0191 49       		.uleb128 0x49
+ 2323 0192 13       		.uleb128 0x13
+ 2324 0193 00       		.byte	0
+ 2325 0194 00       		.byte	0
+ 2326 0195 1C       		.uleb128 0x1c
+ 2327 0196 2E       		.uleb128 0x2e
+ 2328 0197 01       		.byte	0x1
+ 2329 0198 3F       		.uleb128 0x3f
+ 2330 0199 19       		.uleb128 0x19
+ 2331 019a 03       		.uleb128 0x3
+ 2332 019b 0E       		.uleb128 0xe
+ 2333 019c 3A       		.uleb128 0x3a
+ 2334 019d 0B       		.uleb128 0xb
+ 2335 019e 3B       		.uleb128 0x3b
+ 2336 019f 0B       		.uleb128 0xb
+ 2337 01a0 27       		.uleb128 0x27
+ 2338 01a1 19       		.uleb128 0x19
+ 2339 01a2 3C       		.uleb128 0x3c
+ 2340 01a3 19       		.uleb128 0x19
+ 2341 01a4 01       		.uleb128 0x1
+ 2342 01a5 13       		.uleb128 0x13
+ 2343 01a6 00       		.byte	0
+ 2344 01a7 00       		.byte	0
+ 2345 01a8 1D       		.uleb128 0x1d
+ 2346 01a9 0F       		.uleb128 0xf
+ 2347 01aa 00       		.byte	0
+ 2348 01ab 0B       		.uleb128 0xb
+ 2349 01ac 0B       		.uleb128 0xb
+ 2350 01ad 49       		.uleb128 0x49
+ 2351 01ae 13       		.uleb128 0x13
+ 2352 01af 00       		.byte	0
+ 2353 01b0 00       		.byte	0
+ 2354 01b1 00       		.byte	0
+ 2355              		.section	.debug_loc,"",%progbits
+ 2356              	.Ldebug_loc0:
+ 2357              	.LLST0:
+ 2358 0000 00000000 		.4byte	.LVL0
+ 2359 0004 20000000 		.4byte	.LVL1
+ 2360 0008 0100     		.2byte	0x1
+ 2361 000a 50       		.byte	0x50
+ 2362 000b 20000000 		.4byte	.LVL1
+ARM GAS  C:\Users\addis\AppData\Local\Temp\ccSizEqd.s 			page 53
+
+
+ 2363 000f 22000000 		.4byte	.LVL2
+ 2364 0013 0400     		.2byte	0x4
+ 2365 0015 F3       		.byte	0xf3
+ 2366 0016 01       		.uleb128 0x1
+ 2367 0017 50       		.byte	0x50
+ 2368 0018 9F       		.byte	0x9f
+ 2369 0019 22000000 		.4byte	.LVL2
+ 2370 001d 2E000000 		.4byte	.LVL3
+ 2371 0021 0100     		.2byte	0x1
+ 2372 0023 50       		.byte	0x50
+ 2373 0024 2E000000 		.4byte	.LVL3
+ 2374 0028 30000000 		.4byte	.LVL4
+ 2375 002c 0400     		.2byte	0x4
+ 2376 002e F3       		.byte	0xf3
+ 2377 002f 01       		.uleb128 0x1
+ 2378 0030 50       		.byte	0x50
+ 2379 0031 9F       		.byte	0x9f
+ 2380 0032 30000000 		.4byte	.LVL4
+ 2381 0036 3C000000 		.4byte	.LVL5
+ 2382 003a 0100     		.2byte	0x1
+ 2383 003c 50       		.byte	0x50
+ 2384 003d 3C000000 		.4byte	.LVL5
+ 2385 0041 3E000000 		.4byte	.LVL6
+ 2386 0045 0400     		.2byte	0x4
+ 2387 0047 F3       		.byte	0xf3
+ 2388 0048 01       		.uleb128 0x1
+ 2389 0049 50       		.byte	0x50
+ 2390 004a 9F       		.byte	0x9f
+ 2391 004b 3E000000 		.4byte	.LVL6
+ 2392 004f 46000000 		.4byte	.LVL8
+ 2393 0053 0100     		.2byte	0x1
+ 2394 0055 50       		.byte	0x50
+ 2395 0056 46000000 		.4byte	.LVL8
+ 2396 005a 48000000 		.4byte	.LVL9
+ 2397 005e 0400     		.2byte	0x4
+ 2398 0060 F3       		.byte	0xf3
+ 2399 0061 01       		.uleb128 0x1
+ 2400 0062 50       		.byte	0x50
+ 2401 0063 9F       		.byte	0x9f
+ 2402 0064 48000000 		.4byte	.LVL9
+ 2403 0068 54000000 		.4byte	.LVL10
+ 2404 006c 0100     		.2byte	0x1
+ 2405 006e 50       		.byte	0x50
+ 2406 006f 54000000 		.4byte	.LVL10
+ 2407 0073 56000000 		.4byte	.LVL11
+ 2408 0077 0400     		.2byte	0x4
+ 2409 0079 F3       		.byte	0xf3
+ 2410 007a 01       		.uleb128 0x1
+ 2411 007b 50       		.byte	0x50
+ 2412 007c 9F       		.byte	0x9f
+ 2413 007d 56000000 		.4byte	.LVL11
+ 2414 0081 66000000 		.4byte	.LVL12
+ 2415 0085 0100     		.2byte	0x1
+ 2416 0087 50       		.byte	0x50
+ 2417 0088 66000000 		.4byte	.LVL12
+ 2418 008c 68000000 		.4byte	.LVL13
+ 2419 0090 0400     		.2byte	0x4
+ARM GAS  C:\Users\addis\AppData\Local\Temp\ccSizEqd.s 			page 54
+
+
+ 2420 0092 F3       		.byte	0xf3
+ 2421 0093 01       		.uleb128 0x1
+ 2422 0094 50       		.byte	0x50
+ 2423 0095 9F       		.byte	0x9f
+ 2424 0096 68000000 		.4byte	.LVL13
+ 2425 009a 78000000 		.4byte	.LVL14
+ 2426 009e 0100     		.2byte	0x1
+ 2427 00a0 50       		.byte	0x50
+ 2428 00a1 78000000 		.4byte	.LVL14
+ 2429 00a5 7A000000 		.4byte	.LVL15
+ 2430 00a9 0400     		.2byte	0x4
+ 2431 00ab F3       		.byte	0xf3
+ 2432 00ac 01       		.uleb128 0x1
+ 2433 00ad 50       		.byte	0x50
+ 2434 00ae 9F       		.byte	0x9f
+ 2435 00af 7A000000 		.4byte	.LVL15
+ 2436 00b3 86000000 		.4byte	.LVL16
+ 2437 00b7 0100     		.2byte	0x1
+ 2438 00b9 50       		.byte	0x50
+ 2439 00ba 86000000 		.4byte	.LVL16
+ 2440 00be 88000000 		.4byte	.LVL17
+ 2441 00c2 0400     		.2byte	0x4
+ 2442 00c4 F3       		.byte	0xf3
+ 2443 00c5 01       		.uleb128 0x1
+ 2444 00c6 50       		.byte	0x50
+ 2445 00c7 9F       		.byte	0x9f
+ 2446 00c8 88000000 		.4byte	.LVL17
+ 2447 00cc 94000000 		.4byte	.LVL18
+ 2448 00d0 0100     		.2byte	0x1
+ 2449 00d2 50       		.byte	0x50
+ 2450 00d3 94000000 		.4byte	.LVL18
+ 2451 00d7 96000000 		.4byte	.LVL19
+ 2452 00db 0400     		.2byte	0x4
+ 2453 00dd F3       		.byte	0xf3
+ 2454 00de 01       		.uleb128 0x1
+ 2455 00df 50       		.byte	0x50
+ 2456 00e0 9F       		.byte	0x9f
+ 2457 00e1 96000000 		.4byte	.LVL19
+ 2458 00e5 98000000 		.4byte	.LVL20
+ 2459 00e9 0100     		.2byte	0x1
+ 2460 00eb 50       		.byte	0x50
+ 2461 00ec 98000000 		.4byte	.LVL20
+ 2462 00f0 9E000000 		.4byte	.LVL21
+ 2463 00f4 0400     		.2byte	0x4
+ 2464 00f6 F3       		.byte	0xf3
+ 2465 00f7 01       		.uleb128 0x1
+ 2466 00f8 50       		.byte	0x50
+ 2467 00f9 9F       		.byte	0x9f
+ 2468 00fa 9E000000 		.4byte	.LVL21
+ 2469 00fe AA000000 		.4byte	.LVL22
+ 2470 0102 0100     		.2byte	0x1
+ 2471 0104 50       		.byte	0x50
+ 2472 0105 AA000000 		.4byte	.LVL22
+ 2473 0109 AC000000 		.4byte	.LVL23
+ 2474 010d 0400     		.2byte	0x4
+ 2475 010f F3       		.byte	0xf3
+ 2476 0110 01       		.uleb128 0x1
+ARM GAS  C:\Users\addis\AppData\Local\Temp\ccSizEqd.s 			page 55
+
+
+ 2477 0111 50       		.byte	0x50
+ 2478 0112 9F       		.byte	0x9f
+ 2479 0113 AC000000 		.4byte	.LVL23
+ 2480 0117 B8000000 		.4byte	.LVL24
+ 2481 011b 0100     		.2byte	0x1
+ 2482 011d 50       		.byte	0x50
+ 2483 011e B8000000 		.4byte	.LVL24
+ 2484 0122 BA000000 		.4byte	.LVL25
+ 2485 0126 0400     		.2byte	0x4
+ 2486 0128 F3       		.byte	0xf3
+ 2487 0129 01       		.uleb128 0x1
+ 2488 012a 50       		.byte	0x50
+ 2489 012b 9F       		.byte	0x9f
+ 2490 012c BA000000 		.4byte	.LVL25
+ 2491 0130 BC000000 		.4byte	.LVL26
+ 2492 0134 0100     		.2byte	0x1
+ 2493 0136 50       		.byte	0x50
+ 2494 0137 BC000000 		.4byte	.LVL26
+ 2495 013b C2000000 		.4byte	.LVL27
+ 2496 013f 0400     		.2byte	0x4
+ 2497 0141 F3       		.byte	0xf3
+ 2498 0142 01       		.uleb128 0x1
+ 2499 0143 50       		.byte	0x50
+ 2500 0144 9F       		.byte	0x9f
+ 2501 0145 C2000000 		.4byte	.LVL27
+ 2502 0149 CE000000 		.4byte	.LVL28
+ 2503 014d 0100     		.2byte	0x1
+ 2504 014f 50       		.byte	0x50
+ 2505 0150 CE000000 		.4byte	.LVL28
+ 2506 0154 D0000000 		.4byte	.LVL29
+ 2507 0158 0400     		.2byte	0x4
+ 2508 015a F3       		.byte	0xf3
+ 2509 015b 01       		.uleb128 0x1
+ 2510 015c 50       		.byte	0x50
+ 2511 015d 9F       		.byte	0x9f
+ 2512 015e D0000000 		.4byte	.LVL29
+ 2513 0162 D2000000 		.4byte	.LVL30
+ 2514 0166 0100     		.2byte	0x1
+ 2515 0168 50       		.byte	0x50
+ 2516 0169 D2000000 		.4byte	.LVL30
+ 2517 016d D8000000 		.4byte	.LVL31
+ 2518 0171 0400     		.2byte	0x4
+ 2519 0173 F3       		.byte	0xf3
+ 2520 0174 01       		.uleb128 0x1
+ 2521 0175 50       		.byte	0x50
+ 2522 0176 9F       		.byte	0x9f
+ 2523 0177 D8000000 		.4byte	.LVL31
+ 2524 017b E4000000 		.4byte	.LVL32
+ 2525 017f 0100     		.2byte	0x1
+ 2526 0181 50       		.byte	0x50
+ 2527 0182 E4000000 		.4byte	.LVL32
+ 2528 0186 E6000000 		.4byte	.LVL33
+ 2529 018a 0400     		.2byte	0x4
+ 2530 018c F3       		.byte	0xf3
+ 2531 018d 01       		.uleb128 0x1
+ 2532 018e 50       		.byte	0x50
+ 2533 018f 9F       		.byte	0x9f
+ARM GAS  C:\Users\addis\AppData\Local\Temp\ccSizEqd.s 			page 56
+
+
+ 2534 0190 E6000000 		.4byte	.LVL33
+ 2535 0194 EC000000 		.4byte	.LVL34
+ 2536 0198 0100     		.2byte	0x1
+ 2537 019a 50       		.byte	0x50
+ 2538 019b EC000000 		.4byte	.LVL34
+ 2539 019f F2000000 		.4byte	.LVL35
+ 2540 01a3 0400     		.2byte	0x4
+ 2541 01a5 F3       		.byte	0xf3
+ 2542 01a6 01       		.uleb128 0x1
+ 2543 01a7 50       		.byte	0x50
+ 2544 01a8 9F       		.byte	0x9f
+ 2545 01a9 F2000000 		.4byte	.LVL35
+ 2546 01ad F4000000 		.4byte	.LVL36
+ 2547 01b1 0100     		.2byte	0x1
+ 2548 01b3 50       		.byte	0x50
+ 2549 01b4 F4000000 		.4byte	.LVL36
+ 2550 01b8 F6000000 		.4byte	.LVL37
+ 2551 01bc 0400     		.2byte	0x4
+ 2552 01be F3       		.byte	0xf3
+ 2553 01bf 01       		.uleb128 0x1
+ 2554 01c0 50       		.byte	0x50
+ 2555 01c1 9F       		.byte	0x9f
+ 2556 01c2 F6000000 		.4byte	.LVL37
+ 2557 01c6 F8000000 		.4byte	.LVL38
+ 2558 01ca 0100     		.2byte	0x1
+ 2559 01cc 50       		.byte	0x50
+ 2560 01cd F8000000 		.4byte	.LVL38
+ 2561 01d1 FA000000 		.4byte	.LVL39
+ 2562 01d5 0400     		.2byte	0x4
+ 2563 01d7 F3       		.byte	0xf3
+ 2564 01d8 01       		.uleb128 0x1
+ 2565 01d9 50       		.byte	0x50
+ 2566 01da 9F       		.byte	0x9f
+ 2567 01db FA000000 		.4byte	.LVL39
+ 2568 01df FC000000 		.4byte	.LVL40
+ 2569 01e3 0100     		.2byte	0x1
+ 2570 01e5 50       		.byte	0x50
+ 2571 01e6 FC000000 		.4byte	.LVL40
+ 2572 01ea FE000000 		.4byte	.LVL41
+ 2573 01ee 0400     		.2byte	0x4
+ 2574 01f0 F3       		.byte	0xf3
+ 2575 01f1 01       		.uleb128 0x1
+ 2576 01f2 50       		.byte	0x50
+ 2577 01f3 9F       		.byte	0x9f
+ 2578 01f4 FE000000 		.4byte	.LVL41
+ 2579 01f8 00010000 		.4byte	.LVL42
+ 2580 01fc 0100     		.2byte	0x1
+ 2581 01fe 50       		.byte	0x50
+ 2582 01ff 00010000 		.4byte	.LVL42
+ 2583 0203 02010000 		.4byte	.LVL43
+ 2584 0207 0400     		.2byte	0x4
+ 2585 0209 F3       		.byte	0xf3
+ 2586 020a 01       		.uleb128 0x1
+ 2587 020b 50       		.byte	0x50
+ 2588 020c 9F       		.byte	0x9f
+ 2589 020d 02010000 		.4byte	.LVL43
+ 2590 0211 04010000 		.4byte	.LVL44
+ARM GAS  C:\Users\addis\AppData\Local\Temp\ccSizEqd.s 			page 57
+
+
+ 2591 0215 0100     		.2byte	0x1
+ 2592 0217 50       		.byte	0x50
+ 2593 0218 04010000 		.4byte	.LVL44
+ 2594 021c 06010000 		.4byte	.LVL45
+ 2595 0220 0400     		.2byte	0x4
+ 2596 0222 F3       		.byte	0xf3
+ 2597 0223 01       		.uleb128 0x1
+ 2598 0224 50       		.byte	0x50
+ 2599 0225 9F       		.byte	0x9f
+ 2600 0226 06010000 		.4byte	.LVL45
+ 2601 022a 08010000 		.4byte	.LVL46
+ 2602 022e 0100     		.2byte	0x1
+ 2603 0230 50       		.byte	0x50
+ 2604 0231 08010000 		.4byte	.LVL46
+ 2605 0235 0A010000 		.4byte	.LVL47
+ 2606 0239 0400     		.2byte	0x4
+ 2607 023b F3       		.byte	0xf3
+ 2608 023c 01       		.uleb128 0x1
+ 2609 023d 50       		.byte	0x50
+ 2610 023e 9F       		.byte	0x9f
+ 2611 023f 0A010000 		.4byte	.LVL47
+ 2612 0243 0C010000 		.4byte	.LVL48
+ 2613 0247 0100     		.2byte	0x1
+ 2614 0249 50       		.byte	0x50
+ 2615 024a 0C010000 		.4byte	.LVL48
+ 2616 024e 14010000 		.4byte	.LFE0
+ 2617 0252 0400     		.2byte	0x4
+ 2618 0254 F3       		.byte	0xf3
+ 2619 0255 01       		.uleb128 0x1
+ 2620 0256 50       		.byte	0x50
+ 2621 0257 9F       		.byte	0x9f
+ 2622 0258 00000000 		.4byte	0
+ 2623 025c 00000000 		.4byte	0
+ 2624              	.LLST1:
+ 2625 0260 00000000 		.4byte	.LVL0
+ 2626 0264 44000000 		.4byte	.LVL7
+ 2627 0268 0200     		.2byte	0x2
+ 2628 026a 30       		.byte	0x30
+ 2629 026b 9F       		.byte	0x9f
+ 2630 026c 44000000 		.4byte	.LVL7
+ 2631 0270 48000000 		.4byte	.LVL9
+ 2632 0274 0200     		.2byte	0x2
+ 2633 0276 32       		.byte	0x32
+ 2634 0277 9F       		.byte	0x9f
+ 2635 0278 48000000 		.4byte	.LVL9
+ 2636 027c 0C010000 		.4byte	.LVL48
+ 2637 0280 0200     		.2byte	0x2
+ 2638 0282 30       		.byte	0x30
+ 2639 0283 9F       		.byte	0x9f
+ 2640 0284 0C010000 		.4byte	.LVL48
+ 2641 0288 14010000 		.4byte	.LFE0
+ 2642 028c 0100     		.2byte	0x1
+ 2643 028e 50       		.byte	0x50
+ 2644 028f 00000000 		.4byte	0
+ 2645 0293 00000000 		.4byte	0
+ 2646              	.LLST2:
+ 2647 0297 00000000 		.4byte	.LVL49
+ARM GAS  C:\Users\addis\AppData\Local\Temp\ccSizEqd.s 			page 58
+
+
+ 2648 029b 36000000 		.4byte	.LVL50
+ 2649 029f 0100     		.2byte	0x1
+ 2650 02a1 50       		.byte	0x50
+ 2651 02a2 36000000 		.4byte	.LVL50
+ 2652 02a6 38000000 		.4byte	.LVL51
+ 2653 02aa 0400     		.2byte	0x4
+ 2654 02ac F3       		.byte	0xf3
+ 2655 02ad 01       		.uleb128 0x1
+ 2656 02ae 50       		.byte	0x50
+ 2657 02af 9F       		.byte	0x9f
+ 2658 02b0 38000000 		.4byte	.LVL51
+ 2659 02b4 48000000 		.4byte	.LVL52
+ 2660 02b8 0100     		.2byte	0x1
+ 2661 02ba 50       		.byte	0x50
+ 2662 02bb 48000000 		.4byte	.LVL52
+ 2663 02bf 4A000000 		.4byte	.LVL53
+ 2664 02c3 0400     		.2byte	0x4
+ 2665 02c5 F3       		.byte	0xf3
+ 2666 02c6 01       		.uleb128 0x1
+ 2667 02c7 50       		.byte	0x50
+ 2668 02c8 9F       		.byte	0x9f
+ 2669 02c9 4A000000 		.4byte	.LVL53
+ 2670 02cd 88000000 		.4byte	.LVL60
+ 2671 02d1 0100     		.2byte	0x1
+ 2672 02d3 50       		.byte	0x50
+ 2673 02d4 88000000 		.4byte	.LVL60
+ 2674 02d8 8A000000 		.4byte	.LVL61
+ 2675 02dc 0400     		.2byte	0x4
+ 2676 02de F3       		.byte	0xf3
+ 2677 02df 01       		.uleb128 0x1
+ 2678 02e0 50       		.byte	0x50
+ 2679 02e1 9F       		.byte	0x9f
+ 2680 02e2 8A000000 		.4byte	.LVL61
+ 2681 02e6 BA000000 		.4byte	.LVL68
+ 2682 02ea 0100     		.2byte	0x1
+ 2683 02ec 50       		.byte	0x50
+ 2684 02ed BA000000 		.4byte	.LVL68
+ 2685 02f1 BC000000 		.4byte	.LVL69
+ 2686 02f5 0400     		.2byte	0x4
+ 2687 02f7 F3       		.byte	0xf3
+ 2688 02f8 01       		.uleb128 0x1
+ 2689 02f9 50       		.byte	0x50
+ 2690 02fa 9F       		.byte	0x9f
+ 2691 02fb BC000000 		.4byte	.LVL69
+ 2692 02ff FC000000 		.4byte	.LVL76
+ 2693 0303 0100     		.2byte	0x1
+ 2694 0305 50       		.byte	0x50
+ 2695 0306 FC000000 		.4byte	.LVL76
+ 2696 030a FE000000 		.4byte	.LVL77
+ 2697 030e 0400     		.2byte	0x4
+ 2698 0310 F3       		.byte	0xf3
+ 2699 0311 01       		.uleb128 0x1
+ 2700 0312 50       		.byte	0x50
+ 2701 0313 9F       		.byte	0x9f
+ 2702 0314 FE000000 		.4byte	.LVL77
+ 2703 0318 30010000 		.4byte	.LVL82
+ 2704 031c 0100     		.2byte	0x1
+ARM GAS  C:\Users\addis\AppData\Local\Temp\ccSizEqd.s 			page 59
+
+
+ 2705 031e 50       		.byte	0x50
+ 2706 031f 30010000 		.4byte	.LVL82
+ 2707 0323 32010000 		.4byte	.LVL83
+ 2708 0327 0400     		.2byte	0x4
+ 2709 0329 F3       		.byte	0xf3
+ 2710 032a 01       		.uleb128 0x1
+ 2711 032b 50       		.byte	0x50
+ 2712 032c 9F       		.byte	0x9f
+ 2713 032d 32010000 		.4byte	.LVL83
+ 2714 0331 34010000 		.4byte	.LVL84
+ 2715 0335 0100     		.2byte	0x1
+ 2716 0337 50       		.byte	0x50
+ 2717 0338 34010000 		.4byte	.LVL84
+ 2718 033c 36010000 		.4byte	.LVL85
+ 2719 0340 0400     		.2byte	0x4
+ 2720 0342 F3       		.byte	0xf3
+ 2721 0343 01       		.uleb128 0x1
+ 2722 0344 50       		.byte	0x50
+ 2723 0345 9F       		.byte	0x9f
+ 2724 0346 36010000 		.4byte	.LVL85
+ 2725 034a 38010000 		.4byte	.LVL86
+ 2726 034e 0100     		.2byte	0x1
+ 2727 0350 50       		.byte	0x50
+ 2728 0351 38010000 		.4byte	.LVL86
+ 2729 0355 3A010000 		.4byte	.LVL87
+ 2730 0359 0400     		.2byte	0x4
+ 2731 035b F3       		.byte	0xf3
+ 2732 035c 01       		.uleb128 0x1
+ 2733 035d 50       		.byte	0x50
+ 2734 035e 9F       		.byte	0x9f
+ 2735 035f 3A010000 		.4byte	.LVL87
+ 2736 0363 3C010000 		.4byte	.LVL88
+ 2737 0367 0100     		.2byte	0x1
+ 2738 0369 50       		.byte	0x50
+ 2739 036a 3C010000 		.4byte	.LVL88
+ 2740 036e 3E010000 		.4byte	.LVL89
+ 2741 0372 0400     		.2byte	0x4
+ 2742 0374 F3       		.byte	0xf3
+ 2743 0375 01       		.uleb128 0x1
+ 2744 0376 50       		.byte	0x50
+ 2745 0377 9F       		.byte	0x9f
+ 2746 0378 3E010000 		.4byte	.LVL89
+ 2747 037c 40010000 		.4byte	.LVL90
+ 2748 0380 0100     		.2byte	0x1
+ 2749 0382 50       		.byte	0x50
+ 2750 0383 40010000 		.4byte	.LVL90
+ 2751 0387 42010000 		.4byte	.LVL91
+ 2752 038b 0400     		.2byte	0x4
+ 2753 038d F3       		.byte	0xf3
+ 2754 038e 01       		.uleb128 0x1
+ 2755 038f 50       		.byte	0x50
+ 2756 0390 9F       		.byte	0x9f
+ 2757 0391 42010000 		.4byte	.LVL91
+ 2758 0395 44010000 		.4byte	.LVL92
+ 2759 0399 0100     		.2byte	0x1
+ 2760 039b 50       		.byte	0x50
+ 2761 039c 44010000 		.4byte	.LVL92
+ARM GAS  C:\Users\addis\AppData\Local\Temp\ccSizEqd.s 			page 60
+
+
+ 2762 03a0 46010000 		.4byte	.LVL93
+ 2763 03a4 0400     		.2byte	0x4
+ 2764 03a6 F3       		.byte	0xf3
+ 2765 03a7 01       		.uleb128 0x1
+ 2766 03a8 50       		.byte	0x50
+ 2767 03a9 9F       		.byte	0x9f
+ 2768 03aa 46010000 		.4byte	.LVL93
+ 2769 03ae 48010000 		.4byte	.LVL94
+ 2770 03b2 0100     		.2byte	0x1
+ 2771 03b4 50       		.byte	0x50
+ 2772 03b5 48010000 		.4byte	.LVL94
+ 2773 03b9 4A010000 		.4byte	.LVL95
+ 2774 03bd 0400     		.2byte	0x4
+ 2775 03bf F3       		.byte	0xf3
+ 2776 03c0 01       		.uleb128 0x1
+ 2777 03c1 50       		.byte	0x50
+ 2778 03c2 9F       		.byte	0x9f
+ 2779 03c3 4A010000 		.4byte	.LVL95
+ 2780 03c7 4C010000 		.4byte	.LVL96
+ 2781 03cb 0100     		.2byte	0x1
+ 2782 03cd 50       		.byte	0x50
+ 2783 03ce 4C010000 		.4byte	.LVL96
+ 2784 03d2 4E010000 		.4byte	.LVL97
+ 2785 03d6 0400     		.2byte	0x4
+ 2786 03d8 F3       		.byte	0xf3
+ 2787 03d9 01       		.uleb128 0x1
+ 2788 03da 50       		.byte	0x50
+ 2789 03db 9F       		.byte	0x9f
+ 2790 03dc 4E010000 		.4byte	.LVL97
+ 2791 03e0 50010000 		.4byte	.LVL98
+ 2792 03e4 0100     		.2byte	0x1
+ 2793 03e6 50       		.byte	0x50
+ 2794 03e7 50010000 		.4byte	.LVL98
+ 2795 03eb 52010000 		.4byte	.LVL99
+ 2796 03ef 0400     		.2byte	0x4
+ 2797 03f1 F3       		.byte	0xf3
+ 2798 03f2 01       		.uleb128 0x1
+ 2799 03f3 50       		.byte	0x50
+ 2800 03f4 9F       		.byte	0x9f
+ 2801 03f5 52010000 		.4byte	.LVL99
+ 2802 03f9 54010000 		.4byte	.LVL100
+ 2803 03fd 0100     		.2byte	0x1
+ 2804 03ff 50       		.byte	0x50
+ 2805 0400 54010000 		.4byte	.LVL100
+ 2806 0404 56010000 		.4byte	.LVL101
+ 2807 0408 0400     		.2byte	0x4
+ 2808 040a F3       		.byte	0xf3
+ 2809 040b 01       		.uleb128 0x1
+ 2810 040c 50       		.byte	0x50
+ 2811 040d 9F       		.byte	0x9f
+ 2812 040e 56010000 		.4byte	.LVL101
+ 2813 0412 58010000 		.4byte	.LVL102
+ 2814 0416 0100     		.2byte	0x1
+ 2815 0418 50       		.byte	0x50
+ 2816 0419 58010000 		.4byte	.LVL102
+ 2817 041d 5A010000 		.4byte	.LVL103
+ 2818 0421 0400     		.2byte	0x4
+ARM GAS  C:\Users\addis\AppData\Local\Temp\ccSizEqd.s 			page 61
+
+
+ 2819 0423 F3       		.byte	0xf3
+ 2820 0424 01       		.uleb128 0x1
+ 2821 0425 50       		.byte	0x50
+ 2822 0426 9F       		.byte	0x9f
+ 2823 0427 5A010000 		.4byte	.LVL103
+ 2824 042b 5C010000 		.4byte	.LVL104
+ 2825 042f 0100     		.2byte	0x1
+ 2826 0431 50       		.byte	0x50
+ 2827 0432 5C010000 		.4byte	.LVL104
+ 2828 0436 5E010000 		.4byte	.LVL105
+ 2829 043a 0400     		.2byte	0x4
+ 2830 043c F3       		.byte	0xf3
+ 2831 043d 01       		.uleb128 0x1
+ 2832 043e 50       		.byte	0x50
+ 2833 043f 9F       		.byte	0x9f
+ 2834 0440 5E010000 		.4byte	.LVL105
+ 2835 0444 60010000 		.4byte	.LVL106
+ 2836 0448 0100     		.2byte	0x1
+ 2837 044a 50       		.byte	0x50
+ 2838 044b 60010000 		.4byte	.LVL106
+ 2839 044f 62010000 		.4byte	.LVL107
+ 2840 0453 0400     		.2byte	0x4
+ 2841 0455 F3       		.byte	0xf3
+ 2842 0456 01       		.uleb128 0x1
+ 2843 0457 50       		.byte	0x50
+ 2844 0458 9F       		.byte	0x9f
+ 2845 0459 62010000 		.4byte	.LVL107
+ 2846 045d 64010000 		.4byte	.LVL108
+ 2847 0461 0100     		.2byte	0x1
+ 2848 0463 50       		.byte	0x50
+ 2849 0464 64010000 		.4byte	.LVL108
+ 2850 0468 66010000 		.4byte	.LVL109
+ 2851 046c 0400     		.2byte	0x4
+ 2852 046e F3       		.byte	0xf3
+ 2853 046f 01       		.uleb128 0x1
+ 2854 0470 50       		.byte	0x50
+ 2855 0471 9F       		.byte	0x9f
+ 2856 0472 66010000 		.4byte	.LVL109
+ 2857 0476 68010000 		.4byte	.LVL110
+ 2858 047a 0100     		.2byte	0x1
+ 2859 047c 50       		.byte	0x50
+ 2860 047d 68010000 		.4byte	.LVL110
+ 2861 0481 84010000 		.4byte	.LFE1
+ 2862 0485 0400     		.2byte	0x4
+ 2863 0487 F3       		.byte	0xf3
+ 2864 0488 01       		.uleb128 0x1
+ 2865 0489 50       		.byte	0x50
+ 2866 048a 9F       		.byte	0x9f
+ 2867 048b 00000000 		.4byte	0
+ 2868 048f 00000000 		.4byte	0
+ 2869              	.LLST3:
+ 2870 0493 00000000 		.4byte	.LVL49
+ 2871 0497 66000000 		.4byte	.LVL54
+ 2872 049b 0100     		.2byte	0x1
+ 2873 049d 51       		.byte	0x51
+ 2874 049e 66000000 		.4byte	.LVL54
+ 2875 04a2 6C000000 		.4byte	.LVL57
+ARM GAS  C:\Users\addis\AppData\Local\Temp\ccSizEqd.s 			page 62
+
+
+ 2876 04a6 0400     		.2byte	0x4
+ 2877 04a8 F3       		.byte	0xf3
+ 2878 04a9 01       		.uleb128 0x1
+ 2879 04aa 51       		.byte	0x51
+ 2880 04ab 9F       		.byte	0x9f
+ 2881 04ac 6C000000 		.4byte	.LVL57
+ 2882 04b0 6E000000 		.4byte	.LVL58
+ 2883 04b4 0100     		.2byte	0x1
+ 2884 04b6 51       		.byte	0x51
+ 2885 04b7 6E000000 		.4byte	.LVL58
+ 2886 04bb 32010000 		.4byte	.LVL83
+ 2887 04bf 0400     		.2byte	0x4
+ 2888 04c1 F3       		.byte	0xf3
+ 2889 04c2 01       		.uleb128 0x1
+ 2890 04c3 51       		.byte	0x51
+ 2891 04c4 9F       		.byte	0x9f
+ 2892 04c5 32010000 		.4byte	.LVL83
+ 2893 04c9 62010000 		.4byte	.LVL107
+ 2894 04cd 0100     		.2byte	0x1
+ 2895 04cf 51       		.byte	0x51
+ 2896 04d0 62010000 		.4byte	.LVL107
+ 2897 04d4 84010000 		.4byte	.LFE1
+ 2898 04d8 0400     		.2byte	0x4
+ 2899 04da F3       		.byte	0xf3
+ 2900 04db 01       		.uleb128 0x1
+ 2901 04dc 51       		.byte	0x51
+ 2902 04dd 9F       		.byte	0x9f
+ 2903 04de 00000000 		.4byte	0
+ 2904 04e2 00000000 		.4byte	0
+ 2905              	.LLST4:
+ 2906 04e6 66000000 		.4byte	.LVL54
+ 2907 04ea 68000000 		.4byte	.LVL55
+ 2908 04ee 0100     		.2byte	0x1
+ 2909 04f0 53       		.byte	0x53
+ 2910 04f1 6A000000 		.4byte	.LVL56
+ 2911 04f5 6C000000 		.4byte	.LVL57
+ 2912 04f9 0100     		.2byte	0x1
+ 2913 04fb 53       		.byte	0x53
+ 2914 04fc 6E000000 		.4byte	.LVL58
+ 2915 0500 84000000 		.4byte	.LVL59
+ 2916 0504 0100     		.2byte	0x1
+ 2917 0506 53       		.byte	0x53
+ 2918 0507 92000000 		.4byte	.LVL62
+ 2919 050b 94000000 		.4byte	.LVL63
+ 2920 050f 0100     		.2byte	0x1
+ 2921 0511 53       		.byte	0x53
+ 2922 0512 96000000 		.4byte	.LVL64
+ 2923 0516 98000000 		.4byte	.LVL65
+ 2924 051a 0100     		.2byte	0x1
+ 2925 051c 53       		.byte	0x53
+ 2926 051d 9A000000 		.4byte	.LVL66
+ 2927 0521 B2000000 		.4byte	.LVL67
+ 2928 0525 0100     		.2byte	0x1
+ 2929 0527 53       		.byte	0x53
+ 2930 0528 C4000000 		.4byte	.LVL70
+ 2931 052c C6000000 		.4byte	.LVL71
+ 2932 0530 0100     		.2byte	0x1
+ARM GAS  C:\Users\addis\AppData\Local\Temp\ccSizEqd.s 			page 63
+
+
+ 2933 0532 53       		.byte	0x53
+ 2934 0533 C8000000 		.4byte	.LVL72
+ 2935 0537 CA000000 		.4byte	.LVL73
+ 2936 053b 0100     		.2byte	0x1
+ 2937 053d 53       		.byte	0x53
+ 2938 053e CC000000 		.4byte	.LVL74
+ 2939 0542 E6000000 		.4byte	.LVL75
+ 2940 0546 0100     		.2byte	0x1
+ 2941 0548 53       		.byte	0x53
+ 2942 0549 FE000000 		.4byte	.LVL77
+ 2943 054d 00010000 		.4byte	.LVL78
+ 2944 0551 0100     		.2byte	0x1
+ 2945 0553 53       		.byte	0x53
+ 2946 0554 02010000 		.4byte	.LVL79
+ 2947 0558 20010000 		.4byte	.LVL81
+ 2948 055c 0100     		.2byte	0x1
+ 2949 055e 53       		.byte	0x53
+ 2950 055f 66010000 		.4byte	.LVL109
+ 2951 0563 68010000 		.4byte	.LVL110
+ 2952 0567 0100     		.2byte	0x1
+ 2953 0569 53       		.byte	0x53
+ 2954 056a 00000000 		.4byte	0
+ 2955 056e 00000000 		.4byte	0
+ 2956              	.LLST5:
+ 2957 0572 00000000 		.4byte	.LVL111
+ 2958 0576 30000000 		.4byte	.LVL112
+ 2959 057a 0100     		.2byte	0x1
+ 2960 057c 50       		.byte	0x50
+ 2961 057d 30000000 		.4byte	.LVL112
+ 2962 0581 42000000 		.4byte	.LVL115
+ 2963 0585 0400     		.2byte	0x4
+ 2964 0587 F3       		.byte	0xf3
+ 2965 0588 01       		.uleb128 0x1
+ 2966 0589 50       		.byte	0x50
+ 2967 058a 9F       		.byte	0x9f
+ 2968 058b 42000000 		.4byte	.LVL115
+ 2969 058f 2C010000 		.4byte	.LVL116
+ 2970 0593 0100     		.2byte	0x1
+ 2971 0595 50       		.byte	0x50
+ 2972 0596 2C010000 		.4byte	.LVL116
+ 2973 059a 46010000 		.4byte	.LVL120
+ 2974 059e 0400     		.2byte	0x4
+ 2975 05a0 F3       		.byte	0xf3
+ 2976 05a1 01       		.uleb128 0x1
+ 2977 05a2 50       		.byte	0x50
+ 2978 05a3 9F       		.byte	0x9f
+ 2979 05a4 46010000 		.4byte	.LVL120
+ 2980 05a8 48010000 		.4byte	.LVL121
+ 2981 05ac 0100     		.2byte	0x1
+ 2982 05ae 50       		.byte	0x50
+ 2983 05af 48010000 		.4byte	.LVL121
+ 2984 05b3 60010000 		.4byte	.LVL125
+ 2985 05b7 0400     		.2byte	0x4
+ 2986 05b9 F3       		.byte	0xf3
+ 2987 05ba 01       		.uleb128 0x1
+ 2988 05bb 50       		.byte	0x50
+ 2989 05bc 9F       		.byte	0x9f
+ARM GAS  C:\Users\addis\AppData\Local\Temp\ccSizEqd.s 			page 64
+
+
+ 2990 05bd 60010000 		.4byte	.LVL125
+ 2991 05c1 6E010000 		.4byte	.LVL126
+ 2992 05c5 0100     		.2byte	0x1
+ 2993 05c7 50       		.byte	0x50
+ 2994 05c8 6E010000 		.4byte	.LVL126
+ 2995 05cc 86010000 		.4byte	.LVL130
+ 2996 05d0 0400     		.2byte	0x4
+ 2997 05d2 F3       		.byte	0xf3
+ 2998 05d3 01       		.uleb128 0x1
+ 2999 05d4 50       		.byte	0x50
+ 3000 05d5 9F       		.byte	0x9f
+ 3001 05d6 86010000 		.4byte	.LVL130
+ 3002 05da 88010000 		.4byte	.LVL131
+ 3003 05de 0100     		.2byte	0x1
+ 3004 05e0 50       		.byte	0x50
+ 3005 05e1 88010000 		.4byte	.LVL131
+ 3006 05e5 A0010000 		.4byte	.LVL135
+ 3007 05e9 0400     		.2byte	0x4
+ 3008 05eb F3       		.byte	0xf3
+ 3009 05ec 01       		.uleb128 0x1
+ 3010 05ed 50       		.byte	0x50
+ 3011 05ee 9F       		.byte	0x9f
+ 3012 05ef A0010000 		.4byte	.LVL135
+ 3013 05f3 AE010000 		.4byte	.LVL136
+ 3014 05f7 0100     		.2byte	0x1
+ 3015 05f9 50       		.byte	0x50
+ 3016 05fa AE010000 		.4byte	.LVL136
+ 3017 05fe C6010000 		.4byte	.LVL140
+ 3018 0602 0400     		.2byte	0x4
+ 3019 0604 F3       		.byte	0xf3
+ 3020 0605 01       		.uleb128 0x1
+ 3021 0606 50       		.byte	0x50
+ 3022 0607 9F       		.byte	0x9f
+ 3023 0608 C6010000 		.4byte	.LVL140
+ 3024 060c C8010000 		.4byte	.LVL141
+ 3025 0610 0100     		.2byte	0x1
+ 3026 0612 50       		.byte	0x50
+ 3027 0613 C8010000 		.4byte	.LVL141
+ 3028 0617 E0010000 		.4byte	.LVL145
+ 3029 061b 0400     		.2byte	0x4
+ 3030 061d F3       		.byte	0xf3
+ 3031 061e 01       		.uleb128 0x1
+ 3032 061f 50       		.byte	0x50
+ 3033 0620 9F       		.byte	0x9f
+ 3034 0621 E0010000 		.4byte	.LVL145
+ 3035 0625 48020000 		.4byte	.LVL146
+ 3036 0629 0100     		.2byte	0x1
+ 3037 062b 50       		.byte	0x50
+ 3038 062c 48020000 		.4byte	.LVL146
+ 3039 0630 4A020000 		.4byte	.LVL147
+ 3040 0634 0400     		.2byte	0x4
+ 3041 0636 F3       		.byte	0xf3
+ 3042 0637 01       		.uleb128 0x1
+ 3043 0638 50       		.byte	0x50
+ 3044 0639 9F       		.byte	0x9f
+ 3045 063a 4A020000 		.4byte	.LVL147
+ 3046 063e 6C020000 		.4byte	.LFE2
+ARM GAS  C:\Users\addis\AppData\Local\Temp\ccSizEqd.s 			page 65
+
+
+ 3047 0642 0100     		.2byte	0x1
+ 3048 0644 50       		.byte	0x50
+ 3049 0645 00000000 		.4byte	0
+ 3050 0649 00000000 		.4byte	0
+ 3051              	.LLST6:
+ 3052 064d 00000000 		.4byte	.LVL111
+ 3053 0651 33000000 		.4byte	.LVL113-1
+ 3054 0655 0100     		.2byte	0x1
+ 3055 0657 51       		.byte	0x51
+ 3056 0658 33000000 		.4byte	.LVL113-1
+ 3057 065c 42000000 		.4byte	.LVL115
+ 3058 0660 0400     		.2byte	0x4
+ 3059 0662 F3       		.byte	0xf3
+ 3060 0663 01       		.uleb128 0x1
+ 3061 0664 51       		.byte	0x51
+ 3062 0665 9F       		.byte	0x9f
+ 3063 0666 42000000 		.4byte	.LVL115
+ 3064 066a 2F010000 		.4byte	.LVL117-1
+ 3065 066e 0100     		.2byte	0x1
+ 3066 0670 51       		.byte	0x51
+ 3067 0671 2F010000 		.4byte	.LVL117-1
+ 3068 0675 46010000 		.4byte	.LVL120
+ 3069 0679 0400     		.2byte	0x4
+ 3070 067b F3       		.byte	0xf3
+ 3071 067c 01       		.uleb128 0x1
+ 3072 067d 51       		.byte	0x51
+ 3073 067e 9F       		.byte	0x9f
+ 3074 067f 46010000 		.4byte	.LVL120
+ 3075 0683 4B010000 		.4byte	.LVL122-1
+ 3076 0687 0100     		.2byte	0x1
+ 3077 0689 51       		.byte	0x51
+ 3078 068a 4B010000 		.4byte	.LVL122-1
+ 3079 068e 60010000 		.4byte	.LVL125
+ 3080 0692 0400     		.2byte	0x4
+ 3081 0694 F3       		.byte	0xf3
+ 3082 0695 01       		.uleb128 0x1
+ 3083 0696 51       		.byte	0x51
+ 3084 0697 9F       		.byte	0x9f
+ 3085 0698 60010000 		.4byte	.LVL125
+ 3086 069c 71010000 		.4byte	.LVL127-1
+ 3087 06a0 0100     		.2byte	0x1
+ 3088 06a2 51       		.byte	0x51
+ 3089 06a3 71010000 		.4byte	.LVL127-1
+ 3090 06a7 86010000 		.4byte	.LVL130
+ 3091 06ab 0400     		.2byte	0x4
+ 3092 06ad F3       		.byte	0xf3
+ 3093 06ae 01       		.uleb128 0x1
+ 3094 06af 51       		.byte	0x51
+ 3095 06b0 9F       		.byte	0x9f
+ 3096 06b1 86010000 		.4byte	.LVL130
+ 3097 06b5 8B010000 		.4byte	.LVL132-1
+ 3098 06b9 0100     		.2byte	0x1
+ 3099 06bb 51       		.byte	0x51
+ 3100 06bc 8B010000 		.4byte	.LVL132-1
+ 3101 06c0 A0010000 		.4byte	.LVL135
+ 3102 06c4 0400     		.2byte	0x4
+ 3103 06c6 F3       		.byte	0xf3
+ARM GAS  C:\Users\addis\AppData\Local\Temp\ccSizEqd.s 			page 66
+
+
+ 3104 06c7 01       		.uleb128 0x1
+ 3105 06c8 51       		.byte	0x51
+ 3106 06c9 9F       		.byte	0x9f
+ 3107 06ca A0010000 		.4byte	.LVL135
+ 3108 06ce B1010000 		.4byte	.LVL137-1
+ 3109 06d2 0100     		.2byte	0x1
+ 3110 06d4 51       		.byte	0x51
+ 3111 06d5 B1010000 		.4byte	.LVL137-1
+ 3112 06d9 C6010000 		.4byte	.LVL140
+ 3113 06dd 0400     		.2byte	0x4
+ 3114 06df F3       		.byte	0xf3
+ 3115 06e0 01       		.uleb128 0x1
+ 3116 06e1 51       		.byte	0x51
+ 3117 06e2 9F       		.byte	0x9f
+ 3118 06e3 C6010000 		.4byte	.LVL140
+ 3119 06e7 CB010000 		.4byte	.LVL142-1
+ 3120 06eb 0100     		.2byte	0x1
+ 3121 06ed 51       		.byte	0x51
+ 3122 06ee CB010000 		.4byte	.LVL142-1
+ 3123 06f2 E0010000 		.4byte	.LVL145
+ 3124 06f6 0400     		.2byte	0x4
+ 3125 06f8 F3       		.byte	0xf3
+ 3126 06f9 01       		.uleb128 0x1
+ 3127 06fa 51       		.byte	0x51
+ 3128 06fb 9F       		.byte	0x9f
+ 3129 06fc E0010000 		.4byte	.LVL145
+ 3130 0700 48020000 		.4byte	.LVL146
+ 3131 0704 0100     		.2byte	0x1
+ 3132 0706 51       		.byte	0x51
+ 3133 0707 48020000 		.4byte	.LVL146
+ 3134 070b 4A020000 		.4byte	.LVL147
+ 3135 070f 0400     		.2byte	0x4
+ 3136 0711 F3       		.byte	0xf3
+ 3137 0712 01       		.uleb128 0x1
+ 3138 0713 51       		.byte	0x51
+ 3139 0714 9F       		.byte	0x9f
+ 3140 0715 4A020000 		.4byte	.LVL147
+ 3141 0719 6C020000 		.4byte	.LFE2
+ 3142 071d 0100     		.2byte	0x1
+ 3143 071f 51       		.byte	0x51
+ 3144 0720 00000000 		.4byte	0
+ 3145 0724 00000000 		.4byte	0
+ 3146              	.LLST7:
+ 3147 0728 30010000 		.4byte	.LVL117
+ 3148 072c 3A010000 		.4byte	.LVL118
+ 3149 0730 0100     		.2byte	0x1
+ 3150 0732 50       		.byte	0x50
+ 3151 0733 4C010000 		.4byte	.LVL122
+ 3152 0737 54010000 		.4byte	.LVL123
+ 3153 073b 0100     		.2byte	0x1
+ 3154 073d 50       		.byte	0x50
+ 3155 073e 72010000 		.4byte	.LVL127
+ 3156 0742 7A010000 		.4byte	.LVL128
+ 3157 0746 0100     		.2byte	0x1
+ 3158 0748 50       		.byte	0x50
+ 3159 0749 8C010000 		.4byte	.LVL132
+ 3160 074d 94010000 		.4byte	.LVL133
+ARM GAS  C:\Users\addis\AppData\Local\Temp\ccSizEqd.s 			page 67
+
+
+ 3161 0751 0100     		.2byte	0x1
+ 3162 0753 50       		.byte	0x50
+ 3163 0754 B2010000 		.4byte	.LVL137
+ 3164 0758 BA010000 		.4byte	.LVL138
+ 3165 075c 0100     		.2byte	0x1
+ 3166 075e 50       		.byte	0x50
+ 3167 075f CC010000 		.4byte	.LVL142
+ 3168 0763 D4010000 		.4byte	.LVL143
+ 3169 0767 0100     		.2byte	0x1
+ 3170 0769 50       		.byte	0x50
+ 3171 076a 00000000 		.4byte	0
+ 3172 076e 00000000 		.4byte	0
+ 3173              		.section	.debug_aranges,"",%progbits
+ 3174 0000 2C000000 		.4byte	0x2c
+ 3175 0004 0200     		.2byte	0x2
+ 3176 0006 00000000 		.4byte	.Ldebug_info0
+ 3177 000a 04       		.byte	0x4
+ 3178 000b 00       		.byte	0
+ 3179 000c 0000     		.2byte	0
+ 3180 000e 0000     		.2byte	0
+ 3181 0010 00000000 		.4byte	.LFB0
+ 3182 0014 14010000 		.4byte	.LFE0-.LFB0
+ 3183 0018 00000000 		.4byte	.LFB1
+ 3184 001c 84010000 		.4byte	.LFE1-.LFB1
+ 3185 0020 00000000 		.4byte	.LFB2
+ 3186 0024 6C020000 		.4byte	.LFE2-.LFB2
+ 3187 0028 00000000 		.4byte	0
+ 3188 002c 00000000 		.4byte	0
+ 3189              		.section	.debug_ranges,"",%progbits
+ 3190              	.Ldebug_ranges0:
+ 3191 0000 00000000 		.4byte	.LFB0
+ 3192 0004 14010000 		.4byte	.LFE0
+ 3193 0008 00000000 		.4byte	.LFB1
+ 3194 000c 84010000 		.4byte	.LFE1
+ 3195 0010 00000000 		.4byte	.LFB2
+ 3196 0014 6C020000 		.4byte	.LFE2
+ 3197 0018 00000000 		.4byte	0
+ 3198 001c 00000000 		.4byte	0
+ 3199              		.section	.debug_line,"",%progbits
+ 3200              	.Ldebug_line0:
+ 3201 0000 E3010000 		.section	.debug_str,"MS",%progbits,1
+ 3201      02005A00 
+ 3201      00000201 
+ 3201      FB0E0D00 
+ 3201      01010101 
+ 3202              	.LASF6:
+ 3203 0000 6C6F6E67 		.ascii	"long long int\000"
+ 3203      206C6F6E 
+ 3203      6720696E 
+ 3203      7400
+ 3204              	.LASF42:
+ 3205 000e 2E5C6B65 		.ascii	".\\keyboard.c\000"
+ 3205      79626F61 
+ 3205      72642E63 
+ 3205      00
+ 3206              	.LASF43:
+ 3207 001b 433A5C55 		.ascii	"C:\\Users\\addis\\Documents\\PSoC Creator\\Workspac"
+ARM GAS  C:\Users\addis\AppData\Local\Temp\ccSizEqd.s 			page 68
+
+
+ 3207      73657273 
+ 3207      5C616464 
+ 3207      69735C44 
+ 3207      6F63756D 
+ 3208 0049 6530325C 		.ascii	"e02\\PS2Keyboard.cydsn\000"
+ 3208      5053324B 
+ 3208      6579626F 
+ 3208      6172642E 
+ 3208      63796473 
+ 3209              	.LASF34:
+ 3210 005f 4374726C 		.ascii	"CtrlDown\000"
+ 3210      446F776E 
+ 3210      00
+ 3211              	.LASF24:
+ 3212 0068 73746174 		.ascii	"statusLEDs\000"
+ 3212      75734C45 
+ 3212      447300
+ 3213              	.LASF15:
+ 3214 0073 73746174 		.ascii	"state\000"
+ 3214      6500
+ 3215              	.LASF9:
+ 3216 0079 666C6F61 		.ascii	"float\000"
+ 3216      7400
+ 3217              	.LASF22:
+ 3218 007f 62726967 		.ascii	"brightindex\000"
+ 3218      6874696E 
+ 3218      64657800 
+ 3219              	.LASF25:
+ 3220 008b 73686966 		.ascii	"shiftstatus\000"
+ 3220      74737461 
+ 3220      74757300 
+ 3221              	.LASF3:
+ 3222 0097 73686F72 		.ascii	"short unsigned int\000"
+ 3222      7420756E 
+ 3222      7369676E 
+ 3222      65642069 
+ 3222      6E7400
+ 3223              	.LASF39:
+ 3224 00aa 4B657970 		.ascii	"KeypadScancode\000"
+ 3224      61645363 
+ 3224      616E636F 
+ 3224      646500
+ 3225              	.LASF27:
+ 3226 00b9 616C7473 		.ascii	"altstatus\000"
+ 3226      74617475 
+ 3226      7300
+ 3227              	.LASF17:
+ 3228 00c3 4B657962 		.ascii	"KeyboardDecodeData\000"
+ 3228      6F617264 
+ 3228      4465636F 
+ 3228      64654461 
+ 3228      746100
+ 3229              	.LASF21:
+ 3230 00d6 73746174 		.ascii	"status\000"
+ 3230      757300
+ 3231              	.LASF16:
+ 3232 00dd 636F6465 		.ascii	"codetype\000"
+ARM GAS  C:\Users\addis\AppData\Local\Temp\ccSizEqd.s 			page 69
+
+
+ 3232      74797065 
+ 3232      00
+ 3233              	.LASF38:
+ 3234 00e6 436F6E74 		.ascii	"ControlScancode\000"
+ 3234      726F6C53 
+ 3234      63616E63 
+ 3234      6F646500 
+ 3235              	.LASF30:
+ 3236 00f6 4E756D4C 		.ascii	"NumLock\000"
+ 3236      6F636B00 
+ 3237              	.LASF19:
+ 3238 00fe 64617461 		.ascii	"data\000"
+ 3238      00
+ 3239              	.LASF1:
+ 3240 0103 756E7369 		.ascii	"unsigned char\000"
+ 3240      676E6564 
+ 3240      20636861 
+ 3240      7200
+ 3241              	.LASF12:
+ 3242 0111 63686172 		.ascii	"char8\000"
+ 3242      3800
+ 3243              	.LASF18:
+ 3244 0117 4B657962 		.ascii	"KeyboardToASCII\000"
+ 3244      6F617264 
+ 3244      546F4153 
+ 3244      43494900 
+ 3245              	.LASF11:
+ 3246 0127 75696E74 		.ascii	"uint8\000"
+ 3246      3800
+ 3247              	.LASF29:
+ 3248 012d 616C7449 		.ascii	"altIndex\000"
+ 3248      6E646578 
+ 3248      00
+ 3249              	.LASF10:
+ 3250 0136 646F7562 		.ascii	"double\000"
+ 3250      6C6500
+ 3251              	.LASF23:
+ 3252 013d 70776D5F 		.ascii	"pwm_on\000"
+ 3252      6F6E00
+ 3253              	.LASF20:
+ 3254 0144 7363616E 		.ascii	"scancode\000"
+ 3254      636F6465 
+ 3254      00
+ 3255              	.LASF31:
+ 3256 014d 43617073 		.ascii	"CapsLock\000"
+ 3256      4C6F636B 
+ 3256      00
+ 3257              	.LASF37:
+ 3258 0156 416C7068 		.ascii	"AlphabetScancode\000"
+ 3258      61626574 
+ 3258      5363616E 
+ 3258      636F6465 
+ 3258      00
+ 3259              	.LASF45:
+ 3260 0167 5053325F 		.ascii	"PS2_SendCommand\000"
+ 3260      53656E64 
+ 3260      436F6D6D 
+ARM GAS  C:\Users\addis\AppData\Local\Temp\ccSizEqd.s 			page 70
+
+
+ 3260      616E6400 
+ 3261              	.LASF41:
+ 3262 0177 474E5520 		.ascii	"GNU C 4.9.3 20150303 (release) [ARM/embedded-4_9-br"
+ 3262      4320342E 
+ 3262      392E3320 
+ 3262      32303135 
+ 3262      30333033 
+ 3263 01aa 616E6368 		.ascii	"anch revision 221220] -mcpu=cortex-m3 -mthumb -g -O"
+ 3263      20726576 
+ 3263      6973696F 
+ 3263      6E203232 
+ 3263      31323230 
+ 3264 01dd 67202D66 		.ascii	"g -ffunction-sections -ffat-lto-objects\000"
+ 3264      66756E63 
+ 3264      74696F6E 
+ 3264      2D736563 
+ 3264      74696F6E 
+ 3265              	.LASF5:
+ 3266 0205 6C6F6E67 		.ascii	"long unsigned int\000"
+ 3266      20756E73 
+ 3266      69676E65 
+ 3266      6420696E 
+ 3266      7400
+ 3267              	.LASF8:
+ 3268 0217 756E7369 		.ascii	"unsigned int\000"
+ 3268      676E6564 
+ 3268      20696E74 
+ 3268      00
+ 3269              	.LASF33:
+ 3270 0224 53686966 		.ascii	"ShiftDown\000"
+ 3270      74446F77 
+ 3270      6E00
+ 3271              	.LASF7:
+ 3272 022e 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 3272      206C6F6E 
+ 3272      6720756E 
+ 3272      7369676E 
+ 3272      65642069 
+ 3273              	.LASF26:
+ 3274 0245 6374726C 		.ascii	"ctrlstatus\000"
+ 3274      73746174 
+ 3274      757300
+ 3275              	.LASF44:
+ 3276 0250 4B657962 		.ascii	"KeyboardAction\000"
+ 3276      6F617264 
+ 3276      41637469 
+ 3276      6F6E00
+ 3277              	.LASF28:
+ 3278 025f 616C7453 		.ascii	"altStr\000"
+ 3278      747200
+ 3279              	.LASF14:
+ 3280 0266 73697A65 		.ascii	"sizetype\000"
+ 3280      74797065 
+ 3280      00
+ 3281              	.LASF40:
+ 3282 026f 5069616E 		.ascii	"PianoScancode\000"
+ 3282      6F536361 
+ARM GAS  C:\Users\addis\AppData\Local\Temp\ccSizEqd.s 			page 71
+
+
+ 3282      6E636F64 
+ 3282      6500
+ 3283              	.LASF32:
+ 3284 027d 5363726F 		.ascii	"ScrollLock\000"
+ 3284      6C6C4C6F 
+ 3284      636B00
+ 3285              	.LASF2:
+ 3286 0288 73686F72 		.ascii	"short int\000"
+ 3286      7420696E 
+ 3286      7400
+ 3287              	.LASF36:
+ 3288 0292 53686966 		.ascii	"ShiftableScancode\000"
+ 3288      7461626C 
+ 3288      65536361 
+ 3288      6E636F64 
+ 3288      6500
+ 3289              	.LASF4:
+ 3290 02a4 6C6F6E67 		.ascii	"long int\000"
+ 3290      20696E74 
+ 3290      00
+ 3291              	.LASF13:
+ 3292 02ad 63686172 		.ascii	"char\000"
+ 3292      00
+ 3293              	.LASF0:
+ 3294 02b2 7369676E 		.ascii	"signed char\000"
+ 3294      65642063 
+ 3294      68617200 
+ 3295              	.LASF46:
+ 3296 02be 55415254 		.ascii	"UART_PutString\000"
+ 3296      5F507574 
+ 3296      53747269 
+ 3296      6E6700
+ 3297              	.LASF35:
+ 3298 02cd 416C7444 		.ascii	"AltDown\000"
+ 3298      6F776E00 
+ 3299              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 4.9.3 20150303 (release) [ARM/embedded-4_9-br

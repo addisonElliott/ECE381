@@ -1,0 +1,7 @@
+C:\Users\addis\Documents\PSoC Creator\Workspace02\PS2Keyboard.cydsn\PS2Keyboard.cyprj|76601ef1-6e3d-4ff7-8222-1dc5c92de3cf
+C:\Program Files (x86)\Cypress\PSoC Creator\3.3\PSoC Creator\psoc\content\default\CyAnnotationLibrary\CyAnnotationLibrary.cylib\CyAnnotationLibrary.cyprj|7f641bd5-1fb7-4d4f-b120-bf2828d470d5
+C:\Program Files (x86)\Cypress\PSoC Creator\3.3\PSoC Creator\psoc\content\cycomponentlibraryupdates\CyComponentLibraryUpdates.cylib\CyComponentLibraryUpdates.cyprj|42c08298-29d9-4a2d-b441-c49e3b62f5ca
+C:\Program Files (x86)\Cypress\PSoC Creator\3.3\PSoC Creator\psoc\content\cycomponentlibrary\CyComponentLibrary.cylib\CyComponentLibrary.cyprj|07c9106d-1e31-4b67-b9f2-2730cfe06828
+C:\Program Files (x86)\Cypress\PSoC Creator\3.3\PSoC Creator\psoc\content\cyprimitives\CyPrimitives.cylib\CyPrimitives.cyprj|0a616443-3a73-41b9-8532-259b4ca860ac
+C:\Users\addis\Documents\PSoC Creator\Workspace02\USBKeyboard.cydsn\USBKeyboard.cyprj|e58ef4be-aeab-4c12-beea-2de4ac9df425
+C:\Program Files (x86)\Cypress\PSoC Creator\3.3\PSoC Creator\dev\psoc3\AnalogDevice\PSoC35AnalogDevice.cylib\PSoC35AnalogDevice.cyprj|27dcb823-9f71-47bf-9e0b-76d754f80a47

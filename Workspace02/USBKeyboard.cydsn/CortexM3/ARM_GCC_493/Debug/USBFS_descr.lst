@@ -1,0 +1,1484 @@
+ARM GAS  C:\Users\addis\AppData\Local\Temp\cc9zGDAh.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m3
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.file	"USBFS_descr.c"
+  15              		.text
+  16              	.Ltext0:
+  17              		.cfi_sections	.debug_frame
+  18              		.global	USBFS_TABLE
+  19              		.global	USBFS_DEVICE0_TABLE
+  20              		.global	USBFS_DEVICE0_CONFIGURATION0_TABLE
+  21              		.global	USBFS_DEVICE0_CONFIGURATION0_INTERFACE_CLASS
+  22              		.global	USBFS_DEVICE0_CONFIGURATION0_EP_SETTINGS_TABLE
+  23              		.global	USBFS_DEVICE0_CONFIGURATION0_INTERFACE0_TABLE
+  24              		.global	USBFS_DEVICE0_CONFIGURATION0_INTERFACE0_ALTERNATE0_HID_TABLE
+  25              		.global	USBFS_DEVICE0_CONFIGURATION0_INTERFACE0_ALTERNATE0_HID_FEATURE_RPT_TABLE
+  26              		.comm	USBFS_DEVICE0_CONFIGURATION0_INTERFACE0_ALTERNATE0_HID_FEATURE_BUF,2,4
+  27              		.comm	USBFS_DEVICE0_CONFIGURATION0_INTERFACE0_ALTERNATE0_HID_FEATURE_RPT_SCB,4,4
+  28              		.global	USBFS_DEVICE0_CONFIGURATION0_INTERFACE0_ALTERNATE0_HID_IN_RPT_TABLE
+  29              		.comm	USBFS_DEVICE0_CONFIGURATION0_INTERFACE0_ALTERNATE0_HID_IN_BUF,9,4
+  30              		.comm	USBFS_DEVICE0_CONFIGURATION0_INTERFACE0_ALTERNATE0_HID_IN_RPT_SCB,4,4
+  31              		.global	USBFS_HIDREPORT_DESCRIPTOR1
+  32              		.global	USBFS_STRING_DESCRIPTORS
+  33              		.global	USBFS_DEVICE0_CONFIGURATION0_DESCR
+  34              		.global	USBFS_DEVICE0_DESCR
+  35              		.section	.rodata
+  36              		.align	2
+  37              		.type	USBFS_TABLE, %object
+  38              		.size	USBFS_TABLE, 8
+  39              	USBFS_TABLE:
+  40 0000 01       		.byte	1
+  41 0001 000000   		.space	3
+  42 0004 00000000 		.word	USBFS_DEVICE0_TABLE
+  43              		.type	USBFS_DEVICE0_TABLE, %object
+  44              		.size	USBFS_DEVICE0_TABLE, 24
+  45              	USBFS_DEVICE0_TABLE:
+  46 0008 01       		.byte	1
+  47 0009 000000   		.space	3
+  48 000c 00000000 		.word	USBFS_DEVICE0_DESCR
+  49 0010 00       		.byte	0
+  50 0011 000000   		.space	3
+  51 0014 00000000 		.word	0
+  52 0018 01       		.byte	1
+  53 0019 000000   		.space	3
+  54 001c 00000000 		.word	USBFS_DEVICE0_CONFIGURATION0_TABLE
+  55              		.type	USBFS_DEVICE0_CONFIGURATION0_TABLE, %object
+  56              		.size	USBFS_DEVICE0_CONFIGURATION0_TABLE, 32
+  57              	USBFS_DEVICE0_CONFIGURATION0_TABLE:
+ARM GAS  C:\Users\addis\AppData\Local\Temp\cc9zGDAh.s 			page 2
+
+
+  58 0020 01       		.byte	1
+  59 0021 000000   		.space	3
+  60 0024 00000000 		.word	USBFS_DEVICE0_CONFIGURATION0_DESCR
+  61 0028 01       		.byte	1
+  62 0029 000000   		.space	3
+  63 002c 00000000 		.word	USBFS_DEVICE0_CONFIGURATION0_EP_SETTINGS_TABLE
+  64 0030 01       		.byte	1
+  65 0031 000000   		.space	3
+  66 0034 00000000 		.word	USBFS_DEVICE0_CONFIGURATION0_INTERFACE0_TABLE
+  67 0038 00       		.byte	0
+  68 0039 000000   		.space	3
+  69 003c 00000000 		.word	USBFS_DEVICE0_CONFIGURATION0_INTERFACE_CLASS
+  70              		.type	USBFS_DEVICE0_CONFIGURATION0_INTERFACE_CLASS, %object
+  71              		.size	USBFS_DEVICE0_CONFIGURATION0_INTERFACE_CLASS, 1
+  72              	USBFS_DEVICE0_CONFIGURATION0_INTERFACE_CLASS:
+  73 0040 03       		.byte	3
+  74 0041 000000   		.space	3
+  75              		.type	USBFS_DEVICE0_CONFIGURATION0_EP_SETTINGS_TABLE, %object
+  76              		.size	USBFS_DEVICE0_CONFIGURATION0_EP_SETTINGS_TABLE, 8
+  77              	USBFS_DEVICE0_CONFIGURATION0_EP_SETTINGS_TABLE:
+  78 0044 00       		.byte	0
+  79 0045 00       		.byte	0
+  80 0046 81       		.byte	-127
+  81 0047 03       		.byte	3
+  82 0048 0800     		.short	8
+  83 004a 03       		.byte	3
+  84 004b 00       		.space	1
+  85              		.type	USBFS_DEVICE0_CONFIGURATION0_INTERFACE0_TABLE, %object
+  86              		.size	USBFS_DEVICE0_CONFIGURATION0_INTERFACE0_TABLE, 8
+  87              	USBFS_DEVICE0_CONFIGURATION0_INTERFACE0_TABLE:
+  88 004c 01       		.byte	1
+  89 004d 000000   		.space	3
+  90 0050 00000000 		.word	USBFS_DEVICE0_CONFIGURATION0_INTERFACE0_ALTERNATE0_HID_TABLE
+  91              		.type	USBFS_DEVICE0_CONFIGURATION0_INTERFACE0_ALTERNATE0_HID_TABLE, %object
+  92              		.size	USBFS_DEVICE0_CONFIGURATION0_INTERFACE0_ALTERNATE0_HID_TABLE, 40
+  93              	USBFS_DEVICE0_CONFIGURATION0_INTERFACE0_ALTERNATE0_HID_TABLE:
+  94 0054 00       		.byte	0
+  95 0055 000000   		.space	3
+  96 0058 00000000 		.word	USBFS_DEVICE0_CONFIGURATION0_INTERFACE0_ALTERNATE0_HID_IN_RPT_TABLE
+  97 005c 00       		.byte	0
+  98 005d 000000   		.space	3
+  99 0060 00000000 		.word	0
+ 100 0064 00       		.byte	0
+ 101 0065 000000   		.space	3
+ 102 0068 00000000 		.word	USBFS_DEVICE0_CONFIGURATION0_INTERFACE0_ALTERNATE0_HID_FEATURE_RPT_TABLE
+ 103 006c 01       		.byte	1
+ 104 006d 000000   		.space	3
+ 105 0070 00000000 		.word	USBFS_HIDREPORT_DESCRIPTOR1
+ 106 0074 01       		.byte	1
+ 107 0075 000000   		.space	3
+ 108 0078 12000000 		.word	USBFS_DEVICE0_CONFIGURATION0_DESCR+18
+ 109              		.type	USBFS_DEVICE0_CONFIGURATION0_INTERFACE0_ALTERNATE0_HID_FEATURE_RPT_TABLE, %object
+ 110              		.size	USBFS_DEVICE0_CONFIGURATION0_INTERFACE0_ALTERNATE0_HID_FEATURE_RPT_TABLE, 12
+ 111              	USBFS_DEVICE0_CONFIGURATION0_INTERFACE0_ALTERNATE0_HID_FEATURE_RPT_TABLE:
+ 112 007c 0200     		.short	2
+ 113 007e 0000     		.space	2
+ 114 0080 00000000 		.word	USBFS_DEVICE0_CONFIGURATION0_INTERFACE0_ALTERNATE0_HID_FEATURE_BUF
+ARM GAS  C:\Users\addis\AppData\Local\Temp\cc9zGDAh.s 			page 3
+
+
+ 115 0084 00000000 		.word	USBFS_DEVICE0_CONFIGURATION0_INTERFACE0_ALTERNATE0_HID_FEATURE_RPT_SCB
+ 116              		.type	USBFS_DEVICE0_CONFIGURATION0_INTERFACE0_ALTERNATE0_HID_IN_RPT_TABLE, %object
+ 117              		.size	USBFS_DEVICE0_CONFIGURATION0_INTERFACE0_ALTERNATE0_HID_IN_RPT_TABLE, 12
+ 118              	USBFS_DEVICE0_CONFIGURATION0_INTERFACE0_ALTERNATE0_HID_IN_RPT_TABLE:
+ 119 0088 0900     		.short	9
+ 120 008a 0000     		.space	2
+ 121 008c 00000000 		.word	USBFS_DEVICE0_CONFIGURATION0_INTERFACE0_ALTERNATE0_HID_IN_BUF
+ 122 0090 00000000 		.word	USBFS_DEVICE0_CONFIGURATION0_INTERFACE0_ALTERNATE0_HID_IN_RPT_SCB
+ 123              		.type	USBFS_HIDREPORT_DESCRIPTOR1, %object
+ 124              		.size	USBFS_HIDREPORT_DESCRIPTOR1, 67
+ 125              	USBFS_HIDREPORT_DESCRIPTOR1:
+ 126 0094 3F       		.byte	63
+ 127 0095 00       		.byte	0
+ 128 0096 05       		.byte	5
+ 129 0097 01       		.byte	1
+ 130 0098 09       		.byte	9
+ 131 0099 06       		.byte	6
+ 132 009a A1       		.byte	-95
+ 133 009b 01       		.byte	1
+ 134 009c 05       		.byte	5
+ 135 009d 07       		.byte	7
+ 136 009e 19       		.byte	25
+ 137 009f E0       		.byte	-32
+ 138 00a0 29       		.byte	41
+ 139 00a1 E7       		.byte	-25
+ 140 00a2 15       		.byte	21
+ 141 00a3 00       		.byte	0
+ 142 00a4 25       		.byte	37
+ 143 00a5 01       		.byte	1
+ 144 00a6 75       		.byte	117
+ 145 00a7 01       		.byte	1
+ 146 00a8 95       		.byte	-107
+ 147 00a9 08       		.byte	8
+ 148 00aa 81       		.byte	-127
+ 149 00ab 02       		.byte	2
+ 150 00ac 95       		.byte	-107
+ 151 00ad 01       		.byte	1
+ 152 00ae 75       		.byte	117
+ 153 00af 08       		.byte	8
+ 154 00b0 81       		.byte	-127
+ 155 00b1 01       		.byte	1
+ 156 00b2 95       		.byte	-107
+ 157 00b3 05       		.byte	5
+ 158 00b4 75       		.byte	117
+ 159 00b5 01       		.byte	1
+ 160 00b6 05       		.byte	5
+ 161 00b7 08       		.byte	8
+ 162 00b8 19       		.byte	25
+ 163 00b9 01       		.byte	1
+ 164 00ba 29       		.byte	41
+ 165 00bb 05       		.byte	5
+ 166 00bc B1       		.byte	-79
+ 167 00bd 02       		.byte	2
+ 168 00be 95       		.byte	-107
+ 169 00bf 01       		.byte	1
+ 170 00c0 75       		.byte	117
+ 171 00c1 03       		.byte	3
+ARM GAS  C:\Users\addis\AppData\Local\Temp\cc9zGDAh.s 			page 4
+
+
+ 172 00c2 B1       		.byte	-79
+ 173 00c3 01       		.byte	1
+ 174 00c4 95       		.byte	-107
+ 175 00c5 06       		.byte	6
+ 176 00c6 75       		.byte	117
+ 177 00c7 08       		.byte	8
+ 178 00c8 15       		.byte	21
+ 179 00c9 00       		.byte	0
+ 180 00ca 25       		.byte	37
+ 181 00cb 65       		.byte	101
+ 182 00cc 05       		.byte	5
+ 183 00cd 07       		.byte	7
+ 184 00ce 19       		.byte	25
+ 185 00cf 00       		.byte	0
+ 186 00d0 29       		.byte	41
+ 187 00d1 65       		.byte	101
+ 188 00d2 81       		.byte	-127
+ 189 00d3 00       		.byte	0
+ 190 00d4 C0       		.byte	-64
+ 191 00d5 00       		.byte	0
+ 192 00d6 00       		.byte	0
+ 193 00d7 00       		.space	1
+ 194              		.type	USBFS_STRING_DESCRIPTORS, %object
+ 195              		.size	USBFS_STRING_DESCRIPTORS, 187
+ 196              	USBFS_STRING_DESCRIPTORS:
+ 197 00d8 04       		.byte	4
+ 198 00d9 03       		.byte	3
+ 199 00da 09       		.byte	9
+ 200 00db 04       		.byte	4
+ 201 00dc 20       		.byte	32
+ 202 00dd 03       		.byte	3
+ 203 00de 41       		.byte	65
+ 204 00df 00       		.byte	0
+ 205 00e0 64       		.byte	100
+ 206 00e1 00       		.byte	0
+ 207 00e2 64       		.byte	100
+ 208 00e3 00       		.byte	0
+ 209 00e4 69       		.byte	105
+ 210 00e5 00       		.byte	0
+ 211 00e6 73       		.byte	115
+ 212 00e7 00       		.byte	0
+ 213 00e8 6F       		.byte	111
+ 214 00e9 00       		.byte	0
+ 215 00ea 6E       		.byte	110
+ 216 00eb 00       		.byte	0
+ 217 00ec 20       		.byte	32
+ 218 00ed 00       		.byte	0
+ 219 00ee 45       		.byte	69
+ 220 00ef 00       		.byte	0
+ 221 00f0 6C       		.byte	108
+ 222 00f1 00       		.byte	0
+ 223 00f2 6C       		.byte	108
+ 224 00f3 00       		.byte	0
+ 225 00f4 69       		.byte	105
+ 226 00f5 00       		.byte	0
+ 227 00f6 6F       		.byte	111
+ 228 00f7 00       		.byte	0
+ARM GAS  C:\Users\addis\AppData\Local\Temp\cc9zGDAh.s 			page 5
+
+
+ 229 00f8 74       		.byte	116
+ 230 00f9 00       		.byte	0
+ 231 00fa 74       		.byte	116
+ 232 00fb 00       		.byte	0
+ 233 00fc 1C       		.byte	28
+ 234 00fd 03       		.byte	3
+ 235 00fe 50       		.byte	80
+ 236 00ff 00       		.byte	0
+ 237 0100 53       		.byte	83
+ 238 0101 00       		.byte	0
+ 239 0102 2F       		.byte	47
+ 240 0103 00       		.byte	0
+ 241 0104 32       		.byte	50
+ 242 0105 00       		.byte	0
+ 243 0106 20       		.byte	32
+ 244 0107 00       		.byte	0
+ 245 0108 4B       		.byte	75
+ 246 0109 00       		.byte	0
+ 247 010a 65       		.byte	101
+ 248 010b 00       		.byte	0
+ 249 010c 79       		.byte	121
+ 250 010d 00       		.byte	0
+ 251 010e 62       		.byte	98
+ 252 010f 00       		.byte	0
+ 253 0110 6F       		.byte	111
+ 254 0111 00       		.byte	0
+ 255 0112 61       		.byte	97
+ 256 0113 00       		.byte	0
+ 257 0114 72       		.byte	114
+ 258 0115 00       		.byte	0
+ 259 0116 64       		.byte	100
+ 260 0117 00       		.byte	0
+ 261 0118 2C       		.byte	44
+ 262 0119 03       		.byte	3
+ 263 011a 43       		.byte	67
+ 264 011b 00       		.byte	0
+ 265 011c 79       		.byte	121
+ 266 011d 00       		.byte	0
+ 267 011e 70       		.byte	112
+ 268 011f 00       		.byte	0
+ 269 0120 72       		.byte	114
+ 270 0121 00       		.byte	0
+ 271 0122 65       		.byte	101
+ 272 0123 00       		.byte	0
+ 273 0124 73       		.byte	115
+ 274 0125 00       		.byte	0
+ 275 0126 73       		.byte	115
+ 276 0127 00       		.byte	0
+ 277 0128 20       		.byte	32
+ 278 0129 00       		.byte	0
+ 279 012a 44       		.byte	68
+ 280 012b 00       		.byte	0
+ 281 012c 69       		.byte	105
+ 282 012d 00       		.byte	0
+ 283 012e 67       		.byte	103
+ 284 012f 00       		.byte	0
+ 285 0130 69       		.byte	105
+ARM GAS  C:\Users\addis\AppData\Local\Temp\cc9zGDAh.s 			page 6
+
+
+ 286 0131 00       		.byte	0
+ 287 0132 74       		.byte	116
+ 288 0133 00       		.byte	0
+ 289 0134 61       		.byte	97
+ 290 0135 00       		.byte	0
+ 291 0136 6C       		.byte	108
+ 292 0137 00       		.byte	0
+ 293 0138 20       		.byte	32
+ 294 0139 00       		.byte	0
+ 295 013a 41       		.byte	65
+ 296 013b 00       		.byte	0
+ 297 013c 75       		.byte	117
+ 298 013d 00       		.byte	0
+ 299 013e 64       		.byte	100
+ 300 013f 00       		.byte	0
+ 301 0140 69       		.byte	105
+ 302 0141 00       		.byte	0
+ 303 0142 6F       		.byte	111
+ 304 0143 00       		.byte	0
+ 305 0144 16       		.byte	22
+ 306 0145 03       		.byte	3
+ 307 0146 4D       		.byte	77
+ 308 0147 00       		.byte	0
+ 309 0148 69       		.byte	105
+ 310 0149 00       		.byte	0
+ 311 014a 63       		.byte	99
+ 312 014b 00       		.byte	0
+ 313 014c 72       		.byte	114
+ 314 014d 00       		.byte	0
+ 315 014e 6F       		.byte	111
+ 316 014f 00       		.byte	0
+ 317 0150 70       		.byte	112
+ 318 0151 00       		.byte	0
+ 319 0152 68       		.byte	104
+ 320 0153 00       		.byte	0
+ 321 0154 6F       		.byte	111
+ 322 0155 00       		.byte	0
+ 323 0156 6E       		.byte	110
+ 324 0157 00       		.byte	0
+ 325 0158 65       		.byte	101
+ 326 0159 00       		.byte	0
+ 327 015a 1C       		.byte	28
+ 328 015b 03       		.byte	3
+ 329 015c 55       		.byte	85
+ 330 015d 00       		.byte	0
+ 331 015e 53       		.byte	83
+ 332 015f 00       		.byte	0
+ 333 0160 42       		.byte	66
+ 334 0161 00       		.byte	0
+ 335 0162 20       		.byte	32
+ 336 0163 00       		.byte	0
+ 337 0164 53       		.byte	83
+ 338 0165 00       		.byte	0
+ 339 0166 74       		.byte	116
+ 340 0167 00       		.byte	0
+ 341 0168 72       		.byte	114
+ 342 0169 00       		.byte	0
+ARM GAS  C:\Users\addis\AppData\Local\Temp\cc9zGDAh.s 			page 7
+
+
+ 343 016a 65       		.byte	101
+ 344 016b 00       		.byte	0
+ 345 016c 61       		.byte	97
+ 346 016d 00       		.byte	0
+ 347 016e 6D       		.byte	109
+ 348 016f 00       		.byte	0
+ 349 0170 69       		.byte	105
+ 350 0171 00       		.byte	0
+ 351 0172 6E       		.byte	110
+ 352 0173 00       		.byte	0
+ 353 0174 67       		.byte	103
+ 354 0175 00       		.byte	0
+ 355 0176 1C       		.byte	28
+ 356 0177 03       		.byte	3
+ 357 0178 41       		.byte	65
+ 358 0179 00       		.byte	0
+ 359 017a 63       		.byte	99
+ 360 017b 00       		.byte	0
+ 361 017c 74       		.byte	116
+ 362 017d 00       		.byte	0
+ 363 017e 69       		.byte	105
+ 364 017f 00       		.byte	0
+ 365 0180 76       		.byte	118
+ 366 0181 00       		.byte	0
+ 367 0182 65       		.byte	101
+ 368 0183 00       		.byte	0
+ 369 0184 20       		.byte	32
+ 370 0185 00       		.byte	0
+ 371 0186 32       		.byte	50
+ 372 0187 00       		.byte	0
+ 373 0188 34       		.byte	52
+ 374 0189 00       		.byte	0
+ 375 018a 20       		.byte	32
+ 376 018b 00       		.byte	0
+ 377 018c 62       		.byte	98
+ 378 018d 00       		.byte	0
+ 379 018e 69       		.byte	105
+ 380 018f 00       		.byte	0
+ 381 0190 74       		.byte	116
+ 382 0191 00       		.byte	0
+ 383 0192 00       		.byte	0
+ 384 0193 00       		.space	1
+ 385              		.type	USBFS_DEVICE0_CONFIGURATION0_DESCR, %object
+ 386              		.size	USBFS_DEVICE0_CONFIGURATION0_DESCR, 34
+ 387              	USBFS_DEVICE0_CONFIGURATION0_DESCR:
+ 388 0194 09       		.byte	9
+ 389 0195 02       		.byte	2
+ 390 0196 22       		.byte	34
+ 391 0197 00       		.byte	0
+ 392 0198 01       		.byte	1
+ 393 0199 01       		.byte	1
+ 394 019a 00       		.byte	0
+ 395 019b 80       		.byte	-128
+ 396 019c 19       		.byte	25
+ 397 019d 09       		.byte	9
+ 398 019e 04       		.byte	4
+ 399 019f 00       		.byte	0
+ARM GAS  C:\Users\addis\AppData\Local\Temp\cc9zGDAh.s 			page 8
+
+
+ 400 01a0 00       		.byte	0
+ 401 01a1 01       		.byte	1
+ 402 01a2 03       		.byte	3
+ 403 01a3 00       		.byte	0
+ 404 01a4 00       		.byte	0
+ 405 01a5 00       		.byte	0
+ 406 01a6 09       		.byte	9
+ 407 01a7 21       		.byte	33
+ 408 01a8 11       		.byte	17
+ 409 01a9 01       		.byte	1
+ 410 01aa 00       		.byte	0
+ 411 01ab 01       		.byte	1
+ 412 01ac 22       		.byte	34
+ 413 01ad 3F       		.byte	63
+ 414 01ae 00       		.byte	0
+ 415 01af 07       		.byte	7
+ 416 01b0 05       		.byte	5
+ 417 01b1 81       		.byte	-127
+ 418 01b2 03       		.byte	3
+ 419 01b3 08       		.byte	8
+ 420 01b4 00       		.byte	0
+ 421 01b5 0A       		.byte	10
+ 422 01b6 0000     		.space	2
+ 423              		.type	USBFS_DEVICE0_DESCR, %object
+ 424              		.size	USBFS_DEVICE0_DESCR, 18
+ 425              	USBFS_DEVICE0_DESCR:
+ 426 01b8 12       		.byte	18
+ 427 01b9 01       		.byte	1
+ 428 01ba 00       		.byte	0
+ 429 01bb 02       		.byte	2
+ 430 01bc 00       		.byte	0
+ 431 01bd 00       		.byte	0
+ 432 01be 00       		.byte	0
+ 433 01bf 08       		.byte	8
+ 434 01c0 B4       		.byte	-76
+ 435 01c1 04       		.byte	4
+ 436 01c2 51       		.byte	81
+ 437 01c3 80       		.byte	-128
+ 438 01c4 00       		.byte	0
+ 439 01c5 00       		.byte	0
+ 440 01c6 01       		.byte	1
+ 441 01c7 02       		.byte	2
+ 442 01c8 00       		.byte	0
+ 443 01c9 01       		.byte	1
+ 444 01ca 0000     		.text
+ 445              	.Letext0:
+ 446              		.file 1 ".\\Generated_Source\\PSoC5\\cytypes.h"
+ 447              		.file 2 ".\\Generated_Source\\PSoC5\\USBFS.h"
+ 448              		.file 3 ".\\Generated_Source\\PSoC5\\USBFS_descr.c"
+ 449              		.section	.debug_info,"",%progbits
+ 450              	.Ldebug_info0:
+ 451 0000 CD030000 		.4byte	0x3cd
+ 452 0004 0400     		.2byte	0x4
+ 453 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 454 000a 04       		.byte	0x4
+ 455 000b 01       		.uleb128 0x1
+ 456 000c 0E030000 		.4byte	.LASF48
+ARM GAS  C:\Users\addis\AppData\Local\Temp\cc9zGDAh.s 			page 9
+
+
+ 457 0010 01       		.byte	0x1
+ 458 0011 C1030000 		.4byte	.LASF49
+ 459 0015 69010000 		.4byte	.LASF50
+ 460 0019 00000000 		.4byte	.Ldebug_line0
+ 461 001d 02       		.uleb128 0x2
+ 462 001e 01       		.byte	0x1
+ 463 001f 06       		.byte	0x6
+ 464 0020 7B040000 		.4byte	.LASF0
+ 465 0024 02       		.uleb128 0x2
+ 466 0025 01       		.byte	0x1
+ 467 0026 08       		.byte	0x8
+ 468 0027 03020000 		.4byte	.LASF1
+ 469 002b 02       		.uleb128 0x2
+ 470 002c 02       		.byte	0x2
+ 471 002d 05       		.byte	0x5
+ 472 002e F3030000 		.4byte	.LASF2
+ 473 0032 02       		.uleb128 0x2
+ 474 0033 02       		.byte	0x2
+ 475 0034 07       		.byte	0x7
+ 476 0035 D2000000 		.4byte	.LASF3
+ 477 0039 02       		.uleb128 0x2
+ 478 003a 04       		.byte	0x4
+ 479 003b 05       		.byte	0x5
+ 480 003c 6B040000 		.4byte	.LASF4
+ 481 0040 02       		.uleb128 0x2
+ 482 0041 04       		.byte	0x4
+ 483 0042 07       		.byte	0x7
+ 484 0043 AE020000 		.4byte	.LASF5
+ 485 0047 02       		.uleb128 0x2
+ 486 0048 08       		.byte	0x8
+ 487 0049 05       		.byte	0x5
+ 488 004a 9C030000 		.4byte	.LASF6
+ 489 004e 02       		.uleb128 0x2
+ 490 004f 08       		.byte	0x8
+ 491 0050 07       		.byte	0x7
+ 492 0051 CD020000 		.4byte	.LASF7
+ 493 0055 03       		.uleb128 0x3
+ 494 0056 04       		.byte	0x4
+ 495 0057 05       		.byte	0x5
+ 496 0058 696E7400 		.ascii	"int\000"
+ 497 005c 02       		.uleb128 0x2
+ 498 005d 04       		.byte	0x4
+ 499 005e 07       		.byte	0x7
+ 500 005f C0020000 		.4byte	.LASF8
+ 501 0063 04       		.uleb128 0x4
+ 502 0064 5B040000 		.4byte	.LASF9
+ 503 0068 01       		.byte	0x1
+ 504 0069 3801     		.2byte	0x138
+ 505 006b 24000000 		.4byte	0x24
+ 506 006f 04       		.uleb128 0x4
+ 507 0070 55020000 		.4byte	.LASF10
+ 508 0074 01       		.byte	0x1
+ 509 0075 3901     		.2byte	0x139
+ 510 0077 32000000 		.4byte	0x32
+ 511 007b 02       		.uleb128 0x2
+ 512 007c 04       		.byte	0x4
+ 513 007d 04       		.byte	0x4
+ARM GAS  C:\Users\addis\AppData\Local\Temp\cc9zGDAh.s 			page 10
+
+
+ 514 007e 34010000 		.4byte	.LASF11
+ 515 0082 02       		.uleb128 0x2
+ 516 0083 08       		.byte	0x8
+ 517 0084 04       		.byte	0x4
+ 518 0085 4E020000 		.4byte	.LASF12
+ 519 0089 02       		.uleb128 0x2
+ 520 008a 01       		.byte	0x1
+ 521 008b 08       		.byte	0x8
+ 522 008c B6030000 		.4byte	.LASF13
+ 523 0090 05       		.uleb128 0x5
+ 524 0091 63000000 		.4byte	0x63
+ 525 0095 02       		.uleb128 0x2
+ 526 0096 04       		.byte	0x4
+ 527 0097 07       		.byte	0x7
+ 528 0098 05030000 		.4byte	.LASF14
+ 529 009c 06       		.uleb128 0x6
+ 530 009d 08       		.byte	0x8
+ 531 009e 02       		.byte	0x2
+ 532 009f 9F       		.byte	0x9f
+ 533 00a0 ED000000 		.4byte	0xed
+ 534 00a4 07       		.uleb128 0x7
+ 535 00a5 61040000 		.4byte	.LASF15
+ 536 00a9 02       		.byte	0x2
+ 537 00aa A1       		.byte	0xa1
+ 538 00ab 63000000 		.4byte	0x63
+ 539 00af 00       		.byte	0
+ 540 00b0 07       		.uleb128 0x7
+ 541 00b1 3A010000 		.4byte	.LASF16
+ 542 00b5 02       		.byte	0x2
+ 543 00b6 A2       		.byte	0xa2
+ 544 00b7 63000000 		.4byte	0x63
+ 545 00bb 01       		.byte	0x1
+ 546 00bc 07       		.uleb128 0x7
+ 547 00bd EA010000 		.4byte	.LASF17
+ 548 00c1 02       		.byte	0x2
+ 549 00c2 A3       		.byte	0xa3
+ 550 00c3 63000000 		.4byte	0x63
+ 551 00c7 02       		.byte	0x2
+ 552 00c8 07       		.uleb128 0x7
+ 553 00c9 5E010000 		.4byte	.LASF18
+ 554 00cd 02       		.byte	0x2
+ 555 00ce A4       		.byte	0xa4
+ 556 00cf 63000000 		.4byte	0x63
+ 557 00d3 03       		.byte	0x3
+ 558 00d4 07       		.uleb128 0x7
+ 559 00d5 E8030000 		.4byte	.LASF19
+ 560 00d9 02       		.byte	0x2
+ 561 00da A5       		.byte	0xa5
+ 562 00db 6F000000 		.4byte	0x6f
+ 563 00df 04       		.byte	0x4
+ 564 00e0 07       		.uleb128 0x7
+ 565 00e1 BB030000 		.4byte	.LASF20
+ 566 00e5 02       		.byte	0x2
+ 567 00e6 A6       		.byte	0xa6
+ 568 00e7 63000000 		.4byte	0x63
+ 569 00eb 06       		.byte	0x6
+ 570 00ec 00       		.byte	0
+ARM GAS  C:\Users\addis\AppData\Local\Temp\cc9zGDAh.s 			page 11
+
+
+ 571 00ed 08       		.uleb128 0x8
+ 572 00ee EB020000 		.4byte	.LASF21
+ 573 00f2 02       		.byte	0x2
+ 574 00f3 A7       		.byte	0xa7
+ 575 00f4 9C000000 		.4byte	0x9c
+ 576 00f8 06       		.uleb128 0x6
+ 577 00f9 04       		.byte	0x4
+ 578 00fa 02       		.byte	0x2
+ 579 00fb A9       		.byte	0xa9
+ 580 00fc 19010000 		.4byte	0x119
+ 581 0100 07       		.uleb128 0x7
+ 582 0101 74040000 		.4byte	.LASF22
+ 583 0105 02       		.byte	0x2
+ 584 0106 AB       		.byte	0xab
+ 585 0107 63000000 		.4byte	0x63
+ 586 010b 00       		.byte	0
+ 587 010c 07       		.uleb128 0x7
+ 588 010d 17050000 		.4byte	.LASF23
+ 589 0111 02       		.byte	0x2
+ 590 0112 AC       		.byte	0xac
+ 591 0113 6F000000 		.4byte	0x6f
+ 592 0117 02       		.byte	0x2
+ 593 0118 00       		.byte	0
+ 594 0119 08       		.uleb128 0x8
+ 595 011a AD010000 		.4byte	.LASF24
+ 596 011e 02       		.byte	0x2
+ 597 011f AD       		.byte	0xad
+ 598 0120 F8000000 		.4byte	0xf8
+ 599 0124 06       		.uleb128 0x6
+ 600 0125 0C       		.byte	0xc
+ 601 0126 02       		.byte	0x2
+ 602 0127 AF       		.byte	0xaf
+ 603 0128 51010000 		.4byte	0x151
+ 604 012c 07       		.uleb128 0x7
+ 605 012d 9E000000 		.4byte	.LASF25
+ 606 0131 02       		.byte	0x2
+ 607 0132 B1       		.byte	0xb1
+ 608 0133 6F000000 		.4byte	0x6f
+ 609 0137 00       		.byte	0
+ 610 0138 07       		.uleb128 0x7
+ 611 0139 23010000 		.4byte	.LASF26
+ 612 013d 02       		.byte	0x2
+ 613 013e B2       		.byte	0xb2
+ 614 013f 51010000 		.4byte	0x151
+ 615 0143 04       		.byte	0x4
+ 616 0144 07       		.uleb128 0x7
+ 617 0145 14000000 		.4byte	.LASF27
+ 618 0149 02       		.byte	0x2
+ 619 014a B3       		.byte	0xb3
+ 620 014b 57010000 		.4byte	0x157
+ 621 014f 08       		.byte	0x8
+ 622 0150 00       		.byte	0
+ 623 0151 09       		.uleb128 0x9
+ 624 0152 04       		.byte	0x4
+ 625 0153 90000000 		.4byte	0x90
+ 626 0157 09       		.uleb128 0x9
+ 627 0158 04       		.byte	0x4
+ARM GAS  C:\Users\addis\AppData\Local\Temp\cc9zGDAh.s 			page 12
+
+
+ 628 0159 19010000 		.4byte	0x119
+ 629 015d 08       		.uleb128 0x8
+ 630 015e 29010000 		.4byte	.LASF28
+ 631 0162 02       		.byte	0x2
+ 632 0163 B4       		.byte	0xb4
+ 633 0164 24010000 		.4byte	0x124
+ 634 0168 06       		.uleb128 0x6
+ 635 0169 08       		.byte	0x8
+ 636 016a 02       		.byte	0x2
+ 637 016b B6       		.byte	0xb6
+ 638 016c 87010000 		.4byte	0x187
+ 639 0170 0A       		.uleb128 0xa
+ 640 0171 6300     		.ascii	"c\000"
+ 641 0173 02       		.byte	0x2
+ 642 0174 B8       		.byte	0xb8
+ 643 0175 63000000 		.4byte	0x63
+ 644 0179 00       		.byte	0
+ 645 017a 07       		.uleb128 0x7
+ 646 017b E4020000 		.4byte	.LASF29
+ 647 017f 02       		.byte	0x2
+ 648 0180 B9       		.byte	0xb9
+ 649 0181 87010000 		.4byte	0x187
+ 650 0185 04       		.byte	0x4
+ 651 0186 00       		.byte	0
+ 652 0187 09       		.uleb128 0x9
+ 653 0188 04       		.byte	0x4
+ 654 0189 8D010000 		.4byte	0x18d
+ 655 018d 0B       		.uleb128 0xb
+ 656 018e 08       		.uleb128 0x8
+ 657 018f AA030000 		.4byte	.LASF30
+ 658 0193 02       		.byte	0x2
+ 659 0194 BA       		.byte	0xba
+ 660 0195 68010000 		.4byte	0x168
+ 661 0199 0C       		.uleb128 0xc
+ 662 019a 63000000 		.4byte	0x63
+ 663 019e A9010000 		.4byte	0x1a9
+ 664 01a2 0D       		.uleb128 0xd
+ 665 01a3 95000000 		.4byte	0x95
+ 666 01a7 11       		.byte	0x11
+ 667 01a8 00       		.byte	0
+ 668 01a9 0E       		.uleb128 0xe
+ 669 01aa 00000000 		.4byte	.LASF31
+ 670 01ae 03       		.byte	0x3
+ 671 01af 24       		.byte	0x24
+ 672 01b0 BA010000 		.4byte	0x1ba
+ 673 01b4 05       		.uleb128 0x5
+ 674 01b5 03       		.byte	0x3
+ 675 01b6 00000000 		.4byte	USBFS_DEVICE0_DESCR
+ 676 01ba 0F       		.uleb128 0xf
+ 677 01bb 99010000 		.4byte	0x199
+ 678 01bf 0C       		.uleb128 0xc
+ 679 01c0 63000000 		.4byte	0x63
+ 680 01c4 CF010000 		.4byte	0x1cf
+ 681 01c8 0D       		.uleb128 0xd
+ 682 01c9 95000000 		.4byte	0x95
+ 683 01cd 21       		.byte	0x21
+ 684 01ce 00       		.byte	0
+ARM GAS  C:\Users\addis\AppData\Local\Temp\cc9zGDAh.s 			page 13
+
+
+ 685 01cf 0E       		.uleb128 0xe
+ 686 01d0 8B020000 		.4byte	.LASF32
+ 687 01d4 03       		.byte	0x3
+ 688 01d5 37       		.byte	0x37
+ 689 01d6 E0010000 		.4byte	0x1e0
+ 690 01da 05       		.uleb128 0x5
+ 691 01db 03       		.byte	0x3
+ 692 01dc 00000000 		.4byte	USBFS_DEVICE0_CONFIGURATION0_DESCR
+ 693 01e0 0F       		.uleb128 0xf
+ 694 01e1 BF010000 		.4byte	0x1bf
+ 695 01e5 0C       		.uleb128 0xc
+ 696 01e6 8E010000 		.4byte	0x18e
+ 697 01ea F5010000 		.4byte	0x1f5
+ 698 01ee 0D       		.uleb128 0xd
+ 699 01ef 95000000 		.4byte	0x95
+ 700 01f3 00       		.byte	0
+ 701 01f4 00       		.byte	0
+ 702 01f5 0E       		.uleb128 0xe
+ 703 01f6 A4000000 		.4byte	.LASF33
+ 704 01fa 03       		.byte	0x3
+ 705 01fb FF       		.byte	0xff
+ 706 01fc 06020000 		.4byte	0x206
+ 707 0200 05       		.uleb128 0x5
+ 708 0201 03       		.byte	0x3
+ 709 0202 00000000 		.4byte	USBFS_DEVICE0_CONFIGURATION0_INTERFACE0_TABLE
+ 710 0206 0F       		.uleb128 0xf
+ 711 0207 E5010000 		.4byte	0x1e5
+ 712 020b 0C       		.uleb128 0xc
+ 713 020c ED000000 		.4byte	0xed
+ 714 0210 1B020000 		.4byte	0x21b
+ 715 0214 0D       		.uleb128 0xd
+ 716 0215 95000000 		.4byte	0x95
+ 717 0219 00       		.byte	0
+ 718 021a 00       		.byte	0
+ 719 021b 10       		.uleb128 0x10
+ 720 021c 5C020000 		.4byte	.LASF34
+ 721 0220 03       		.byte	0x3
+ 722 0221 0A01     		.2byte	0x10a
+ 723 0223 2D020000 		.4byte	0x22d
+ 724 0227 05       		.uleb128 0x5
+ 725 0228 03       		.byte	0x3
+ 726 0229 00000000 		.4byte	USBFS_DEVICE0_CONFIGURATION0_EP_SETTINGS_TABLE
+ 727 022d 0F       		.uleb128 0xf
+ 728 022e 0B020000 		.4byte	0x20b
+ 729 0232 0C       		.uleb128 0xc
+ 730 0233 63000000 		.4byte	0x63
+ 731 0237 42020000 		.4byte	0x242
+ 732 023b 0D       		.uleb128 0xd
+ 733 023c 95000000 		.4byte	0x95
+ 734 0240 00       		.byte	0
+ 735 0241 00       		.byte	0
+ 736 0242 10       		.uleb128 0x10
+ 737 0243 21000000 		.4byte	.LASF35
+ 738 0247 03       		.byte	0x3
+ 739 0248 0E01     		.2byte	0x10e
+ 740 024a 54020000 		.4byte	0x254
+ 741 024e 05       		.uleb128 0x5
+ARM GAS  C:\Users\addis\AppData\Local\Temp\cc9zGDAh.s 			page 14
+
+
+ 742 024f 03       		.byte	0x3
+ 743 0250 00000000 		.4byte	USBFS_DEVICE0_CONFIGURATION0_INTERFACE_CLASS
+ 744 0254 0F       		.uleb128 0xf
+ 745 0255 32020000 		.4byte	0x232
+ 746 0259 0C       		.uleb128 0xc
+ 747 025a 8E010000 		.4byte	0x18e
+ 748 025e 69020000 		.4byte	0x269
+ 749 0262 0D       		.uleb128 0xd
+ 750 0263 95000000 		.4byte	0x95
+ 751 0267 03       		.byte	0x3
+ 752 0268 00       		.byte	0
+ 753 0269 10       		.uleb128 0x10
+ 754 026a C7010000 		.4byte	.LASF36
+ 755 026e 03       		.byte	0x3
+ 756 026f 1601     		.2byte	0x116
+ 757 0271 7B020000 		.4byte	0x27b
+ 758 0275 05       		.uleb128 0x5
+ 759 0276 03       		.byte	0x3
+ 760 0277 00000000 		.4byte	USBFS_DEVICE0_CONFIGURATION0_TABLE
+ 761 027b 0F       		.uleb128 0xf
+ 762 027c 59020000 		.4byte	0x259
+ 763 0280 0C       		.uleb128 0xc
+ 764 0281 8E010000 		.4byte	0x18e
+ 765 0285 90020000 		.4byte	0x290
+ 766 0289 0D       		.uleb128 0xd
+ 767 028a 95000000 		.4byte	0x95
+ 768 028e 02       		.byte	0x2
+ 769 028f 00       		.byte	0
+ 770 0290 10       		.uleb128 0x10
+ 771 0291 EF010000 		.4byte	.LASF37
+ 772 0295 03       		.byte	0x3
+ 773 0296 2001     		.2byte	0x120
+ 774 0298 A2020000 		.4byte	0x2a2
+ 775 029c 05       		.uleb128 0x5
+ 776 029d 03       		.byte	0x3
+ 777 029e 00000000 		.4byte	USBFS_DEVICE0_TABLE
+ 778 02a2 0F       		.uleb128 0xf
+ 779 02a3 80020000 		.4byte	0x280
+ 780 02a7 10       		.uleb128 0x10
+ 781 02a8 92000000 		.4byte	.LASF38
+ 782 02ac 03       		.byte	0x3
+ 783 02ad 2801     		.2byte	0x128
+ 784 02af B9020000 		.4byte	0x2b9
+ 785 02b3 05       		.uleb128 0x5
+ 786 02b4 03       		.byte	0x3
+ 787 02b5 00000000 		.4byte	USBFS_TABLE
+ 788 02b9 0F       		.uleb128 0xf
+ 789 02ba E5010000 		.4byte	0x1e5
+ 790 02be 0C       		.uleb128 0xc
+ 791 02bf 63000000 		.4byte	0x63
+ 792 02c3 CE020000 		.4byte	0x2ce
+ 793 02c7 0D       		.uleb128 0xd
+ 794 02c8 95000000 		.4byte	0x95
+ 795 02cc BA       		.byte	0xba
+ 796 02cd 00       		.byte	0
+ 797 02ce 0E       		.uleb128 0xe
+ 798 02cf 45010000 		.4byte	.LASF39
+ARM GAS  C:\Users\addis\AppData\Local\Temp\cc9zGDAh.s 			page 15
+
+
+ 799 02d3 03       		.byte	0x3
+ 800 02d4 65       		.byte	0x65
+ 801 02d5 DF020000 		.4byte	0x2df
+ 802 02d9 05       		.uleb128 0x5
+ 803 02da 03       		.byte	0x3
+ 804 02db 00000000 		.4byte	USBFS_STRING_DESCRIPTORS
+ 805 02df 0F       		.uleb128 0xf
+ 806 02e0 BE020000 		.4byte	0x2be
+ 807 02e4 0E       		.uleb128 0xe
+ 808 02e5 19040000 		.4byte	.LASF40
+ 809 02e9 03       		.byte	0x3
+ 810 02ea D0       		.byte	0xd0
+ 811 02eb 19010000 		.4byte	0x119
+ 812 02ef 05       		.uleb128 0x5
+ 813 02f0 03       		.byte	0x3
+ 814 02f1 00000000 		.4byte	USBFS_DEVICE0_CONFIGURATION0_INTERFACE0_ALTERNATE0_HID_IN_RPT_SCB
+ 815 02f5 0C       		.uleb128 0xc
+ 816 02f6 63000000 		.4byte	0x63
+ 817 02fa 05030000 		.4byte	0x305
+ 818 02fe 0D       		.uleb128 0xd
+ 819 02ff 95000000 		.4byte	0x95
+ 820 0303 08       		.byte	0x8
+ 821 0304 00       		.byte	0
+ 822 0305 0E       		.uleb128 0xe
+ 823 0306 E5000000 		.4byte	.LASF41
+ 824 030a 03       		.byte	0x3
+ 825 030b D1       		.byte	0xd1
+ 826 030c F5020000 		.4byte	0x2f5
+ 827 0310 05       		.uleb128 0x5
+ 828 0311 03       		.byte	0x3
+ 829 0312 00000000 		.4byte	USBFS_DEVICE0_CONFIGURATION0_INTERFACE0_ALTERNATE0_HID_IN_BUF
+ 830 0316 0E       		.uleb128 0xe
+ 831 0317 87040000 		.4byte	.LASF42
+ 832 031b 03       		.byte	0x3
+ 833 031c DF       		.byte	0xdf
+ 834 031d 19010000 		.4byte	0x119
+ 835 0321 05       		.uleb128 0x5
+ 836 0322 03       		.byte	0x3
+ 837 0323 00000000 		.4byte	USBFS_DEVICE0_CONFIGURATION0_INTERFACE0_ALTERNATE0_HID_FEATURE_RPT_SCB
+ 838 0327 0C       		.uleb128 0xc
+ 839 0328 63000000 		.4byte	0x63
+ 840 032c 37030000 		.4byte	0x337
+ 841 0330 0D       		.uleb128 0xd
+ 842 0331 95000000 		.4byte	0x95
+ 843 0335 01       		.byte	0x1
+ 844 0336 00       		.byte	0
+ 845 0337 0E       		.uleb128 0xe
+ 846 0338 1E050000 		.4byte	.LASF43
+ 847 033c 03       		.byte	0x3
+ 848 033d E0       		.byte	0xe0
+ 849 033e 27030000 		.4byte	0x327
+ 850 0342 05       		.uleb128 0x5
+ 851 0343 03       		.byte	0x3
+ 852 0344 00000000 		.4byte	USBFS_DEVICE0_CONFIGURATION0_INTERFACE0_ALTERNATE0_HID_FEATURE_BUF
+ 853 0348 0C       		.uleb128 0xc
+ 854 0349 63000000 		.4byte	0x63
+ 855 034d 58030000 		.4byte	0x358
+ARM GAS  C:\Users\addis\AppData\Local\Temp\cc9zGDAh.s 			page 16
+
+
+ 856 0351 0D       		.uleb128 0xd
+ 857 0352 95000000 		.4byte	0x95
+ 858 0356 42       		.byte	0x42
+ 859 0357 00       		.byte	0
+ 860 0358 0E       		.uleb128 0xe
+ 861 0359 FD030000 		.4byte	.LASF44
+ 862 035d 03       		.byte	0x3
+ 863 035e A5       		.byte	0xa5
+ 864 035f 69030000 		.4byte	0x369
+ 865 0363 05       		.uleb128 0x5
+ 866 0364 03       		.byte	0x3
+ 867 0365 00000000 		.4byte	USBFS_HIDREPORT_DESCRIPTOR1
+ 868 0369 0F       		.uleb128 0xf
+ 869 036a 48030000 		.4byte	0x348
+ 870 036e 0C       		.uleb128 0xc
+ 871 036f 5D010000 		.4byte	0x15d
+ 872 0373 7E030000 		.4byte	0x37e
+ 873 0377 0D       		.uleb128 0xd
+ 874 0378 95000000 		.4byte	0x95
+ 875 037c 00       		.byte	0
+ 876 037d 00       		.byte	0
+ 877 037e 0E       		.uleb128 0xe
+ 878 037f 4E000000 		.4byte	.LASF45
+ 879 0383 03       		.byte	0x3
+ 880 0384 D7       		.byte	0xd7
+ 881 0385 8F030000 		.4byte	0x38f
+ 882 0389 05       		.uleb128 0x5
+ 883 038a 03       		.byte	0x3
+ 884 038b 00000000 		.4byte	USBFS_DEVICE0_CONFIGURATION0_INTERFACE0_ALTERNATE0_HID_IN_RPT_TABLE
+ 885 038f 0F       		.uleb128 0xf
+ 886 0390 6E030000 		.4byte	0x36e
+ 887 0394 0E       		.uleb128 0xe
+ 888 0395 CE040000 		.4byte	.LASF46
+ 889 0399 03       		.byte	0x3
+ 890 039a E6       		.byte	0xe6
+ 891 039b A5030000 		.4byte	0x3a5
+ 892 039f 05       		.uleb128 0x5
+ 893 03a0 03       		.byte	0x3
+ 894 03a1 00000000 		.4byte	USBFS_DEVICE0_CONFIGURATION0_INTERFACE0_ALTERNATE0_HID_FEATURE_RPT_TABLE
+ 895 03a5 0F       		.uleb128 0xf
+ 896 03a6 6E030000 		.4byte	0x36e
+ 897 03aa 0C       		.uleb128 0xc
+ 898 03ab 8E010000 		.4byte	0x18e
+ 899 03af BA030000 		.4byte	0x3ba
+ 900 03b3 0D       		.uleb128 0xd
+ 901 03b4 95000000 		.4byte	0x95
+ 902 03b8 04       		.byte	0x4
+ 903 03b9 00       		.byte	0
+ 904 03ba 0E       		.uleb128 0xe
+ 905 03bb 11020000 		.4byte	.LASF47
+ 906 03bf 03       		.byte	0x3
+ 907 03c0 F3       		.byte	0xf3
+ 908 03c1 CB030000 		.4byte	0x3cb
+ 909 03c5 05       		.uleb128 0x5
+ 910 03c6 03       		.byte	0x3
+ 911 03c7 00000000 		.4byte	USBFS_DEVICE0_CONFIGURATION0_INTERFACE0_ALTERNATE0_HID_TABLE
+ 912 03cb 0F       		.uleb128 0xf
+ARM GAS  C:\Users\addis\AppData\Local\Temp\cc9zGDAh.s 			page 17
+
+
+ 913 03cc AA030000 		.4byte	0x3aa
+ 914 03d0 00       		.byte	0
+ 915              		.section	.debug_abbrev,"",%progbits
+ 916              	.Ldebug_abbrev0:
+ 917 0000 01       		.uleb128 0x1
+ 918 0001 11       		.uleb128 0x11
+ 919 0002 01       		.byte	0x1
+ 920 0003 25       		.uleb128 0x25
+ 921 0004 0E       		.uleb128 0xe
+ 922 0005 13       		.uleb128 0x13
+ 923 0006 0B       		.uleb128 0xb
+ 924 0007 03       		.uleb128 0x3
+ 925 0008 0E       		.uleb128 0xe
+ 926 0009 1B       		.uleb128 0x1b
+ 927 000a 0E       		.uleb128 0xe
+ 928 000b 10       		.uleb128 0x10
+ 929 000c 17       		.uleb128 0x17
+ 930 000d 00       		.byte	0
+ 931 000e 00       		.byte	0
+ 932 000f 02       		.uleb128 0x2
+ 933 0010 24       		.uleb128 0x24
+ 934 0011 00       		.byte	0
+ 935 0012 0B       		.uleb128 0xb
+ 936 0013 0B       		.uleb128 0xb
+ 937 0014 3E       		.uleb128 0x3e
+ 938 0015 0B       		.uleb128 0xb
+ 939 0016 03       		.uleb128 0x3
+ 940 0017 0E       		.uleb128 0xe
+ 941 0018 00       		.byte	0
+ 942 0019 00       		.byte	0
+ 943 001a 03       		.uleb128 0x3
+ 944 001b 24       		.uleb128 0x24
+ 945 001c 00       		.byte	0
+ 946 001d 0B       		.uleb128 0xb
+ 947 001e 0B       		.uleb128 0xb
+ 948 001f 3E       		.uleb128 0x3e
+ 949 0020 0B       		.uleb128 0xb
+ 950 0021 03       		.uleb128 0x3
+ 951 0022 08       		.uleb128 0x8
+ 952 0023 00       		.byte	0
+ 953 0024 00       		.byte	0
+ 954 0025 04       		.uleb128 0x4
+ 955 0026 16       		.uleb128 0x16
+ 956 0027 00       		.byte	0
+ 957 0028 03       		.uleb128 0x3
+ 958 0029 0E       		.uleb128 0xe
+ 959 002a 3A       		.uleb128 0x3a
+ 960 002b 0B       		.uleb128 0xb
+ 961 002c 3B       		.uleb128 0x3b
+ 962 002d 05       		.uleb128 0x5
+ 963 002e 49       		.uleb128 0x49
+ 964 002f 13       		.uleb128 0x13
+ 965 0030 00       		.byte	0
+ 966 0031 00       		.byte	0
+ 967 0032 05       		.uleb128 0x5
+ 968 0033 35       		.uleb128 0x35
+ 969 0034 00       		.byte	0
+ARM GAS  C:\Users\addis\AppData\Local\Temp\cc9zGDAh.s 			page 18
+
+
+ 970 0035 49       		.uleb128 0x49
+ 971 0036 13       		.uleb128 0x13
+ 972 0037 00       		.byte	0
+ 973 0038 00       		.byte	0
+ 974 0039 06       		.uleb128 0x6
+ 975 003a 13       		.uleb128 0x13
+ 976 003b 01       		.byte	0x1
+ 977 003c 0B       		.uleb128 0xb
+ 978 003d 0B       		.uleb128 0xb
+ 979 003e 3A       		.uleb128 0x3a
+ 980 003f 0B       		.uleb128 0xb
+ 981 0040 3B       		.uleb128 0x3b
+ 982 0041 0B       		.uleb128 0xb
+ 983 0042 01       		.uleb128 0x1
+ 984 0043 13       		.uleb128 0x13
+ 985 0044 00       		.byte	0
+ 986 0045 00       		.byte	0
+ 987 0046 07       		.uleb128 0x7
+ 988 0047 0D       		.uleb128 0xd
+ 989 0048 00       		.byte	0
+ 990 0049 03       		.uleb128 0x3
+ 991 004a 0E       		.uleb128 0xe
+ 992 004b 3A       		.uleb128 0x3a
+ 993 004c 0B       		.uleb128 0xb
+ 994 004d 3B       		.uleb128 0x3b
+ 995 004e 0B       		.uleb128 0xb
+ 996 004f 49       		.uleb128 0x49
+ 997 0050 13       		.uleb128 0x13
+ 998 0051 38       		.uleb128 0x38
+ 999 0052 0B       		.uleb128 0xb
+ 1000 0053 00       		.byte	0
+ 1001 0054 00       		.byte	0
+ 1002 0055 08       		.uleb128 0x8
+ 1003 0056 16       		.uleb128 0x16
+ 1004 0057 00       		.byte	0
+ 1005 0058 03       		.uleb128 0x3
+ 1006 0059 0E       		.uleb128 0xe
+ 1007 005a 3A       		.uleb128 0x3a
+ 1008 005b 0B       		.uleb128 0xb
+ 1009 005c 3B       		.uleb128 0x3b
+ 1010 005d 0B       		.uleb128 0xb
+ 1011 005e 49       		.uleb128 0x49
+ 1012 005f 13       		.uleb128 0x13
+ 1013 0060 00       		.byte	0
+ 1014 0061 00       		.byte	0
+ 1015 0062 09       		.uleb128 0x9
+ 1016 0063 0F       		.uleb128 0xf
+ 1017 0064 00       		.byte	0
+ 1018 0065 0B       		.uleb128 0xb
+ 1019 0066 0B       		.uleb128 0xb
+ 1020 0067 49       		.uleb128 0x49
+ 1021 0068 13       		.uleb128 0x13
+ 1022 0069 00       		.byte	0
+ 1023 006a 00       		.byte	0
+ 1024 006b 0A       		.uleb128 0xa
+ 1025 006c 0D       		.uleb128 0xd
+ 1026 006d 00       		.byte	0
+ARM GAS  C:\Users\addis\AppData\Local\Temp\cc9zGDAh.s 			page 19
+
+
+ 1027 006e 03       		.uleb128 0x3
+ 1028 006f 08       		.uleb128 0x8
+ 1029 0070 3A       		.uleb128 0x3a
+ 1030 0071 0B       		.uleb128 0xb
+ 1031 0072 3B       		.uleb128 0x3b
+ 1032 0073 0B       		.uleb128 0xb
+ 1033 0074 49       		.uleb128 0x49
+ 1034 0075 13       		.uleb128 0x13
+ 1035 0076 38       		.uleb128 0x38
+ 1036 0077 0B       		.uleb128 0xb
+ 1037 0078 00       		.byte	0
+ 1038 0079 00       		.byte	0
+ 1039 007a 0B       		.uleb128 0xb
+ 1040 007b 26       		.uleb128 0x26
+ 1041 007c 00       		.byte	0
+ 1042 007d 00       		.byte	0
+ 1043 007e 00       		.byte	0
+ 1044 007f 0C       		.uleb128 0xc
+ 1045 0080 01       		.uleb128 0x1
+ 1046 0081 01       		.byte	0x1
+ 1047 0082 49       		.uleb128 0x49
+ 1048 0083 13       		.uleb128 0x13
+ 1049 0084 01       		.uleb128 0x1
+ 1050 0085 13       		.uleb128 0x13
+ 1051 0086 00       		.byte	0
+ 1052 0087 00       		.byte	0
+ 1053 0088 0D       		.uleb128 0xd
+ 1054 0089 21       		.uleb128 0x21
+ 1055 008a 00       		.byte	0
+ 1056 008b 49       		.uleb128 0x49
+ 1057 008c 13       		.uleb128 0x13
+ 1058 008d 2F       		.uleb128 0x2f
+ 1059 008e 0B       		.uleb128 0xb
+ 1060 008f 00       		.byte	0
+ 1061 0090 00       		.byte	0
+ 1062 0091 0E       		.uleb128 0xe
+ 1063 0092 34       		.uleb128 0x34
+ 1064 0093 00       		.byte	0
+ 1065 0094 03       		.uleb128 0x3
+ 1066 0095 0E       		.uleb128 0xe
+ 1067 0096 3A       		.uleb128 0x3a
+ 1068 0097 0B       		.uleb128 0xb
+ 1069 0098 3B       		.uleb128 0x3b
+ 1070 0099 0B       		.uleb128 0xb
+ 1071 009a 49       		.uleb128 0x49
+ 1072 009b 13       		.uleb128 0x13
+ 1073 009c 3F       		.uleb128 0x3f
+ 1074 009d 19       		.uleb128 0x19
+ 1075 009e 02       		.uleb128 0x2
+ 1076 009f 18       		.uleb128 0x18
+ 1077 00a0 00       		.byte	0
+ 1078 00a1 00       		.byte	0
+ 1079 00a2 0F       		.uleb128 0xf
+ 1080 00a3 26       		.uleb128 0x26
+ 1081 00a4 00       		.byte	0
+ 1082 00a5 49       		.uleb128 0x49
+ 1083 00a6 13       		.uleb128 0x13
+ARM GAS  C:\Users\addis\AppData\Local\Temp\cc9zGDAh.s 			page 20
+
+
+ 1084 00a7 00       		.byte	0
+ 1085 00a8 00       		.byte	0
+ 1086 00a9 10       		.uleb128 0x10
+ 1087 00aa 34       		.uleb128 0x34
+ 1088 00ab 00       		.byte	0
+ 1089 00ac 03       		.uleb128 0x3
+ 1090 00ad 0E       		.uleb128 0xe
+ 1091 00ae 3A       		.uleb128 0x3a
+ 1092 00af 0B       		.uleb128 0xb
+ 1093 00b0 3B       		.uleb128 0x3b
+ 1094 00b1 05       		.uleb128 0x5
+ 1095 00b2 49       		.uleb128 0x49
+ 1096 00b3 13       		.uleb128 0x13
+ 1097 00b4 3F       		.uleb128 0x3f
+ 1098 00b5 19       		.uleb128 0x19
+ 1099 00b6 02       		.uleb128 0x2
+ 1100 00b7 18       		.uleb128 0x18
+ 1101 00b8 00       		.byte	0
+ 1102 00b9 00       		.byte	0
+ 1103 00ba 00       		.byte	0
+ 1104              		.section	.debug_aranges,"",%progbits
+ 1105 0000 14000000 		.4byte	0x14
+ 1106 0004 0200     		.2byte	0x2
+ 1107 0006 00000000 		.4byte	.Ldebug_info0
+ 1108 000a 04       		.byte	0x4
+ 1109 000b 00       		.byte	0
+ 1110 000c 0000     		.2byte	0
+ 1111 000e 0000     		.2byte	0
+ 1112 0010 00000000 		.4byte	0
+ 1113 0014 00000000 		.4byte	0
+ 1114              		.section	.debug_line,"",%progbits
+ 1115              	.Ldebug_line0:
+ 1116 0000 5B000000 		.section	.debug_str,"MS",%progbits,1
+ 1116      02005500 
+ 1116      00000201 
+ 1116      FB0E0D00 
+ 1116      01010101 
+ 1117              	.LASF31:
+ 1118 0000 55534246 		.ascii	"USBFS_DEVICE0_DESCR\000"
+ 1118      535F4445 
+ 1118      56494345 
+ 1118      305F4445 
+ 1118      53435200 
+ 1119              	.LASF27:
+ 1120 0014 70537461 		.ascii	"pStatusBlock\000"
+ 1120      74757342 
+ 1120      6C6F636B 
+ 1120      00
+ 1121              	.LASF35:
+ 1122 0021 55534246 		.ascii	"USBFS_DEVICE0_CONFIGURATION0_INTERFACE_CLASS\000"
+ 1122      535F4445 
+ 1122      56494345 
+ 1122      305F434F 
+ 1122      4E464947 
+ 1123              	.LASF45:
+ 1124 004e 55534246 		.ascii	"USBFS_DEVICE0_CONFIGURATION0_INTERFACE0_ALTERNATE0_"
+ 1124      535F4445 
+ARM GAS  C:\Users\addis\AppData\Local\Temp\cc9zGDAh.s 			page 21
+
+
+ 1124      56494345 
+ 1124      305F434F 
+ 1124      4E464947 
+ 1125 0081 4849445F 		.ascii	"HID_IN_RPT_TABLE\000"
+ 1125      494E5F52 
+ 1125      50545F54 
+ 1125      41424C45 
+ 1125      00
+ 1126              	.LASF38:
+ 1127 0092 55534246 		.ascii	"USBFS_TABLE\000"
+ 1127      535F5441 
+ 1127      424C4500 
+ 1128              	.LASF25:
+ 1129 009e 636F756E 		.ascii	"count\000"
+ 1129      7400
+ 1130              	.LASF33:
+ 1131 00a4 55534246 		.ascii	"USBFS_DEVICE0_CONFIGURATION0_INTERFACE0_TABLE\000"
+ 1131      535F4445 
+ 1131      56494345 
+ 1131      305F434F 
+ 1131      4E464947 
+ 1132              	.LASF3:
+ 1133 00d2 73686F72 		.ascii	"short unsigned int\000"
+ 1133      7420756E 
+ 1133      7369676E 
+ 1133      65642069 
+ 1133      6E7400
+ 1134              	.LASF41:
+ 1135 00e5 55534246 		.ascii	"USBFS_DEVICE0_CONFIGURATION0_INTERFACE0_ALTERNATE0_"
+ 1135      535F4445 
+ 1135      56494345 
+ 1135      305F434F 
+ 1135      4E464947 
+ 1136 0118 4849445F 		.ascii	"HID_IN_BUF\000"
+ 1136      494E5F42 
+ 1136      554600
+ 1137              	.LASF26:
+ 1138 0123 70446174 		.ascii	"pData\000"
+ 1138      6100
+ 1139              	.LASF28:
+ 1140 0129 545F5553 		.ascii	"T_USBFS_TD\000"
+ 1140      4246535F 
+ 1140      544400
+ 1141              	.LASF11:
+ 1142 0134 666C6F61 		.ascii	"float\000"
+ 1142      7400
+ 1143              	.LASF16:
+ 1144 013a 616C7453 		.ascii	"altSetting\000"
+ 1144      65747469 
+ 1144      6E6700
+ 1145              	.LASF39:
+ 1146 0145 55534246 		.ascii	"USBFS_STRING_DESCRIPTORS\000"
+ 1146      535F5354 
+ 1146      52494E47 
+ 1146      5F444553 
+ 1146      43524950 
+ 1147              	.LASF18:
+ARM GAS  C:\Users\addis\AppData\Local\Temp\cc9zGDAh.s 			page 22
+
+
+ 1148 015e 61747472 		.ascii	"attributes\000"
+ 1148      69627574 
+ 1148      657300
+ 1149              	.LASF50:
+ 1150 0169 433A5C55 		.ascii	"C:\\Users\\addis\\Documents\\PSoC Creator\\Workspac"
+ 1150      73657273 
+ 1150      5C616464 
+ 1150      69735C44 
+ 1150      6F63756D 
+ 1151 0197 6530325C 		.ascii	"e02\\USBKeyboard.cydsn\000"
+ 1151      5553424B 
+ 1151      6579626F 
+ 1151      6172642E 
+ 1151      63796473 
+ 1152              	.LASF24:
+ 1153 01ad 545F5553 		.ascii	"T_USBFS_XFER_STATUS_BLOCK\000"
+ 1153      4246535F 
+ 1153      58464552 
+ 1153      5F535441 
+ 1153      5455535F 
+ 1154              	.LASF36:
+ 1155 01c7 55534246 		.ascii	"USBFS_DEVICE0_CONFIGURATION0_TABLE\000"
+ 1155      535F4445 
+ 1155      56494345 
+ 1155      305F434F 
+ 1155      4E464947 
+ 1156              	.LASF17:
+ 1157 01ea 61646472 		.ascii	"addr\000"
+ 1157      00
+ 1158              	.LASF37:
+ 1159 01ef 55534246 		.ascii	"USBFS_DEVICE0_TABLE\000"
+ 1159      535F4445 
+ 1159      56494345 
+ 1159      305F5441 
+ 1159      424C4500 
+ 1160              	.LASF1:
+ 1161 0203 756E7369 		.ascii	"unsigned char\000"
+ 1161      676E6564 
+ 1161      20636861 
+ 1161      7200
+ 1162              	.LASF47:
+ 1163 0211 55534246 		.ascii	"USBFS_DEVICE0_CONFIGURATION0_INTERFACE0_ALTERNATE0_"
+ 1163      535F4445 
+ 1163      56494345 
+ 1163      305F434F 
+ 1163      4E464947 
+ 1164 0244 4849445F 		.ascii	"HID_TABLE\000"
+ 1164      5441424C 
+ 1164      4500
+ 1165              	.LASF12:
+ 1166 024e 646F7562 		.ascii	"double\000"
+ 1166      6C6500
+ 1167              	.LASF10:
+ 1168 0255 75696E74 		.ascii	"uint16\000"
+ 1168      313600
+ 1169              	.LASF34:
+ 1170 025c 55534246 		.ascii	"USBFS_DEVICE0_CONFIGURATION0_EP_SETTINGS_TABLE\000"
+ARM GAS  C:\Users\addis\AppData\Local\Temp\cc9zGDAh.s 			page 23
+
+
+ 1170      535F4445 
+ 1170      56494345 
+ 1170      305F434F 
+ 1170      4E464947 
+ 1171              	.LASF32:
+ 1172 028b 55534246 		.ascii	"USBFS_DEVICE0_CONFIGURATION0_DESCR\000"
+ 1172      535F4445 
+ 1172      56494345 
+ 1172      305F434F 
+ 1172      4E464947 
+ 1173              	.LASF5:
+ 1174 02ae 6C6F6E67 		.ascii	"long unsigned int\000"
+ 1174      20756E73 
+ 1174      69676E65 
+ 1174      6420696E 
+ 1174      7400
+ 1175              	.LASF8:
+ 1176 02c0 756E7369 		.ascii	"unsigned int\000"
+ 1176      676E6564 
+ 1176      20696E74 
+ 1176      00
+ 1177              	.LASF7:
+ 1178 02cd 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 1178      206C6F6E 
+ 1178      6720756E 
+ 1178      7369676E 
+ 1178      65642069 
+ 1179              	.LASF29:
+ 1180 02e4 705F6C69 		.ascii	"p_list\000"
+ 1180      737400
+ 1181              	.LASF21:
+ 1182 02eb 545F5553 		.ascii	"T_USBFS_EP_SETTINGS_BLOCK\000"
+ 1182      4246535F 
+ 1182      45505F53 
+ 1182      45545449 
+ 1182      4E47535F 
+ 1183              	.LASF14:
+ 1184 0305 73697A65 		.ascii	"sizetype\000"
+ 1184      74797065 
+ 1184      00
+ 1185              	.LASF48:
+ 1186 030e 474E5520 		.ascii	"GNU C 4.9.3 20150303 (release) [ARM/embedded-4_9-br"
+ 1186      4320342E 
+ 1186      392E3320 
+ 1186      32303135 
+ 1186      30333033 
+ 1187 0341 616E6368 		.ascii	"anch revision 221220] -mcpu=cortex-m3 -mthumb -g -O"
+ 1187      20726576 
+ 1187      6973696F 
+ 1187      6E203232 
+ 1187      31323230 
+ 1188 0374 67202D66 		.ascii	"g -ffunction-sections -ffat-lto-objects\000"
+ 1188      66756E63 
+ 1188      74696F6E 
+ 1188      2D736563 
+ 1188      74696F6E 
+ 1189              	.LASF6:
+ARM GAS  C:\Users\addis\AppData\Local\Temp\cc9zGDAh.s 			page 24
+
+
+ 1190 039c 6C6F6E67 		.ascii	"long long int\000"
+ 1190      206C6F6E 
+ 1190      6720696E 
+ 1190      7400
+ 1191              	.LASF30:
+ 1192 03aa 545F5553 		.ascii	"T_USBFS_LUT\000"
+ 1192      4246535F 
+ 1192      4C555400 
+ 1193              	.LASF13:
+ 1194 03b6 63686172 		.ascii	"char\000"
+ 1194      00
+ 1195              	.LASF20:
+ 1196 03bb 624D6973 		.ascii	"bMisc\000"
+ 1196      6300
+ 1197              	.LASF49:
+ 1198 03c1 2E5C4765 		.ascii	".\\Generated_Source\\PSoC5\\USBFS_descr.c\000"
+ 1198      6E657261 
+ 1198      7465645F 
+ 1198      536F7572 
+ 1198      63655C50 
+ 1199              	.LASF19:
+ 1200 03e8 62756666 		.ascii	"bufferSize\000"
+ 1200      65725369 
+ 1200      7A6500
+ 1201              	.LASF2:
+ 1202 03f3 73686F72 		.ascii	"short int\000"
+ 1202      7420696E 
+ 1202      7400
+ 1203              	.LASF44:
+ 1204 03fd 55534246 		.ascii	"USBFS_HIDREPORT_DESCRIPTOR1\000"
+ 1204      535F4849 
+ 1204      44524550 
+ 1204      4F52545F 
+ 1204      44455343 
+ 1205              	.LASF40:
+ 1206 0419 55534246 		.ascii	"USBFS_DEVICE0_CONFIGURATION0_INTERFACE0_ALTERNATE0_"
+ 1206      535F4445 
+ 1206      56494345 
+ 1206      305F434F 
+ 1206      4E464947 
+ 1207 044c 4849445F 		.ascii	"HID_IN_RPT_SCB\000"
+ 1207      494E5F52 
+ 1207      50545F53 
+ 1207      434200
+ 1208              	.LASF9:
+ 1209 045b 75696E74 		.ascii	"uint8\000"
+ 1209      3800
+ 1210              	.LASF15:
+ 1211 0461 696E7465 		.ascii	"interface\000"
+ 1211      72666163 
+ 1211      6500
+ 1212              	.LASF4:
+ 1213 046b 6C6F6E67 		.ascii	"long int\000"
+ 1213      20696E74 
+ 1213      00
+ 1214              	.LASF22:
+ 1215 0474 73746174 		.ascii	"status\000"
+ARM GAS  C:\Users\addis\AppData\Local\Temp\cc9zGDAh.s 			page 25
+
+
+ 1215      757300
+ 1216              	.LASF0:
+ 1217 047b 7369676E 		.ascii	"signed char\000"
+ 1217      65642063 
+ 1217      68617200 
+ 1218              	.LASF42:
+ 1219 0487 55534246 		.ascii	"USBFS_DEVICE0_CONFIGURATION0_INTERFACE0_ALTERNATE0_"
+ 1219      535F4445 
+ 1219      56494345 
+ 1219      305F434F 
+ 1219      4E464947 
+ 1220 04ba 4849445F 		.ascii	"HID_FEATURE_RPT_SCB\000"
+ 1220      46454154 
+ 1220      5552455F 
+ 1220      5250545F 
+ 1220      53434200 
+ 1221              	.LASF46:
+ 1222 04ce 55534246 		.ascii	"USBFS_DEVICE0_CONFIGURATION0_INTERFACE0_ALTERNATE0_"
+ 1222      535F4445 
+ 1222      56494345 
+ 1222      305F434F 
+ 1222      4E464947 
+ 1223 0501 4849445F 		.ascii	"HID_FEATURE_RPT_TABLE\000"
+ 1223      46454154 
+ 1223      5552455F 
+ 1223      5250545F 
+ 1223      5441424C 
+ 1224              	.LASF23:
+ 1225 0517 6C656E67 		.ascii	"length\000"
+ 1225      746800
+ 1226              	.LASF43:
+ 1227 051e 55534246 		.ascii	"USBFS_DEVICE0_CONFIGURATION0_INTERFACE0_ALTERNATE0_"
+ 1227      535F4445 
+ 1227      56494345 
+ 1227      305F434F 
+ 1227      4E464947 
+ 1228 0551 4849445F 		.ascii	"HID_FEATURE_BUF\000"
+ 1228      46454154 
+ 1228      5552455F 
+ 1228      42554600 
+ 1229              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 4.9.3 20150303 (release) [ARM/embedded-4_9-br

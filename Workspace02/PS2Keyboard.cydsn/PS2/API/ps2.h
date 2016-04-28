@@ -1,6 +1,6 @@
 /* ========================================
  *
- * Copyright YOUR COMPANY, THE YEAR
+ * Copyright Addison Elliott, 2016
  * All Rights Reserved
  * UNPUBLISHED, LICENSED SOFTWARE.
  *
@@ -25,60 +25,69 @@
 #include "`$INSTANCE_NAME`_stateReg.h"
 #include "`$INSTANCE_NAME`_statusReg.h"
     
-#include "ps2_clock.h" /* This is a hack, fix it later */
-#include "ps2_data.h" /* This is a hack, fix it later */
-
-/* Macros that read/write the control and status registers */
-	
-/* Bit 1 in the control register is what tells the state machine whether to read(0) or write(1) */
+// Macros that read/write the control and status registers
+//	
+// Bit 1 in the control register is what tells the state machine whether to read(0) or write(1)
 #define `$INSTANCE_NAME`_READ           {`$INSTANCE_NAME`_controlReg_Write(`$INSTANCE_NAME`_controlReg_Read() & ~0x01); }
 #define `$INSTANCE_NAME`_WRITE          {`$INSTANCE_NAME`_controlReg_Write(`$INSTANCE_NAME`_controlReg_Read() | 0x01); }
 	
-/* Resets the state machine to the IDLE state */
+// Resets the state machine to the IDLE state by setting RESET HIGH and then LOW
 #define `$INSTANCE_NAME`_RESET          { `$INSTANCE_NAME`_controlReg_Write(`$INSTANCE_NAME`_controlReg_Read() | 0x02); \
                                         `$INSTANCE_NAME`_controlReg_Write(`$INSTANCE_NAME`_controlReg_Read() & ~0x02); }
 
-/* Sets the ps2_data line on the software side. Note: This is only changed if the control is set to software and not hardware */
+// Sets the ps2_data line on the software side. Note: This is only changed if the control is set to software and not hardware
 #define `$INSTANCE_NAME`_DATA_HIGH 		{`$INSTANCE_NAME`_controlReg_Write(`$INSTANCE_NAME`_controlReg_Read() | 0x04); }
 #define `$INSTANCE_NAME`_DATA_LOW 		{`$INSTANCE_NAME`_controlReg_Write(`$INSTANCE_NAME`_controlReg_Read() & ~0x04); }
 
-/* Sets the ps2_clock line. Note: A 1 is high-Z */
+// Sets the ps2_clock line. Note: A 1 is high-Z
 #define `$INSTANCE_NAME`_CLOCK_HIGH 	{`$INSTANCE_NAME`_controlReg_Write(`$INSTANCE_NAME`_controlReg_Read() | 0x08); }
 #define `$INSTANCE_NAME`_CLOCK_LOW 		{`$INSTANCE_NAME`_controlReg_Write(`$INSTANCE_NAME`_controlReg_Read() & ~0x08); }
 
-/* The data control bit sets whether the ps2_data output is software or hardware. Hardware refers to the verilog 
- *	module and software refers to bit 3 in this register */
+// The data control bit sets whether the ps2_data output is software or hardware. Hardware refers to the verilog 
+//	module and software refers to bit 3 in this register
 #define `$INSTANCE_NAME`_DATA_CTRL_HW 	{`$INSTANCE_NAME`_controlReg_Write(`$INSTANCE_NAME`_controlReg_Read() | 0x10); }
 #define `$INSTANCE_NAME`_DATA_CTRL_SW 	{`$INSTANCE_NAME`_controlReg_Write(`$INSTANCE_NAME`_controlReg_Read() & ~0x10); }
 
-/* Returns the various register values */
+// Returns the various register values
 #define `$INSTANCE_NAME`_STATUS         (`$INSTANCE_NAME`_statusReg_Read())
 #define `$INSTANCE_NAME`_STATE          (`$INSTANCE_NAME`_stateReg_Read())
 #define `$INSTANCE_NAME`_BYTE_R         (`$INSTANCE_NAME`_dataOut_Read())
 #define `$INSTANCE_NAME`_DATA_WRITE(data) (`$INSTANCE_NAME`_dataIn_Write(data))
     
-/* Starts the timer to run for the given period. This timer will repeat reps time. 
- * Total Amount of time waiting = 10uS * period * reps
- * Period is a byte, reps is an unsigned int
- *
- * Note: Make sure period is sufficiently large before increasing reps. This reduces the amount of latency because
- * reps triggers an ISR to decrement a counter and the period internally decrements a counter(within one clock cycle)
- * Sufficiently large means > 10 periods(A.K.A. 100uS)
- */
-#define `$INSTANCE_NAME`_TIMER_START(period, reps) { `$INSTANCE_NAME`_timer_reps = reps; `$INSTANCE_NAME`_Timer_WriteCounter(period); \
-													 `$INSTANCE_NAME`_Timer_WritePeriod(period); `$INSTANCE_NAME`_Timer_Enable(); }
+// Run the timer for a given period that repeats reps time.
+// This macro will hang until the time is up
+//
+// Total Amount of time waiting = 10uS * period * reps
+//
+// Note: Make sure period is sufficiently large before increasing reps. This reduces the amount of latency because
+// reps triggers an ISR to decrement a counter and the period internally decrements a counter(within one clock cycle)
+// Sufficiently large means > 10 periods(A.K.A. 100uS)
+#define `$INSTANCE_NAME`_TIMER_WAIT(period, reps) { `$INSTANCE_NAME`_timer_reps = reps; `$INSTANCE_NAME`_Timer_WriteCounter(period); \
+													`$INSTANCE_NAME`_Timer_WritePeriod(period); `$INSTANCE_NAME`_Timer_Enable(); \
+													while (`$INSTANCE_NAME`_timer_reps); `$INSTANCE_NAME`_Timer_Stop(); }
+	
+// This macro is the same as `$INSTANCE_NAME`_TIMER_WAIT, 
+// except an additional cond term is present. The timer
+// will hang until time is up or the specified cond
+// becomes untrue. (cond == 0) then hanging stops
+#define `$INSTANCE_NAME`_TIMER_WAIT_UNTIL(period, reps, cond) { `$INSTANCE_NAME`_timer_reps = reps; `$INSTANCE_NAME`_Timer_WriteCounter(period); \
+													 			`$INSTANCE_NAME`_Timer_WritePeriod(period); `$INSTANCE_NAME`_Timer_Enable(); \
+													 			while (`$INSTANCE_NAME`_timer_reps && cond); `$INSTANCE_NAME`_Timer_Stop(); }
 
-/* Enumerations */
+// Enumerations
+// Status of PS2_Core
 #define `$INSTANCE_NAME`_STATUS_PENDING     0
 #define `$INSTANCE_NAME`_STATUS_DONE        1
 #define `$INSTANCE_NAME`_STATUS_ERROR       2
     
+// Possible return values for the API
 #define `$INSTANCE_NAME`_SUCCESS			0
 #define `$INSTANCE_NAME`_BAD_BAT			1
 #define `$INSTANCE_NAME`_TIMEOUT			2
 #define `$INSTANCE_NAME`_ERROR				3
 #define `$INSTANCE_NAME`_INVALID_RESPONSE	4
-    
+	
+// States for the PS2_Core
 #define `$INSTANCE_NAME`_IDLE               0
 #define `$INSTANCE_NAME`_READ_BIT_1         1
 #define `$INSTANCE_NAME`_READ_BIT_2         2
@@ -104,12 +113,12 @@
 #define `$INSTANCE_NAME`_DONE               22
 #define `$INSTANCE_NAME`_ERROR_             23
     
-/* Global variables */
+// Global variables
 extern uint16 `$INSTANCE_NAME`_timer_reps;
 extern uint8 `$INSTANCE_NAME`_initVar;
 extern uint8 `$INSTANCE_NAME`_deviceDetectFail;
     
-/* Functions */
+// Functions
 void `$INSTANCE_NAME`_Init(void) `=ReentrantKeil($INSTANCE_NAME . "_Init")`;
 void `$INSTANCE_NAME`_Start(void) `=ReentrantKeil($INSTANCE_NAME . "_Start")`;
 uint8 `$INSTANCE_NAME`_DetectDevice(void) `=ReentrantKeil($INSTANCE_NAME . "_DetectDevice")`;

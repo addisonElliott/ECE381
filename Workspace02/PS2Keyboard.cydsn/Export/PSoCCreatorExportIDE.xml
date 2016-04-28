@@ -37,6 +37,8 @@
       <Folder BuildType="BUILD" Path="C:\Users\addis\Documents\PSoC Creator\Workspace02\PS2Keyboard.cydsn">
         <Files Root="C:\Users\addis\Documents\PSoC Creator\Workspace02\PS2Keyboard.cydsn">
           <File BuildType="BUILD" Toolchain="">.\main.c</File>
+          <File BuildType="BUILD" Toolchain="">.\keyboard.c</File>
+          <File BuildType="BUILD" Toolchain="">.\keyboard.h</File>
           <File BuildType="BUILD" Toolchain="">.\cyapicallbacks.h</File>
         </Files>
       </Folder>
@@ -58,11 +60,6 @@
           <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC5\cyfitteriar.inc</File>
           <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC5\cyfitter.h</File>
           <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC5\cydisabledsheets.h</File>
-          <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC5\Pin_1_aliases.h</File>
-          <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC5\Pin_1.c</File>
-          <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC5\Pin_1.h</File>
-          <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC5\Clock_1.c</File>
-          <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC5\Clock_1.h</File>
           <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC5\cycodeshareimport.ld</File>
           <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC5\cycodeshareexport.ld</File>
           <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC5\cycodeshareimport.scat</File>
@@ -96,8 +93,8 @@
           <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC5\UART_PM.c</File>
           <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC5\UART_INT.c</File>
           <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC5\UART_BOOT.c</File>
-          <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC5\PS2_ps2.c</File>
-          <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC5\PS2_ps2.h</File>
+          <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC5\PS2.c</File>
+          <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC5\PS2.h</File>
           <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC5\ps2_data_aliases.h</File>
           <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC5\ps2_data.c</File>
           <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC5\ps2_data.h</File>
@@ -123,8 +120,10 @@
           <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC5\PS2_Timer_PM.c</File>
           <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC5\PS2_Timer_ISR.c</File>
           <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC5\PS2_Timer_ISR.h</File>
-          <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC5\Clock_2.c</File>
-          <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC5\Clock_2.h</File>
+          <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC5\mainClock.c</File>
+          <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC5\mainClock.h</File>
+          <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC5\clock10us.c</File>
+          <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC5\clock10us.h</File>
         </Files>
       </Folder>
       <Folder BuildType="BUILD" Path="C:\Users\addis\Documents\PSoC Creator\Workspace02\PS2Keyboard.cydsn\PS2\API">
