@@ -14,5 +14,4 @@
 *.cydsn/Generated_Source
 *.cydsn/Generated_Source/(chip name)/*
 !.cydsn/Generated_Source/(chip name)/*.hex
-*.docx
 *.pep
